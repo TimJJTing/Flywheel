@@ -1,1 +1,38 @@
-[]
+[
+ {
+  "ts": "2026-07-06T12:00",
+  "agent": "explore",
+  "model": "per parent",
+  "effort": "-",
+  "task": "inventory source repo harness scaffolding",
+  "outcome": "ok",
+  "notes": "vocabulary-universe survey"
+ },
+ {
+  "ts": "2026-07-06T12:10",
+  "agent": "plan",
+  "model": "per parent",
+  "effort": "-",
+  "task": "design flywheel repo implementation plan",
+  "outcome": "ok",
+  "notes": ""
+ },
+ {
+  "ts": "2026-07-06T13:00",
+  "agent": "engineer",
+  "model": "sonnet",
+  "effort": "high",
+  "task": "dashboard template, build scripts, check.sh",
+  "outcome": "ok",
+  "notes": "6/6 criteria PASS; handled mid-task config schema change"
+ },
+ {
+  "ts": "2026-07-06T13:10",
+  "agent": "engineer",
+  "model": "sonnet",
+  "effort": "high",
+  "task": "install.sh and uninstall.sh with tests",
+  "outcome": "ok",
+  "notes": "6/6 criteria PASS; fixed own trailing-newline bug"
+ }
+]

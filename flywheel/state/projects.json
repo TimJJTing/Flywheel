@@ -1,1 +1,48 @@
-[]
+[
+ {
+  "id": "p1",
+  "title": "Flywheel v0.1 boilerplate",
+  "type": "flywheel",
+  "priority": "P1",
+  "status": "active",
+  "milestones": [
+   {
+    "title": "Core doctrine",
+    "done": true
+   },
+   {
+    "title": "Adapters (claude-code/codex/opencode)",
+    "done": true
+   },
+   {
+    "title": "Dashboard + check.sh",
+    "done": true
+   },
+   {
+    "title": "install/uninstall",
+    "done": true
+   },
+   {
+    "title": "Docs set + seed prompt",
+    "done": true
+   },
+   {
+    "title": "Fresh-context audit",
+    "done": false
+   },
+   {
+    "title": "E2E rehearsal in scratch repo",
+    "done": false
+   }
+  ],
+  "detail": "Portable harness extracted from vocabulary-universe; see README.md.",
+  "commits": [
+   "5fcca4c",
+   "089bfdb",
+   "a26c727",
+   "eff2cd9",
+   "18649d1"
+  ],
+  "updated": "2026-07-06"
+ }
+]

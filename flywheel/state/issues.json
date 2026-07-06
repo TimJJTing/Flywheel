@@ -1,1 +1,24 @@
-[]
+[
+ {
+  "id": "i1",
+  "title": "install.sh does not support target == flywheel repo itself",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "cp identical-file guard aborts; dogfood install was hand-wired. Fine for real targets; document or guard.",
+  "commits": [],
+  "opened": "2026-07-06",
+  "closed": null
+ },
+ {
+  "id": "i2",
+  "title": "uninstall opencode.json removal heuristic untested without .flywheel-bak",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Best-effort key-set comparison path never exercised by tests (bak always existed).",
+  "commits": [],
+  "opened": "2026-07-06",
+  "closed": null
+ }
+]
