@@ -35,6 +35,19 @@ if [ -f "$FLYWHEEL_DIR/LESSONS.md" ]; then
   else echo "✓ LESSONS.md: $n/80 lines"; fi
 fi
 
+# Always-loaded set (adapter file + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines.
+for adapter_file in CLAUDE.md AGENTS.md; do
+  if [ -f "$REPO_ROOT/$adapter_file" ]; then
+    total=0
+    for f in "$REPO_ROOT/$adapter_file" "$FLYWHEEL_DIR/INDEX.md" \
+             "$FLYWHEEL_DIR/ORCHESTRATION.md" "$FLYWHEEL_DIR/FACTS.md"; do
+      [ -f "$f" ] && total=$((total + $(wc -l < "$f")))
+    done
+    if [ "$total" -le 500 ]; then echo "✓ always-loaded set ($adapter_file+INDEX+ORCHESTRATION+FACTS): $total/500 lines";
+    else echo "✗ always-loaded set ($adapter_file+INDEX+ORCHESTRATION+FACTS): $total lines exceeds 500"; FAIL=1; fi
+  fi
+done
+
 # Every flywheel/*.md path referenced in INDEX.md must exist.
 missing_refs=0
 for ref in $(grep -oE 'flywheel/[A-Za-z0-9_./-]*\.md' "$FLYWHEEL_DIR/INDEX.md" | sort -u); do
@@ -92,7 +105,7 @@ fi
 
 if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   bad=0
-  while IFS= read -r h; do
+  while IFS= read -r h || [ -n "$h" ]; do
     [ -z "$h" ] && continue
     git -C "$REPO_ROOT" cat-file -e "$h" 2>/dev/null || { echo "✗ commit hash not found: $h"; bad=1; }
   done < "$HASHES_FILE"
@@ -123,6 +136,7 @@ for agent, tier_key in mapping.items():
     expect = tiers.get(tier_key, {}).get("harnesses", {}).get("claude-code", {})
     exp_model, exp_effort = expect.get("model"), expect.get("effort")
     if exp_model == "Pending verification":
+        print(f"⚠ {agent}.md frontmatter check skipped (config model still Pending verification)")
         continue
     got_model = m_model.group(1) if m_model else None
     got_effort = m_effort.group(1) if m_effort else None

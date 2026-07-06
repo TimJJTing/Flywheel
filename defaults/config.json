@@ -1,0 +1,57 @@
+{
+  "flywheel_version": "0.1.0",
+  "project_name": "Pending verification",
+  "autonomy": 3,
+  "improve_cadence_sessions": 5,
+  "audit_cadence_sessions": 5,
+  "tiers": {
+    "architect": {
+      "role": "last resort: twice-failed plans, irreversible forks, rule conflicts",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "medium" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    },
+    "strategist": {
+      "role": "plans, deep research, edge cases, requirement catalogs",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    },
+    "engineer": {
+      "role": "all production code, refactors, complex scripts",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    },
+    "utility": {
+      "role": "batch reads/edits, searches, checklist checks",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    },
+    "verifier": {
+      "role": "fresh-context verification of code claims",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    },
+    "auditor": {
+      "role": "fresh-context audit of plans and system docs",
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
+    }
+  }
+}

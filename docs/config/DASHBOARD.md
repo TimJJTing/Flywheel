@@ -12,7 +12,10 @@ flywheel/dashboard/template.html  ──►  flywheel/dashboard/dashboard.html  
 Wrapup rebuilds it every session. Rebuild manually any time; it is deterministic
 (set `FLYWHEEL_BUILD_TS` to pin the timestamp, e.g. in tests).
 
-## Ledger schemas (source of truth for agents writing them)
+## Ledger schemas
+
+Canonical copy ships with the payload as `flywheel/state/SCHEMAS.md` (that is what
+agents in target projects read). Mirrored here for reference:
 
 All flat JSON arrays. IDs: `p1`/`i1`/`d1`… (max existing + 1). Dates ISO-8601.
 

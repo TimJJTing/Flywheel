@@ -8,12 +8,12 @@ Updated: 2026-07-06 (bootstrap session, coordinated by fable)
 - Dogfood: repo runs its own Claude Code adapter (CLAUDE.md + .claude/).
 
 ## In flight
-- Fresh-context audit (auditor) + E2E rehearsal (verifier) — dispatched, results
-  pending integration.
+- None.
 
 ## Next actions (in order)
-1. Fix any BLOCKER/MAJOR audit findings.
-2. Close E2E rehearsal milestone; fix friction found.
+1. Real-world adoption test: install into an actual project, run SEED-PROMPT.md end
+   to end with a live harness session (only simulated mechanically so far).
+2. Consider closing i1 (self-install target==source unsupported) or documenting it.
 3. First improve pass once 5 sessions accumulate (or on demand).
 
 ## Blockers / decisions pending the human

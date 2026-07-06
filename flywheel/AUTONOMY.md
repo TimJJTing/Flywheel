@@ -27,6 +27,10 @@ with options + recommendation, then continue OTHER work — never idle-block).
 The bottom "Spend money" and "Change autonomy" rows are level-invariant: **no autonomy
 level authorizes these.**
 
+The "Edit flywheel structural docs" row does NOT waive MAINTENANCE.md §1 (strategist
+plan + auditor approval, applied on an improve branch). The cell only sets whether the
+human approves the change before (A) or after (R/D) — the process is always required.
+
 ## Level meanings (one line each, shown on the dashboard)
 
 - **L1 — Micromanage:** CEO approves nearly every move. First-week or high-stakes repos.

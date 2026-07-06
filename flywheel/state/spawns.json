@@ -34,5 +34,23 @@
   "task": "install.sh and uninstall.sh with tests",
   "outcome": "ok",
   "notes": "6/6 criteria PASS; fixed own trailing-newline bug"
+ },
+ {
+  "ts": "2026-07-06T15:00",
+  "agent": "plan-auditor",
+  "model": "opus",
+  "effort": "high",
+  "task": "v0.1 cross-examination of all docs",
+  "outcome": "ok",
+  "notes": "REVISE(1 blocker,3 major,3 minor) \u2014 all fixed; first spawn died on session limit, retried"
+ },
+ {
+  "ts": "2026-07-06T15:00",
+  "agent": "verifier",
+  "model": "sonnet",
+  "effort": "high",
+  "task": "E2E rehearsal install/seed/check/uninstall in scratch repo",
+  "outcome": "ok",
+  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) \u2014 both fixed and retested"
  }
 ]

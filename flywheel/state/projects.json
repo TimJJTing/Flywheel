@@ -28,11 +28,11 @@
    },
    {
     "title": "Fresh-context audit",
-    "done": false
+    "done": true
    },
    {
     "title": "E2E rehearsal in scratch repo",
-    "done": false
+    "done": true
    }
   ],
   "detail": "Portable harness extracted from vocabulary-universe; see README.md.",

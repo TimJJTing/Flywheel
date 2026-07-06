@@ -44,6 +44,7 @@ Answer these for harness X; the answers ARE the adapter.
 - The adapter never duplicates doctrine — it points at flywheel/ files. A rule copied
   into an adapter block will drift from its source within ten sessions.
   Exception: the four hard rules in the block are deliberate point-of-use duplicates;
-  keep them verbatim-identical to INDEX.md's list (check.sh compares).
+  keep them verbatim-identical to INDEX.md's list (the MAINTENANCE.md §4 audit pass
+  diffs them — there is no mechanical check yet).
 - Test the port with the phase-style check: install into a scratch repo, run one
   session with the seed prompt, confirm FACTS.md gets filled and the dashboard builds.

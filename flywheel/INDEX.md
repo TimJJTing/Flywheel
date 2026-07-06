@@ -32,7 +32,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/LESSONS.md` | After any escalation or surprising failure (append) |
 
 ## State (the CEO dashboard's source of truth)
-`flywheel/state/{projects,issues,decisions,activity,spawns}.json` — schemas documented
-in the flywheel repo's docs/config/DASHBOARD.md and in `flywheel/check.sh` validation.
+`flywheel/state/{projects,issues,decisions,activity,spawns}.json` — schemas in
+`flywheel/state/SCHEMAS.md` (ships with the payload).
 Rebuild the dashboard with `python3 flywheel/dashboard/build.py` (or `node
 flywheel/dashboard/build.mjs`); output: `flywheel/dashboard/dashboard.html`.

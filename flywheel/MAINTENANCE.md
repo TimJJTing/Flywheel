@@ -25,9 +25,12 @@ itself" — structural; requires strategist plan + auditor sign-off on an improv
 Enforced mechanically by `flywheel/check.sh` (wrapup runs it; a red check blocks
 committing doc changes until fixed or consciously overridden with a LESSONS.md entry).
 
-- Adapter always-loaded block ≤ 50 lines; INDEX.md ≤ 50.
-- Always-loaded set (block + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines total.
-- `flywheel/STATUS.md` ≤ 60 lines; trim the decisions log to the 10 most recent.
+- Per-file budgets: the authoritative table is the `check_budget` list at the top of
+  `flywheel/check.sh` (INDEX 50, STATUS 60, ORCHESTRATION 120, and so on) — edit
+  budgets there, via the structural process, never by letting a file grow past one.
+- Always-loaded set (CLAUDE.md/AGENTS.md + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines
+  total — check.sh sums it. Keep new adapter blocks ≤ 50 lines (audit-pass check).
+- `flywheel/STATUS.md`: trim the decisions log to the 10 most recent.
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
   `docs/research/lessons-archive-YYYYMM.md`.

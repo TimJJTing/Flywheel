@@ -122,7 +122,8 @@ copy_managed_if_ok() { # $1 = src, $2 = dest
 # --- 1. flywheel/ payload: MANAGED (always overwrite) ----------------------
 mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
 for f in INDEX.md ORCHESTRATION.md JUDGMENT.md AUTONOMY.md DIAGNOSIS.md \
-         TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh; do
+         TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh \
+         state/SCHEMAS.md; do
   if [ -f "$PAYLOAD/$f" ]; then
     cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
     echo "  managed: flywheel/$f"
@@ -133,29 +134,33 @@ if [ -d "$PAYLOAD/dashboard" ] && [ -n "$(ls -A "$PAYLOAD/dashboard" 2>/dev/null
   echo "  managed: flywheel/dashboard/*"
 fi
 
-# --- 1b. flywheel/ payload: OWNED-BY-TARGET (create only if absent) --------
+# --- 1b. OWNED-BY-TARGET (create only if absent) ----------------------------
+# Sourced from defaults/ (pristine templates), never from the live payload — the
+# flywheel repo dogfoods its own payload, so payload state carries ITS project data.
+DEFAULTS="$SCRIPT_DIR/defaults"
 for f in config.json FACTS.md STATUS.md LESSONS.md; do
-  if [ -f "$PAYLOAD/$f" ]; then
+  src="$DEFAULTS/$f"; [ -f "$src" ] || src="$PAYLOAD/$f"
+  if [ -f "$src" ]; then
     if [ ! -f "$TARGET/flywheel/$f" ]; then
-      cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
+      cp -f "$src" "$TARGET/flywheel/$f"
       echo "  created: flywheel/$f"
     else
       echo "  kept: flywheel/$f (already present)"
     fi
   fi
 done
-if [ -d "$PAYLOAD/state" ]; then
-  for sf in "$PAYLOAD"/state/*.json; do
-    [ -e "$sf" ] || continue
-    b="$(basename "$sf")"
-    if [ ! -f "$TARGET/flywheel/state/$b" ]; then
-      cp -f "$sf" "$TARGET/flywheel/state/$b"
-      echo "  created: flywheel/state/$b"
+for b in projects.json issues.json decisions.json activity.json spawns.json; do
+  if [ ! -f "$TARGET/flywheel/state/$b" ]; then
+    if [ -f "$DEFAULTS/state/$b" ]; then
+      cp -f "$DEFAULTS/state/$b" "$TARGET/flywheel/state/$b"
     else
-      echo "  kept: flywheel/state/$b (already present)"
+      printf '[]\n' > "$TARGET/flywheel/state/$b"
     fi
-  done
-fi
+    echo "  created: flywheel/state/$b"
+  else
+    echo "  kept: flywheel/state/$b (already present)"
+  fi
+done
 
 # --- 2. adapters -------------------------------------------------------------
 IFS=',' read -ra ADAPTER_LIST <<< "$ADAPTERS_ARG"
