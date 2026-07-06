@@ -110,6 +110,24 @@ if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     git -C "$REPO_ROOT" cat-file -e "$h" 2>/dev/null || { echo "✗ commit hash not found: $h"; bad=1; }
   done < "$HASHES_FILE"
   [ "$bad" -eq 0 ] && echo "✓ all ledger commit hashes exist in git history" || FAIL=1
+
+  # Drift (warn-only): recent commits no ledger references — usually a human working
+  # outside the framework. Triage at session start: backfill ledgers, note in STATUS.md.
+  # The wrapup commit itself can never be in the ledger it writes, so it is skipped.
+  drift=$(git -C "$REPO_ROOT" log --format='%h %s' --abbrev=7 -n 100 2>/dev/null | \
+    { while IFS=' ' read -r h s; do
+        grep -q "^$h" "$HASHES_FILE" && break
+        [ "$s" = "chore(flywheel): update state ledgers + dashboard" ] && continue
+        echo "$h $s"
+      done; })
+  if [ -n "$drift" ]; then
+    echo "⚠ $(printf '%s\n' "$drift" | wc -l | tr -d ' ') commit(s) untracked by ledgers (human/off-framework work?):"
+    printf '%s\n' "$drift" | sed 's/^/    /'
+    nc=$(printf '%s\n' "$drift" | grep -cvE '^[0-9a-f]+ (feat|fix|docs|refactor|test|chore|improve)(\(|:)' || true)
+    [ "$nc" -gt 0 ] && echo "    ($nc of them off the Conventional Commits scheme — see flywheel/GIT.md)"
+  else
+    echo "✓ no ledger-untracked commits since last recorded session"
+  fi
 else
   echo "⚠ not a git repo — skipping commit hash check"
 fi

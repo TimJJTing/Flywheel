@@ -7,7 +7,9 @@ This adapter runs flywheel in **degraded mode** (no subagents — see
 flywheel/ORCHESTRATION.md §8). Read `flywheel/INDEX.md` now; it indexes everything.
 
 ## Session protocol
-1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive.
+1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
+   `bash flywheel/check.sh`: drift warnings = work done outside the framework —
+   triage, backfill ledgers/docs, note in STATUS.md.
 2. Before ending / context low: run the wrapup procedure inline — update STATUS.md +
    `flywheel/state/*.json`, `bash flywheel/check.sh`, rebuild dashboard
    (`python3 flywheel/dashboard/build.py`), commit per `flywheel/GIT.md`.

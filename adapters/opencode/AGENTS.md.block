@@ -6,7 +6,9 @@ Project: (one line — what this project is; seed prompt fills this)
 Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand docs).
 
 ## Session protocol
-1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive.
+1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
+   `bash flywheel/check.sh`: drift warnings = work done outside the framework —
+   triage, backfill ledgers/docs, note in STATUS.md.
 2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are opencode subagents
    (defined in opencode.json under "agent"); delegate with the templates in
    `flywheel/TEMPLATES.md`.

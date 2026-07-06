@@ -9,7 +9,9 @@ Project: flywheel — the portable agent-framework boilerplate itself (dogfoodin
 @flywheel/FACTS.md
 
 ## Session protocol
-1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive.
+1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
+   `bash flywheel/check.sh`: drift warnings = work done outside the framework —
+   triage, backfill ledgers/docs, note in STATUS.md.
 2. Route work per ORCHESTRATION.md §1; use the `delegate` skill for any delegation.
 3. Before ending / context low: run the `wrapup` skill. Uncommitted = lost.
 
