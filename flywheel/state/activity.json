@@ -2,13 +2,15 @@
  {
   "ts": "2026-07-06T14:00",
   "session": 1,
-  "summary": "Bootstrap: doctrine, adapters, dashboard, install scripts, docs, dogfood",
+  "summary": "Bootstrap: doctrine, adapters, dashboard, install, docs, dogfood, audit+E2E fixes",
   "commits": [
    "5fcca4c",
    "089bfdb",
    "a26c727",
    "eff2cd9",
-   "18649d1"
+   "18649d1",
+   "6df7311",
+   "c787a7f"
   ]
  }
 ]
