@@ -1,0 +1,29 @@
+<!-- flywheel:begin -->
+# Flywheel harness (managed block — edits outside the markers are yours, inside are flywheel's)
+
+Project: (one line — what this project is; seed prompt fills this)
+
+Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand docs).
+
+## Session protocol
+1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive.
+2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are opencode subagents
+   (defined in opencode.json under "agent"); delegate with the templates in
+   `flywheel/TEMPLATES.md`.
+3. Before ending / context low: wrapup — update STATUS.md + `flywheel/state/*.json`,
+   `bash flywheel/check.sh`, rebuild dashboard (`python3 flywheel/dashboard/build.py`),
+   commit per `flywheel/GIT.md`.
+
+## Hard rules (point-of-use duplicates — keep identical to INDEX.md)
+- HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)
+  wholesale — slice via grep/jq/python, or delegate to `utility`.
+- HR2. Model names / effort values / API params come from `flywheel/config.json` +
+  `flywheel/FACTS.md` only. Missing → write `Pending verification`, never invent.
+- HR3. No agent declares its own work complete — dispatch `verifier` / `auditor`.
+- HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind
+  at every autonomy level.
+
+Note: agent model strings in opencode.json ("provider/model-id") must mirror
+`flywheel/config.json` tiers.<tier>.opencode — the seed prompt fills both from live
+provider docs.
+<!-- flywheel:end -->
