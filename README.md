@@ -52,7 +52,8 @@ python3-or-node.
 ## What to .gitignore (in your project)
 
 - `flywheel/dashboard/dashboard.html` — if you rebuild on demand; **commit it instead**
-  if teammates without python3/node should open it from the repo.
+  if teammates without python3/node should open it from the repo. Rebuild anytime:
+  `python3 flywheel/dashboard/build.py` (or `node flywheel/dashboard/build.mjs`).
 - `.claude/settings.local.json` — local-only harness settings (conventional).
 - Not recommended: ignoring `flywheel/state/*.json`, `STATUS.md`, `LESSONS.md` — that
   breaks session continuity and the dashboard on fresh clones; throwaway experiments
