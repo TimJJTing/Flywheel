@@ -123,7 +123,7 @@ copy_managed_if_ok() { # $1 = src, $2 = dest
 mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
 for f in INDEX.md ORCHESTRATION.md JUDGMENT.md AUTONOMY.md DIAGNOSIS.md \
          TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh \
-         state/SCHEMAS.md; do
+         wrapup.sh state/SCHEMAS.md; do
   if [ -f "$PAYLOAD/$f" ]; then
     cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
     echo "  managed: flywheel/$f"

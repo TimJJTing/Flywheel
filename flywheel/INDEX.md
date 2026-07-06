@@ -5,9 +5,9 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 ## Session protocol
 1. Read `flywheel/STATUS.md` — current state, in-flight work, next actions. Resume from it.
 2. Route work per `flywheel/ORCHESTRATION.md` §1. The coordinator routes; tiers execute.
-3. Before ending / when context runs low: run the wrapup procedure (update STATUS.md,
-   run `flywheel/check.sh`, update `flywheel/state/*.json`, rebuild dashboard, commit
-   per `flywheel/GIT.md`). Uncommitted = lost.
+3. Before ending / when context runs low: run the wrapup procedure (update STATUS.md
+   + `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` for the mechanical rest).
+   Uncommitted = lost.
 
 ## Hard rules (duplicated in the adapter block at point of use — keep identical)
 - HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)

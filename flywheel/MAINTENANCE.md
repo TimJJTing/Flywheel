@@ -13,7 +13,7 @@ adapter files, and before any consistency audit.
 | `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check |
 | `flywheel/config.json` — `autonomy` value | Never by an agent | Human instruction only (AUTONOMY.md, level-invariant row) |
 | `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
-| `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh` | No | Same structural process (these enforce the rules mechanically) |
+| `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh`, `wrapup.sh` | No | Same structural process (these enforce the rules mechanically) |
 
 ✓ Correct: `utility` appends a decided-by-llm entry to state/decisions.json after a
 batch rename — in the autonomous set, no approval needed.

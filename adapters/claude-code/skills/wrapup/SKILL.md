@@ -22,25 +22,22 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
 - `decisions.json`: entries for anything the autonomy matrix classed A (pending) or
   R (decided-by-llm) this session.
 
-## 3. Run the mechanical check + quality floor
-- `bash flywheel/check.sh` — a ✗ blocks committing doc changes; fix or log a justified
-  override in LESSONS.md.
-- JUDGMENT.md R6 remainder (not automated): q1 diff review hunk by hunk; q2 full test
-  suite, quote the summary line; q3 `git diff | grep -inE 'secret|password|api[_-]?key'`
-  → no hits; q6 data claims re-checked against FACTS.md.
-- Delegate the mechanical parts to `utility` if main-session context is low.
+## 3. Quality floor (judgment — not automated)
+JUDGMENT.md R6 remainder: q1 diff review hunk by hunk; q2 full test suite, quote the
+summary line; q3 `git diff | grep -inE 'secret|password|api[_-]?key'` → no hits;
+q6 data claims re-checked against FACTS.md.
 
 ## 4. Log escalations
 Any delegation that hit ORCHESTRATION.md §4 (retry exhausted, escalated) → append one
 line to `flywheel/LESSONS.md`: date | task | tier path | cause | rule to update.
 
-## 5. Rebuild dashboard + commit
-- `python3 flywheel/dashboard/build.py || node flywheel/dashboard/build.mjs`
-- Commit per `flywheel/GIT.md`: specific files (never `-A`/`.`), conventional message,
-  body says why, never `--no-verify`. Standard final commit:
-  `chore(flywheel): update state ledgers + dashboard`.
-- If activity.json length is now a multiple of `improve_cadence_sessions`
-  (flywheel/config.json), say "improve pass due — run the improve skill next session."
+## 5. Run the mechanical script
+- First commit any NON-wrapup changes (code, docs) per `flywheel/GIT.md` — specific
+  files, conventional message, never `-A`/`.`, never `--no-verify`.
+- Then `bash flywheel/wrapup.sh` — runs check.sh (aborts on ✗; fix or log a justified
+  override in LESSONS.md), rebuilds the dashboard, warns if activity.json is stale,
+  commits the wrapup file set as `chore(flywheel): update state ledgers + dashboard`,
+  and announces "improve pass due" on the `improve_cadence_sessions` boundary.
 
 ## 6. Report
 Return the commit hash(es) (`git rev-parse --short HEAD`) and a one-line summary per

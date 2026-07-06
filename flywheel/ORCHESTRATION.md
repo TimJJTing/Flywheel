@@ -96,7 +96,7 @@ Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, 
 Start: read `flywheel/STATUS.md` (current state + next actions), then `flywheel/FACTS.md`.
 Resume from STATUS.md, not from re-deriving.
 End (or context running low): run the wrapup procedure (adapter skill, or inline:
-update STATUS.md, run `flywheel/check.sh`, update state ledgers, rebuild the dashboard,
+update STATUS.md + state ledgers, then `bash flywheel/wrapup.sh` — check, dashboard,
 commit per `flywheel/GIT.md`). What is not committed does not exist.
 
 ## 8. Adapters without subagents (degraded mode)
