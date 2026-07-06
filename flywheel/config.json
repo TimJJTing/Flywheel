@@ -7,39 +7,51 @@
   "tiers": {
     "architect": {
       "role": "last resort: twice-failed plans, irreversible forks, rule conflicts",
-      "claude-code": { "model": "Pending verification", "effort": "medium" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "medium" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     },
     "strategist": {
       "role": "plans, deep research, edge cases, requirement catalogs",
-      "claude-code": { "model": "Pending verification", "effort": "high" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     },
     "engineer": {
       "role": "all production code, refactors, complex scripts",
-      "claude-code": { "model": "Pending verification", "effort": "high" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     },
     "utility": {
       "role": "batch reads/edits, searches, checklist checks",
-      "claude-code": { "model": "Pending verification", "effort": "high" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     },
     "verifier": {
       "role": "fresh-context verification of code claims",
-      "claude-code": { "model": "Pending verification", "effort": "high" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     },
     "auditor": {
       "role": "fresh-context audit of plans and system docs",
-      "claude-code": { "model": "Pending verification", "effort": "high" },
-      "codex": { "model": "Pending verification", "reasoning": "high" },
-      "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      "harnesses": {
+        "claude-code": { "model": "Pending verification", "effort": "high" },
+        "codex": { "model": "Pending verification", "reasoning": "high" },
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+      }
     }
   }
 }

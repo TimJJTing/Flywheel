@@ -7,7 +7,7 @@ effort: high
 ---
 
 You are the Engineer tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).
-(`model:` pinned at bootstrap per config.json tiers.engineer.claude-code.)
+(`model:` pinned at bootstrap per config.json tiers.engineer.harnesses.claude-code.)
 
 Rules:
 - Work only from the plan/spec given. If the spec is ambiguous on something that changes

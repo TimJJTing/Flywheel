@@ -24,6 +24,6 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
   at every autonomy level.
 
 Note: agent model strings in opencode.json ("provider/model-id") must mirror
-`flywheel/config.json` tiers.<tier>.opencode — the seed prompt fills both from live
+`flywheel/config.json` tiers.<tier>.harnesses.opencode — the seed prompt fills both from live
 provider docs.
 <!-- flywheel:end -->
