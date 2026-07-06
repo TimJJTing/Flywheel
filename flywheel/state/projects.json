@@ -33,6 +33,10 @@
    {
     "title": "E2E rehearsal in scratch repo",
     "done": true
+   },
+   {
+    "title": "Refinement pass: terminology + scripts (wrapup/drift/compact)",
+    "done": true
    }
   ],
   "detail": "Portable framework extracted from vocabulary-universe; see README.md.",
@@ -41,8 +45,12 @@
    "089bfdb",
    "a26c727",
    "eff2cd9",
-   "18649d1"
+   "18649d1",
+   "06e01af",
+   "e18bac2",
+   "3d2ebce",
+   "6573b3f"
   ],
-  "updated": "2026-07-06"
+  "updated": "2026-07-07"
  }
 ]

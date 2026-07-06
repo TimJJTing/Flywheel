@@ -46,5 +46,29 @@
     "outcome": "deferred to a later version",
     "created": "2026-07-06",
     "resolved": "2026-07-06"
+  },
+  {
+    "id": "d5",
+    "title": "Merge six improve branches (terminology, STATUS slim, R8, wrapup.sh, drift, compact)",
+    "detail": "Human approved the full plan in-session (plan mode); auditor APPROVE + verifier VERIFIED before fast-forward to main at 6573b3f.",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Merge flywheel self-improvement branch",
+    "status": "approved",
+    "outcome": "merged to main",
+    "created": "2026-07-07",
+    "resolved": "2026-07-07"
+  },
+  {
+    "id": "d6",
+    "title": "No pi-style providers block in config.json",
+    "detail": "Flywheel never calls model APIs itself — the adapter does; per-tier adapters map plus the opencode 'provider' field already covers it.",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Architectural fork",
+    "status": "decided-by-llm",
+    "outcome": "config schema unchanged beyond harnesses→adapters key rename",
+    "created": "2026-07-07",
+    "resolved": "2026-07-07"
   }
 ]
