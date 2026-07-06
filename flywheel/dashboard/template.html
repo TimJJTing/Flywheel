@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flywheel Dashboard</title>
+<style>
+  :root {
+    --bg: #f6f7f8; --fg: #1b1e22; --card: #ffffff; --border: #d8dce1;
+    --muted: #6b7280; --accent: #2f5fda;
+    --pos: #1a7f45; --pos-bg: #e6f4ea;
+    --caution: #92620a; --caution-bg: #fdf2d9;
+    --neg: #a12525; --neg-bg: #fbe7e7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181c; --fg: #e6e8eb; --card: #202327; --border: #33383e;
+      --muted: #9aa1ab; --accent: #7fa1ff;
+      --pos: #6fd396; --pos-bg: #123321;
+      --caution: #f0c25e; --caution-bg: #3a2e0d;
+      --neg: #f28b8b; --neg-bg: #3a1414;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+  }
+  header {
+    padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--card);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+  }
+  header h1 { font-size: 18px; margin: 0; }
+  .dial { display: flex; gap: 4px; align-items: center; }
+  .dial .seg {
+    width: 22px; height: 10px; border-radius: 2px; background: var(--border);
+  }
+  .dial .seg.active { background: var(--accent); }
+  .dial .meaning { font-size: 12px; color: var(--muted); margin-left: 6px; }
+  .badge {
+    background: var(--neg-bg); color: var(--neg); border-radius: 999px;
+    padding: 2px 10px; font-size: 12px; font-weight: 600;
+  }
+  .badge.zero { background: var(--border); color: var(--muted); }
+  .gen { font-size: 11px; color: var(--muted); margin-left: auto; }
+  main { max-width: 980px; margin: 0 auto; padding: 16px 20px 60px; }
+  section { margin-bottom: 28px; }
+  section h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  select, input[type=search] {
+    background: var(--card); color: var(--fg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 8px; font-size: 13px;
+  }
+  #search { min-width: 220px; }
+  .empty { color: var(--muted); font-size: 13px; font-style: italic; }
+  details {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; margin-bottom: 6px;
+  }
+  summary { cursor: pointer; font-size: 13px; }
+  summary .pill {
+    display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+    background: var(--border); color: var(--muted); margin-left: 6px;
+  }
+  .body-text { margin-top: 8px; font-size: 13px; color: var(--fg); }
+  .chips { margin-top: 6px; }
+  code.chip {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1px 5px; font-size: 11px; margin-right: 4px;
+  }
+  .bar-track { background: var(--border); border-radius: 4px; height: 6px; margin-top: 6px; overflow: hidden; }
+  .bar-fill { background: var(--accent); height: 100%; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .outcome { border-radius: 999px; padding: 1px 8px; font-size: 11px; }
+  .outcome.ok { background: var(--pos-bg); color: var(--pos); }
+  .outcome.caution { background: var(--caution-bg); color: var(--caution); }
+  .outcome.negative { background: var(--neg-bg); color: var(--neg); }
+  ul.activity-list { list-style: none; margin: 0; padding: 0; }
+  ul.activity-list li {
+    border-bottom: 1px solid var(--border); padding: 6px 2px; font-size: 13px;
+  }
+  ul.activity-list li .ts { color: var(--muted); font-size: 11px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="project-name">Flywheel</h1>
+  <div class="dial" id="dial"></div>
+  <span class="badge" id="pending-badge">0 pending</span>
+  <span class="gen" id="generated"></span>
+</header>
+<main>
+
+  <section id="sec-decisions">
+    <h2>Decisions awaiting you</h2>
+    <div class="controls">
+      <select id="f-decisions-status">
+        <option value="all">All statuses</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="decided-by-llm">Decided by LLM</option>
+      </select>
+    </div>
+    <div id="list-decisions"></div>
+  </section>
+
+  <section id="sec-projects">
+    <h2>Projects &amp; milestones</h2>
+    <div class="controls">
+      <select id="f-projects-priority">
+        <option value="all">All priorities</option>
+        <option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option>
+      </select>
+      <select id="f-projects-type">
+        <option value="all">All types</option>
+        <option value="feature">Feature</option><option value="infra">Infra</option><option value="flywheel">Flywheel</option>
+      </select>
+      <select id="f-projects-status">
+        <option value="all">All statuses</option>
+        <option value="active">Active</option><option value="paused">Paused</option><option value="done">Done</option>
+      </select>
+    </div>
+    <div id="list-projects"></div>
+  </section>
+
+  <section id="sec-issues">
+    <h2>Open issues</h2>
+    <div class="controls">
+      <select id="f-issues-priority">
+        <option value="all">All priorities</option>
+        <option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option>
+      </select>
+      <select id="f-issues-type">
+        <option value="all">All types</option>
+        <option value="bug">Bug</option><option value="friction">Friction</option>
+        <option value="question">Question</option><option value="debt">Debt</option>
+      </select>
+      <select id="f-issues-status">
+        <option value="all">All statuses</option>
+        <option value="open">Open</option><option value="done">Done</option><option value="wontfix">Won't fix</option>
+      </select>
+    </div>
+    <div id="list-issues"></div>
+  </section>
+
+  <section id="sec-activity">
+    <h2>Recent activity</h2>
+    <div id="list-activity"></div>
+  </section>
+
+  <section id="sec-spawns">
+    <h2>Agent spawns</h2>
+    <div class="controls">
+      <select id="f-spawns-outcome">
+        <option value="all">All outcomes</option>
+        <option value="ok">ok</option><option value="retried">retried</option>
+        <option value="escalated">escalated</option><option value="failed">failed</option>
+      </select>
+    </div>
+    <div id="list-spawns"></div>
+  </section>
+
+</main>
+
+<div class="controls" style="position:sticky; bottom:0; padding:10px 20px; background:var(--card); border-top:1px solid var(--border);">
+  <input type="search" id="search" placeholder="Search everything...">
+</div>
+
+<script>
+const DATA = /*__FLYWHEEL_DATA__*/ null;
+
+const AUTONOMY_MEANINGS = [
+  "L1 — Micromanage: CEO approves nearly every move.",
+  "L2 — Cautious: LLM executes; CEO approves merges and anything structural.",
+  "L3 — Balanced: LLM plans/implements/self-improves on branches; CEO approves the risky stuff.",
+  "L4 — Trusting: LLM merges its own verified work; CEO watches the dashboard.",
+  "L5 — Autopilot: CEO sees reports; only money, credentials, and the dial itself ask."
+];
+
+const filters = {
+  decisions: { status: "all" },
+  projects: { priority: "all", type: "all", status: "all" },
+  issues: { priority: "all", type: "all", status: "all" },
+  spawns: { outcome: "all" },
+  search: ""
+};
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+function matches(item, fields) {
+  if (!filters.search) return true;
+  const q = filters.search.toLowerCase();
+  return fields.some(f => String(item[f] || "").toLowerCase().includes(q));
+}
+
+function chips(hashes) {
+  if (!hashes || !hashes.length) return "";
+  return `<div class="chips">${hashes.map(h => `<code class="chip">${esc(h)}</code>`).join("")}</div>`;
+}
+
+function sortByRecency(list, dateField) {
+  return [...list].sort((a, b) => String(b[dateField] || "").localeCompare(String(a[dateField] || "")));
+}
+
+function sortPriorityFirst(list, isHigh, dateField) {
+  return [...list].sort((a, b) => {
+    const hi = (isHigh(b) ? 1 : 0) - (isHigh(a) ? 1 : 0);
+    if (hi !== 0) return hi;
+    return String(b[dateField] || "").localeCompare(String(a[dateField] || ""));
+  });
+}
+
+function renderEmpty(msg) {
+  return `<p class="empty">${esc(msg)}</p>`;
+}
+
+function renderDecisions() {
+  const el = document.getElementById("list-decisions");
+  let items = DATA.decisions.filter(d => matches(d, ["title", "detail", "recommendation"]));
+  if (filters.decisions.status !== "all") items = items.filter(d => d.status === filters.decisions.status);
+  items = sortPriorityFirst(items, d => d.status === "pending", "created");
+  if (!items.length) { el.innerHTML = renderEmpty("No pending decisions — nothing needs you."); return; }
+  el.innerHTML = items.map(d => `
+    <details ${d.status === "pending" ? "open" : ""}>
+      <summary>${esc(d.title)} <span class="pill">${esc(d.status)}</span></summary>
+      <div class="body-text">${esc(d.detail)}</div>
+      ${d.recommendation ? `<div class="body-text"><strong>Recommendation:</strong> ${esc(d.recommendation)}</div>` : ""}
+      ${d.options && d.options.length ? `<div class="body-text"><strong>Options:</strong> ${d.options.map(esc).join(" · ")}</div>` : ""}
+      ${d.outcome ? `<div class="body-text"><strong>Outcome:</strong> ${esc(d.outcome)}</div>` : ""}
+    </details>`).join("");
+}
+
+function renderProjects() {
+  const el = document.getElementById("list-projects");
+  let items = DATA.projects.filter(p => matches(p, ["title", "detail"]));
+  const f = filters.projects;
+  if (f.priority !== "all") items = items.filter(p => p.priority === f.priority);
+  if (f.type !== "all") items = items.filter(p => p.type === f.type);
+  if (f.status !== "all") items = items.filter(p => p.status === f.status);
+  items = sortPriorityFirst(items, p => p.priority === "P1", "updated");
+  if (!items.length) { el.innerHTML = renderEmpty("No projects match — nothing tracked here yet."); return; }
+  el.innerHTML = items.map(p => {
+    const total = (p.milestones || []).length;
+    const done = (p.milestones || []).filter(m => m.done).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    return `
+    <details>
+      <summary>${esc(p.title)} <span class="pill">${esc(p.priority)}</span><span class="pill">${esc(p.type)}</span><span class="pill">${esc(p.status)}</span></summary>
+      <div class="body-text">${esc(p.detail)}</div>
+      <div class="body-text">${done}/${total} milestones</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      ${chips(p.commits)}
+    </details>`;
+  }).join("");
+}
+
+function renderIssues() {
+  const el = document.getElementById("list-issues");
+  let items = DATA.issues.filter(i => matches(i, ["title", "detail"]));
+  const f = filters.issues;
+  if (f.priority !== "all") items = items.filter(i => i.priority === f.priority);
+  if (f.type !== "all") items = items.filter(i => i.type === f.type);
+  if (f.status !== "all") items = items.filter(i => i.status === f.status);
+  items = sortPriorityFirst(items, i => i.priority === "P1", "opened");
+  if (!items.length) { el.innerHTML = renderEmpty("No open issues — clean slate."); return; }
+  el.innerHTML = items.map(i => `
+    <details>
+      <summary>${esc(i.title)} <span class="pill">${esc(i.priority)}</span><span class="pill">${esc(i.type)}</span><span class="pill">${esc(i.status)}</span></summary>
+      <div class="body-text">${esc(i.detail)}</div>
+      <div class="body-text">opened ${esc(i.opened)}${i.closed ? " · closed " + esc(i.closed) : ""}</div>
+      ${chips(i.commits)}
+    </details>`).join("");
+}
+
+function renderActivity() {
+  const el = document.getElementById("list-activity");
+  let items = DATA.activity.filter(a => matches(a, ["summary"]));
+  items = sortByRecency(items, "ts").slice(0, 30);
+  if (!items.length) { el.innerHTML = renderEmpty("No recent activity."); return; }
+  el.innerHTML = `<ul class="activity-list">${items.map(a => `
+    <li><span class="ts">${esc(a.ts)}</span>${esc(a.summary)} (session ${esc(a.session)})${chips(a.commits)}</li>
+  `).join("")}</ul>`;
+}
+
+function outcomeClass(o) {
+  if (o === "ok") return "ok";
+  if (o === "retried" || o === "escalated") return "caution";
+  return "negative";
+}
+
+function renderSpawns() {
+  const el = document.getElementById("list-spawns");
+  let items = DATA.spawns.filter(s => matches(s, ["task", "agent", "notes"]));
+  if (filters.spawns.outcome !== "all") items = items.filter(s => s.outcome === filters.spawns.outcome);
+  items = sortByRecency(items, "ts");
+  if (!items.length) { el.innerHTML = renderEmpty("No agent spawns recorded yet."); return; }
+  el.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>ts</th><th>agent</th><th>model</th><th>effort</th><th>task</th><th>outcome</th></tr></thead>
+    <tbody>${items.map(s => `
+      <tr>
+        <td>${esc(s.ts)}</td><td>${esc(s.agent)}</td><td>${esc(s.model)}</td><td>${esc(s.effort)}</td>
+        <td>${esc(s.task)}</td><td><span class="outcome ${outcomeClass(s.outcome)}">${esc(s.outcome)}</span></td>
+      </tr>`).join("")}</tbody>
+  </table></div>`;
+}
+
+function renderHeader() {
+  const cfg = DATA.config;
+  document.getElementById("project-name").textContent = cfg.project_name;
+  document.getElementById("generated").textContent = "generated " + DATA.generated;
+  const dial = document.getElementById("dial");
+  const level = cfg.autonomy;
+  dial.innerHTML = [1, 2, 3, 4, 5].map(n =>
+    `<span class="seg ${n === level ? "active" : ""}" title="L${n}"></span>`
+  ).join("") + `<span class="meaning">${esc(AUTONOMY_MEANINGS[level - 1] || "")}</span>`;
+  const pending = DATA.decisions.filter(d => d.status === "pending").length;
+  const badge = document.getElementById("pending-badge");
+  badge.textContent = pending + " pending";
+  badge.className = "badge" + (pending === 0 ? " zero" : "");
+}
+
+function render() {
+  renderHeader();
+  renderDecisions();
+  renderProjects();
+  renderIssues();
+  renderActivity();
+  renderSpawns();
+}
+
+function wireFilter(id, store, key) {
+  document.getElementById(id).addEventListener("change", e => { store[key] = e.target.value; render(); });
+}
+wireFilter("f-decisions-status", filters.decisions, "status");
+wireFilter("f-projects-priority", filters.projects, "priority");
+wireFilter("f-projects-type", filters.projects, "type");
+wireFilter("f-projects-status", filters.projects, "status");
+wireFilter("f-issues-priority", filters.issues, "priority");
+wireFilter("f-issues-type", filters.issues, "type");
+wireFilter("f-issues-status", filters.issues, "status");
+wireFilter("f-spawns-outcome", filters.spawns, "outcome");
+document.getElementById("search").addEventListener("input", e => { filters.search = e.target.value; render(); });
+
+render();
+</script>
+</body>
+</html>
