@@ -15,8 +15,8 @@ adapter files, and before any consistency audit.
 | `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
 | `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh` | No | Same structural process (these enforce the rules mechanically) |
 
-✓ Correct: `utility` appends a line to STATUS.md's decisions log after a batch
-rename — in the autonomous set, no approval needed.
+✓ Correct: `utility` appends a decided-by-llm entry to state/decisions.json after a
+batch rename — in the autonomous set, no approval needed.
 ✗ Incorrect: `engineer` edits ORCHESTRATION.md §4 retry counts mid-task to "unblock
 itself" — structural; requires strategist plan + auditor sign-off on an improve branch.
 
@@ -30,7 +30,6 @@ committing doc changes until fixed or consciously overridden with a LESSONS.md e
   budgets there, via the structural process, never by letting a file grow past one.
 - Always-loaded set (CLAUDE.md/AGENTS.md + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines
   total — check.sh sums it. Keep new adapter blocks ≤ 50 lines (audit-pass check).
-- `flywheel/STATUS.md`: trim the decisions log to the 10 most recent.
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
   `docs/research/lessons-archive-YYYYMM.md`.

@@ -1,4 +1,5 @@
-# STATUS — session handover. Budget: ≤ 60 lines (check.sh enforces). Trim, don't grow.
+# STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
+Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
 Updated: 2026-07-06 (bootstrap session, coordinated by fable)
 
@@ -18,12 +19,3 @@ Updated: 2026-07-06 (bootstrap session, coordinated by fable)
 
 ## Blockers / decisions pending the human
 - None.
-
-## Key decisions log (10 most recent)
-- 2026-07-06: config tiers nest per-adapter values under "adapters" map (user
-  request; extensible without schema change).
-- 2026-07-06: JSON ledgers + build-step dashboard over live-fetch HTML (offline,
-  diffable).
-- 2026-07-06: no {{PLACEHOLDER}} templating; 3 bootstrap-owned files carry all
-  project specifics.
-- 2026-07-06: hooks skipped in v0.1; ADAPTERS.md documents them as hardening path.

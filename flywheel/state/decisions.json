@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "id": "d1",
+    "title": "Config tiers nest per-adapter values under \"adapters\" map",
+    "detail": "User request; extensible without schema change. (Key renamed harnesses→adapters 2026-07-07.)",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Edit flywheel structural docs",
+    "status": "approved",
+    "outcome": "adopted in config.json",
+    "created": "2026-07-06",
+    "resolved": "2026-07-06"
+  },
+  {
+    "id": "d2",
+    "title": "JSON ledgers + build-step dashboard over live-fetch HTML",
+    "detail": "Offline, diffable.",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Architectural fork",
+    "status": "decided-by-llm",
+    "outcome": "state/*.json + dashboard/build.{py,mjs}",
+    "created": "2026-07-06",
+    "resolved": "2026-07-06"
+  },
+  {
+    "id": "d3",
+    "title": "No {{PLACEHOLDER}} templating; 3 bootstrap-owned files carry project specifics",
+    "detail": "STATUS.md, FACTS.md, config.json are seeded by the bootstrap prompt instead.",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Architectural fork",
+    "status": "decided-by-llm",
+    "outcome": "defaults/ holds the bootstrap-owned seeds",
+    "created": "2026-07-06",
+    "resolved": "2026-07-06"
+  },
+  {
+    "id": "d4",
+    "title": "Hooks skipped in v0.1",
+    "detail": "ADAPTERS.md documents them as the hardening path.",
+    "options": [],
+    "recommendation": "",
+    "autonomy_row": "Edit flywheel structural docs",
+    "status": "decided-by-llm",
+    "outcome": "deferred to a later version",
+    "created": "2026-07-06",
+    "resolved": "2026-07-06"
+  }
+]

@@ -1,4 +1,5 @@
-# STATUS — session handover. Budget: ≤ 60 lines (check.sh enforces). Trim, don't grow.
+# STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
+Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
 Updated: (date, by which session)
 
@@ -13,6 +14,3 @@ Updated: (date, by which session)
 
 ## Blockers / decisions pending the human
 - (mirror of state/decisions.json pending items, one line each)
-
-## Key decisions log (10 most recent)
-- (YYYY-MM-DD: decision — one-line rationale)

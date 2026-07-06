@@ -33,6 +33,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 
 ## State (the CEO dashboard's source of truth)
 `flywheel/state/{projects,issues,decisions,activity,spawns}.json` — schemas in
-`flywheel/state/SCHEMAS.md` (ships with the payload).
+`flywheel/state/SCHEMAS.md` (ships with the payload). Detailed history lives in these
+ledgers; `flywheel/STATUS.md` is only the ≤ 40-line handover summary.
 Rebuild the dashboard with `python3 flywheel/dashboard/build.py` (or `node
 flywheel/dashboard/build.mjs`); output: `flywheel/dashboard/dashboard.html`.

@@ -8,8 +8,8 @@ description: Use before ending a session or when context runs low — updates ST
 
 ## 1. Update flywheel/STATUS.md
 Edit each section with what's true now: Current state, In flight, Next actions (in
-order), Blockers/decisions pending the human, Key decisions log (keep 10). Amend
-existing entries; stay ≤ 60 lines (check.sh enforces).
+order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 40 lines
+(check.sh enforces). Decisions history lives in state/decisions.json, not here.
 
 ## 2. Update state ledgers (flywheel/state/)
 - `activity.json`: append one entry {ts, session (= previous max +1), summary ≤1 line,

@@ -17,7 +17,7 @@ check_budget() {
 }
 
 check_budget INDEX.md 50
-check_budget STATUS.md 60
+check_budget STATUS.md 40
 check_budget ORCHESTRATION.md 120
 check_budget AUTONOMY.md 75
 check_budget JUDGMENT.md 130
