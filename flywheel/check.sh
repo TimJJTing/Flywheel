@@ -71,6 +71,8 @@ for f in files:
         if not isinstance(data, list):
             print(f"✗ state/{f}: not a JSON array"); ok = False; continue
         print(f"✓ state/{f}: valid JSON array ({len(data)} entries)")
+        if f in ("activity.json", "spawns.json") and len(data) > 100:
+            print(f"⚠ state/{f}: {len(data)} entries (>100) — compaction due (python3 flywheel/compact.py)")
         for item in data:
             hashes += item.get("commits") or []
     except Exception as e:
@@ -92,6 +94,8 @@ for (const f of files) {
     const data=JSON.parse(fs.readFileSync(stateDir+'/'+f,'utf-8'));
     if (!Array.isArray(data)) { console.log('✗ state/'+f+': not a JSON array'); ok=false; continue; }
     console.log('✓ state/'+f+': valid JSON array ('+data.length+' entries)');
+    if ((f==='activity.json'||f==='spawns.json') && data.length>100)
+      console.log('⚠ state/'+f+': '+data.length+' entries (>100) — compaction due (python3 flywheel/compact.py)');
     for (const item of data) hashes.push(...(item.commits||[]));
   } catch (e) { console.log('✗ state/'+f+': invalid JSON ('+e.message+')'); ok=false; }
 }

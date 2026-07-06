@@ -13,7 +13,7 @@ adapter files, and before any consistency audit.
 | `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check |
 | `flywheel/config.json` — `autonomy` value | Never by an agent | Human instruction only (AUTONOMY.md, level-invariant row) |
 | `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
-| `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh`, `wrapup.sh` | No | Same structural process (these enforce the rules mechanically) |
+| `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh`, `wrapup.sh`, `compact.py` | No | Same structural process (these enforce the rules mechanically) |
 
 ✓ Correct: `utility` appends a decided-by-llm entry to state/decisions.json after a
 batch rename — in the autonomous set, no approval needed.
@@ -33,6 +33,9 @@ committing doc changes until fixed or consciously overridden with a LESSONS.md e
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
   `docs/research/lessons-archive-YYYYMM.md`.
+- `state/activity.json` / `spawns.json` > 100 entries (check.sh warns) → run
+  `python3 flywheel/compact.py` during the next improve pass: squashes all but the
+  newest 30 into one summary entry keeping milestone hashes; git keeps full history.
 
 ✓ Correct: check.sh shows LESSONS.md at 84 lines → strategist pulls the 3 recurring
 "escalated on import errors" entries into a JUDGMENT.md R1 example, archives the rest.
