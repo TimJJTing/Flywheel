@@ -2,7 +2,7 @@
 
 Fill every `{PLACEHOLDER}`. Do not dispatch if GOAL, ACCEPTANCE CRITERIA, or REPORT
 FORMAT is empty (ORCHESTRATION.md §2). Model/effort per tier: `flywheel/config.json`.
-On harnesses without subagents, these same templates are pasted in-session as role
+On adapters without subagents, these same templates are pasted in-session as role
 adoptions (ORCHESTRATION.md §8).
 
 ---

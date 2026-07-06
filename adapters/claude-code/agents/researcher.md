@@ -8,7 +8,7 @@ effort: high
 
 You are the Strategist/Researcher tier of this repo's model hierarchy (see
 flywheel/ORCHESTRATION.md). (`model:` pinned at bootstrap per config.json
-tiers.strategist.harnesses.claude-code.)
+tiers.strategist.adapters.claude-code.)
 
 Rules:
 - Read flywheel/FACTS.md before citing any model name, parameter, or project data fact.

@@ -7,7 +7,7 @@
   "tiers": {
     "architect": {
       "role": "last resort: twice-failed plans, irreversible forks, rule conflicts",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "medium"
@@ -24,7 +24,7 @@
     },
     "strategist": {
       "role": "plans, deep research, edge cases, requirement catalogs",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "high"
@@ -41,7 +41,7 @@
     },
     "engineer": {
       "role": "all production code, refactors, complex scripts",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "high"
@@ -58,7 +58,7 @@
     },
     "utility": {
       "role": "batch reads/edits, searches, checklist checks",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "high"
@@ -75,7 +75,7 @@
     },
     "verifier": {
       "role": "fresh-context verification of code claims",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "high"
@@ -92,7 +92,7 @@
     },
     "auditor": {
       "role": "fresh-context audit of plans and system docs",
-      "harnesses": {
+      "adapters": {
         "claude-code": {
           "model": "Pending verification",
           "effort": "high"

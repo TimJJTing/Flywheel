@@ -31,6 +31,6 @@ every change is reviewed and revertible. Typical customizations:
 ## Policy vs enforcement
 
 The matrix is policy the LLM obeys, not a sandbox. For rows you need GUARANTEED
-(no pushes, no credential access), also configure your harness's permission system
-to deny those operations — then the matrix decides "should", the harness enforces
+(no pushes, no credential access), also configure your adapter's permission system
+to deny those operations — then the matrix decides "should", the adapter enforces
 "can". docs/HUMAN-ATTENTION.md says this too; it bears repeating.

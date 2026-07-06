@@ -1,6 +1,6 @@
 # Improve — the flywheel's flywheel (the COO office optimizing itself)
 
-Iteration by iteration, the harness adapts to THIS project. Every self-improvement is
+Iteration by iteration, the framework adapts to THIS project. Every self-improvement is
 one branch + one commit = individually revertible. The CEO never wakes up to an
 unrecognizable system.
 

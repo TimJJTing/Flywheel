@@ -1,5 +1,5 @@
 <!-- flywheel:begin -->
-# Flywheel harness (managed block — edits outside the markers are yours, inside are flywheel's)
+# Flywheel framework (managed block — edits outside the markers are yours, inside are flywheel's)
 
 Project: (one line — what this project is; seed prompt fills this)
 
@@ -24,6 +24,6 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
   at every autonomy level.
 
 Note: agent model strings in opencode.json ("provider/model-id") must mirror
-`flywheel/config.json` tiers.<tier>.harnesses.opencode — the seed prompt fills both from live
+`flywheel/config.json` tiers.<tier>.adapters.opencode — the seed prompt fills both from live
 provider docs.
 <!-- flywheel:end -->

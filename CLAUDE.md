@@ -1,7 +1,7 @@
 <!-- flywheel:begin -->
-# Flywheel harness (managed block — edits outside the markers are yours, inside are flywheel's)
+# Flywheel framework (managed block — edits outside the markers are yours, inside are flywheel's)
 
-Project: flywheel — the portable LLM-harness boilerplate itself (dogfooding its own system).
+Project: flywheel — the portable agent-framework boilerplate itself (dogfooding its own system).
 
 ## Always loaded
 @flywheel/INDEX.md

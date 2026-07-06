@@ -10,21 +10,21 @@ repo — greenfield or legacy, any tech stack — and every AI coding session ga
   decision matrix — you (the CEO) always keep money, credentials, and the dial itself.
 - **A CEO dashboard**: one offline HTML file showing projects, progress, open issues,
   decisions awaiting you, and exactly which agent (model, effort) did what.
-- **A self-improvement flywheel**: every N sessions the harness reviews its own
+- **A self-improvement flywheel**: every N sessions the framework reviews its own
   friction log and improves itself — each change one branch, one commit, individually
   revertible.
 - **Clean git history as a feature**: conventional commits, branch scheme, and ledger
   entries cross-linked to hashes so the dashboard is an audit trail.
 
 Works with **Claude Code** (full), **Codex CLI** (degraded mode), and **OpenCode**;
-porting to another harness is a five-question exercise (`flywheel/ADAPTERS.md`).
+porting to another adapter is a five-question exercise (`flywheel/ADAPTERS.md`).
 
 ## Quickstart
 
 ```bash
 git clone <this repo> && cd flywheel
 ./install.sh /path/to/your/project --adapters claude-code
-# then, inside your project's harness, paste docs/SEED-PROMPT.md
+# then, inside your project's adapter, paste docs/SEED-PROMPT.md
 ```
 
 The seed prompt makes the LLM adopt the system, survey your codebase (if legacy),
@@ -54,7 +54,7 @@ python3-or-node.
 - `flywheel/dashboard/dashboard.html` — if you rebuild on demand; **commit it instead**
   if teammates without python3/node should open it from the repo. Rebuild anytime:
   `python3 flywheel/dashboard/build.py` (or `node flywheel/dashboard/build.mjs`).
-- `.claude/settings.local.json` — local-only harness settings (conventional).
+- `.claude/settings.local.json` — local-only adapter settings (conventional).
 - Not recommended: ignoring `flywheel/state/*.json`, `STATUS.md`, `LESSONS.md` — that
   breaks session continuity and the dashboard on fresh clones; throwaway experiments
   only.
@@ -65,4 +65,4 @@ python3-or-node.
 
 ## Requirements
 
-git · python3 (3.9+) or node · one supported harness. Nothing else.
+git · python3 (3.9+) or node · one supported adapter. Nothing else.

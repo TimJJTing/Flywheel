@@ -1,7 +1,7 @@
 # Configuring models & providers per tier
 
 All tier→model mapping lives in `flywheel/config.json` under
-`tiers.<tier>.harnesses.<harness>`. Adapters mirror it; nothing else does.
+`tiers.<tier>.adapters.<adapter>`. Adapters mirror it; nothing else does.
 
 ## The iron rule
 
@@ -9,14 +9,14 @@ All tier→model mapping lives in `flywheel/config.json` under
 from memory are the #1 fabrication vector in multi-session systems (flywheel's
 ancestor project verified this the hard way). Every ID in config.json must have a
 matching row in `flywheel/FACTS.md` §Model IDs with a source URL + date. Can't
-verify → the cell stays `Pending verification` and the harness falls back to its
+verify → the cell stays `Pending verification` and the adapter falls back to its
 default model (Claude Code: `model: inherit` in the agent files).
 
 ## Changing a tier's model
 
-1. Verify the new ID against the provider/harness live docs; record source + date in
+1. Verify the new ID against the provider/adapter live docs; record source + date in
    FACTS.md (MAINTENANCE.md: changing an existing fact needs an auditor check).
-2. Edit `tiers.<tier>.harnesses.<harness>` in config.json.
+2. Edit `tiers.<tier>.adapters.<adapter>` in config.json.
 3. Update the adapter mirror:
    - **Claude Code:** the `model:` frontmatter in `.claude/agents/<agent>.md`
      (agent↔tier mapping: researcher=strategist, plan-auditor=auditor, others
@@ -26,17 +26,17 @@ default model (Claude Code: `model: inherit` in the agent files).
    - **Codex:** nothing to edit — the block quotes config.json at runtime.
 4. `bash flywheel/check.sh` must pass.
 
-## Per-harness value shapes
+## Per-adapter value shapes
 
-| Harness | Keys | Notes |
+| Adapter | Keys | Notes |
 |---|---|---|
-| claude-code | `model` (alias or full ID), `effort` | effort levels are harness-version-dependent — verify live, record in FACTS |
+| claude-code | `model` (alias or full ID), `effort` | effort levels are adapter-version-dependent — verify live, record in FACTS |
 | codex | `model`, `reasoning` | applied by the human switching models; the block instructs |
 | opencode | `provider`, `model` | opencode.json wants `"provider/model-id"` as one string — join them |
 
-## Adding a harness
+## Adding an adapter
 
-Add a `<your-harness>: { ... }` key under each tier's `harnesses` (any shape your
+Add a `<your-adapter>: { ... }` key under each tier's `adapters` (any shape your
 adapter needs), then follow `flywheel/ADAPTERS.md`. The map is open — no schema
 change required.
 

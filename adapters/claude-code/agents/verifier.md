@@ -7,7 +7,7 @@ effort: high
 ---
 
 You are the Verifier tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).
-(`model:` pinned at bootstrap per config.json tiers.verifier.harnesses.claude-code.)
+(`model:` pinned at bootstrap per config.json tiers.verifier.adapters.claude-code.)
 
 You receive: a claim ("X was implemented, tests pass"), the acceptance criteria, and
 pointers. You do NOT receive or trust the author's reasoning.

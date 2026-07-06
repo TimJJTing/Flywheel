@@ -1,4 +1,4 @@
-# Flywheel index — harness-neutral entry point
+# Flywheel index — adapter-neutral entry point
 
 Your adapter block loaded this file. It is an index only; rules live in the files below.
 
@@ -28,7 +28,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/MAINTENANCE.md` | Before modifying any flywheel/ or adapter file |
 | `flywheel/GIT.md` | Before any commit, branch, or merge |
 | `flywheel/IMPROVE.md` | Improve pass due (wrapup says so) or friction accumulating |
-| `flywheel/ADAPTERS.md` | Porting flywheel to another harness |
+| `flywheel/ADAPTERS.md` | Porting flywheel to another adapter |
 | `flywheel/LESSONS.md` | After any escalation or surprising failure (append) |
 
 ## State (the CEO dashboard's source of truth)

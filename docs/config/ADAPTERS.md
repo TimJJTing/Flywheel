@@ -11,7 +11,7 @@ the flywheel-repo-side detail.
 | codex | `AGENTS.md.block` | Degraded: no subagents; in-session role adoption + fresh-session verification + human model switching |
 | opencode | `AGENTS.md.block`, `opencode.json.merge` | Subagents via opencode.json `"agent"` entries (`mode: "subagent"`) |
 
-Verified facts about harness schemas (keep current, re-verify on harness upgrades):
+Verified facts about adapter schemas (keep current, re-verify on adapter upgrades):
 - OpenCode agent config: `"agent"` key in opencode.json; fields `description`
   (required), `mode` (`primary|subagent|all`), `model` (`"provider/model-id"`),
   `prompt`, `temperature`, `permission`. Source: opencode.ai/docs/agents, 2026-07-06.
@@ -32,14 +32,14 @@ are missing, and install prints a note).
 ## Writing a new adapter
 
 1. Answer the five questions in `flywheel/ADAPTERS.md`; that IS the design.
-2. Create `adapters/<harness>/` with a `*.block` file (always-loaded surface ≤ 50
+2. Create `adapters/<adapter>/` with a `*.block` file (always-loaded surface ≤ 50
    lines: pointer to INDEX.md + session protocol + the four hard rules verbatim) and
-   whatever agent/skill definitions the harness supports, each containing the string
+   whatever agent/skill definitions the adapter supports, each containing the string
    `flywheel-managed`.
-3. Add the harness's per-tier config shape under `tiers.<tier>.harnesses.<name>` in
+3. Add the adapter's per-tier config shape under `tiers.<tier>.adapters.<name>` in
    config.json (the map is open; see docs/config/MODELS.md).
 4. Wire it into install.sh (block target file + copy rules) — follow the existing
    three cases.
 5. Test: install into a scratch repo, run the seed prompt, confirm FACTS gets filled
-   and the dashboard builds. Record harness facts you verified (with source + date)
+   and the dashboard builds. Record adapter facts you verified (with source + date)
    in this file.

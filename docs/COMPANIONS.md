@@ -15,10 +15,10 @@ ignored by design (DIAGNOSIS.md Leak 2).
 - **A chart/dataviz skill** — if you extend the dashboard, keep its design-system
   discipline.
 
-## Harness features worth enabling
+## Adapter features worth enabling
 
 - **Permission allowlists** — encode the autonomy matrix's hard rows (no push, no
-  credential reads) as actual harness permissions; policy + enforcement beats policy
+  credential reads) as actual adapter permissions; policy + enforcement beats policy
   alone.
 - **Session-end hooks** — IF sessions repeatedly skip wrapup (check LESSONS.md), a
   hook running `bash flywheel/check.sh` is the documented hardening path

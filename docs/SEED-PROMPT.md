@@ -1,10 +1,10 @@
 # The Seed Prompt
 
-Paste everything inside the fence into your harness, in your project's directory,
+Paste everything inside the fence into your adapter, in your project's directory,
 right after `install.sh` ran. One session; it bootstraps everything.
 
 ```
-This project has just adopted the flywheel harness. You are its first session — the
+This project has just adopted the flywheel framework. You are its first session — the
 one that turns a generic install into THIS project's operating system. Later sessions
 inherit exactly what you leave behind; what you don't write down does not exist.
 
@@ -28,17 +28,17 @@ Run `git log --oneline | head -5` and `ls`.
 
 STEP 3 — FILL THE FACTS
 For every tier in flywheel/config.json: verify the model ID you will use against the
-LIVE docs of the provider/harness (fetch them; record source URL + date in
-flywheel/FACTS.md). Update the config.json "harnesses" cells for YOUR harness with
+LIVE docs of the provider/adapter (fetch them; record source URL + date in
+flywheel/FACTS.md). Update the config.json "adapters" cells for YOUR adapter with
 verified values. Anything you cannot verify stays exactly `Pending verification`.
 Fill FACTS.md toolchain + big-files sections from the commands you ran in Step 2.
 Write the one-line project description into the adapter block's "Project:" line and
 config.json "project_name".
 
-STEP 4 — VERIFY THE TIERS LIVE (harnesses with subagents)
+STEP 4 — VERIFY THE TIERS LIVE (adapters with subagents)
 Spawn each tier agent with a dummy brief ("reply with your model ID and tier name").
-Record per-tier results in FACTS.md §Harness capabilities. If spawns fail, record the
-fallback that worked. On harnesses without subagents, record "degraded mode" there
+Record per-tier results in FACTS.md §Adapter capabilities. If spawns fail, record the
+fallback that worked. On adapters without subagents, record "degraded mode" there
 instead (see flywheel/ORCHESTRATION.md §8).
 
 STEP 5 — SEED THE STATE

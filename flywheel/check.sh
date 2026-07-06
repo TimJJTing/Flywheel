@@ -133,7 +133,7 @@ for agent, tier_key in mapping.items():
     fm = text.split("---")[1] if text.startswith("---") else ""
     m_model = re.search(r"^model:\s*(\S+)", fm, re.M)
     m_effort = re.search(r"^effort:\s*(\S+)", fm, re.M)
-    expect = tiers.get(tier_key, {}).get("harnesses", {}).get("claude-code", {})
+    expect = tiers.get(tier_key, {}).get("adapters", {}).get("claude-code", {})
     exp_model, exp_effort = expect.get("model"), expect.get("effort")
     if exp_model == "Pending verification":
         print(f"⚠ {agent}.md frontmatter check skipped (config model still Pending verification)")

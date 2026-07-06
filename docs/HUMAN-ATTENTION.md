@@ -22,11 +22,11 @@
 
 ## Known low-confidence areas (honest disclosure)
 
-- **Effort/reasoning pinning per agent** varies by harness and version; FACTS.md
+- **Effort/reasoning pinning per agent** varies by adapter and version; FACTS.md
   records what your bootstrap actually verified. Where marked
   `Unconfirmed, recommended to test live`, believe the marking.
 - **Degraded mode (no subagents)** loses real context isolation; its "fresh session
   verification" is only as independent as you make it.
 - **The autonomy matrix rows are a design, not a guarantee.** They constrain an LLM
   via instructions, not via sandboxing. For hard guarantees (e.g., no pushes), use
-  your harness's permission system as the enforcement layer and the matrix as policy.
+  your adapter's permission system as the enforcement layer and the matrix as policy.

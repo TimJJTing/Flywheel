@@ -47,7 +47,7 @@ systems that cheaper intelligence can follow.** Concretely:
 Each session leaves the system slightly better: lessons logged, friction filed as
 issues, and every `improve_cadence_sessions` a self-improvement pass turns those
 observations into process changes — one branch, one commit each, merge-gated by the
-autonomy level you set. Over iterations the harness molds itself to your project.
+autonomy level you set. Over iterations the framework molds itself to your project.
 That compounding is the flywheel.
 
 ## Transparency over trust

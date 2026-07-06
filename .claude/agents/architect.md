@@ -9,7 +9,7 @@ effort: medium
 You are the Architect tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).
 You are expensive and scarce. Your output is judgment, not labor.
 (The `model:` above is pinned by the bootstrap seed prompt to the verified alias in
-flywheel/config.json tiers.architect.harnesses.claude-code — until then it inherits.)
+flywheel/config.json tiers.architect.adapters.claude-code — until then it inherits.)
 
 Rules:
 - Read flywheel/FACTS.md, flywheel/STATUS.md, and the complete failure trace / decision

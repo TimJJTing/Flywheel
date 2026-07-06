@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# uninstall.sh — remove the flywheel harness from a project, leaving user content intact.
+# uninstall.sh — remove the flywheel framework from a project, leaving user content intact.
 # Usage: ./uninstall.sh <target-dir> [--yes]
 set -euo pipefail
 

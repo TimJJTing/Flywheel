@@ -4,7 +4,7 @@
 
 - git (strongly recommended; the ledger↔commit linking and improve branches need it)
 - python3 (3.9+) or node — for the dashboard build; nothing else
-- One supported harness: Claude Code, Codex CLI, or OpenCode (or port your own —
+- One supported adapter: Claude Code, Codex CLI, or OpenCode (or port your own —
   `flywheel/ADAPTERS.md`)
 
 ## Install
@@ -26,7 +26,7 @@ What it does:
   tagged `flywheel-managed` (unmanaged same-named files are skipped with a warning).
 - Idempotent: running it twice changes nothing.
 
-Then: open your harness in the project and paste `docs/SEED-PROMPT.md` (from this
+Then: open your adapter in the project and paste `docs/SEED-PROMPT.md` (from this
 repo). That single prompt makes the LLM adopt the system and fill in the
 project-specific facts — including on a legacy codebase, which it surveys first.
 
@@ -58,7 +58,7 @@ offers to archive your state (ledgers, STATUS, LESSONS, FACTS, config) to
 
 - `flywheel/dashboard/dashboard.html` — ignore if you rebuild on demand; **commit it
   instead** if teammates without python3/node should open it straight from the repo.
-- `.claude/settings.local.json` — conventional local-only harness settings.
+- `.claude/settings.local.json` — conventional local-only adapter settings.
 - **Not recommended:** ignoring `flywheel/state/*.json`, `STATUS.md`, or `LESSONS.md`.
   That breaks session continuity and the dashboard on fresh clones; only for
   throwaway experiments.

@@ -99,9 +99,9 @@ End (or context running low): run the wrapup procedure (adapter skill, or inline
 update STATUS.md, run `flywheel/check.sh`, update state ledgers, rebuild the dashboard,
 commit per `flywheel/GIT.md`). What is not committed does not exist.
 
-## 8. Harnesses without subagents (degraded mode)
+## 8. Adapters without subagents (degraded mode)
 
-If your harness cannot spawn subagents (see your adapter block), the tiers become
+If your adapter cannot spawn subagents (see your adapter block), the tiers become
 sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template and
 announcing "operating as <tier>". Verification-never-self-performed then means: a FRESH
 session (new context) runs Template 4. Model switching is done by the human per

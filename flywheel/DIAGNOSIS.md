@@ -1,4 +1,4 @@
-# Rapid Diagnosis — Top 3 Harness Failure Modes (read before long sessions)
+# Rapid Diagnosis — Top 3 Adapter Failure Modes (read before long sessions)
 
 Audience: every session operating this repo. Each item: the leak, why it happens, a
 step-by-step fix you can execute, and how to check you complied.
@@ -32,7 +32,7 @@ unless you explicitly justified it in the preceding message.
 
 ## Leak 2 — Skill/plugin sprawl and conflicting mandates
 
-**What happens:** Harnesses ship dozens of skills, agents, and hooks; some inject
+**What happens:** Adapters ship dozens of skills, agents, and hooks; some inject
 aggressive instructions ("you MUST invoke a skill before ANY response"). A lower-tier
 model obeys all of them, burns tokens on ceremony, or freezes between contradictions.
 

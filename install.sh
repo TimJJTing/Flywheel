@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install.sh — adopt the flywheel harness into any project (greenfield or legacy).
+# install.sh — adopt the flywheel framework into any project (greenfield or legacy).
 # Usage: ./install.sh <target-dir> [--adapters claude-code,codex,opencode]
 #
 # Safety property: legacy files are never clobbered. flywheel/ payload files are
@@ -269,4 +269,4 @@ fi
 
 echo ""
 echo "flywheel install into $TARGET done (adapters: $ADAPTERS_ARG)."
-echo "Next: open your harness in $TARGET and paste docs/SEED-PROMPT.md (from the flywheel repo)."
+echo "Next: open your adapter in $TARGET and paste docs/SEED-PROMPT.md (from the flywheel repo)."

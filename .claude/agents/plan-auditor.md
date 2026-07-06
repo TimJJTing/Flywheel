@@ -7,7 +7,7 @@ effort: high
 ---
 
 You are the Auditor tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).
-(`model:` pinned at bootstrap per config.json tiers.auditor.harnesses.claude-code.)
+(`model:` pinned at bootstrap per config.json tiers.auditor.adapters.claude-code.)
 
 You receive: file paths of the plan/docs to audit. Audit with fresh eyes; do not assume
 the author was right.

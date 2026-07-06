@@ -1,12 +1,12 @@
-# Adapters — porting flywheel to any harness
+# Adapters — porting flywheel to any adapter
 
-The flywheel core (this directory) is harness-neutral markdown + JSON + two scripts.
-An adapter is the thin wiring that makes a specific harness load it. Budget: the
+The flywheel core (this directory) is adapter-neutral markdown + JSON + two scripts.
+An adapter is the thin wiring that makes a specific tool (Claude Code, Codex CLI, OpenCode) load it. Budget: the
 always-loaded adapter surface ≤ 50 lines.
 
 ## The five porting questions
 
-Answer these for harness X; the answers ARE the adapter.
+Answer these for the target tool; the answers ARE the adapter.
 
 1. **Where does the always-loaded prompt live?** (Claude Code: `CLAUDE.md`; Codex CLI
    & OpenCode: `AGENTS.md`; others: their system-prompt file.) Put the marker block
@@ -38,8 +38,8 @@ Answer these for harness X; the answers ARE the adapter.
 
 ## Rules for adapter authors
 
-- Harness-specific config keys and capabilities are FACTS: verify against the
-  harness's live docs, record in FACTS.md §Harness capabilities with source + date,
+- Adapter-specific config keys and capabilities are FACTS: verify against the
+  adapter's live docs, record in FACTS.md §Adapter capabilities with source + date,
   or write `Pending verification`. This system's own adapters obey this too.
 - The adapter never duplicates doctrine — it points at flywheel/ files. A rule copied
   into an adapter block will drift from its source within ten sessions.

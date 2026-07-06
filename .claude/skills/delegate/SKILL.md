@@ -32,9 +32,10 @@ If any is empty, stop and fill it — do not send the delegation anyway.
 If the tier agents are not in the available `subagent_type` list (agent files created
 this session may not register until next session), fall back to
 `subagent_type: general-purpose` with the `model` parameter from
-`flywheel/config.json` (tiers.<tier>.harnesses.claude-code.model), paste the tier's rules from
+`flywheel/config.json` (tiers.<tier>.adapters.claude-code.model), paste the tier's rules from
 `.claude/agents/<agent>.md` into the prompt, and state in the prompt that effort
-cannot be pinned this way.
+cannot be pinned this way. If that config value is still `Pending verification`, omit
+the model parameter (adapter default) — never pass the placeholder string as a model.
 
 ## 5. Respect the limits, log the spawn
 Max two retries per tier (ORCHESTRATION.md §4); a retry must change something, never

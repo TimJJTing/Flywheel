@@ -35,7 +35,7 @@
     "done": true
    }
   ],
-  "detail": "Portable harness extracted from vocabulary-universe; see README.md.",
+  "detail": "Portable framework extracted from vocabulary-universe; see README.md.",
   "commits": [
    "5fcca4c",
    "089bfdb",

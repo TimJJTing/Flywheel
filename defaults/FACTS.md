@@ -22,7 +22,7 @@ VERIFICATION of those values (source URL + date). Verified: `Pending verificatio
 | verifier | Pending verification | — | — |
 | auditor | Pending verification | — | — |
 
-## Harness capabilities (verified live, not assumed)
+## Adapter capabilities (verified live, not assumed)
 
 | Fact | Value | Date |
 |---|---|---|

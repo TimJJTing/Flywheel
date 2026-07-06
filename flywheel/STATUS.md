@@ -12,7 +12,7 @@ Updated: 2026-07-06 (bootstrap session, coordinated by fable)
 
 ## Next actions (in order)
 1. Real-world adoption test: install into an actual project, run SEED-PROMPT.md end
-   to end with a live harness session (only simulated mechanically so far).
+   to end with a live adapter session (only simulated mechanically so far).
 2. Consider closing i1 (self-install target==source unsupported) or documenting it.
 3. First improve pass once 5 sessions accumulate (or on demand).
 
@@ -20,7 +20,7 @@ Updated: 2026-07-06 (bootstrap session, coordinated by fable)
 - None.
 
 ## Key decisions log (10 most recent)
-- 2026-07-06: config tiers nest per-harness values under "harnesses" map (user
+- 2026-07-06: config tiers nest per-adapter values under "adapters" map (user
   request; extensible without schema change).
 - 2026-07-06: JSON ledgers + build-step dashboard over live-fetch HTML (offline,
   diffable).
