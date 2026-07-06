@@ -4,8 +4,8 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 
 ## Session protocol
 1. Read `flywheel/STATUS.md` — current state, in-flight work, next actions. Resume from
-   it. Then `bash flywheel/check.sh`: drift warnings mean someone worked outside the
-   framework — triage, backfill ledgers/docs, note it in STATUS.md.
+   it. Then `bash flywheel/check.sh`: ledger-untracked-commit warnings mean someone
+   worked outside the framework — triage, backfill ledgers/docs, note it in STATUS.md.
 2. Route work per `flywheel/ORCHESTRATION.md` §1. The coordinator routes; tiers execute.
 3. Before ending / when context runs low: run the wrapup procedure (update STATUS.md
    + `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` for the mechanical rest).

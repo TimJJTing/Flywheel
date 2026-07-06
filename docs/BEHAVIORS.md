@@ -29,7 +29,7 @@ depends on your autonomy level; at the default (3) they wait in your decision qu
 |---|---|---|
 | `state/*.json` ledgers | Append per session | Done items stay (history); dashboard filters |
 | `flywheel/LESSONS.md` | One line per escalation/pivot/misread rule | > 80 lines → consolidated into JUDGMENT.md rules, raw log archived |
-| `flywheel/STATUS.md` | Rewritten each wrapup | Hard ≤ 60 lines, enforced by check.sh |
+| `flywheel/STATUS.md` | Rewritten each wrapup | Hard ≤ 40 lines, enforced by check.sh |
 | Commit history | Small conventional commits, branch per concern | Never rewritten |
 
 ## What never happens without you

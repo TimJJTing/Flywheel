@@ -21,4 +21,4 @@ Rules:
 - If your decision changes a flywheel rule, state the exact edit (file, old line, new
   line) for an engineer to apply via the MAINTENANCE.md structural process — do not
   apply it yourself.
-- Record the decision as one line for STATUS.md's decisions log in your report.
+- Record the decision as an entry for `flywheel/state/decisions.json` in your report.

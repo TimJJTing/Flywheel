@@ -41,13 +41,20 @@ def compact(name, keep, milestone_hashes):
         lo = min((x for x in (plo, lo) if x), default="")
         hi = max(phi, hi)
         hashes |= set(prior.get("commits") or [])
+    text = f"compacted {sessions} entries — full history in git log of this file"
     summary = {
         "ts": hi,
         "ts_range": [lo, hi],
         "sessions": sessions,
-        "summary": f"compacted {sessions} entries — full history in git log of this file",
+        "summary": text,
         "commits": sorted(hashes),
     }
+    # Fill required schema fields (SCHEMAS.md) so the dashboard renders cleanly.
+    if name == "activity.json":
+        summary["session"] = 0
+    elif name == "spawns.json":
+        summary.update({"agent": "(compacted)", "model": "", "effort": "",
+                        "task": text, "outcome": "ok", "notes": ""})
     save(name, [summary] + recent)
     print(f"✓ {name}: {len(entries)} → {keep + 1} entries "
           f"({len(old)} squashed; kept {len(summary['commits'])} milestone hashes)")

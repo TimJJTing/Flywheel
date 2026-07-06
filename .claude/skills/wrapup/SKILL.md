@@ -33,7 +33,9 @@ line to `flywheel/LESSONS.md`: date | task | tier path | cause | rule to update.
 
 ## 5. Run the mechanical script
 - First commit any NON-wrapup changes (code, docs) per `flywheel/GIT.md` — specific
-  files, conventional message, never `-A`/`.`, never `--no-verify`.
+  files, conventional message, never `-A`/`.`, never `--no-verify` — and append those
+  hashes to this session's activity.json entry (else next session's drift check flags
+  them).
 - Then `bash flywheel/wrapup.sh` — runs check.sh (aborts on ✗; fix or log a justified
   override in LESSONS.md), rebuilds the dashboard, warns if activity.json is stale,
   commits the wrapup file set as `chore(flywheel): update state ledgers + dashboard`,

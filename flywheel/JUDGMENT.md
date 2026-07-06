@@ -116,8 +116,8 @@ Triage before touching the current plan:
 - i1. New task does NOT conflict with in-flight/committed work → insert it into
   STATUS.md "Next actions" at the position its urgency dictates; continue current work
   (or switch to it if it now ranks first).
-- i2. Urgent + specific + low-risk → dispatch immediately per ORCHESTRATION.md §1
-  routing; log the spawn as usual. Urgency changes ORDER, never the delegation contract.
+- i2. Non-conflicting (per i1) AND urgent + specific + low-risk → dispatch immediately
+  per ORCHESTRATION.md §1; log the spawn as usual. Urgency changes ORDER, not contracts.
 - i3. It conflicts with (or invalidates) an approved plan or in-flight delegation →
   stop the conflicting delegation, write both options + a recommendation to
   `state/decisions.json`, and consult AUTONOMY.md for whether to ask or proceed.

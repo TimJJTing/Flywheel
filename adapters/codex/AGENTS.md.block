@@ -8,11 +8,11 @@ flywheel/ORCHESTRATION.md §8). Read `flywheel/INDEX.md` now; it indexes everyth
 
 ## Session protocol
 1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
-   `bash flywheel/check.sh`: drift warnings = work done outside the framework —
-   triage, backfill ledgers/docs, note in STATUS.md.
+   `bash flywheel/check.sh`: ledger-untracked-commit warnings = work done outside the
+   framework — triage, backfill ledgers/docs, note in STATUS.md.
 2. Before ending / context low: run the wrapup procedure inline — update STATUS.md +
-   `flywheel/state/*.json`, `bash flywheel/check.sh`, rebuild dashboard
-   (`python3 flywheel/dashboard/build.py`), commit per `flywheel/GIT.md`.
+   `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` (check, dashboard, commit
+   per `flywheel/GIT.md`).
 
 ## Degraded-mode tier rules
 - To do tier work, paste the matching template from `flywheel/TEMPLATES.md` into THIS

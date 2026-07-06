@@ -7,14 +7,13 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
 
 ## Session protocol
 1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
-   `bash flywheel/check.sh`: drift warnings = work done outside the framework —
-   triage, backfill ledgers/docs, note in STATUS.md.
+   `bash flywheel/check.sh`: ledger-untracked-commit warnings = work done outside the
+   framework — triage, backfill ledgers/docs, note in STATUS.md.
 2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are opencode subagents
    (defined in opencode.json under "agent"); delegate with the templates in
    `flywheel/TEMPLATES.md`.
 3. Before ending / context low: wrapup — update STATUS.md + `flywheel/state/*.json`,
-   `bash flywheel/check.sh`, rebuild dashboard (`python3 flywheel/dashboard/build.py`),
-   commit per `flywheel/GIT.md`.
+   then `bash flywheel/wrapup.sh` (check, dashboard, commit per `flywheel/GIT.md`).
 
 ## Hard rules (point-of-use duplicates — keep identical to INDEX.md)
 - HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)
