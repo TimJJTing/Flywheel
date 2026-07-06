@@ -22,7 +22,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | File | Read when |
 |---|---|
 | `flywheel/DIAGNOSIS.md` | Session start of any long task; before reading big files |
-| `flywheel/JUDGMENT.md` | Deciding: escalate? complete? pivot? quality floor? |
+| `flywheel/JUDGMENT.md` | Deciding: escalate? complete? pivot? quality floor? User interrupts with a new/conflicting task? |
 | `flywheel/AUTONOMY.md` | Any decision that might need the human; merges; deletes |
 | `flywheel/TEMPLATES.md` | Composing any delegation prompt |
 | `flywheel/MAINTENANCE.md` | Before modifying any flywheel/ or adapter file |

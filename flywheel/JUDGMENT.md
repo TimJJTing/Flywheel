@@ -109,3 +109,21 @@ store-separately (plan §3 needs it later), flagged the alternative in STATUS.md
 Reading chosen WITH a reason tied to the plan, alternative preserved.
 ✗ Silently discarding the metadata because it was easier. The ambiguity was erased
 instead of surfaced; the data loss is invisible until it bites.
+
+## R8. Mid-session interrupts (user drops a new task while work is in flight)
+
+Triage before touching the current plan:
+- i1. New task does NOT conflict with in-flight/committed work → insert it into
+  STATUS.md "Next actions" at the position its urgency dictates; continue current work
+  (or switch to it if it now ranks first).
+- i2. Urgent + specific + low-risk → dispatch immediately per ORCHESTRATION.md §1
+  routing; log the spawn as usual. Urgency changes ORDER, never the delegation contract.
+- i3. It conflicts with (or invalidates) an approved plan or in-flight delegation →
+  stop the conflicting delegation, write both options + a recommendation to
+  `state/decisions.json`, and consult AUTONOMY.md for whether to ask or proceed.
+  Discarding committed work is at minimum an R row — never silent.
+
+✓ "Mid-refactor, user: 'prod bug, fix the export NOW' — no overlap with the refactor
+(i1+i2): dispatched engineer on fix/export, refactor delegation kept running."
+✗ Quietly abandoning a half-done approved plan to chase the new idea, leaving no
+STATUS.md/decisions.json trace — the conflict was erased instead of surfaced.
