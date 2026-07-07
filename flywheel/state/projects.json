@@ -37,6 +37,10 @@
    {
     "title": "Refinement pass: terminology + scripts (wrapup/drift/compact)",
     "done": true
+   },
+   {
+    "title": "Default models set + config.json single-source (sync.py)",
+    "done": true
    }
   ],
   "detail": "Portable framework extracted from vocabulary-universe; see README.md.",

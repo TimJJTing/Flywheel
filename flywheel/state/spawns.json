@@ -42,7 +42,7 @@
   "effort": "high",
   "task": "v0.1 cross-examination of all docs",
   "outcome": "ok",
-  "notes": "REVISE(1 blocker,3 major,3 minor) \u2014 all fixed; first spawn died on session limit, retried"
+  "notes": "REVISE(1 blocker,3 major,3 minor) — all fixed; first spawn died on session limit, retried"
  },
  {
   "ts": "2026-07-06T15:00",
@@ -51,7 +51,7 @@
   "effort": "high",
   "task": "E2E rehearsal install/seed/check/uninstall in scratch repo",
   "outcome": "ok",
-  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) \u2014 both fixed and retested"
+  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) — both fixed and retested"
  },
  {
   "ts": "2026-07-07T01:40",
@@ -69,7 +69,7 @@
   "effort": "-",
   "task": "verify wrapup.sh, drift check, compact.py in scratch clone",
   "outcome": "retried",
-  "notes": "crit 8 FAIL (compact.py idempotency) \u2014 fixed, re-verified VERIFIED at ea96af3/6573b3f"
+  "notes": "crit 8 FAIL (compact.py idempotency) — fixed, re-verified VERIFIED at ea96af3/6573b3f"
  },
  {
   "ts": "2026-07-07T02:10",
@@ -78,6 +78,24 @@
   "effort": "-",
   "task": "audit six improve commits before merge",
   "outcome": "ok",
-  "notes": "REVISE (5 major, 4 minor) \u2014 all applied in 6573b3f, re-audit APPROVE"
+  "notes": "REVISE (5 major, 4 minor) — all applied in 6573b3f, re-audit APPROVE"
+ },
+ {
+  "ts": "2026-07-07T03:30",
+  "agent": "engineer",
+  "model": "claude-sonnet-5",
+  "effort": "high",
+  "task": "build flywheel/sync.py config->projections generator",
+  "outcome": "ok",
+  "notes": "92 lines; self-caught a git checkout slip, restored"
+ },
+ {
+  "ts": "2026-07-07T03:40",
+  "agent": "verifier",
+  "model": "claude-sonnet-5",
+  "effort": "high",
+  "task": "verify sync.py idempotency + drift-repair",
+  "outcome": "ok",
+  "notes": "VERIFIED 7/7, tree left byte-identical"
  }
 ]

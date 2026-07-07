@@ -27,5 +27,13 @@
    "3d2ebce",
    "6573b3f"
   ]
+ },
+ {
+  "ts": "2026-07-07T03:45",
+  "session": 3,
+  "summary": "Default models per tier/adapter + config.json single-source via sync.py (VERIFIED)",
+  "commits": [
+   "aa7aaa4"
+  ]
  }
 ]

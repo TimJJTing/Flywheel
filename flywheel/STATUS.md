@@ -1,14 +1,16 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-07 (session 2, refinement pass, coordinated by fable)
+Updated: 2026-07-07 (session 3, default models + config-as-source)
 
 ## Current state
-- v0.1 + refinement pass merged to main (auditor APPROVE, verifier VERIFIED):
-  terminology adapter/framework/provider (config key `tiers.*.adapters`), STATUS.md
-  slimmed to ≤40 lines, JUDGMENT R8 interrupt triage, `flywheel/wrapup.sh`,
-  drift + ledger-size warnings in check.sh, `flywheel/compact.py`.
-- Dogfood: repo runs its own Claude Code adapter (CLAUDE.md + .claude/).
+- Default models shipped for all tiers×adapters (config.json + projections): fable/opus/
+  sonnet/haiku per tier, effort high except architect+utility=medium. Cost-safety:
+  routine work hits haiku/sonnet, not opus/fable. FACTS.md model table filled + dated.
+- `flywheel/sync.py` makes config.json the REAL single source: regenerates claude-code
+  frontmatter (both dirs) + opencode.json.merge. VERIFIED (7/7, tree clean). check.sh
+  still fails on drift; MAINTENANCE.md documents edit-config→sync→check flow.
+- Prior: v0.1 + refinement pass on main. Dogfood: repo runs its own claude-code adapter.
 
 ## In flight
 - None.
