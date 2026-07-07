@@ -70,5 +70,17 @@
     "outcome": "config schema unchanged beyond harnesses→adapters key rename",
     "created": "2026-07-07",
     "resolved": "2026-07-07"
+  },
+  {
+    "id": "d7",
+    "title": "Cross-adapter auto-log hook for spawns.json — design only, not built now",
+    "detail": "Extends d4 (hooks skipped). Design: claude-code SubagentStop/PostToolUse(Task) hook -> resolve-spawn.py maps subagent_type -> tier -> config.json adapter block -> {adapter,model,level}, appends a row; matching SessionStart/SessionEnd hook emits the coordinator row. opencode: same resolver via opencode.json plugin/hook mechanism. codex: degraded mode, no subagents to capture -- only session-level (coordinator/role) events loggable via notify; per-subagent capture is N/A, document the asymmetry rather than faking rows. Resolver logic is shared; only the wiring differs per adapter.",
+    "options": ["build now", "defer, keep manual wrapup logging"],
+    "recommendation": "defer, keep manual wrapup logging",
+    "autonomy_row": "Edit flywheel structural docs",
+    "status": "decided-by-llm",
+    "outcome": "deferred; manual logging continues per ORCHESTRATION.md §6 until built",
+    "created": "2026-07-08",
+    "resolved": "2026-07-08"
   }
 ]

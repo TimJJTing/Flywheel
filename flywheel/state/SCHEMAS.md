@@ -23,7 +23,14 @@ on the writing agent.
 // activity.json — append-only session log
 { "ts":"2026-07-06T14:00","session":1,"summary":"","commits":[] }
 
-// spawns.json — append-only agent-spawn record
-{ "ts":"2026-07-06T14:00","agent":"engineer","model":"","effort":"",
+// spawns.json — append-only agent-activity record (coordinator + subagents)
+{ "ts":"2026-07-06T14:00","agent":"engineer","adapter":"claude-code",
+  "model":"","level":"",
   "task":"<=15 words","outcome":"ok|retried|escalated|failed","notes":"" }
+// agent: add "coordinator" for the main session itself.
+// adapter: claude-code | codex | opencode.
+// model: the actual resolved model ID — always the real value, never a
+//   placeholder that defers to the caller, never blank.
+// level: effort (claude-code) / reasoning (codex) value; "-" when the adapter
+//   has no knob (opencode) or unknown.
 ```

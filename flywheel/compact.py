@@ -53,7 +53,7 @@ def compact(name, keep, milestone_hashes):
     if name == "activity.json":
         summary["session"] = 0
     elif name == "spawns.json":
-        summary.update({"agent": "(compacted)", "model": "", "effort": "",
+        summary.update({"agent": "(compacted)", "adapter": "", "model": "", "level": "",
                         "task": text, "outcome": "ok", "notes": ""})
     save(name, [summary] + recent)
     print(f"✓ {name}: {len(entries)} → {keep + 1} entries "

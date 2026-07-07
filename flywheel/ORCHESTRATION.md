@@ -6,7 +6,7 @@ Always loaded. Keep under 120 lines; detail belongs in on-demand files (see INDE
 
 The main session is the **coordinator** (the COO running daily operations). It decides,
 routes, and integrates. It does not do detail work inline when a tier below can.
-Concrete model/provider/effort per tier: `flywheel/config.json` — never from memory.
+Concrete model/provider/level per tier: `flywheel/config.json` — never from memory.
 
 | Tier | Owns |
 |---|---|
@@ -88,8 +88,12 @@ Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, 
   it inline in the main session, check §1 routing table first.
 - Main-session context is the scarcest resource. When a task will generate > ~100 lines
   of tool output, that alone is reason to delegate.
-- Log every spawn to `flywheel/state/spawns.json` at wrapup (agent, model, effort,
-  task ≤15 words, outcome) — the CEO dashboard renders this ledger.
+- Log every spawn to `flywheel/state/spawns.json` at wrapup (agent, adapter, model,
+  level, task ≤15 words, outcome) — the CEO dashboard renders this ledger. Include the
+  coordinator's own row each session. `model` is always the actual resolved model ID —
+  never a placeholder deferring to the caller — resolve it from `flywheel/config.json`
+  for the tier (or the actual main-session model for the coordinator / built-in
+  Explore·Plan agents).
 
 ## 7. Session start / end protocol
 

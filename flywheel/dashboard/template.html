@@ -74,6 +74,7 @@
   .table-wrap { overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; font-size: 13px; }
   th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .coordinator-row td { font-weight: 600; }
   .outcome { border-radius: 999px; padding: 1px 8px; font-size: 11px; }
   .outcome.ok { background: var(--pos-bg); color: var(--pos); }
   .outcome.caution { background: var(--caution-bg); color: var(--caution); }
@@ -303,10 +304,10 @@ function renderSpawns() {
   items = sortByRecency(items, "ts");
   if (!items.length) { el.innerHTML = renderEmpty("No agent spawns recorded yet."); return; }
   el.innerHTML = `<div class="table-wrap"><table>
-    <thead><tr><th>ts</th><th>agent</th><th>model</th><th>effort</th><th>task</th><th>outcome</th></tr></thead>
+    <thead><tr><th>ts</th><th>agent</th><th>adapter</th><th>model</th><th>level</th><th>task</th><th>outcome</th></tr></thead>
     <tbody>${items.map(s => `
-      <tr>
-        <td>${esc(s.ts)}</td><td>${esc(s.agent)}</td><td>${esc(s.model)}</td><td>${esc(s.effort)}</td>
+      <tr${s.agent === "coordinator" ? ' class="coordinator-row"' : ""}>
+        <td>${esc(s.ts)}</td><td>${esc(s.agent)}</td><td>${esc(s.adapter)}</td><td>${esc(s.model)}</td><td>${esc(s.level)}</td>
         <td>${esc(s.task)}</td><td><span class="outcome ${outcomeClass(s.outcome)}">${esc(s.outcome)}</span></td>
       </tr>`).join("")}</tbody>
   </table></div>`;

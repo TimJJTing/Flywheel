@@ -33,10 +33,17 @@ All flat JSON arrays. IDs: `p1`/`i1`/`d1`… (max existing + 1). Dates ISO-8601.
   "outcome":"","created":"2026-07-06","resolved":null }
 // activity.json  (append-only)
 { "ts":"2026-07-06T14:00","session":1,"summary":"","commits":[] }
-// spawns.json  (append-only)
-{ "ts":"2026-07-06T14:00","agent":"engineer","model":"","effort":"",
+// spawns.json  (append-only; agent may be "coordinator" for the main session)
+{ "ts":"2026-07-06T14:00","agent":"engineer","adapter":"claude-code",
+  "model":"","level":"",
   "task":"","outcome":"ok|retried|escalated|failed","notes":"" }
 ```
+
+`model` is always the actual resolved model ID (never a placeholder deferring to the
+caller). `level` is the effort (claude-code) / reasoning (codex) value, `-` when the
+adapter has no knob. One row each session should have `agent:"coordinator"` — the
+main session's own model/level, the biggest single cost, otherwise invisible to the
+ledger.
 
 `flywheel/check.sh` validates all five parse and that recorded commit hashes exist.
 

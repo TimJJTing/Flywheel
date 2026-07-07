@@ -7,7 +7,7 @@ the flywheel-repo-side detail.
 
 | Adapter | Files | Mode |
 |---|---|---|
-| claude-code | `CLAUDE.md.block`, 6 agents, 3 skills | Full reference: subagents, per-agent model/effort pinning, skills |
+| claude-code | `CLAUDE.md.block`, 6 agents, 3 skills | Full reference: subagents, per-agent model/level pinning, skills |
 | codex | `AGENTS.md.block` | Degraded: no subagents; in-session role adoption + fresh-session verification + human model switching |
 | opencode | `AGENTS.md.block`, `opencode.json.merge` | Subagents via opencode.json `"agent"` entries (`mode: "subagent"`) |
 
@@ -19,6 +19,8 @@ Verified facts about adapter schemas (keep current, re-verify on adapter upgrade
   Model/reasoning switching is human-performed. Anything finer:
   `Pending verification` — re-check Codex docs when installing.
 - Claude Code agent frontmatter fields used: `name`, `description`, `model`, `effort`.
+  `effort` is the native key — flywheel's config.json stores this as `level` and
+  `sync.py` projects it to `effort:` at write time (see docs/config/MODELS.md).
   Effort-per-agent behavior varies by version: `Unconfirmed, recommended to test live`
   (the seed prompt's Step 4 does exactly that).
 

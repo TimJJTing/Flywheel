@@ -10,11 +10,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-fable-5",
-          "effort": "medium"
+          "level": "medium"
         },
         "codex": {
           "model": "gpt-5.5-pro",
-          "reasoning": "xhigh"
+          "level": "xhigh"
         },
         "opencode": {
           "provider": "anthropic",
@@ -27,11 +27,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-opus-4-8",
-          "effort": "high"
+          "level": "high"
         },
         "codex": {
           "model": "gpt-5.5",
-          "reasoning": "high"
+          "level": "high"
         },
         "opencode": {
           "provider": "anthropic",
@@ -44,11 +44,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-sonnet-5",
-          "effort": "high"
+          "level": "high"
         },
         "codex": {
           "model": "gpt-5.5",
-          "reasoning": "high"
+          "level": "high"
         },
         "opencode": {
           "provider": "anthropic",
@@ -61,11 +61,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-haiku-4-5-20251001",
-          "effort": "medium"
+          "level": "medium"
         },
         "codex": {
           "model": "gpt-5.4-mini",
-          "reasoning": "high"
+          "level": "high"
         },
         "opencode": {
           "provider": "anthropic",
@@ -78,11 +78,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-sonnet-5",
-          "effort": "high"
+          "level": "high"
         },
         "codex": {
           "model": "gpt-5.5",
-          "reasoning": "high"
+          "level": "high"
         },
         "opencode": {
           "provider": "anthropic",
@@ -95,11 +95,11 @@
       "adapters": {
         "claude-code": {
           "model": "claude-opus-4-8",
-          "effort": "high"
+          "level": "high"
         },
         "codex": {
           "model": "gpt-5.5",
-          "reasoning": "high"
+          "level": "high"
         },
         "opencode": {
           "provider": "anthropic",

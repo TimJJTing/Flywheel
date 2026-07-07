@@ -14,8 +14,10 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
 ## 2. Update state ledgers (flywheel/state/)
 - `activity.json`: append one entry {ts, session (= previous max +1), summary ≤1 line,
   commits: [hashes made this session — fill after step 5, or amend]}.
-- `spawns.json`: append one row per subagent spawned this session (agent, model,
-  effort, task ≤15 words, outcome ok|retried|escalated|failed).
+- `spawns.json`: append one row per subagent spawned this session (agent, adapter,
+  model, level, task ≤15 words, outcome ok|retried|escalated|failed), plus one row for
+  the coordinator itself (this session's main model). Never write
+  `model:"per parent"` — resolve the real model from `flywheel/config.json`.
 - `projects.json` / `issues.json`: update statuses, milestones, and commits arrays for
   anything this session advanced. Friction you noticed → new issue with
   `type: "friction"` (feeds the improve pass).

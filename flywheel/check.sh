@@ -172,16 +172,17 @@ for agent, tier_key in mapping.items():
     text = open(path, encoding="utf-8").read()
     fm = text.split("---")[1] if text.startswith("---") else ""
     m_model = re.search(r"^model:\s*(\S+)", fm, re.M)
+    # frontmatter native key is "effort" (see plan section 0 boundary); config key is "level".
     m_effort = re.search(r"^effort:\s*(\S+)", fm, re.M)
     expect = tiers.get(tier_key, {}).get("adapters", {}).get("claude-code", {})
-    exp_model, exp_effort = expect.get("model"), expect.get("effort")
+    exp_model, exp_level = expect.get("model"), expect.get("level")
     if exp_model == "Pending verification":
         print(f"⚠ {agent}.md frontmatter check skipped (config model still Pending verification)")
         continue
     got_model = m_model.group(1) if m_model else None
     got_effort = m_effort.group(1) if m_effort else None
-    if got_model != exp_model or got_effort != exp_effort:
-        print(f"✗ {agent}.md frontmatter ({got_model}/{got_effort}) != config.json {tier_key} ({exp_model}/{exp_effort})")
+    if got_model != exp_model or got_effort != exp_level:
+        print(f"✗ {agent}.md frontmatter ({got_model}/{got_effort}) != config.json {tier_key} ({exp_model}/{exp_level})")
         ok = False
     else:
         print(f"✓ {agent}.md frontmatter matches config.json")

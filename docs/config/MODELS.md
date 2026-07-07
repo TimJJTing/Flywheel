@@ -30,9 +30,9 @@ default model (Claude Code: `model: inherit` in the agent files).
 
 | Adapter | Keys | Notes |
 |---|---|---|
-| claude-code | `model` (alias or full ID), `effort` | effort levels are adapter-version-dependent — verify live, record in FACTS |
-| codex | `model`, `reasoning` | applied by the human switching models; the block instructs |
-| opencode | `provider`, `model` | opencode.json wants `"provider/model-id"` as one string — join them |
+| claude-code | `model` (alias or full ID), `level` | projected to native `effort:` frontmatter by `sync.py` (see docs/config/ADAPTERS.md); values are adapter-version-dependent — verify live, record in FACTS |
+| codex | `model`, `level` | native key is `reasoning`; applied by the human switching models — the block instructs |
+| opencode | `provider`, `model` | no level knob; opencode.json wants `"provider/model-id"` as one string — join them |
 
 ## Adding an adapter
 
@@ -42,8 +42,8 @@ change required.
 
 ## Sizing guidance (design intent, not facts)
 
-architect = your scarcest/strongest model, effort medium (judgment, not labor);
-strategist/auditor = strong reasoning model, effort high; engineer/verifier = the
-best coding model you can afford, effort high; utility = cheapest competent model,
-effort high (high effort on a cheap model prevents careless batch errors — that
+architect = your scarcest/strongest model, level medium (judgment, not labor);
+strategist/auditor = strong reasoning model, level high; engineer/verifier = the
+best coding model you can afford, level high; utility = cheapest competent model,
+level high (high level on a cheap model prevents careless batch errors — that
 asymmetry is deliberate).

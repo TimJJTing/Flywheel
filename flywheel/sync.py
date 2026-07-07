@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenerate per-adapter projection files from flywheel/config.json.
 
-config.json is the source of truth for tier->model/effort. This script writes
+config.json is the source of truth for tier->model/level. This script writes
 that truth into the files each adapter actually reads at runtime:
   - .claude/agents/<agent>.md            (claude-code frontmatter)
   - adapters/claude-code/agents/<agent>.md (claude-code frontmatter, mirrored)
@@ -40,10 +40,12 @@ PENDING = "Pending verification"
 
 
 def sync_claude_code_frontmatter(tiers: dict) -> None:
+    # flywheel config speaks "level"; claude-code's native frontmatter key is
+    # "effort" (§0 boundary) - this is the one place that translation happens.
     for tier_key, agent_file in TIER_TO_AGENT_FILE.items():
         cell = tiers.get(tier_key, {}).get("adapters", {}).get("claude-code", {})
-        model, effort = cell.get("model"), cell.get("effort")
-        if model == PENDING or effort == PENDING or model is None or effort is None:
+        model, level = cell.get("model"), cell.get("level")
+        if model == PENDING or level == PENDING or model is None or level is None:
             print(f"skip {agent_file}.md: config tiers.{tier_key}.adapters.claude-code pending/missing")
             continue
         for agents_dir in CLAUDE_CODE_AGENT_DIRS:
@@ -53,7 +55,7 @@ def sync_claude_code_frontmatter(tiers: dict) -> None:
                 continue
             text = path.read_text(encoding="utf-8")
             new_text = re.sub(r"^model:\s*\S+", f"model: {model}", text, count=1, flags=re.M)
-            new_text = re.sub(r"^effort:\s*\S+", f"effort: {effort}", new_text, count=1, flags=re.M)
+            new_text = re.sub(r"^effort:\s*\S+", f"effort: {level}", new_text, count=1, flags=re.M)
             if new_text != text:
                 path.write_text(new_text, encoding="utf-8")
                 print(f"wrote {path}")

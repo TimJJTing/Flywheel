@@ -18,7 +18,7 @@ Project: flywheel — the portable agent-framework boilerplate itself (dogfoodin
 ## Hard rules (point-of-use duplicates — keep identical to INDEX.md)
 - HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)
   wholesale — slice via grep/jq/python, or delegate to `utility`.
-- HR2. Model names / effort values / API params come from `flywheel/config.json` +
+- HR2. Model names / level values / API params come from `flywheel/config.json` +
   `flywheel/FACTS.md` only. Missing → write `Pending verification`, never invent.
 - HR3. No agent declares its own work complete — dispatch `verifier` / `auditor`.
 - HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind

@@ -13,10 +13,10 @@ Update it whenever a value is verified or found wrong; date-stamp every change.
 Source of truth for tier→model mapping: `flywheel/config.json`. This table records the
 VERIFICATION of those values (source URL + date).
 
-Note: architect uses `xhigh` reasoning on codex (vs. `medium` effort on claude-code) —
-an intentional cross-adapter asymmetry, not a mismatch to "fix" (codex has no
-`medium`-tier convention documented here — codex has no `medium`, so architect
-falls back to the top-tier codex model at its highest reasoning, `xhigh`).
+Note: architect uses `level: xhigh` on codex (vs. `level: medium` on claude-code) —
+an intentional cross-adapter asymmetry, not a mismatch to "fix": codex has no
+`medium`, so architect falls back to the top-tier codex model at its highest
+level, `xhigh`.
 
 | Tier | Adapter | Model ID | Verified against | Date |
 |---|---|---|---|---|
@@ -44,7 +44,7 @@ falls back to the top-tier codex model at its highest reasoning, `xhigh`).
 | Fact | Value | Date |
 |---|---|---|
 | Subagent spawn works for all tier agents | Pending verification | — |
-| Per-agent effort/reasoning pinning works | Pending verification | — |
+| Per-agent level pinning works (native effort/reasoning key) | Pending verification | — |
 
 ## Toolchain (versions from commands run in THIS repo)
 
