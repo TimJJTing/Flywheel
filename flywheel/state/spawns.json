@@ -2,8 +2,9 @@
  {
   "ts": "2026-07-06T12:00",
   "agent": "explore",
-  "model": "per parent",
-  "effort": "-",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "-",
   "task": "inventory source repo framework scaffolding",
   "outcome": "ok",
   "notes": "vocabulary-universe survey"
@@ -11,8 +12,9 @@
  {
   "ts": "2026-07-06T12:10",
   "agent": "plan",
-  "model": "per parent",
-  "effort": "-",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "-",
   "task": "design flywheel repo implementation plan",
   "outcome": "ok",
   "notes": ""
@@ -20,8 +22,9 @@
  {
   "ts": "2026-07-06T13:00",
   "agent": "engineer",
-  "model": "sonnet",
-  "effort": "high",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
   "task": "dashboard template, build scripts, check.sh",
   "outcome": "ok",
   "notes": "6/6 criteria PASS; handled mid-task config schema change"
@@ -29,8 +32,9 @@
  {
   "ts": "2026-07-06T13:10",
   "agent": "engineer",
-  "model": "sonnet",
-  "effort": "high",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
   "task": "install.sh and uninstall.sh with tests",
   "outcome": "ok",
   "notes": "6/6 criteria PASS; fixed own trailing-newline bug"
@@ -38,8 +42,9 @@
  {
   "ts": "2026-07-06T15:00",
   "agent": "plan-auditor",
-  "model": "opus",
-  "effort": "high",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
   "task": "v0.1 cross-examination of all docs",
   "outcome": "ok",
   "notes": "REVISE(1 blocker,3 major,3 minor) — all fixed; first spawn died on session limit, retried"
@@ -47,8 +52,9 @@
  {
   "ts": "2026-07-06T15:00",
   "agent": "verifier",
-  "model": "sonnet",
-  "effort": "high",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
   "task": "E2E rehearsal install/seed/check/uninstall in scratch repo",
   "outcome": "ok",
   "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) — both fixed and retested"
@@ -56,8 +62,9 @@
  {
   "ts": "2026-07-07T01:40",
   "agent": "utility",
-  "model": "per parent",
-  "effort": "-",
+  "adapter": "claude-code",
+  "model": "claude-haiku-4-5-20251001",
+  "level": "medium",
   "task": "terminology sweep harness to adapter/framework, 43 files",
   "outcome": "ok",
   "notes": "6/6 criteria PASS; 3 judgment calls, none ambiguous"
@@ -65,8 +72,9 @@
  {
   "ts": "2026-07-07T02:10",
   "agent": "verifier",
-  "model": "per parent",
-  "effort": "-",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
   "task": "verify wrapup.sh, drift check, compact.py in scratch clone",
   "outcome": "retried",
   "notes": "crit 8 FAIL (compact.py idempotency) — fixed, re-verified VERIFIED at ea96af3/6573b3f"
@@ -74,8 +82,9 @@
  {
   "ts": "2026-07-07T02:10",
   "agent": "plan-auditor",
-  "model": "per parent",
-  "effort": "-",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
   "task": "audit six improve commits before merge",
   "outcome": "ok",
   "notes": "REVISE (5 major, 4 minor) — all applied in 6573b3f, re-audit APPROVE"
@@ -83,8 +92,9 @@
  {
   "ts": "2026-07-07T03:30",
   "agent": "engineer",
+  "adapter": "claude-code",
   "model": "claude-sonnet-5",
-  "effort": "high",
+  "level": "high",
   "task": "build flywheel/sync.py config->projections generator",
   "outcome": "ok",
   "notes": "92 lines; self-caught a git checkout slip, restored"
@@ -92,10 +102,71 @@
  {
   "ts": "2026-07-07T03:40",
   "agent": "verifier",
+  "adapter": "claude-code",
   "model": "claude-sonnet-5",
-  "effort": "high",
+  "level": "high",
   "task": "verify sync.py idempotency + drift-repair",
   "outcome": "ok",
   "notes": "VERIFIED 7/7, tree left byte-identical"
+ },
+ {
+  "ts": "2026-07-08T13:00",
+  "agent": "explore",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "-",
+  "task": "map spawns ledger + dashboard render",
+  "outcome": "ok",
+  "notes": "planning recon"
+ },
+ {
+  "ts": "2026-07-08T13:00",
+  "agent": "explore",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "-",
+  "task": "map hooks + wrapup mechanics per adapter",
+  "outcome": "ok",
+  "notes": "planning recon"
+ },
+ {
+  "ts": "2026-07-08T13:30",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "unify effort/reasoning to level + enrich ledger",
+  "outcome": "ok",
+  "notes": "24 files; 8/8 criteria PASS self-reported"
+ },
+ {
+  "ts": "2026-07-08T13:50",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "verify level unification + ledger",
+  "outcome": "ok",
+  "notes": "VERIFIED 8/8 + probes, tree clean"
+ },
+ {
+  "ts": "2026-07-08T13:50",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "audit config + rule-doc changes",
+  "outcome": "ok",
+  "notes": "APPROVE, 5 minors — all applied"
+ },
+ {
+  "ts": "2026-07-08T14:00",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "-",
+  "task": "unify effort/reasoning to level vocabulary + dashboard ledger enrichment",
+  "outcome": "ok",
+  "notes": "coordinator session; routed engineer/utility/auditor/verifier per plan"
  }
 ]
