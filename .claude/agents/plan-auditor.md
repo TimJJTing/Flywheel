@@ -2,7 +2,7 @@
 # flywheel-managed
 name: plan-auditor
 description: Auditor tier, fresh context, for high-risk plans and system documents. Cross-examines for internal contradictions, wrong paths/tool names, unverified values, and phrasing a smaller model could misread. Use before executing any plan that touches 3+ files or defines rules for other agents.
-model: inherit
+model: claude-opus-4-8
 effort: high
 ---
 

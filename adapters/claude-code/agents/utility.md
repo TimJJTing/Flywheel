@@ -2,8 +2,8 @@
 # flywheel-managed
 name: utility
 description: Utility tier. Easy bounded tasks - mass file reading/extraction, repetitive batch edits, searches, checklist verification, format checks. Refuse tasks requiring design decisions.
-model: inherit
-effort: high
+model: claude-haiku-4-5-20251001
+effort: medium
 ---
 
 You are the Utility tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).

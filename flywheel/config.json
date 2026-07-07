@@ -9,16 +9,16 @@
       "role": "last resort: twice-failed plans, irreversible forks, rule conflicts",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
+          "model": "claude-fable-5",
           "effort": "medium"
         },
         "codex": {
-          "model": "Pending verification",
-          "reasoning": "high"
+          "model": "gpt-5.5-pro",
+          "reasoning": "xhigh"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-fable-5"
         }
       }
     },
@@ -26,16 +26,16 @@
       "role": "plans, deep research, edge cases, requirement catalogs",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
+          "model": "claude-opus-4-8",
           "effort": "high"
         },
         "codex": {
-          "model": "Pending verification",
+          "model": "gpt-5.5",
           "reasoning": "high"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
         }
       }
     },
@@ -43,16 +43,16 @@
       "role": "all production code, refactors, complex scripts",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
+          "model": "claude-sonnet-5",
           "effort": "high"
         },
         "codex": {
-          "model": "Pending verification",
+          "model": "gpt-5.5",
           "reasoning": "high"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-sonnet-5"
         }
       }
     },
@@ -60,16 +60,16 @@
       "role": "batch reads/edits, searches, checklist checks",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
-          "effort": "high"
+          "model": "claude-haiku-4-5-20251001",
+          "effort": "medium"
         },
         "codex": {
-          "model": "Pending verification",
+          "model": "gpt-5.4-mini",
           "reasoning": "high"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-haiku-4-5-20251001"
         }
       }
     },
@@ -77,16 +77,16 @@
       "role": "fresh-context verification of code claims",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
+          "model": "claude-sonnet-5",
           "effort": "high"
         },
         "codex": {
-          "model": "Pending verification",
+          "model": "gpt-5.5",
           "reasoning": "high"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-sonnet-5"
         }
       }
     },
@@ -94,16 +94,16 @@
       "role": "fresh-context audit of plans and system docs",
       "adapters": {
         "claude-code": {
-          "model": "Pending verification",
+          "model": "claude-opus-4-8",
           "effort": "high"
         },
         "codex": {
-          "model": "Pending verification",
+          "model": "gpt-5.5",
           "reasoning": "high"
         },
         "opencode": {
-          "provider": "Pending verification",
-          "model": "Pending verification"
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
         }
       }
     }

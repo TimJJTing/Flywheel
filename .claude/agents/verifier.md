@@ -2,7 +2,7 @@
 # flywheel-managed
 name: verifier
 description: Verifier tier, fresh context. Independently verifies claims that code works - runs tests, exercises the change end-to-end, checks acceptance criteria. Never used by the author of the change being verified - it IS the second pair of eyes.
-model: inherit
+model: claude-sonnet-5
 effort: high
 ---
 

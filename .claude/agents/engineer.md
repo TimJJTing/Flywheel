@@ -2,7 +2,7 @@
 # flywheel-managed
 name: engineer
 description: Engineer tier. Implements code from a written plan or precise spec - business logic, refactors, scripts, tests. Requires acceptance criteria in the prompt. Do not use for open-ended research or planning.
-model: inherit
+model: claude-sonnet-5
 effort: high
 ---
 

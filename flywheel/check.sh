@@ -144,6 +144,24 @@ if [ -d "$AGENTS_DIR" ] && command -v python3 >/dev/null 2>&1; then
 import json, re, os, sys
 agents_dir, config_path = sys.argv[1], sys.argv[2]
 tiers = json.load(open(config_path, encoding="utf-8")).get("tiers", {})
+
+# Regression guard: warn (never fail) on any tier x adapter cell that is still
+# the "Pending verification" placeholder, or missing outright. Covers all three
+# adapters (claude-code, codex, opencode) even though only claude-code gets the
+# per-file frontmatter check below (the other two have no per-agent files to check).
+TIER_NAMES = ["architect", "strategist", "engineer", "utility", "verifier", "auditor"]
+ADAPTER_NAMES = ["claude-code", "codex", "opencode"]
+unset_found = False
+for tier_name in TIER_NAMES:
+    tier_adapters = tiers.get(tier_name, {}).get("adapters", {})
+    for adapter_name in ADAPTER_NAMES:
+        cell = tier_adapters.get(adapter_name)
+        if cell is None or any(v == "Pending verification" for v in cell.values()):
+            print(f"⚠ config.json tiers.{tier_name}.adapters.{adapter_name} still unset (Pending verification)")
+            unset_found = True
+if not unset_found:
+    print("✓ all tier×adapter models set")
+
 mapping = {"architect": "architect", "researcher": "strategist", "engineer": "engineer",
            "utility": "utility", "verifier": "verifier", "plan-auditor": "auditor"}
 ok = True
@@ -167,6 +185,8 @@ for agent, tier_key in mapping.items():
         ok = False
     else:
         print(f"✓ {agent}.md frontmatter matches config.json")
+if not ok:
+    print("  → config.json is source of truth; run: python3 flywheel/sync.py")
 sys.exit(0 if ok else 1)
 ' "$AGENTS_DIR" "$FLYWHEEL_DIR/config.json"
   [ $? -ne 0 ] && FAIL=1

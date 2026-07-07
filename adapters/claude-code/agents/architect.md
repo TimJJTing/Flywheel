@@ -2,7 +2,7 @@
 # flywheel-managed
 name: architect
 description: LAST-RESORT tier. Only for - a strategist plan failed twice with full trace, an irreversible architectural fork, or flywheel rules conflicting at a level the auditor cannot resolve. Never for coding, research, or anything a cheaper tier can do.
-model: inherit
+model: claude-fable-5
 effort: medium
 ---
 

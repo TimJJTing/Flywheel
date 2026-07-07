@@ -10,9 +10,9 @@ adapter files, and before any consistency audit.
 | `flywheel/STATUS.md`, `flywheel/LESSONS.md`, `flywheel/state/*.json`, `docs/plans/*`, `docs/research/*` | Yes — append/update | — |
 | Adapter skill bodies, project code, tests | engineer+ per approved plan | utility only for explicit mechanical batch edits |
 | `flywheel/FACTS.md` | Add a new verified fact | Changing/removing an existing fact → `auditor` check first |
-| `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check |
+| `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check. Then run `python3 flywheel/sync.py` to regenerate the projections — config.json is the source of truth; agent frontmatter and `opencode.json.merge` are generated from it, never hand-edited. `check.sh` fails on drift. |
 | `flywheel/config.json` — `autonomy` value | Never by an agent | Human instruction only (AUTONOMY.md, level-invariant row) |
-| `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
+| `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter (prose only — model/effort are generated, see the config.json row above) | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
 | `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh`, `wrapup.sh`, `compact.py` | No | Same structural process (these enforce the rules mechanically) |
 
 ✓ Correct: `utility` appends a decided-by-llm entry to state/decisions.json after a
