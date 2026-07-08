@@ -1,7 +1,9 @@
 # Delegation Prompt Templates
 
 Fill every `{PLACEHOLDER}`. Do not dispatch if GOAL, ACCEPTANCE CRITERIA, or REPORT
-FORMAT is empty (ORCHESTRATION.md §2). Model/level per tier: `flywheel/config.json`.
+FORMAT is empty (ORCHESTRATION.md §2). Model/level are pinned in agent frontmatter,
+synced from flywheel/config.json by flywheel/sync.py; the PostToolUse hook reports the
+resolved model on every spawn.
 On adapters without subagents, these same templates are pasted in-session as role
 adoptions (ORCHESTRATION.md §8).
 
@@ -10,7 +12,7 @@ adoptions (ORCHESTRATION.md §8).
 ## Template 1 — Research & Detailed Planning (`strategist`)
 
 ```
-Agent: strategist | Model/level: per flywheel/config.json
+Agent: strategist
 
 GOAL & MOTIVATION
 {What question must be answered or what must be planned, and WHY this feeds the
@@ -37,7 +39,7 @@ the saved file, not in the reply.
 
 ### Worked example
 ```
-Agent: strategist | Model/level: per flywheel/config.json
+Agent: strategist
 
 GOAL & MOTIVATION
 Plan the CSV-import feature: how uploaded files are validated, parsed, and stored,
@@ -66,7 +68,7 @@ Found/Assumed/Could not find summary, ≤10 lines.
 ## Template 2 — Implementation & Refactoring (`engineer`)
 
 ```
-Agent: engineer | Model/level: per flywheel/config.json
+Agent: engineer
 
 GOAL & MOTIVATION
 {What behavior must exist after this and WHY (what it unblocks / what it fixes).}
@@ -92,7 +94,7 @@ save under docs/research/ and return the path.
 
 ### Worked example
 ```
-Agent: engineer | Model/level: per flywheel/config.json
+Agent: engineer
 
 GOAL & MOTIVATION
 Implement the CSV row validator per docs/plans/csv-import.md §2, so malformed rows
@@ -121,7 +123,7 @@ tests/test_importer.py -q` -> "12 passed". Deviations: none. Open issues: none.
 ## Template 3 — Search & Easy/Batch Tasks (`utility`)
 
 ```
-Agent: utility | Model/level: per flywheel/config.json
+Agent: utility
 
 GOAL & MOTIVATION
 {What needs to be found/checked/batch-edited and WHY, e.g. feeds a later decision
@@ -145,7 +147,7 @@ and return the path.
 
 ### Worked example
 ```
-Agent: utility | Model/level: per flywheel/config.json
+Agent: utility
 
 GOAL & MOTIVATION
 Find every call site of the deprecated `fetch_user()` so the strategist's migration
@@ -169,7 +171,7 @@ full list to docs/research/fetch-user-callers.txt if > 30 entries; return path +
 ## Template 4 — Review & Verification (`verifier` for code / `auditor` for plans+docs)
 
 ```
-Agent: {verifier | auditor} | Model/level: per flywheel/config.json
+Agent: {verifier | auditor}
 
 GOAL & MOTIVATION
 {What claim is being checked and WHY it matters before it's trusted (merge, next
@@ -196,7 +198,7 @@ of the implementation.
 
 ### Worked example
 ```
-Agent: verifier | Model/level: per flywheel/config.json
+Agent: verifier
 
 GOAL & MOTIVATION
 Engineer claims the CSV validator (src/importer.py) passes all tests. Verify

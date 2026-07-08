@@ -34,7 +34,16 @@ Answer these for the target tool; the answers ARE the adapter.
 5. **Does it have hooks/automation?** Optional hardening only. The reference design
    works without hooks. If sessions repeatedly skip wrapup (check LESSONS.md), add a
    session-end hook that runs `flywheel/check.sh` — that is the documented upgrade
-   path, not the default.
+   path, not the default. Per-spawn auto-log (d7): claude-code wires
+   `flywheel/resolve-spawn.py` as a PostToolUse hook (see
+   `adapters/claude-code/settings.json.merge`). codex is NOT the "no subagents" case
+   it was assumed to be: codex documents `SubagentStart`/`SubagentStop` hook events
+   (with `agent_id`/`agent_type`, matcher-capable) and a `SessionStart` event carrying
+   the active model slug — see `docs/research/codex-hooks.md` (fetched 2026-07-08).
+   Per-spawn auto-logging is designable the same way as claude-code (`SubagentStop` →
+   shared `resolve-spawn.py` resolver); build is pending a live codex session to
+   verify exact trigger wording and the hooks.json skeleton, both still
+   `Pending verification` per that research doc's WebFetch-summarizer caveat.
 
 ## Rules for adapter authors
 

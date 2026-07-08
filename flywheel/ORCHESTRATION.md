@@ -88,12 +88,14 @@ Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, 
   it inline in the main session, check §1 routing table first.
 - Main-session context is the scarcest resource. When a task will generate > ~100 lines
   of tool output, that alone is reason to delegate.
-- Log every spawn to `flywheel/state/spawns.json` at wrapup (agent, adapter, model,
-  level, task ≤15 words, outcome) — the CEO dashboard renders this ledger. Include the
-  coordinator's own row each session. `model` is always the actual resolved model ID —
-  never a placeholder deferring to the caller — resolve it from `flywheel/config.json`
-  for the tier (or the actual main-session model for the coordinator / built-in
-  Explore·Plan agents).
+- claude-code: subagent rows in `flywheel/state/spawns.json` are auto-appended by the
+  PostToolUse hook (`flywheel/resolve-spawn.py`), which reads the actual resolved
+  model off the spawn response — no manual logging needed for those. At wrapup,
+  verify/correct any wrong outcome/notes and append the coordinator's own row by hand
+  (the hook has no session-level event with the coordinator's model). Other adapters
+  degraded mode: log every spawn manually (agent, adapter, model, level, task ≤15
+  words, outcome) — `model` is always the actual resolved model ID, never a
+  placeholder deferring to the caller.
 
 ## 7. Session start / end protocol
 

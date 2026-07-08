@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      { "matcher": "Agent", "hooks": [ { "type": "command", "command": "python3 flywheel/resolve-spawn.py" } ] }
+    ]
+  }
+}

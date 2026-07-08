@@ -43,8 +43,11 @@ level, `xhigh`.
 
 | Fact | Value | Date |
 |---|---|---|
-| Subagent spawn works for all tier agents | Pending verification | — |
+| Subagent spawn works for all tier agents | Verified for claude-code (live spawn this session) | 2026-07-08 |
 | Per-agent level pinning works (native effort/reasoning key) | Pending verification | — |
+| claude-code Agent-spawn hook payload | matcher/tool_name is `"Agent"` (not `"Task"`); PreToolUse has no resolved model; PostToolUse adds `tool_response.resolvedModel` (actual model ID) — see `flywheel/resolve-spawn.py` | 2026-07-08 |
+| opencode per-spawn hook wiring (`adapters/opencode/plugin/spawn-log.ts`) | Pending verification — no opencode session available to test | 2026-07-08 |
+| codex subagent hook events (SubagentStart/SubagentStop, SessionStart model field) | Documented at https://developers.openai.com/codex/hooks (see `docs/research/codex-hooks.md`); not yet live-verified against a running codex session | 2026-07-08 |
 
 ## Toolchain (versions from commands run in THIS repo)
 
