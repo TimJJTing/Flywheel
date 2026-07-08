@@ -79,7 +79,7 @@
     "recommendation": "defer, keep manual wrapup logging",
     "autonomy_row": "Edit flywheel structural docs",
     "status": "decided-by-llm",
-    "outcome": "deferred; manual logging continues per ORCHESTRATION.md §6 until built",
+    "outcome": "built for claude-code: single PostToolUse hook (matcher \"Agent\") on flywheel/resolve-spawn.py does notify+log in one pass, using tool_response.resolvedModel as ground truth; coordinator row remains manual at wrapup (SessionEnd payload carries no model). opencode: stub written (adapters/opencode/plugin/spawn-log.ts), Pending verification. codex: NOT N/A after all -- docs/research/codex-hooks.md (fetched 2026-07-08) shows codex documents SubagentStart/SubagentStop hook events with agent_id/agent_type, so per-spawn capture is possible via a SubagentStop hook using the same shared resolver; deferred pending a live codex session to verify exact trigger wording and the hooks.json skeleton.",
     "created": "2026-07-08",
     "resolved": "2026-07-08"
   }

@@ -47,7 +47,7 @@
   "level": "high",
   "task": "v0.1 cross-examination of all docs",
   "outcome": "ok",
-  "notes": "REVISE(1 blocker,3 major,3 minor) — all fixed; first spawn died on session limit, retried"
+  "notes": "REVISE(1 blocker,3 major,3 minor) \u2014 all fixed; first spawn died on session limit, retried"
  },
  {
   "ts": "2026-07-06T15:00",
@@ -57,7 +57,7 @@
   "level": "high",
   "task": "E2E rehearsal install/seed/check/uninstall in scratch repo",
   "outcome": "ok",
-  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) — both fixed and retested"
+  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) \u2014 both fixed and retested"
  },
  {
   "ts": "2026-07-07T01:40",
@@ -77,7 +77,7 @@
   "level": "high",
   "task": "verify wrapup.sh, drift check, compact.py in scratch clone",
   "outcome": "retried",
-  "notes": "crit 8 FAIL (compact.py idempotency) — fixed, re-verified VERIFIED at ea96af3/6573b3f"
+  "notes": "crit 8 FAIL (compact.py idempotency) \u2014 fixed, re-verified VERIFIED at ea96af3/6573b3f"
  },
  {
   "ts": "2026-07-07T02:10",
@@ -87,7 +87,7 @@
   "level": "high",
   "task": "audit six improve commits before merge",
   "outcome": "ok",
-  "notes": "REVISE (5 major, 4 minor) — all applied in 6573b3f, re-audit APPROVE"
+  "notes": "REVISE (5 major, 4 minor) \u2014 all applied in 6573b3f, re-audit APPROVE"
  },
  {
   "ts": "2026-07-07T03:30",
@@ -157,7 +157,7 @@
   "level": "high",
   "task": "audit config + rule-doc changes",
   "outcome": "ok",
-  "notes": "APPROVE, 5 minors — all applied"
+  "notes": "APPROVE, 5 minors \u2014 all applied"
  },
  {
   "ts": "2026-07-08T14:00",
@@ -168,5 +168,75 @@
   "task": "unify effort/reasoning to level vocabulary + dashboard ledger enrichment",
   "outcome": "ok",
   "notes": "coordinator session; routed engineer/utility/auditor/verifier per plan"
+ },
+ {
+  "ts": "2026-07-08T14:33",
+  "agent": "utility",
+  "adapter": "claude-code",
+  "model": "claude-haiku-4-5-20251001",
+  "level": "medium",
+  "task": "hook payload test spawn",
+  "outcome": "ok",
+  "notes": "manual: spawned during dump-hook phase, no auto row"
+ },
+ {
+  "ts": "2026-07-08T14:34",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "build resolve-spawn hook + doc cleanup",
+  "outcome": "retried",
+  "notes": "manual: pre-hook; verifier found flock race, retried"
+ },
+ {
+  "ts": "2026-07-08T14:39",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Researcher: study codex hooks doc",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-08T14:40",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify spawn hook implementation",
+  "outcome": "ok",
+  "notes": "auto-logged; verdict FAILED - found flock race corruption"
+ },
+ {
+  "ts": "2026-07-08T14:43",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Fix flock race + codex doc fix",
+  "outcome": "ok",
+  "notes": "auto-logged; retry of 14:34 task, fix verified"
+ },
+ {
+  "ts": "2026-07-08T14:47",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Re-verify flock fix + doc corrections",
+  "outcome": "ok",
+  "notes": "auto-logged; verdict VERIFIED (3x20 concurrent stress)"
+ },
+ {
+  "ts": "2026-07-08T15:00",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-fable-5",
+  "level": "medium",
+  "task": "spawn-visibility hook (d7) + TEMPLATES cleanup + codex hooks research",
+  "outcome": "ok",
+  "notes": "coordinator session 5; routed engineer/verifier/researcher/utility"
  }
 ]

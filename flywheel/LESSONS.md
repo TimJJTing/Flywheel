@@ -1,3 +1,4 @@
 # Lessons — append-only. Format: YYYY-MM-DD | task | tier path | cause | rule to update (if any)
 2026-07-06 | v0.1 pre-release audit | coordinator→auditor | dogfooding conflict: payload state/STATUS/config doubled as install templates, shipping flywheel's own data + unresolvable hashes into fresh targets | INSTALL now sources owned files from defaults/
 2026-07-06 | E2E verification | engineer→verifier | check.sh hash loop dropped unterminated final line (read EOF) — last commit hash silently unchecked | check.sh read guard added
+2026-07-08 | d7 spawn auto-log hook | engineer→verifier(FAIL)→engineer→verifier(VERIFIED) | flock held on "a+" fd but explicit LOCK_UN ran before TextIOWrapper flush — concurrent hook runs read stale bytes, ledger wiped to 1 row | locking rule: flock before read on "r+", let with-close flush-then-unlock; never manual LOCK_UN around buffered writes
