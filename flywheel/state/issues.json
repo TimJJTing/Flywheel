@@ -20,5 +20,16 @@
   "commits": [],
   "opened": "2026-07-06",
   "closed": null
+ },
+ {
+  "id": "i3",
+  "title": "INDEX.md on-demand row for strategy doc (structural process)",
+  "type": "debt",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Add 'docs/research/strategy-2026-07.md | before feature/priority/roadmap decisions' to INDEX.md on-demand table. INDEX.md is structural (MAINTENANCE.md par.1): strategist plan + auditor + improve branch. Fold into the due improve pass, together with A1 (prose-rule to check.sh migrations) and A4 (delete-to-add rule for IMPROVE.md) from the strategy doc.",
+  "commits": [],
+  "opened": "2026-07-09",
+  "closed": null
  }
 ]

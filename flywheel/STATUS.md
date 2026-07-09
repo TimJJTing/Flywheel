@@ -1,20 +1,19 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-09 (session 6, codex adapter Part A built + verified)
+Updated: 2026-07-09 (session 7, strategy consulting session)
 
 ## Current state
-- codex "no subagents" assumption REFUTED + Part A BUILT + VERIFIED (fresh-context
-  verifier, not self-reported): codex CLI has first-class subagents
-  (`.codex/agents/*.toml`, per-agent model/effort pinning) + hooks.json (same shape
-  as claude-code) + SKILL.md. Drafted adapters/codex/ (agents/*.toml,
-  hooks.json.merge, skills/, AGENTS.md.block); wired install.sh (`--adapters
-  codex`), resolve-spawn.py (codex branch resolves model/level from config.json
-  only — SubagentStop payload's `model` field is the PARENT's model, correctly
-  discarded), check.sh (codex TOML-vs-config.json cross-check). plan-auditor found
-  1 major (hooks.json matcher pipe-alternation unverified → fixed to ".*") + 4
-  minor, all fixed; verifier independently re-ran everything in own scratch dirs —
-  SAFE TO MERGE, no regression to claude-code/opencode install paths.
+- STRATEGY SET (session 7): motto "Heroes come and go; policies compound." (human-
+  approved, d-ledger); niche = self-amending operating policy. Landscape + 5 revised
+  assumptions + open research questions: docs/research/strategy-2026-07.md — read
+  before feature/priority decisions. Embedded in README.md + CLAUDE.md pointer.
+- codex Part A BUILT + VERIFIED (session 6, fresh-context verifier): "no subagents"
+  refuted — codex has `.codex/agents/*.toml` + hooks.json + SKILL.md. adapters/codex/
+  drafted; install.sh/resolve-spawn.py/check.sh wired (resolve-spawn codex branch
+  reads config.json only; SubagentStop `model` = parent's, discarded). Audited (1
+  major + 4 minor, all fixed), verified independently — SAFE TO MERGE, no regression
+  to claude-code/opencode.
 - AWAITING CODEX LIVE VERIFICATION: no codex CLI available this session. Part B
   (install `.codex/` into this repo) + Part C (11-step human checklist) in
   docs/plans/codex-adapter-dogfood.md are next, human-run.
@@ -30,7 +29,9 @@ Updated: 2026-07-09 (session 6, codex adapter Part A built + verified)
    docs/plans/codex-adapter-dogfood.md.
 2. Real-world adoption test: install into an actual project, run SEED-PROMPT.md end
    to end with a live adapter session (only simulated mechanically so far).
-3. Improve pass due (5 sessions reached) — run `improve` skill next session.
+3. Improve pass due (5 sessions reached) — run `improve` skill next session; fold in
+   strategy items: INDEX.md strategy-doc row (issue ledger), A1 prose-rule→check.sh
+   migrations, A4 delete-to-add rule (docs/research/strategy-2026-07.md).
 4. opencode spawn-log plugin: verify opencode plugin API live, replace stub.
 
 ## Blockers / decisions pending the human

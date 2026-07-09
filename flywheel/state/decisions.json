@@ -1,86 +1,106 @@
 [
-  {
-    "id": "d1",
-    "title": "Config tiers nest per-adapter values under \"adapters\" map",
-    "detail": "User request; extensible without schema change. (Key renamed harnesses→adapters 2026-07-07.)",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Edit flywheel structural docs",
-    "status": "approved",
-    "outcome": "adopted in config.json",
-    "created": "2026-07-06",
-    "resolved": "2026-07-06"
-  },
-  {
-    "id": "d2",
-    "title": "JSON ledgers + build-step dashboard over live-fetch HTML",
-    "detail": "Offline, diffable.",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Architectural fork",
-    "status": "decided-by-llm",
-    "outcome": "state/*.json + dashboard/build.{py,mjs}",
-    "created": "2026-07-06",
-    "resolved": "2026-07-06"
-  },
-  {
-    "id": "d3",
-    "title": "No {{PLACEHOLDER}} templating; 3 bootstrap-owned files carry project specifics",
-    "detail": "STATUS.md, FACTS.md, config.json are seeded by the bootstrap prompt instead.",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Architectural fork",
-    "status": "decided-by-llm",
-    "outcome": "defaults/ holds the bootstrap-owned seeds",
-    "created": "2026-07-06",
-    "resolved": "2026-07-06"
-  },
-  {
-    "id": "d4",
-    "title": "Hooks skipped in v0.1",
-    "detail": "ADAPTERS.md documents them as the hardening path.",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Edit flywheel structural docs",
-    "status": "decided-by-llm",
-    "outcome": "deferred to a later version",
-    "created": "2026-07-06",
-    "resolved": "2026-07-06"
-  },
-  {
-    "id": "d5",
-    "title": "Merge six improve branches (terminology, STATUS slim, R8, wrapup.sh, drift, compact)",
-    "detail": "Human approved the full plan in-session (plan mode); auditor APPROVE + verifier VERIFIED before fast-forward to main at 6573b3f.",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "approved",
-    "outcome": "merged to main",
-    "created": "2026-07-07",
-    "resolved": "2026-07-07"
-  },
-  {
-    "id": "d6",
-    "title": "No pi-style providers block in config.json",
-    "detail": "Flywheel never calls model APIs itself — the adapter does; per-tier adapters map plus the opencode 'provider' field already covers it.",
-    "options": [],
-    "recommendation": "",
-    "autonomy_row": "Architectural fork",
-    "status": "decided-by-llm",
-    "outcome": "config schema unchanged beyond harnesses→adapters key rename",
-    "created": "2026-07-07",
-    "resolved": "2026-07-07"
-  },
-  {
-    "id": "d7",
-    "title": "Cross-adapter auto-log hook for spawns.json — design only, not built now",
-    "detail": "Extends d4 (hooks skipped). Design: claude-code SubagentStop/PostToolUse(Task) hook -> resolve-spawn.py maps subagent_type -> tier -> config.json adapter block -> {adapter,model,level}, appends a row; matching SessionStart/SessionEnd hook emits the coordinator row. opencode: same resolver via opencode.json plugin/hook mechanism. codex: degraded mode, no subagents to capture -- only session-level (coordinator/role) events loggable via notify; per-subagent capture is N/A, document the asymmetry rather than faking rows. Resolver logic is shared; only the wiring differs per adapter.",
-    "options": ["build now", "defer, keep manual wrapup logging"],
-    "recommendation": "defer, keep manual wrapup logging",
-    "autonomy_row": "Edit flywheel structural docs",
-    "status": "decided-by-llm",
-    "outcome": "built for claude-code: single PostToolUse hook (matcher \"Agent\") on flywheel/resolve-spawn.py does notify+log in one pass, using tool_response.resolvedModel as ground truth; coordinator row remains manual at wrapup (SessionEnd payload carries no model). opencode: stub written (adapters/opencode/plugin/spawn-log.ts), Pending verification. codex: NOT N/A after all -- docs/research/codex-hooks.md (fetched 2026-07-08) shows codex documents SubagentStart/SubagentStop hook events with agent_id/agent_type, so per-spawn capture is possible via a SubagentStop hook using the same shared resolver; deferred pending a live codex session to verify exact trigger wording and the hooks.json skeleton.",
-    "created": "2026-07-08",
-    "resolved": "2026-07-08"
-  }
+ {
+  "id": "d1",
+  "title": "Config tiers nest per-adapter values under \"adapters\" map",
+  "detail": "User request; extensible without schema change. (Key renamed harnesses\u2192adapters 2026-07-07.)",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Edit flywheel structural docs",
+  "status": "approved",
+  "outcome": "adopted in config.json",
+  "created": "2026-07-06",
+  "resolved": "2026-07-06"
+ },
+ {
+  "id": "d2",
+  "title": "JSON ledgers + build-step dashboard over live-fetch HTML",
+  "detail": "Offline, diffable.",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Architectural fork",
+  "status": "decided-by-llm",
+  "outcome": "state/*.json + dashboard/build.{py,mjs}",
+  "created": "2026-07-06",
+  "resolved": "2026-07-06"
+ },
+ {
+  "id": "d3",
+  "title": "No {{PLACEHOLDER}} templating; 3 bootstrap-owned files carry project specifics",
+  "detail": "STATUS.md, FACTS.md, config.json are seeded by the bootstrap prompt instead.",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Architectural fork",
+  "status": "decided-by-llm",
+  "outcome": "defaults/ holds the bootstrap-owned seeds",
+  "created": "2026-07-06",
+  "resolved": "2026-07-06"
+ },
+ {
+  "id": "d4",
+  "title": "Hooks skipped in v0.1",
+  "detail": "ADAPTERS.md documents them as the hardening path.",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Edit flywheel structural docs",
+  "status": "decided-by-llm",
+  "outcome": "deferred to a later version",
+  "created": "2026-07-06",
+  "resolved": "2026-07-06"
+ },
+ {
+  "id": "d5",
+  "title": "Merge six improve branches (terminology, STATUS slim, R8, wrapup.sh, drift, compact)",
+  "detail": "Human approved the full plan in-session (plan mode); auditor APPROVE + verifier VERIFIED before fast-forward to main at 6573b3f.",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "approved",
+  "outcome": "merged to main",
+  "created": "2026-07-07",
+  "resolved": "2026-07-07"
+ },
+ {
+  "id": "d6",
+  "title": "No pi-style providers block in config.json",
+  "detail": "Flywheel never calls model APIs itself \u2014 the adapter does; per-tier adapters map plus the opencode 'provider' field already covers it.",
+  "options": [],
+  "recommendation": "",
+  "autonomy_row": "Architectural fork",
+  "status": "decided-by-llm",
+  "outcome": "config schema unchanged beyond harnesses\u2192adapters key rename",
+  "created": "2026-07-07",
+  "resolved": "2026-07-07"
+ },
+ {
+  "id": "d7",
+  "title": "Cross-adapter auto-log hook for spawns.json \u2014 design only, not built now",
+  "detail": "Extends d4 (hooks skipped). Design: claude-code SubagentStop/PostToolUse(Task) hook -> resolve-spawn.py maps subagent_type -> tier -> config.json adapter block -> {adapter,model,level}, appends a row; matching SessionStart/SessionEnd hook emits the coordinator row. opencode: same resolver via opencode.json plugin/hook mechanism. codex: degraded mode, no subagents to capture -- only session-level (coordinator/role) events loggable via notify; per-subagent capture is N/A, document the asymmetry rather than faking rows. Resolver logic is shared; only the wiring differs per adapter.",
+  "options": [
+   "build now",
+   "defer, keep manual wrapup logging"
+  ],
+  "recommendation": "defer, keep manual wrapup logging",
+  "autonomy_row": "Edit flywheel structural docs",
+  "status": "decided-by-llm",
+  "outcome": "built for claude-code: single PostToolUse hook (matcher \"Agent\") on flywheel/resolve-spawn.py does notify+log in one pass, using tool_response.resolvedModel as ground truth; coordinator row remains manual at wrapup (SessionEnd payload carries no model). opencode: stub written (adapters/opencode/plugin/spawn-log.ts), Pending verification. codex: NOT N/A after all -- docs/research/codex-hooks.md (fetched 2026-07-08) shows codex documents SubagentStart/SubagentStop hook events with agent_id/agent_type, so per-spawn capture is possible via a SubagentStop hook using the same shared resolver; deferred pending a live codex session to verify exact trigger wording and the hooks.json skeleton.",
+  "created": "2026-07-08",
+  "resolved": "2026-07-08"
+ },
+ {
+  "id": "d8",
+  "title": "Motto + niche positioning adopted",
+  "detail": "Strategy session 2026-07-09: motto 'Heroes come and go; policies compound.' chosen by human; niche = self-amending operating policy (invest in FACTS anti-fabrication, never-self-verified, improve loop; not the org chart -- BMAD owns that). Full findings + 5 revised assumptions: docs/research/strategy-2026-07.md. Embedded in README.md and CLAUDE.md (outside managed block).",
+  "options": [
+   "Heroes come and go; policies compound.",
+   "Policies over heroes.",
+   "Trust the system, not the hero.",
+   "Answers fade; systems compound."
+  ],
+  "recommendation": "Heroes come and go; policies compound.",
+  "autonomy_row": "positioning/branding -- human call",
+  "status": "approved",
+  "outcome": "Motto adopted; strategy doc written; README/CLAUDE.md updated",
+  "created": "2026-07-09",
+  "resolved": "2026-07-09"
+ }
 ]
