@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
-"""PostToolUse hook (matcher "Agent"): notify the user of the resolved model/level
-for a spawned subagent and auto-append the row to flywheel/state/spawns.json
-(implements decision d7). Reads the hook JSON payload from stdin.
+"""Hook: notify the user of the resolved model/level for a spawned subagent and
+auto-append the row to flywheel/state/spawns.json (implements decision d7).
+Reads the hook JSON payload from stdin. Adapter selector is sys.argv[1] (default
+"claude-code" — the existing claude-code settings.json.merge command passes no arg,
+so that behavior is unchanged).
 
-ponytail: one script, no flags — this is the only mode there is. Any failure to
-parse/resolve must never block a spawn, so all errors are swallowed (exit 0).
+claude-code: PostToolUse(Agent) hook. tool_input.subagent_type is the agent name;
+tool_response.resolvedModel is the ACTUAL resolved subagent model (trustworthy).
+
+codex: SubagentStop hook. Top-level agent_type is the agent name; payload["model"] is
+the PARENT session's model, not the subagent's (docs/research/codex-hooks.md Rev 2) —
+never used as the row's model. model/level are resolved ENTIRELY from
+flywheel/config.json by agent_type -> tier.
+
+Branches per-adapter (payload shapes differ, must not run unmodified against the
+other): build_row_claude_code / build_row_codex. Shared across both: TIER_MAP, the
+cwd-resolution fallback, the ts/outcome row fields, the file-locking append to
+spawns.json, and exit-0-on-any-error (a hook failure must never block a spawn).
+
+ponytail: one script, adapter branch via argv — no flag-parsing library needed.
 """
 import fcntl
 import json
@@ -24,22 +38,24 @@ TIER_MAP = {
 }
 
 
-def main():
-    payload = json.load(sys.stdin)
+def resolve_config(cwd, tier, adapter):
+    """Look up (model, level) for a tier x adapter cell in flywheel/config.json."""
+    if not tier:
+        return None, None
+    try:
+        config = json.load(open(os.path.join(cwd, "flywheel", "config.json"), encoding="utf-8"))
+        cell = config.get("tiers", {}).get(tier, {}).get("adapters", {}).get(adapter, {})
+        return cell.get("model"), cell.get("level")
+    except Exception:
+        return None, None
+
+
+def build_row_claude_code(payload, cwd):
     tool_input = payload.get("tool_input") or {}
     tool_response = payload.get("tool_response") or {}
     subagent_type = tool_input.get("subagent_type") or "unknown"
-    cwd = payload.get("cwd") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
     tier = TIER_MAP.get(subagent_type)
-    config_model = config_level = None
-    if tier:
-        try:
-            config = json.load(open(os.path.join(cwd, "flywheel", "config.json"), encoding="utf-8"))
-            cell = config.get("tiers", {}).get(tier, {}).get("adapters", {}).get("claude-code", {})
-            config_model, config_level = cell.get("model"), cell.get("level")
-        except Exception:
-            pass
+    config_model, config_level = resolve_config(cwd, tier, "claude-code")
 
     model = tool_response.get("resolvedModel") or config_model or "Pending verification"
     level = config_level if tier else "-"
@@ -53,15 +69,65 @@ def main():
 
     task = " ".join((tool_input.get("description") or "").split()[:15])
 
-    row = {
-        "ts": datetime.now().strftime("%Y-%m-%dT%H:%M"),
+    return {
         "agent": subagent_type,
         "adapter": "claude-code",
         "model": model,
         "level": level,
         "task": task,
-        "outcome": "ok",
         "notes": notes,
+    }
+
+
+def build_row_codex(payload, cwd):
+    # SubagentStop payload is top-level (no tool_input/tool_response wrapper).
+    subagent_type = payload.get("agent_type") or "unknown"
+    tier = TIER_MAP.get(subagent_type)
+    config_model, config_level = resolve_config(cwd, tier, "codex")
+
+    # payload["model"] is the PARENT session's model, not the subagent's — never use
+    # it (docs/research/codex-hooks.md Rev 2). model/level come from config.json only.
+    model = config_model or "Pending verification"
+    level = config_level if tier else "-"
+
+    # last_assistant_message is the subagent's RESULT, not the task it was given —
+    # there is no clean task field in this payload, so task stays manual-at-wrapup.
+    task = ""
+    notes = "auto-logged (codex; model from config, payload model is parent's)"
+
+    return {
+        "agent": subagent_type,
+        "adapter": "codex",
+        "model": model,
+        "level": level,
+        "task": task,
+        "notes": notes,
+    }
+
+
+BUILDERS = {
+    "claude-code": build_row_claude_code,
+    "codex": build_row_codex,
+}
+
+
+def main():
+    adapter = sys.argv[1] if len(sys.argv) > 1 else "claude-code"
+    payload = json.load(sys.stdin)
+    cwd = payload.get("cwd") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    builder = BUILDERS.get(adapter, build_row_claude_code)
+    fields = builder(payload, cwd)
+
+    row = {
+        "ts": datetime.now().strftime("%Y-%m-%dT%H:%M"),
+        "agent": fields["agent"],
+        "adapter": fields["adapter"],
+        "model": fields["model"],
+        "level": fields["level"],
+        "task": fields["task"],
+        "outcome": "ok",
+        "notes": fields["notes"],
     }
 
     spawns_path = os.path.join(cwd, "flywheel", "state", "spawns.json")
@@ -82,7 +148,7 @@ def main():
         # buffered write is flushed to disk BEFORE the lock is released — that ordering
         # (not the lock itself) was the actual bug (flush raced unlock).
 
-    print(json.dumps({"systemMessage": f"spawn {subagent_type} → {model} / {level}"}))
+    print(json.dumps({"systemMessage": f"spawn {row['agent']} → {row['model']} / {row['level']}"}))
 
 
 if __name__ == "__main__":

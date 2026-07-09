@@ -183,6 +183,24 @@ if [ "$DO_CODEX" = 1 ] || [ "$DO_OPENCODE" = 1 ]; then
   echo "  wired: AGENTS.md"
 fi
 
+if [ "$DO_CODEX" = 1 ]; then
+  mkdir -p "$TARGET/.codex/agents"
+  for af in "$ADAPTERS_DIR"/codex/agents/*.toml; do
+    [ -e "$af" ] || continue
+    copy_managed_if_ok "$af" "$TARGET/.codex/agents/$(basename "$af")"
+  done
+  for sd in "$ADAPTERS_DIR"/codex/skills/*/; do
+    [ -d "$sd" ] || continue
+    copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.codex/skills/$(basename "$sd")/SKILL.md"
+  done
+  # hooks.json is strict JSON and cannot carry the "flywheel-managed" marker
+  # copy_managed_if_ok keys off, so an existing unmanaged hooks.json is always left
+  # alone (first install writes it; re-install over a user's own file skips it).
+  # ponytail: no JSON deep-merge for hooks.json; add one (mirroring the opencode.json
+  # merge path below) when a real repo ships its own hooks.json.
+  copy_managed_if_ok "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
+fi
+
 if [ "$DO_CLAUDE" = 1 ]; then
   wire_block "$ADAPTERS_DIR/claude-code/CLAUDE.md.block" "$TARGET/CLAUDE.md"
   echo "  wired: CLAUDE.md"

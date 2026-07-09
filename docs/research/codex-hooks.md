@@ -1,8 +1,49 @@
 # Codex hooks — capability study for flywheel spawn auto-log (d7)
 
-- **Source:** https://developers.openai.com/codex/hooks
-- **Fetch date:** 2026-07-08
-- **Method:** two independent WebFetch passes against the same URL. The event-name
+> **Revision 2 (2026-07-08)** — supersedes the WebFetch-summarizer caveats below with
+> direct reads of the official docs. The `Pending verification` items in Revision 1
+> (full hooks.json skeleton; subagent payload fields; the `model` field's referent) are
+> now resolved, and a **much larger** finding landed: codex has **first-class custom
+> subagents and skills**, not just a hook surface. See the "## Revision 2" section
+> immediately below; Revision 1's body is retained unedited as the original record.
+
+## Revision 2 — codex has full subagent + skill capability (VERIFIED)
+
+**New sources (all developers.openai.com, read directly 2026-07-08):**
+- https://developers.openai.com/codex/subagents (+ `.md` raw) — custom subagents
+- https://developers.openai.com/codex/skills — Agent Skills (SKILL.md)
+- https://developers.openai.com/codex/hooks — hooks.json skeleton (re-read)
+- https://developers.openai.com/codex/config-reference — config + effort levels
+
+**Headline upgrade:** the degraded-mode assumption for the codex adapter is not just
+refuted at the hook layer — codex has a **first-class custom-subagent system** with
+per-agent model + reasoning-effort pinning, plus a skills mechanism. The codex adapter
+should be built as a **full (non-degraded) adapter**, mirroring claude-code/opencode.
+
+| Claim | Status | Evidence (source, 2026-07-08) |
+|---|---|---|
+| Custom subagents defined as **TOML** in `.codex/agents/*.toml` (project) / `~/.codex/agents/` (personal) | **VERIFIED** | subagents.md, verbatim example `.codex/agents/reviewer.toml` reproduced |
+| Required agent fields: `name`, `description`, `developer_instructions` | **VERIFIED** | subagents.md |
+| Optional agent fields incl. `model`, `model_reasoning_effort`, `sandbox_mode`, `mcp_servers`, `skills.config`, `nickname_candidates` | **VERIFIED** | subagents.md |
+| **Per-agent model + reasoning effort pinning works** | **VERIFIED (docs)** | example sets `model="gpt-5.4"`, `model_reasoning_effort="high"`. NB: live end-to-end pin still owed (FACTS.md row stays Pending until a running session confirms) |
+| Valid effort levels: `minimal\|low\|medium\|high\|xhigh` | **VERIFIED** | config-reference (`model_reasoning_effort`; "xhigh is model-dependent") — validates config.json codex `high`/`xhigh` |
+| Full literal `hooks.json` skeleton: top key `"hooks"` → EventName → `[{matcher, hooks:[{type:"command", command, statusMessage, timeout}]}]` | **VERIFIED (WebFetch summary; live-Pending)** (was Pending in Rev 1) | hooks doc, skeleton reproduced |
+| `SubagentStop` payload: `turn_id`, `agent_id`, `agent_type`, `session_id`, `cwd`, `hook_event_name`, `model` | **VERIFIED (WebFetch summary; live-Pending)** | hooks doc |
+| The `model` field in subagent events = **PARENT session model**, not the subagent's | **VERIFIED (WebFetch summary; live-Pending)** (was Pending/Assumed in Rev 1) | hooks doc: "reflects the parent session's model, not the subagent's individual model configuration" → **resolver MUST take model from config.json by `agent_type`→tier, never the payload** |
+| Skills: folder w/ `SKILL.md` (frontmatter `name`,`description`) in `.codex/skills/` (project) / `~/.codex/skills/` | **VERIFIED** | skills doc — same shape as claude-code skills, so delegate/wrapup/improve port cleanly |
+| Config: `.codex/config.toml` (project, when trusted) + `~/.codex/config.toml`; `[agents.<name>]`, `agents.max_threads` (default 6), `agents.max_depth` | **VERIFIED** | config-reference |
+| Codex spawns a subagent **only when explicitly asked** (no autonomous fan-out) | **VERIFIED** | subagents doc — delegate skill must name the agent to spawn |
+| flywheel's codex adapter spawns real subagent processes end-to-end; per-agent pin actually takes effect; `resolve-spawn.py` codex branch fires on `SubagentStop` | **Pending verification** | no live codex session run against this repo yet — this is the one validation still owed (see docs/plans/codex-adapter-dogfood.md) |
+
+**Consequence for the resolver:** unlike claude-code (`PostToolUse(Agent)` carries
+`tool_response.resolvedModel` = the real subagent model), codex's `SubagentStop.model`
+is the *parent's* model. So on codex the spawn row's `model`/`level` must be resolved
+**entirely** from `flywheel/config.json` by `agent_type`→tier. `agent`←`agent_type`,
+`task` is not cleanly in the payload (`last_assistant_message` is the result), so `task`
+may stay manual-at-wrapup. See the dogfood plan for the exact `resolve-spawn.py` change.
+
+---
+ The event-name
   list and the load-bearing structural facts were **identical across both passes**
   (high confidence). The second pass's *prose trigger descriptions* were visibly
   garbled (it labeled `SubagentStart` as an approval hook and `SubagentStop` as a

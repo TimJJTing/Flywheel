@@ -40,10 +40,13 @@ Answer these for the target tool; the answers ARE the adapter.
    it was assumed to be: codex documents `SubagentStart`/`SubagentStop` hook events
    (with `agent_id`/`agent_type`, matcher-capable) and a `SessionStart` event carrying
    the active model slug — see `docs/research/codex-hooks.md` (fetched 2026-07-08).
-   Per-spawn auto-logging is designable the same way as claude-code (`SubagentStop` →
-   shared `resolve-spawn.py` resolver); build is pending a live codex session to
-   verify exact trigger wording and the hooks.json skeleton, both still
-   `Pending verification` per that research doc's WebFetch-summarizer caveat.
+   Per-spawn auto-logging is wired the same way as claude-code: `SubagentStop` →
+   shared `resolve-spawn.py codex` (see `adapters/codex/hooks.json.merge`,
+   `docs/plans/codex-adapter-dogfood.md` Part A). The hooks.json skeleton and payload
+   field names are doc-verified (Rev 2 of that research doc) but sourced via a WebFetch
+   summarizer, not a live codex session — status is "VERIFIED (WebFetch summary;
+   live-Pending)"; end-to-end proof (real spawn, real hook fire, real row) is still
+   owed and tracked as Part C of the dogfood plan.
 
 ## Rules for adapter authors
 

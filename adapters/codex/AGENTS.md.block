@@ -3,36 +3,34 @@
 
 Project: (one line — what this project is; seed prompt fills this)
 
-This adapter runs flywheel in **degraded mode** (no subagents — see
-flywheel/ORCHESTRATION.md §8). Read `flywheel/INDEX.md` now; it indexes everything.
+Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand docs).
 
 ## Session protocol
 1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
    `bash flywheel/check.sh`: ledger-untracked-commit warnings = work done outside the
    framework — triage, backfill ledgers/docs, note in STATUS.md.
-2. Before ending / context low: run the wrapup procedure inline — update STATUS.md +
+2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are codex custom
+   subagents (`.codex/agents/*.toml`); codex only spawns one when explicitly asked, so
+   name the agent to spawn (architect / researcher / engineer / utility / verifier /
+   plan-auditor) and fill the matching template from `flywheel/TEMPLATES.md`. Use the
+   `delegate` skill to compose the delegation.
+3. Before ending / context low: run the `wrapup` skill — update STATUS.md +
    `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` (check, dashboard, commit
-   per `flywheel/GIT.md`).
-
-## Degraded-mode tier rules
-- To do tier work, paste the matching template from `flywheel/TEMPLATES.md` into THIS
-  session and announce "operating as <tier>". Follow that tier's rules until the task
-  reports back.
-- Verification is never self-performed: verifier/auditor passes (Template 4) run in a
-  FRESH session with clean context. Ask the human to start one (or queue it in
-  `state/decisions.json` if they are away). A same-session "verification" is not one.
-- Model switching: the tier→model mapping lives in `flywheel/config.json` (codex
-  entries). When a task belongs to a tier mapped to a different model, tell the human
-  which model to switch to, quoting config.json — never a model name from memory.
-- State honestly in reports what degraded mode cost: no context isolation, no
-  parallelism, verification only as independent as the human made it.
+   per `flywheel/GIT.md`). Uncommitted = lost.
 
 ## Hard rules (point-of-use duplicates — keep identical to INDEX.md)
 - HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)
-  wholesale — slice via grep/jq/python.
+  wholesale — slice via grep/jq/python, or delegate to `utility`.
 - HR2. Model names / level values / API params come from `flywheel/config.json` +
   `flywheel/FACTS.md` only. Missing → write `Pending verification`, never invent.
-- HR3. No agent declares its own work complete — fresh-session Template 4 verdict.
+- HR3. No agent declares its own work complete — dispatch `verifier` / `plan-auditor`.
 - HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind
   at every autonomy level.
+
+## Skill whitelist (ignore other skills unless the user names them)
+Repo skills: `delegate`, `wrapup`, `improve` (in `.codex/skills/`).
+
+Note: `model` / `model_reasoning_effort` in each `.codex/agents/*.toml` must mirror
+`flywheel/config.json` tiers.<tier>.adapters.codex — the seed prompt fills both from
+live provider docs; `flywheel/check.sh` cross-checks them.
 <!-- flywheel:end -->

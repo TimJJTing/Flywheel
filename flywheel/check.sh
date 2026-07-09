@@ -193,5 +193,43 @@ sys.exit(0 if ok else 1)
   [ $? -ne 0 ] && FAIL=1
 fi
 
+# Codex agent TOML (model/model_reasoning_effort) vs config.json, only if
+# .codex/agents/ exists.
+CODEX_AGENTS_DIR="$REPO_ROOT/.codex/agents"
+if [ -d "$CODEX_AGENTS_DIR" ] && command -v python3 >/dev/null 2>&1; then
+  python3 -c '
+import json, re, os, sys
+agents_dir, config_path = sys.argv[1], sys.argv[2]
+tiers = json.load(open(config_path, encoding="utf-8")).get("tiers", {})
+
+mapping = {"architect": "architect", "researcher": "strategist", "engineer": "engineer",
+           "utility": "utility", "verifier": "verifier", "plan-auditor": "auditor"}
+ok = True
+for agent, tier_key in mapping.items():
+    path = os.path.join(agents_dir, agent + ".toml")
+    if not os.path.isfile(path):
+        continue
+    text = open(path, encoding="utf-8").read()
+    m_model = re.search(r"^model\s*=\s*\"([^\"]*)\"", text, re.M)
+    m_effort = re.search(r"^model_reasoning_effort\s*=\s*\"([^\"]*)\"", text, re.M)
+    expect = tiers.get(tier_key, {}).get("adapters", {}).get("codex", {})
+    exp_model, exp_level = expect.get("model"), expect.get("level")
+    if exp_model == "Pending verification":
+        print(f"⚠ {agent}.toml frontmatter check skipped (config model still Pending verification)")
+        continue
+    got_model = m_model.group(1) if m_model else None
+    got_effort = m_effort.group(1) if m_effort else None
+    if got_model != exp_model or got_effort != exp_level:
+        print(f"✗ {agent}.toml frontmatter ({got_model}/{got_effort}) != config.json {tier_key} ({exp_model}/{exp_level})")
+        ok = False
+    else:
+        print(f"✓ {agent}.toml frontmatter matches config.json")
+if not ok:
+    print("  → config.json is source of truth; edit .codex/agents/*.toml to match")
+sys.exit(0 if ok else 1)
+' "$CODEX_AGENTS_DIR" "$FLYWHEEL_DIR/config.json"
+  [ $? -ne 0 ] && FAIL=1
+fi
+
 if [ "$FAIL" -eq 0 ]; then echo "✓ all checks passed"; exit 0;
 else echo "✗ one or more checks failed"; exit 1; fi
