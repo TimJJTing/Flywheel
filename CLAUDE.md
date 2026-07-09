@@ -28,3 +28,6 @@ Project: flywheel — the portable agent-framework boilerplate itself (dogfoodin
 Repo skills: `delegate`, `wrapup`, `improve`. (Add project-specific entries below this
 line; DIAGNOSIS.md Leak 2 explains why this list stays short.)
 <!-- flywheel:end -->
+
+Motto: "Heroes come and go; policies compound." Strategy & roadmap assumptions:
+`docs/research/strategy-2026-07.md` — read before any feature/priority/roadmap decision.

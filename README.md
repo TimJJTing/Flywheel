@@ -1,7 +1,16 @@
 # Flywheel
 
-A portable operating system for LLM-assisted software projects. Install it into any
-repo — greenfield or legacy, any tech stack — and every AI coding session gains:
+> **Heroes come and go; policies compound.**
+
+A hero model may one-shot a brilliant fix, but only good policies carry a project
+across hundreds of sessions. Flywheel is not another agent framework — it is a
+**self-amending operating policy** for LLM-run projects: facts are verified or marked
+`Pending verification` (never recalled), completion is never self-graded, and the
+rules amend themselves session by session from a friction log. The repo itself is the
+harness — portable to any adapter (Claude Code, Codex CLI, OpenCode), bound to none.
+
+Install it into any repo — greenfield or legacy, any tech stack — and every AI coding
+session gains:
 
 - **A model hierarchy** ("the Commander does not step onto the battlefield"): expensive
   models decide, cheap models execute, with explicit delegation contracts, escalation
@@ -36,6 +45,7 @@ build your first dashboard: `flywheel/dashboard/dashboard.html` — double-click
 | Want to… | Read |
 |---|---|
 | Understand the idea (CEO/COO analogy) | [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) |
+| Strategy / competitive positioning | [docs/research/strategy-2026-07.md](docs/research/strategy-2026-07.md) |
 | See what it does day-to-day | [docs/BEHAVIORS.md](docs/BEHAVIORS.md), [docs/USAGE.md](docs/USAGE.md) |
 | Install / uninstall / upgrade | [docs/INSTALL.md](docs/INSTALL.md) |
 | The bootstrap prompt | [docs/SEED-PROMPT.md](docs/SEED-PROMPT.md) |
