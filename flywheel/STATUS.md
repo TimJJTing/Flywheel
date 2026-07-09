@@ -1,30 +1,33 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-08 (session 5, d7 spawn hook built + codex hooks research)
+Updated: 2026-07-09 (session 6, codex adapter Part A built + verified)
 
 ## Current state
-- d7 BUILT for claude-code: `.claude/settings.json` PostToolUse hook (matcher "Agent")
-  → `flywheel/resolve-spawn.py` shows user "spawn <agent> → <model> / <level>" and
-  auto-appends spawns.json rows (model from `tool_response.resolvedModel` = ground
-  truth). VERIFIED incl. 3×20 concurrent stress after a flock race fix (buffered
-  write flushed after LOCK_UN — see LESSONS.md). Coordinator row stays manual at
-  wrapup (no session-level hook event carries the model).
-- codex assumption REFUTED: codex hooks DO expose SubagentStart/SubagentStop
-  (agent_type) + SessionStart (model slug) — per-spawn auto-log designable, see
-  docs/research/codex-hooks.md. Not built: needs a live codex session to verify.
-- TEMPLATES.md "Model/level: per config.json" dead text removed (frontmatter is the
-  real binding, synced by sync.py; hook now reports the resolved model per spawn).
+- codex "no subagents" assumption REFUTED + Part A BUILT + VERIFIED (fresh-context
+  verifier, not self-reported): codex CLI has first-class subagents
+  (`.codex/agents/*.toml`, per-agent model/effort pinning) + hooks.json (same shape
+  as claude-code) + SKILL.md. Drafted adapters/codex/ (agents/*.toml,
+  hooks.json.merge, skills/, AGENTS.md.block); wired install.sh (`--adapters
+  codex`), resolve-spawn.py (codex branch resolves model/level from config.json
+  only — SubagentStop payload's `model` field is the PARENT's model, correctly
+  discarded), check.sh (codex TOML-vs-config.json cross-check). plan-auditor found
+  1 major (hooks.json matcher pipe-alternation unverified → fixed to ".*") + 4
+  minor, all fixed; verifier independently re-ran everything in own scratch dirs —
+  SAFE TO MERGE, no regression to claude-code/opencode install paths.
+- AWAITING CODEX LIVE VERIFICATION: no codex CLI available this session. Part B
+  (install `.codex/` into this repo) + Part C (11-step human checklist) in
+  docs/plans/codex-adapter-dogfood.md are next, human-run.
+- Prior (session 5): d7 spawn auto-log hook (claude-code) built + verified.
 - opencode wiring: comment-only stub (adapters/opencode/plugin/spawn-log.ts), pending.
-- Prior: level vocabulary unification; default models per tier via sync.py.
 
 ## In flight
 - None.
 
 ## Next actions (in order)
-1. Codex adapter: build .codex/hooks.json SubagentStop wiring per
-   docs/research/codex-hooks.md — needs a live codex session (exact trigger wording
-   still Pending verification).
+1. AWAITING CODEX LIVE VERIFICATION (human, needs codex CLI installed): run Part B
+   (`./install.sh . --adapters claude-code,codex`) then Part C's checklist in
+   docs/plans/codex-adapter-dogfood.md.
 2. Real-world adoption test: install into an actual project, run SEED-PROMPT.md end
    to end with a live adapter session (only simulated mechanically so far).
 3. Improve pass due (5 sessions reached) — run `improve` skill next session.

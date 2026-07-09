@@ -238,5 +238,55 @@
   "task": "spawn-visibility hook (d7) + TEMPLATES cleanup + codex hooks research",
   "outcome": "ok",
   "notes": "coordinator session 5; routed engineer/verifier/researcher/utility"
+ },
+ {
+  "ts": "2026-07-08T19:03",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Draft codex adapter research + skeleton",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-09T21:35",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Audit codex adapter dogfood plan",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-09T21:38",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Apply audit fixes, execute Part A codex wiring",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-09T21:47",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify codex adapter Part A wiring",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-09T21:50",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "-",
+  "task": "route codex adapter research/audit/build/verify (Part A)",
+  "outcome": "ok",
+  "notes": "coordinator session 6; routed researcher/plan-auditor/engineer/verifier"
  }
 ]

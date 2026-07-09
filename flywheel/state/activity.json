@@ -52,5 +52,13 @@
    "9bfd334",
    "be75e33"
   ]
+ },
+ {
+  "ts": "2026-07-09T21:55",
+  "session": 6,
+  "summary": "codex adapter Part A built+verified (subagent assumption refuted, install.sh/resolve-spawn.py/check.sh wired); awaiting live codex session for Part B/C",
+  "commits": [
+   "4d2d17b"
+  ]
  }
 ]
