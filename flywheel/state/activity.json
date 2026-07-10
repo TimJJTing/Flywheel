@@ -66,7 +66,17 @@
   "session": 7,
   "summary": "strategy consulting: landscape vs BMAD/Agent OS/Spec Kit, motto adopted, docs/research/strategy-2026-07.md + README/CLAUDE.md updated",
   "commits": [
-   "7b62d3a"
+   "7b62d3a",
+   "907cdcc"
+  ]
+ },
+ {
+  "ts": "2026-07-10T12:59",
+  "session": 8,
+  "summary": "consulting: five new ideas (fabrication linter, compliance telemetry, benchmark, rule provenance, LESSONS auto-harvest) spec'd + ledgered i4-i8",
+  "commits": [
+   "2b87391",
+   "298ed37"
   ]
  }
 ]

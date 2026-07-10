@@ -298,5 +298,15 @@
   "task": "strategy consulting session: landscape, motto, assumptions doc",
   "outcome": "ok",
   "notes": "coordinator session 7; no subagents spawned (consulting + doc writing)"
+ },
+ {
+  "ts": "2026-07-10T12:59",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-fable-5",
+  "level": "-",
+  "task": "consulting: five new ideas spec'd and ledgered i4-i8",
+  "outcome": "ok",
+  "notes": "coordinator session 8; no subagents spawned; backfilled 907cdcc into session 7 activity"
  }
 ]
