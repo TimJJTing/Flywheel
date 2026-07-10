@@ -31,5 +31,60 @@
   "commits": [],
   "opened": "2026-07-09",
   "closed": null
+ },
+ {
+  "id": "i4",
+  "title": "Fabrication linter: enforce FACTS.md-sourced claims",
+  "type": "question",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Script cross-checks fact-shaped claims (model IDs, versions, counts) in docs/reports against FACTS.md. Minimal start: check.sh rule that claude-*/gpt-* strings outside config.json+FACTS.md must match a FACTS row. Differentiator #1. Spec: docs/research/ideas-2026-07-10.md I-A.",
+  "commits": ["2b87391"],
+  "opened": "2026-07-10",
+  "closed": null
+ },
+ {
+  "id": "i5",
+  "title": "Compliance half-life telemetry (measure A1 decay)",
+  "type": "question",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Per-session prose-rule violation counts in activity.json via hooks; dashboard trend. Turns strategy A1 from belief into curve. Spec: docs/research/ideas-2026-07-10.md I-B.",
+  "commits": ["2b87391"],
+  "opened": "2026-07-10",
+  "closed": null
+ },
+ {
+  "id": "i6",
+  "title": "Benchmark: same task with vs. without flywheel",
+  "type": "question",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Fixed task set with seeded traps; bare adapter vs flywheel-installed; count fabrications + false completion claims. Gives README measured deltas; feeds adoption test. Spec: docs/research/ideas-2026-07-10.md I-C.",
+  "commits": ["2b87391"],
+  "opened": "2026-07-10",
+  "closed": null
+ },
+ {
+  "id": "i7",
+  "title": "Rule provenance: cite decision/lesson ID per rule line",
+  "type": "question",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Annotate rules with [dN]/[LN] sources; uncited rule = deletion candidate. Makes A4 delete-to-add executable. Convention + check.sh warning. Spec: docs/research/ideas-2026-07-10.md I-D.",
+  "commits": ["2b87391"],
+  "opened": "2026-07-10",
+  "closed": null
+ },
+ {
+  "id": "i8",
+  "title": "LESSONS auto-harvest from spawns.json escalation signatures",
+  "type": "question",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Manual logging fails (4 lines / 7 sessions). PostToolUse hook detects retries/tier changes in spawns.json, drafts LESSONS lines for wrapup confirmation. Spec: docs/research/ideas-2026-07-10.md I-E.",
+  "commits": ["2b87391"],
+  "opened": "2026-07-10",
+  "closed": null
  }
 ]
