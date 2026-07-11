@@ -18,9 +18,11 @@ HR2 note: all external values below (stars, prices, feature claims) are web-sour
 | Project | What it is | Overlap with flywheel | What flywheel has that it lacks |
 |---|---|---|---|
 | BMAD-METHOD (~48k stars) | Agent orchestration across full SDLC; 12+ role personas (PM, Architect, Dev, QA); file-based context passing; tool-portable markdown | HIGHEST — company metaphor, role tiers, portability. Closest competitor; it "won" the org-chart story | FACTS anti-fabrication ledger; fresh-context never-self-verified; self-amending improve loop; autonomy matrix; degraded mode |
+| GStack (Garry Tan) | Opinionated roles, slash commands, and browser-based QA for Claude Code | High — role/workflow-centric, custom skills | Self-amending policy, anti-fabrication ledger, autonomy matrix, adapter neutrality, independent verification |
 | Agent OS (Builder Methods) | "Install into any project, works with any tool"; spec-driven standards files | High on pitch (portable, repo-resident) | Orchestration policy, verification tiers, self-improvement, state ledgers |
 | GitHub Spec Kit | Constitution-document, spec-driven development, tool-agnostic | Medium — repo-as-source-of-truth | Everything runtime: routing, verification, autonomy, improve loop |
 | OpenSpec | Every change = approved proposal before code | Medium — approval gates ≈ autonomy matrix subset | Same as Spec Kit row |
+| GSD (Open GSD) | CLI harness to slice milestones and run isolated tasks | High — context sharding, fresh runs, git branch hygiene | Self-amending policy, anti-fabrication ledger, autonomy matrix, adapter neutrality |
 | MetaGPT / ChatDev / CrewAI | Harness-level multi-agent "software company" frameworks (Python) | Same founding metaphor, wrong layer — they ARE a harness | Adapter-neutrality; repo-is-the-harness; self-amendment |
 | Vendor-native absorption (AGENTS.md standard, Claude Code skills/memory/plans, Cursor rules) | Harnesses shipping the convention layer natively | Eats flywheel from below | Cross-vendor portability; policy/verification/improvement layer vendors won't ship |
 
