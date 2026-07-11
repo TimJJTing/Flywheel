@@ -86,5 +86,13 @@
   "commits": [
    "aad5a8a"
   ]
+ },
+ {
+  "ts": "2026-07-11T19:22",
+  "session": 10,
+  "summary": "consulting: 6-way agentic frameworks comparison (Flywheel, GStack, BMAD, GSD, Spec Kit, OpenSpec)",
+  "commits": [
+   "a4862eb"
+  ]
  }
 ]

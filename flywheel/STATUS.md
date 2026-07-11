@@ -1,13 +1,12 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-11 (session 9, antigravity support)
+Updated: 2026-07-11 (session 10, frameworks comparison)
 
 ## Current state
+- FRAMEWORKS COMPARISON DOCUMENTED (session 10): 6-way comparative analysis (docs/research/agentic-frameworks-comparison-2026-07.md) generated; strategy-2026-07.md table updated.
 - ANTIGRAVITY ADAPTER BUILT & VERIFIED (session 9): custom agents (`.agents/agents/`),
   skills (`.agents/skills/`), hooks (`.agents/hooks.json`), installer/uninstaller updated.
-  `resolve-spawn.py` list-based parser verified via synthetic hook payload. Checked
-  and passing `check.sh` on both `CLAUDE.md` and `AGENTS.md` blocks.
 - IDEAS LEDGERED (session 8): issues i4–i8; spec: docs/research/ideas-2026-07-10.md.
 - codex Part A BUILT + VERIFIED (session 6): awaiting codex CLI to test Part B + C.
 - opencode wiring: comment-only stub (adapters/opencode/plugin/spawn-log.ts), pending.
