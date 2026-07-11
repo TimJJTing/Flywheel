@@ -78,5 +78,13 @@
    "2b87391",
    "298ed37"
   ]
+ },
+ {
+  "ts": "2026-07-11T18:21",
+  "session": 9,
+  "summary": "Google Antigravity CLI (agy) support added: custom agents, skills, PostToolUse logging hook, install/uninstall, check.sh/sync.py/config.json alignment (VERIFIED)",
+  "commits": [
+   "aad5a8a"
+  ]
  }
 ]

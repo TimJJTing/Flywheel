@@ -308,5 +308,45 @@
   "task": "consulting: five new ideas spec'd and ledgered i4-i8",
   "outcome": "ok",
   "notes": "coordinator session 8; no subagents spawned; backfilled 907cdcc into session 7 activity"
+ },
+ {
+  "ts": "2026-07-11T17:45",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Research Claude Code adapter agents, skills, hooks, templates in detail",
+  "outcome": "ok",
+  "notes": "manual-logged"
+ },
+ {
+  "ts": "2026-07-11T17:45",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Research Antigravity CLI capabilities by reading the reference docs",
+  "outcome": "ok",
+  "notes": "manual-logged"
+ },
+ {
+  "ts": "2026-07-11T17:45",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Research the flywheel install script and adapter system",
+  "outcome": "ok",
+  "notes": "manual-logged"
+ },
+ {
+  "ts": "2026-07-11T18:21",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "-",
+  "task": "Google Antigravity CLI (agy) support design and implementation plan + dogfooding",
+  "outcome": "ok",
+  "notes": "coordinator session 9; routed researcher for adapter investigation; implemented agy support"
  }
 ]
