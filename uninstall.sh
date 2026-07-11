@@ -147,6 +147,35 @@ if [ -d "$TARGET/.claude/skills" ]; then
   rmdir "$TARGET/.claude/skills" 2>/dev/null || true
 fi
 
+if [ -d "$TARGET/.agents/agents" ]; then
+  for ad in "$TARGET"/.agents/agents/*/; do
+    [ -d "$ad" ] || continue
+    if [ -f "$ad/agent.json" ]; then
+      rm -f "$ad/agent.json"
+      echo "  removed: .agents/agents/$(basename "$ad")/agent.json"
+      rmdir "$ad" 2>/dev/null || true
+    fi
+  done
+  rmdir "$TARGET/.agents/agents" 2>/dev/null || true
+fi
+if [ -d "$TARGET/.agents/skills" ]; then
+  for sd in "$TARGET"/.agents/skills/*/; do
+    [ -d "$sd" ] || continue
+    sf="$sd/SKILL.md"
+    if [ -f "$sf" ] && grep -q 'flywheel-managed' "$sf" 2>/dev/null; then
+      rm -f "$sf"
+      echo "  removed: .agents/skills/$(basename "$sd")/SKILL.md"
+      rmdir "$sd" 2>/dev/null || true
+    fi
+  done
+  rmdir "$TARGET/.agents/skills" 2>/dev/null || true
+fi
+if [ -f "$TARGET/.agents/hooks.json" ]; then
+  rm -f "$TARGET/.agents/hooks.json"
+  echo "  removed: .agents/hooks.json"
+fi
+rmdir "$TARGET/.agents" 2>/dev/null || true
+
 # --- 4. restore opencode.json -----------------------------------------------
 if [ -f "$TARGET/opencode.json.flywheel-bak" ]; then
   mv -f "$TARGET/opencode.json.flywheel-bak" "$TARGET/opencode.json"

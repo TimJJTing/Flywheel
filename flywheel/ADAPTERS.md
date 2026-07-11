@@ -1,7 +1,7 @@
 # Adapters — porting flywheel to any adapter
 
 The flywheel core (this directory) is adapter-neutral markdown + JSON + two scripts.
-An adapter is the thin wiring that makes a specific tool (Claude Code, Codex CLI, OpenCode) load it. Budget: the
+An adapter is the thin wiring that makes a specific tool (Claude Code, Codex CLI, OpenCode, Antigravity CLI) load it. Budget: the
 always-loaded adapter surface ≤ 50 lines.
 
 ## The five porting questions
@@ -46,7 +46,9 @@ Answer these for the target tool; the answers ARE the adapter.
    field names are doc-verified (Rev 2 of that research doc) but sourced via a WebFetch
    summarizer, not a live codex session — status is "VERIFIED (WebFetch summary;
    live-Pending)"; end-to-end proof (real spawn, real hook fire, real row) is still
-   owed and tracked as Part C of the dogfood plan.
+   owed and tracked as Part C of the dogfood plan. Antigravity CLI implements
+   `PostToolUse` for tool `invoke_subagent` (see `adapters/antigravity/hooks.json.merge`)
+   which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
 
 ## Rules for adapter authors
 

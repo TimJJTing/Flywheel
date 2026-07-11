@@ -1,0 +1,17 @@
+{
+  "flywheel-spawn-log": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "invoke_subagent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 flywheel/resolve-spawn.py antigravity",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -105,9 +105,45 @@ def build_row_codex(payload, cwd):
     }
 
 
+def build_rows_antigravity(payload, cwd):
+    tool_input = payload.get("tool_input") or {}
+    subagents = tool_input.get("Subagents") or []
+    if not isinstance(subagents, list):
+        subagents = [subagents]
+
+    rows = []
+    for sub in subagents:
+        subagent_type = sub.get("TypeName") or "unknown"
+        tier = TIER_MAP.get(subagent_type)
+        config_model, config_level = resolve_config(cwd, tier, "antigravity")
+
+        model = config_model or "Pending verification"
+        level = config_level if tier else "-"
+        task = " ".join((sub.get("Prompt") or "").split()[:15])
+
+        rows.append({
+            "agent": subagent_type,
+            "adapter": "antigravity",
+            "model": model,
+            "level": level,
+            "task": task,
+            "notes": "auto-logged",
+        })
+    return rows
+
+
+def build_rows_claude_code(payload, cwd):
+    return [build_row_claude_code(payload, cwd)]
+
+
+def build_rows_codex(payload, cwd):
+    return [build_row_codex(payload, cwd)]
+
+
 BUILDERS = {
-    "claude-code": build_row_claude_code,
-    "codex": build_row_codex,
+    "claude-code": build_rows_claude_code,
+    "codex": build_rows_codex,
+    "antigravity": build_rows_antigravity,
 }
 
 
@@ -116,39 +152,38 @@ def main():
     payload = json.load(sys.stdin)
     cwd = payload.get("cwd") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    builder = BUILDERS.get(adapter, build_row_claude_code)
-    fields = builder(payload, cwd)
+    builder = BUILDERS.get(adapter, build_rows_claude_code)
+    rows_fields = builder(payload, cwd)
 
-    row = {
-        "ts": datetime.now().strftime("%Y-%m-%dT%H:%M"),
-        "agent": fields["agent"],
-        "adapter": fields["adapter"],
-        "model": fields["model"],
-        "level": fields["level"],
-        "task": fields["task"],
-        "outcome": "ok",
-        "notes": fields["notes"],
-    }
+    rows = []
+    for fields in rows_fields:
+        rows.append({
+            "ts": datetime.now().strftime("%Y-%m-%dT%H:%M"),
+            "agent": fields["agent"],
+            "adapter": fields["adapter"],
+            "model": fields["model"],
+            "level": fields["level"],
+            "task": fields["task"],
+            "outcome": "ok",
+            "notes": fields["notes"],
+        })
 
     spawns_path = os.path.join(cwd, "flywheel", "state", "spawns.json")
     if not os.path.exists(spawns_path):
-        # ponytail: "a" mode is create-if-missing and non-truncating, so a racing
-        # concurrent creator is harmless — both end up with an openable file.
         open(spawns_path, "a", encoding="utf-8").close()
     with open(spawns_path, "r+", encoding="utf-8") as f:
         fcntl.flock(f, fcntl.LOCK_EX)
         content = f.read()
         data = json.loads(content) if content.strip() else []
-        data.append(row)
+        for row in rows:
+            data.append(row)
         f.seek(0)
         f.truncate()
         json.dump(data, f, indent=1)
         f.write("\n")
-        # no manual LOCK_UN: releasing via the `with` block's close() guarantees the
-        # buffered write is flushed to disk BEFORE the lock is released — that ordering
-        # (not the lock itself) was the actual bug (flush raced unlock).
 
-    print(json.dumps({"systemMessage": f"spawn {row['agent']} → {row['model']} / {row['level']}"}))
+    for row in rows:
+        print(json.dumps({"systemMessage": f"spawn {row['agent']} → {row['model']} / {row['level']}"}))
 
 
 if __name__ == "__main__":
@@ -157,3 +192,4 @@ if __name__ == "__main__":
     except Exception:
         pass
     sys.exit(0)
+

@@ -150,7 +150,7 @@ tiers = json.load(open(config_path, encoding="utf-8")).get("tiers", {})
 # adapters (claude-code, codex, opencode) even though only claude-code gets the
 # per-file frontmatter check below (the other two have no per-agent files to check).
 TIER_NAMES = ["architect", "strategist", "engineer", "utility", "verifier", "auditor"]
-ADAPTER_NAMES = ["claude-code", "codex", "opencode"]
+ADAPTER_NAMES = ["claude-code", "codex", "opencode", "antigravity"]
 unset_found = False
 for tier_name in TIER_NAMES:
     tier_adapters = tiers.get(tier_name, {}).get("adapters", {})

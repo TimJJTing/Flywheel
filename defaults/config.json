@@ -10,7 +10,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "medium" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     },
     "strategist": {
@@ -18,7 +19,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "high" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     },
     "engineer": {
@@ -26,7 +28,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "high" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     },
     "utility": {
@@ -34,7 +37,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "high" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     },
     "verifier": {
@@ -42,7 +46,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "high" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     },
     "auditor": {
@@ -50,7 +55,8 @@
       "adapters": {
         "claude-code": { "model": "Pending verification", "level": "high" },
         "codex": { "model": "Pending verification", "level": "high" },
-        "opencode": { "provider": "Pending verification", "model": "Pending verification" }
+        "opencode": { "provider": "Pending verification", "model": "Pending verification" },
+      "antigravity": { "model": "Pending verification", "level": "high" }
       }
     }
   }

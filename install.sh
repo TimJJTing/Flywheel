@@ -120,64 +120,70 @@ copy_managed_if_ok() { # $1 = src, $2 = dest
 }
 
 # --- 1. flywheel/ payload: MANAGED (always overwrite) ----------------------
-mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
-for f in INDEX.md ORCHESTRATION.md JUDGMENT.md AUTONOMY.md DIAGNOSIS.md \
-         TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh \
-         wrapup.sh compact.py state/SCHEMAS.md; do
-  if [ -f "$PAYLOAD/$f" ]; then
-    cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
-    echo "  managed: flywheel/$f"
+if [ "$TARGET" != "$SCRIPT_DIR" ]; then
+  mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
+  for f in INDEX.md ORCHESTRATION.md JUDGMENT.md AUTONOMY.md DIAGNOSIS.md \
+           TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh \
+           wrapup.sh compact.py state/SCHEMAS.md; do
+    if [ -f "$PAYLOAD/$f" ]; then
+      cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
+      echo "  managed: flywheel/$f"
+    fi
+  done
+  if [ -d "$PAYLOAD/dashboard" ] && [ -n "$(ls -A "$PAYLOAD/dashboard" 2>/dev/null)" ]; then
+    cp -Rf "$PAYLOAD/dashboard/." "$TARGET/flywheel/dashboard/"
+    echo "  managed: flywheel/dashboard/*"
   fi
-done
-if [ -d "$PAYLOAD/dashboard" ] && [ -n "$(ls -A "$PAYLOAD/dashboard" 2>/dev/null)" ]; then
-  cp -Rf "$PAYLOAD/dashboard/." "$TARGET/flywheel/dashboard/"
-  echo "  managed: flywheel/dashboard/*"
-fi
 
-# --- 1b. OWNED-BY-TARGET (create only if absent) ----------------------------
-# Sourced from defaults/ (pristine templates), never from the live payload — the
-# flywheel repo dogfoods its own payload, so payload state carries ITS project data.
-DEFAULTS="$SCRIPT_DIR/defaults"
-for f in config.json FACTS.md STATUS.md LESSONS.md; do
-  src="$DEFAULTS/$f"; [ -f "$src" ] || src="$PAYLOAD/$f"
-  if [ -f "$src" ]; then
-    if [ ! -f "$TARGET/flywheel/$f" ]; then
-      cp -f "$src" "$TARGET/flywheel/$f"
-      echo "  created: flywheel/$f"
-    else
-      echo "  kept: flywheel/$f (already present)"
+  # --- 1b. OWNED-BY-TARGET (create only if absent) ----------------------------
+  # Sourced from defaults/ (pristine templates), never from the live payload — the
+  # flywheel repo dogfoods its own payload, so payload state carries ITS project data.
+  DEFAULTS="$SCRIPT_DIR/defaults"
+  for f in config.json FACTS.md STATUS.md LESSONS.md; do
+    src="$DEFAULTS/$f"; [ -f "$src" ] || src="$PAYLOAD/$f"
+    if [ -f "$src" ]; then
+      if [ ! -f "$TARGET/flywheel/$f" ]; then
+        cp -f "$src" "$TARGET/flywheel/$f"
+        echo "  created: flywheel/$f"
+      else
+        echo "  kept: flywheel/$f (already present)"
+      fi
     fi
-  fi
-done
-for b in projects.json issues.json decisions.json activity.json spawns.json; do
-  if [ ! -f "$TARGET/flywheel/state/$b" ]; then
-    if [ -f "$DEFAULTS/state/$b" ]; then
-      cp -f "$DEFAULTS/state/$b" "$TARGET/flywheel/state/$b"
+  done
+  for b in projects.json issues.json decisions.json activity.json spawns.json; do
+    if [ ! -f "$TARGET/flywheel/state/$b" ]; then
+      if [ -f "$DEFAULTS/state/$b" ]; then
+        cp -f "$DEFAULTS/state/$b" "$TARGET/flywheel/state/$b"
+      else
+        printf '[]\n' > "$TARGET/flywheel/state/$b"
+      fi
+      echo "  created: flywheel/state/$b"
     else
-      printf '[]\n' > "$TARGET/flywheel/state/$b"
+      echo "  kept: flywheel/state/$b (already present)"
     fi
-    echo "  created: flywheel/state/$b"
-  else
-    echo "  kept: flywheel/state/$b (already present)"
-  fi
-done
+  done
+fi
 
 # --- 2. adapters -------------------------------------------------------------
 IFS=',' read -ra ADAPTER_LIST <<< "$ADAPTERS_ARG"
 want() { local x; for x in "${ADAPTER_LIST[@]}"; do [ "$x" = "$1" ] && return 0; done; return 1; }
-DO_CLAUDE=0; DO_CODEX=0; DO_OPENCODE=0
+DO_CLAUDE=0; DO_CODEX=0; DO_OPENCODE=0; DO_ANTIGRAVITY=0
 want claude-code && DO_CLAUDE=1
 want codex && DO_CODEX=1
 want opencode && DO_OPENCODE=1
+want antigravity && DO_ANTIGRAVITY=1
 
-# AGENTS.md is shared by codex + opencode; only one flywheel block may exist —
-# prefer opencode's when both are selected.
-if [ "$DO_CODEX" = 1 ] || [ "$DO_OPENCODE" = 1 ]; then
+# AGENTS.md is shared by codex + opencode + antigravity; only one flywheel block may exist —
+# prefer opencode's then codex's then antigravity's.
+if [ "$DO_CODEX" = 1 ] || [ "$DO_OPENCODE" = 1 ] || [ "$DO_ANTIGRAVITY" = 1 ]; then
   if [ "$DO_OPENCODE" = 1 ]; then
     AGENTS_BLOCK="$ADAPTERS_DIR/opencode/AGENTS.md.block"
-    [ "$DO_CODEX" = 1 ] && echo "  note: both codex and opencode selected — AGENTS.md uses opencode's block"
-  else
+    ( [ "$DO_CODEX" = 1 ] || [ "$DO_ANTIGRAVITY" = 1 ] ) && echo "  note: multiple adapters selected — AGENTS.md uses opencode's block"
+  elif [ "$DO_CODEX" = 1 ]; then
     AGENTS_BLOCK="$ADAPTERS_DIR/codex/AGENTS.md.block"
+    [ "$DO_ANTIGRAVITY" = 1 ] && echo "  note: both codex and antigravity selected — AGENTS.md uses codex's block"
+  else
+    AGENTS_BLOCK="$ADAPTERS_DIR/antigravity/AGENTS.md.block"
   fi
   wire_block "$AGENTS_BLOCK" "$TARGET/AGENTS.md"
   echo "  wired: AGENTS.md"
@@ -199,6 +205,22 @@ if [ "$DO_CODEX" = 1 ]; then
   # ponytail: no JSON deep-merge for hooks.json; add one (mirroring the opencode.json
   # merge path below) when a real repo ships its own hooks.json.
   copy_managed_if_ok "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
+fi
+
+if [ "$DO_ANTIGRAVITY" = 1 ]; then
+  mkdir -p "$TARGET/.agents/agents"
+  for af in "$ADAPTERS_DIR"/antigravity/agents/*; do
+    [ -d "$af" ] || continue
+    name="$(basename "$af")"
+    mkdir -p "$TARGET/.agents/agents/$name"
+    copy_managed_if_ok "$af/agent.json" "$TARGET/.agents/agents/$name/agent.json"
+  done
+  for sd in "$ADAPTERS_DIR"/antigravity/skills/*/; do
+    [ -d "$sd" ] || continue
+    name="$(basename "$sd")"
+    copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.agents/skills/$name/SKILL.md"
+  done
+  copy_managed_if_ok "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
 fi
 
 if [ "$DO_CLAUDE" = 1 ]; then

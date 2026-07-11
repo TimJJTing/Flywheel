@@ -19,6 +19,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-fable-5"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-pro-latest",
+          "level": "high"
         }
       }
     },
@@ -36,6 +40,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-opus-4-8"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-pro-latest",
+          "level": "high"
         }
       }
     },
@@ -53,6 +61,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-sonnet-5"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-pro-latest",
+          "level": "high"
         }
       }
     },
@@ -70,6 +82,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-haiku-4-5-20251001"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-flash-latest",
+          "level": "high"
         }
       }
     },
@@ -87,6 +103,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-sonnet-5"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-pro-latest",
+          "level": "high"
         }
       }
     },
@@ -104,6 +124,10 @@
         "opencode": {
           "provider": "anthropic",
           "model": "claude-opus-4-8"
+        },
+        "antigravity": {
+          "model": "gemini-3.5-pro-latest",
+          "level": "high"
         }
       }
     }
