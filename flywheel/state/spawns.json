@@ -312,8 +312,8 @@
  {
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
+  "adapter": "antigravity",
+  "model": "gemini-3.5-pro-latest",
   "level": "high",
   "task": "Research Claude Code adapter agents, skills, hooks, templates in detail",
   "outcome": "ok",
@@ -322,8 +322,8 @@
  {
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
+  "adapter": "antigravity",
+  "model": "gemini-3.5-pro-latest",
   "level": "high",
   "task": "Research Antigravity CLI capabilities by reading the reference docs",
   "outcome": "ok",
@@ -332,8 +332,8 @@
  {
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
+  "adapter": "antigravity",
+  "model": "gemini-3.5-pro-latest",
   "level": "high",
   "task": "Research the flywheel install script and adapter system",
   "outcome": "ok",
@@ -342,8 +342,8 @@
  {
   "ts": "2026-07-11T18:21",
   "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
+  "adapter": "antigravity",
+  "model": "gemini-3.5-flash-latest",
   "level": "-",
   "task": "Google Antigravity CLI (agy) support design and implementation plan + dogfooding",
   "outcome": "ok",
