@@ -1,17 +1,17 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-12 (session 12, Antigravity CLI model constraint fix)
+Updated: 2026-07-13 (session 13, gen_architecture.py dynamic discovery)
 
 ## Current state
-- ANTIGRAVITY CLI MODEL INHERITANCE FIXED & DOCUMENTED (session 12): corrected resolve-spawn.py to use parent session model, documented CLI limitation in FACTS.md/ADAPTERS.md.
-- ARCHITECTURE DOCS & DIAGRAM COMPILATION INTEGRATED (session 11): auto-generation, path resolving, and dashboard rendering built on branch `flywheel/improve-architecture-docs`.
-- FRAMEWORKS COMPARISON DOCUMENTED (session 10): 6-way comparative analysis (docs/research/agentic-frameworks-comparison-2026-07.md) generated.
-- ANTIGRAVITY ADAPTER BUILT & VERIFIED (session 9): custom agents, skills, hooks, installer/uninstaller updated.
+- GEN_ARCHITECTURE.PY FULLY DYNAMIC & VERIFIED (session 13): Mermaid diagram + tech-stack overview now discovered from filesystem/config.json, nothing hardcoded. Verifier 9/9 PASS.
+- ANTIGRAVITY CLI MODEL INHERITANCE FIXED & DOCUMENTED (session 12): corrected resolve-spawn.py to use parent session model.
+- ARCHITECTURE DOCS & DIAGRAM COMPILATION INTEGRATED (session 11): auto-generation, path resolving, and dashboard rendering on branch `flywheel/improve-architecture-docs`.
+- ANTIGRAVITY ADAPTER BUILT & VERIFIED (session 9): custom agents, skills, hooks, installer/uninstaller.
 - codex Part A BUILT + VERIFIED (session 6): awaiting codex CLI to test Part B + C.
 
 ## In flight
-- None (self-improvement branch `flywheel/improve-architecture-docs` awaiting merge approval).
+- None (branch `flywheel/improve-architecture-docs` awaiting merge approval).
 
 ## Next actions (in order)
 1. Approve and merge `flywheel/improve-architecture-docs` branch (decision pending).
@@ -21,3 +21,4 @@ Updated: 2026-07-12 (session 12, Antigravity CLI model constraint fix)
 
 ## Blockers / decisions pending the human
 - Merge approval for `flywheel/improve-architecture-docs` (decisions.json d9).
+

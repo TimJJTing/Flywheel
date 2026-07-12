@@ -114,5 +114,13 @@
    "262bed2",
    "4bd321e"
   ]
+ },
+ {
+  "ts": "2026-07-13T01:55",
+  "session": 13,
+  "summary": "refactor: gen_architecture.py fully dynamic discovery (diagram, tech-stack, edges) — verified 9/9",
+  "commits": [
+   "e88049e"
+  ]
  }
 ]
