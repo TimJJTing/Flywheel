@@ -110,7 +110,9 @@
   "session": 12,
   "summary": "fix: correct Antigravity CLI subagent model log mapping and document model inheritance limitation",
   "commits": [
-   "c835ea4"
+   "c835ea4",
+   "262bed2",
+   "4bd321e"
   ]
  }
 ]
