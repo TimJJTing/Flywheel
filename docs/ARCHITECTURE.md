@@ -75,9 +75,9 @@ flowchart TD
 ```
 
 ## Active Tiers & Models
-- **architect**: last resort: twice-failed plans, irreversible forks, rule conflicts (Model: `gemini-3.5-pro-latest`)
-- **strategist**: plans, deep research, edge cases, requirement catalogs (Model: `gemini-3.5-pro-latest`)
-- **engineer**: all production code, refactors, complex scripts (Model: `gemini-3.5-pro-latest`)
+- **architect**: last resort: twice-failed plans, irreversible forks, rule conflicts (Model: `gemini-3.1-pro-latest`)
+- **strategist**: plans, deep research, edge cases, requirement catalogs (Model: `gemini-3.1-pro-latest`)
+- **engineer**: all production code, refactors, complex scripts (Model: `gemini-3.1-pro-latest`)
 - **utility**: batch reads/edits, searches, checklist checks (Model: `gemini-3.5-flash-latest`)
-- **verifier**: fresh-context verification of code claims (Model: `gemini-3.5-pro-latest`)
-- **auditor**: fresh-context audit of plans and system docs (Model: `gemini-3.5-pro-latest`)
+- **verifier**: fresh-context verification of code claims (Model: `gemini-3.1-pro-latest`)
+- **auditor**: fresh-context audit of plans and system docs (Model: `gemini-3.1-pro-latest`)
