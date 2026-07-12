@@ -307,6 +307,12 @@ NODEEOF
   fi
 fi
 
+# Bootstrap docs/ARCHITECTURE.md
+mkdir -p "$TARGET/docs"
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$TARGET/flywheel/dashboard/gen_architecture.py" "$TARGET" >/dev/null 2>&1 || echo "  warning: initial docs/ARCHITECTURE.md generation failed"
+fi
+
 echo ""
 echo "flywheel install into $TARGET done (adapters: $ADAPTERS_ARG)."
 echo "Next: open your adapter in $TARGET and paste docs/SEED-PROMPT.md (from the flywheel repo)."

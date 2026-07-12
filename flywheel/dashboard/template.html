@@ -148,6 +148,16 @@
     <div id="list-issues"></div>
   </section>
 
+  <section id="sec-architecture">
+    <h2>Architecture &amp; Tech-Stack</h2>
+    <div id="list-architecture" style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 6px;">
+      <div id="arch-html" class="body-text"></div>
+      <div style="margin-top: 16px; overflow-x: auto; background: var(--bg); padding: 12px; border-radius: 6px;">
+        <pre class="mermaid" id="arch-mermaid" style="display: block; margin: 0; white-space: pre; font-size: 12px; font-family: monospace;"></pre>
+      </div>
+    </div>
+  </section>
+
   <section id="sec-activity">
     <h2>Recent activity</h2>
     <div id="list-activity"></div>
@@ -328,11 +338,39 @@ function renderHeader() {
   badge.className = "badge" + (pending === 0 ? " zero" : "");
 }
 
+async function renderArchitecture() {
+  const elHtml = document.getElementById("arch-html");
+  const elMermaid = document.getElementById("arch-mermaid");
+  
+  if (DATA.architecture_html) {
+    elHtml.innerHTML = DATA.architecture_html;
+  } else {
+    elHtml.innerHTML = renderEmpty("No tech-stack info available.");
+  }
+  
+  if (DATA.architecture_mermaid) {
+    if (window.mermaid) {
+      elMermaid.removeAttribute("data-processed");
+      elMermaid.textContent = DATA.architecture_mermaid;
+      try {
+        await window.mermaid.run({ nodes: [elMermaid] });
+      } catch (e) {
+        console.error("Mermaid render failed:", e);
+      }
+    } else {
+      elMermaid.textContent = DATA.architecture_mermaid;
+    }
+  } else {
+    elMermaid.style.display = "none";
+  }
+}
+
 function render() {
   renderHeader();
   renderDecisions();
   renderProjects();
   renderIssues();
+  renderArchitecture();
   renderActivity();
   renderSpawns();
 }
@@ -351,6 +389,16 @@ wireFilter("f-spawns-outcome", filters.spawns, "outcome");
 document.getElementById("search").addEventListener("input", e => { filters.search = e.target.value; render(); });
 
 render();
+window.renderArchitecture = renderArchitecture;
+</script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  window.mermaid = mermaid;
+  const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'loose', theme: isDark ? 'dark' : 'default' });
+  if (window.renderArchitecture) {
+    window.renderArchitecture();
+  }
 </script>
 </body>
 </html>

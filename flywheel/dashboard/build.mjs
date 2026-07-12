@@ -39,6 +39,42 @@ function nowToMinute() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+function mdToHtml(mdText) {
+  const htmlLines = [];
+  let inList = false;
+  for (let line of mdText.split(/\r?\n/)) {
+    line = line.trim();
+    if (!line) continue;
+    if (line.startsWith("# ")) {
+      if (inList) { htmlLines.push("</ul>"); inList = false; }
+      htmlLines.push(`<h3>${line.slice(2)}</h3>`);
+    } else if (line.startsWith("## ")) {
+      if (inList) { htmlLines.push("</ul>"); inList = false; }
+      htmlLines.push(`<h4>${line.slice(3)}</h4>`);
+    } else if (line.startsWith("- ")) {
+      if (!inList) { htmlLines.push("<ul style='margin-top:4px; margin-bottom:12px;'>"); inList = true; }
+      const parts = line.slice(2).split("`");
+      let formatted = "";
+      for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 1) formatted += `<code>${parts[i]}</code>`;
+        else formatted += parts[i];
+      }
+      htmlLines.push(`<li>${formatted}</li>`);
+    } else {
+      if (inList) { htmlLines.push("</ul>"); inList = false; }
+      const parts = line.split("`");
+      let formatted = "";
+      for (let i = 0; i < parts.length; i++) {
+        if (i % 2 === 1) formatted += `<code>${parts[i]}</code>`;
+        else formatted += parts[i];
+      }
+      htmlLines.push(`<p>${formatted}</p>`);
+    }
+  }
+  if (inList) htmlLines.push("</ul>");
+  return htmlLines.join("\n");
+}
+
 function main() {
   const config = loadJson(CONFIG_PATH);
   const projects = loadJson(path.join(STATE_DIR, "projects.json"));
@@ -46,6 +82,25 @@ function main() {
   const decisions = loadJson(path.join(STATE_DIR, "decisions.json"));
   const activity = loadJson(path.join(STATE_DIR, "activity.json"));
   const spawns = loadJson(path.join(STATE_DIR, "spawns.json"));
+
+  const archPath = path.join(FLYWHEEL_DIR, "..", "docs", "ARCHITECTURE.md");
+  let archHtml = "";
+  let mermaidText = "";
+  if (fs.existsSync(archPath)) {
+    try {
+      const archContent = fs.readFileSync(archPath, "utf-8");
+      const mermaidMatch = archContent.match(/```mermaid\r?\n([\s\S]*?)\r?\n```/);
+      let textWithoutMermaid = archContent;
+      if (mermaidMatch) {
+        mermaidText = mermaidMatch[1];
+        mermaidText = mermaidText.split('"../').join('"../../').split("'../").join("'../../");
+        textWithoutMermaid = archContent.replace(mermaidMatch[0], "");
+      }
+      archHtml = mdToHtml(textWithoutMermaid);
+    } catch (e) {
+      console.warn(`warning: failed to parse docs/ARCHITECTURE.md: ${e.message}`);
+    }
+  }
 
   const generated = process.env.FLYWHEEL_BUILD_TS || nowToMinute();
 
@@ -61,6 +116,8 @@ function main() {
     decisions,
     activity,
     spawns,
+    architecture_html: archHtml,
+    architecture_mermaid: mermaidText
   };
   const jsonText = JSON.stringify(blob);
 

@@ -32,6 +32,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/IMPROVE.md` | Improve pass due (wrapup says so) or friction accumulating |
 | `flywheel/ADAPTERS.md` | Porting flywheel to another adapter |
 | `flywheel/LESSONS.md` | After any escalation or surprising failure (append) |
+| `docs/ARCHITECTURE.md` | Understanding current repo structure or architecture diagram |
 
 ## State (the CEO dashboard's source of truth)
 `flywheel/state/{projects,issues,decisions,activity,spawns}.json` — schemas in

@@ -41,10 +41,12 @@ line to `flywheel/LESSONS.md`: date | task | tier path | cause | rule to update.
   files, conventional message, never `-A`/`.`, never `--no-verify` — and append those
   hashes to this session's activity.json entry (else next session's drift check flags
   them).
-- Then `bash flywheel/wrapup.sh` — runs check.sh (aborts on ✗; fix or log a justified
-  override in LESSONS.md), rebuilds the dashboard, warns if activity.json is stale,
-  commits the wrapup file set as `chore(flywheel): update state ledgers + dashboard`,
-  and announces "improve pass due" on the `improve_cadence_sessions` boundary.
+- Then `bash flywheel/wrapup.sh` — automatically runs `gen_architecture.py` to update
+  `docs/ARCHITECTURE.md` if python3 is present, executes `check.sh` (aborts on ✗; fix
+  or log a justified override in LESSONS.md), rebuilds the dashboard, warns if
+  activity.json is stale, commits the wrapup file set (including state ledgers, dashboard,
+  and architecture doc) as `chore(flywheel): update state ledgers + dashboard`, and
+  announces "improve pass due" on the `improve_cadence_sessions` boundary.
 
 ## 6. Report
 Return the commit hash(es) (`git rev-parse --short HEAD`) and a one-line summary per

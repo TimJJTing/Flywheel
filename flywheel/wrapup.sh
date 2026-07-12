@@ -7,15 +7,20 @@ set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
-# 1. Mechanical rule check — a red check blocks the wrapup commit (MAINTENANCE.md §2).
+# 1. Auto-generate architecture docs if python3 is available.
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$SCRIPT_DIR/dashboard/gen_architecture.py" "$REPO_ROOT" 2>/dev/null || echo "⚠ warning: architecture auto-generation failed"
+fi
+
+# 2. Mechanical rule check — a red check blocks the wrapup commit (MAINTENANCE.md §2).
 bash "$SCRIPT_DIR/check.sh" || { echo "✗ wrapup aborted: fix check.sh failures (or log a justified override in LESSONS.md)"; exit 1; }
 
-# 2. Rebuild the dashboard.
+# 3. Rebuild the dashboard.
 python3 "$SCRIPT_DIR/dashboard/build.py" 2>/dev/null \
   || node "$SCRIPT_DIR/dashboard/build.mjs" \
   || { echo "✗ wrapup aborted: dashboard build failed"; exit 1; }
 
-# 3. Ledger freshness + improve cadence, read in one pass (python3 or node, like check.sh).
+# 4. Ledger freshness + improve cadence, read in one pass (python3 or node, like check.sh).
 if command -v python3 >/dev/null 2>&1; then
   META=$(python3 -c '
 import json, sys
@@ -40,10 +45,10 @@ if [ "$NEWEST_TS" != "$(date +%F)" ]; then
   echo "⚠ newest activity.json entry is $NEWEST_TS — update the ledgers (wrapup skill step 2) before committing"
 fi
 
-# 4. Stage exactly the wrapup file set; commit only if something changed.
+# 5. Stage exactly the wrapup file set; commit only if something changed.
 cd "$REPO_ROOT"
 git add -- flywheel/STATUS.md flywheel/LESSONS.md flywheel/state/*.json \
-  flywheel/dashboard/dashboard.html 2>/dev/null
+  flywheel/dashboard/dashboard.html docs/ARCHITECTURE.md 2>/dev/null
 if git diff --cached --quiet; then
   echo "✓ nothing to commit (wrapup file set unchanged)"
 else
@@ -51,7 +56,7 @@ else
   echo "✓ committed $(git rev-parse --short HEAD)"
 fi
 
-# 5. Improve-pass cadence notice (IMPROVE.md).
+# 6. Improve-pass cadence notice (IMPROVE.md).
 if [ "$COUNT" -gt 0 ] && [ $((COUNT % CADENCE)) -eq 0 ]; then
   echo "improve pass due — run the improve skill next session"
 fi

@@ -29,6 +29,15 @@ check_budget DIAGNOSIS.md 85
 check_budget TEMPLATES.md 230
 check_budget FACTS.md 80
 
+if [ -f "$REPO_ROOT/docs/ARCHITECTURE.md" ]; then
+  n=$(wc -l < "$REPO_ROOT/docs/ARCHITECTURE.md" | tr -d ' ')
+  limit=150
+  if [ "$n" -le "$limit" ]; then echo "✓ docs/ARCHITECTURE.md: $n/$limit lines";
+  else echo "✗ docs/ARCHITECTURE.md: $n lines exceeds budget $limit"; FAIL=1; fi
+else
+  echo "✗ docs/ARCHITECTURE.md: missing"; FAIL=1
+fi
+
 if [ -f "$FLYWHEEL_DIR/LESSONS.md" ]; then
   n=$(wc -l < "$FLYWHEEL_DIR/LESSONS.md" | tr -d ' ')
   if [ "$n" -gt 80 ]; then echo "⚠ LESSONS.md: $n lines (>80) — consolidation due";
@@ -131,6 +140,17 @@ if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     [ "$nc" -gt 0 ] && echo "    ($nc of them off the Conventional Commits scheme — see flywheel/GIT.md)"
   else
     echo "✓ no ledger-untracked commits since last recorded session"
+  fi
+
+  # Check if structural files have changed without updating ARCHITECTURE.md
+  struct_changes=$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null | grep -E '^( M| A|\?\?) (flywheel/(INDEX|ORCHESTRATION|AUTONOMY|MAINTENANCE|TEMPLATES|FACTS|DIAGNOSIS|JUDGMENT|GIT|IMPROVE|ADAPTERS)\.md|flywheel/check\.sh|flywheel/wrapup\.sh|flywheel/config\.json|\.agents/|\.claude/|\.codex/)' || true)
+  if [ -n "$struct_changes" ]; then
+    arch_changed=$(git -C "$REPO_ROOT" status --porcelain docs/ARCHITECTURE.md 2>/dev/null)
+    if [ -z "$arch_changed" ]; then
+      echo "⚠ Structural changes detected in:"
+      printf '%s\n' "$struct_changes" | cut -c4- | sed 's/^/    /'
+      echo "  but docs/ARCHITECTURE.md was not updated. Please review if the architecture needs updating or run gen_architecture.py."
+    fi
   fi
 else
   echo "⚠ not a git repo — skipping commit hash check"

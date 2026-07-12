@@ -223,7 +223,14 @@ NODEEOF
   fi
 fi
 
-# --- 5. remove flywheel/ ----------------------------------------------------
+# --- 5. remove architecture docs if present ---------------------------------
+if [ -f "$TARGET/docs/ARCHITECTURE.md" ]; then
+  rm -f "$TARGET/docs/ARCHITECTURE.md"
+  echo "  removed: docs/ARCHITECTURE.md"
+  rmdir "$TARGET/docs" 2>/dev/null || true
+fi
+
+# --- 6. remove flywheel/ ----------------------------------------------------
 rm -rf "$TARGET/flywheel"
 echo ""
 echo "flywheel uninstalled from $TARGET."

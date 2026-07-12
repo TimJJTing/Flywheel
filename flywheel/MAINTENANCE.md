@@ -7,7 +7,7 @@ adapter files, and before any consistency audit.
 
 | Path | Any tier, autonomous | Requires |
 |---|---|---|
-| `flywheel/STATUS.md`, `flywheel/LESSONS.md`, `flywheel/state/*.json`, `docs/plans/*`, `docs/research/*` | Yes — append/update | — |
+| `flywheel/STATUS.md`, `flywheel/LESSONS.md`, `flywheel/state/*.json`, `docs/plans/*`, `docs/research/*`, `docs/ARCHITECTURE.md` | Yes — append/update | — |
 | Adapter skill bodies, project code, tests | engineer+ per approved plan | utility only for explicit mechanical batch edits |
 | `flywheel/FACTS.md` | Add a new verified fact | Changing/removing an existing fact → `auditor` check first |
 | `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check. Then run `python3 flywheel/sync.py` to regenerate the projections — config.json is the source of truth; agent frontmatter and `opencode.json.merge` are generated from it, never hand-edited. `check.sh` fails on drift. |
