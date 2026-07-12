@@ -104,5 +104,13 @@
    "eb4fc13",
    "f538639"
   ]
+ },
+ {
+  "ts": "2026-07-12T21:40",
+  "session": 12,
+  "summary": "fix: correct Antigravity CLI subagent model log mapping and document model inheritance limitation",
+  "commits": [
+   "c835ea4"
+  ]
  }
 ]
