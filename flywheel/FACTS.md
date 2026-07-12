@@ -48,6 +48,7 @@ level, `xhigh`.
 | claude-code Agent-spawn hook payload | matcher/tool_name is `"Agent"` (not `"Task"`); PreToolUse has no resolved model; PostToolUse adds `tool_response.resolvedModel` (actual model ID) — see `flywheel/resolve-spawn.py` | 2026-07-08 |
 | opencode per-spawn hook wiring (`adapters/opencode/plugin/spawn-log.ts`) | Pending verification — no opencode session available to test | 2026-07-08 |
 | codex subagent hook events (SubagentStart/SubagentStop, SessionStart model field) | Documented at https://developers.openai.com/codex/hooks (see `docs/research/codex-hooks.md`); not yet live-verified against a running codex session | 2026-07-08 |
+| Antigravity CLI (agy) subagent model inheritance | Spawned subagents inherit the active model of the parent session; routing subagents to different models is not supported (known limitation) | 2026-07-12 |
 
 ## Toolchain (versions from commands run in THIS repo)
 

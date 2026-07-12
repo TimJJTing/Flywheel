@@ -313,31 +313,31 @@
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
   "adapter": "antigravity",
-  "model": "gemini-3.5-pro-latest",
+  "model": "gemini-3.5-flash-latest",
   "level": "high",
   "task": "Research Claude Code adapter agents, skills, hooks, templates in detail",
   "outcome": "ok",
-  "notes": "manual-logged"
+  "notes": "manual-logged (same model as parent)"
  },
  {
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
   "adapter": "antigravity",
-  "model": "gemini-3.5-pro-latest",
+  "model": "gemini-3.5-flash-latest",
   "level": "high",
   "task": "Research Antigravity CLI capabilities by reading the reference docs",
   "outcome": "ok",
-  "notes": "manual-logged"
+  "notes": "manual-logged (same model as parent)"
  },
  {
   "ts": "2026-07-11T17:45",
   "agent": "researcher",
   "adapter": "antigravity",
-  "model": "gemini-3.5-pro-latest",
+  "model": "gemini-3.5-flash-latest",
   "level": "high",
   "task": "Research the flywheel install script and adapter system",
   "outcome": "ok",
-  "notes": "manual-logged"
+  "notes": "manual-logged (same model as parent)"
  },
  {
   "ts": "2026-07-11T18:21",
@@ -363,21 +363,21 @@
   "ts": "2026-07-12T19:07",
   "agent": "plan-auditor",
   "adapter": "antigravity",
-  "model": "gemini-3.5-pro-latest",
+  "model": "gemini-3.5-flash-latest",
   "level": "high",
   "task": "Audit initial implementation plan for architecture docs and diagram",
   "outcome": "failed",
-  "notes": "verdict FAILED: identified 5 findings (budget path, node compat, sequencing, merge gate, budget value)"
+  "notes": "verdict FAILED: identified 5 findings (budget path, node compat, sequencing, merge gate, budget value); same model as parent"
  },
  {
   "ts": "2026-07-12T19:08",
   "agent": "plan-auditor",
   "adapter": "antigravity",
-  "model": "gemini-3.5-pro-latest",
+  "model": "gemini-3.5-flash-latest",
   "level": "high",
   "task": "Audit corrected implementation plan for architecture docs and diagram",
   "outcome": "ok",
-  "notes": "verdict VERIFIED with suggestions on commit length/motivating cite"
+  "notes": "verdict VERIFIED with suggestions on commit length/motivating cite; same model as parent"
  },
  {
   "ts": "2026-07-12T20:00",

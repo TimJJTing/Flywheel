@@ -1,9 +1,10 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-12 (session 11, architecture integration)
+Updated: 2026-07-12 (session 12, Antigravity CLI model constraint fix)
 
 ## Current state
+- ANTIGRAVITY CLI MODEL INHERITANCE FIXED & DOCUMENTED (session 12): corrected resolve-spawn.py to use parent session model, documented CLI limitation in FACTS.md/ADAPTERS.md.
 - ARCHITECTURE DOCS & DIAGRAM COMPILATION INTEGRATED (session 11): auto-generation, path resolving, and dashboard rendering built on branch `flywheel/improve-architecture-docs`.
 - FRAMEWORKS COMPARISON DOCUMENTED (session 10): 6-way comparative analysis (docs/research/agentic-frameworks-comparison-2026-07.md) generated.
 - ANTIGRAVITY ADAPTER BUILT & VERIFIED (session 9): custom agents, skills, hooks, installer/uninstaller updated.

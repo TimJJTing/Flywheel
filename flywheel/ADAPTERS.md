@@ -49,6 +49,7 @@ Answer these for the target tool; the answers ARE the adapter.
    owed and tracked as Part C of the dogfood plan. Antigravity CLI implements
    `PostToolUse` for tool `invoke_subagent` (see `adapters/antigravity/hooks.json.merge`)
    which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
+   *(Note: The agy CLI has a known limitation where all spawned subagents run on the same model as the parent session, ignoring tier-specific model overrides).*
 
 ## Rules for adapter authors
 

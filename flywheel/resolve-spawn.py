@@ -107,17 +107,25 @@ def build_row_codex(payload, cwd):
 
 def build_rows_antigravity(payload, cwd):
     tool_input = payload.get("tool_input") or {}
+    tool_response = payload.get("tool_response") or {}
     subagents = tool_input.get("Subagents") or []
     if not isinstance(subagents, list):
         subagents = [subagents]
+
+    # Known limitation: agy CLI subagents always run on the same model as the main (parent) agent session.
+    # We attempt to find the parent session model from the payload, falling back to the
+    # config's utility (coordinator) model.
+    parent_model = payload.get("model") or payload.get("parent_model") or tool_response.get("resolvedModel")
+    if not parent_model:
+        parent_model, _ = resolve_config(cwd, "utility", "antigravity")
 
     rows = []
     for sub in subagents:
         subagent_type = sub.get("TypeName") or "unknown"
         tier = TIER_MAP.get(subagent_type)
-        config_model, config_level = resolve_config(cwd, tier, "antigravity")
+        _, config_level = resolve_config(cwd, tier, "antigravity")
 
-        model = config_model or "Pending verification"
+        model = parent_model or "Pending verification"
         level = config_level if tier else "-"
         task = " ".join((sub.get("Prompt") or "").split()[:15])
 
@@ -127,7 +135,7 @@ def build_rows_antigravity(payload, cwd):
             "model": model,
             "level": level,
             "task": task,
-            "notes": "auto-logged",
+            "notes": "auto-logged (antigravity; same model as parent)",
         })
     return rows
 
