@@ -102,5 +102,20 @@
   "outcome": "Motto adopted; strategy doc written; README/CLAUDE.md updated",
   "created": "2026-07-09",
   "resolved": "2026-07-09"
+ },
+ {
+  "id": "d9",
+  "title": "Merge self-improvement branch flywheel/improve-architecture-docs",
+  "detail": "Adds docs/ARCHITECTURE.md with tech-stack and auto-generated Mermaid diagram. Updates check.sh, wrapup.sh, SKILL.md, and dashboard compile scripts (build.py, build.mjs, template.html) to render interactive relative links in the diagram. Adds installer/uninstaller support.",
+  "options": [
+   "merge",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-12",
+  "resolved": ""
  }
 ]

@@ -94,5 +94,13 @@
   "commits": [
    "a4862eb"
   ]
+ },
+ {
+  "ts": "2026-07-12T20:00",
+  "session": 11,
+  "summary": "improve: auto-generate architecture docs and render interactive Mermaid diagram in dashboard",
+  "commits": [
+   "b6eca90"
+  ]
  }
 ]
