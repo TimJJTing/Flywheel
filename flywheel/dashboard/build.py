@@ -30,52 +30,6 @@ def load_json(path):
         sys.exit(f"flywheel dashboard build: invalid JSON in {path}: {e}")
 
 
-def md_to_html(md_text):
-    html_lines = []
-    in_list = False
-    for line in md_text.splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        if line.startswith("# "):
-            if in_list:
-                html_lines.append("</ul>")
-                in_list = False
-            html_lines.append(f"<h3>{line[2:]}</h3>")
-        elif line.startswith("## "):
-            if in_list:
-                html_lines.append("</ul>")
-                in_list = False
-            html_lines.append(f"<h4>{line[3:]}</h4>")
-        elif line.startswith("- "):
-            if not in_list:
-                html_lines.append("<ul style='margin-top:4px; margin-bottom:12px;'>")
-                in_list = True
-            parts = line[2:].split("`")
-            formatted = ""
-            for i, p in enumerate(parts):
-                if i % 2 == 1:
-                    formatted += f"<code>{p}</code>"
-                else:
-                    formatted += p
-            html_lines.append(f"<li>{formatted}</li>")
-        else:
-            if in_list:
-                html_lines.append("</ul>")
-                in_list = False
-            parts = line.split("`")
-            formatted = ""
-            for i, p in enumerate(parts):
-                if i % 2 == 1:
-                    formatted += f"<code>{p}</code>"
-                else:
-                    formatted += p
-            html_lines.append(f"<p>{formatted}</p>")
-    if in_list:
-        html_lines.append("</ul>")
-    return "\n".join(html_lines)
-
-
 def main():
     config = load_json(CONFIG_PATH)
     projects = load_json(os.path.join(STATE_DIR, "projects.json"))
@@ -85,7 +39,7 @@ def main():
     spawns = load_json(os.path.join(STATE_DIR, "spawns.json"))
 
     arch_path = os.path.abspath(os.path.join(FLYWHEEL_DIR, "..", "docs", "ARCHITECTURE.md"))
-    arch_html = ""
+    arch_markdown = ""
     mermaid_text = ""
     if os.path.isfile(arch_path):
         try:
@@ -98,7 +52,7 @@ def main():
                 mermaid_text = mermaid_match.group(1)
                 mermaid_text = mermaid_text.replace('"../', '"../../').replace("'../", "'../../")
                 text_without_mermaid = arch_content.replace(mermaid_match.group(0), "")
-            arch_html = md_to_html(text_without_mermaid)
+            arch_markdown = text_without_mermaid
         except Exception as e:
             print(f"warning: failed to parse docs/ARCHITECTURE.md: {e}")
 
@@ -116,7 +70,7 @@ def main():
         "decisions": decisions,
         "activity": activity,
         "spawns": spawns,
-        "architecture_html": arch_html,
+        "architecture_markdown": arch_markdown,
         "architecture_mermaid": mermaid_text
     }
     json_text = json.dumps(blob, separators=(",", ":"), ensure_ascii=False)

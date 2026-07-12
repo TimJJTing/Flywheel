@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Flywheel Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   :root {
     --bg: #f6f7f8; --fg: #1b1e22; --card: #ffffff; --border: #d8dce1;
@@ -342,8 +343,18 @@ async function renderArchitecture() {
   const elHtml = document.getElementById("arch-html");
   const elMermaid = document.getElementById("arch-mermaid");
   
-  if (DATA.architecture_html) {
-    elHtml.innerHTML = DATA.architecture_html;
+  if (DATA.architecture_markdown) {
+    if (window.marked) {
+      elHtml.innerHTML = window.marked.parse(DATA.architecture_markdown);
+    } else {
+      const pre = document.createElement("pre");
+      pre.style.whiteSpace = "pre-wrap";
+      pre.style.fontFamily = "inherit";
+      pre.style.margin = "0";
+      pre.textContent = DATA.architecture_markdown;
+      elHtml.innerHTML = "";
+      elHtml.appendChild(pre);
+    }
   } else {
     elHtml.innerHTML = renderEmpty("No tech-stack info available.");
   }
