@@ -241,7 +241,7 @@ if [ "$TARGET" != "$SCRIPT_DIR" ]; then
   mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
   for f in INDEX.md ORCHESTRATION.md JUDGMENT.md AUTONOMY.md DIAGNOSIS.md \
            TEMPLATES.md MAINTENANCE.md GIT.md IMPROVE.md ADAPTERS.md check.sh \
-           wrapup.sh compact.py state/SCHEMAS.md; do
+           wrapup.sh compact.py resolve-spawn.py sync.py state/SCHEMAS.md; do
     if [ -f "$PAYLOAD/$f" ]; then
       cp -f "$PAYLOAD/$f" "$TARGET/flywheel/$f"
       echo "  managed: flywheel/$f"

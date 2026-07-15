@@ -251,5 +251,24 @@ sys.exit(0 if ok else 1)
   [ $? -ne 0 ] && FAIL=1
 fi
 
+# --- resolve-spawn.py presence guard ----------------------------------------
+# Every adapter hook file that references resolve-spawn.py must find it at
+# flywheel/resolve-spawn.py, or spawn auto-logging silently no-ops (see
+# docs/plans/architecture-audit-2026-07.md Plan 2, Finding A).
+RESOLVE_SPAWN_REFERENCED=0
+for hook_file in "$REPO_ROOT/.codex/hooks.json" "$REPO_ROOT/.agents/hooks.json" "$REPO_ROOT/.claude/settings.json"; do
+  if [ -f "$hook_file" ] && grep -q "resolve-spawn.py" "$hook_file"; then
+    RESOLVE_SPAWN_REFERENCED=1
+  fi
+done
+if [ "$RESOLVE_SPAWN_REFERENCED" -eq 1 ]; then
+  if [ -f "$FLYWHEEL_DIR/resolve-spawn.py" ]; then
+    echo "✓ flywheel/resolve-spawn.py present (referenced by an installed hook)"
+  else
+    echo "✗ flywheel/resolve-spawn.py missing but referenced by an installed hook — run: bash install.sh . (or) restore the file"
+    FAIL=1
+  fi
+fi
+
 if [ "$FAIL" -eq 0 ]; then echo "✓ all checks passed"; exit 0;
 else echo "✗ one or more checks failed"; exit 1; fi
