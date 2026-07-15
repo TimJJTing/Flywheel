@@ -360,6 +360,14 @@ if [ "$DO_CLAUDE" = 1 ]; then
     name="$(basename "$sd")"
     copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.claude/skills/$name/SKILL.md"
   done
+
+  mkdir -p "$TARGET/.claude"
+  if [ ! -f "$TARGET/.claude/settings.json" ]; then
+    cp -f "$ADAPTERS_DIR/claude-code/settings.json.merge" "$TARGET/.claude/settings.json"
+    echo "  created: .claude/settings.json"
+  else
+    merge_json "$ADAPTERS_DIR/claude-code/settings.json.merge" "$TARGET/.claude/settings.json"
+  fi
 fi
 
 if [ "$DO_OPENCODE" = 1 ]; then
