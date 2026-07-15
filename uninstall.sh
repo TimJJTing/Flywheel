@@ -123,6 +123,188 @@ NODEEOF
 strip_block "$TARGET/CLAUDE.md"
 strip_block "$TARGET/AGENTS.md"
 
+# --- helper: restore_or_unmerge_json ----------------------------------------
+# Reverse of install.sh's merge_json. If $1.flywheel-bak exists (the merge
+# case), restore it verbatim and drop the backup. Otherwise, if $1 exists
+# (created fresh by install, no backup — or hand-edited since), strip out
+# exactly the entries flywheel added: the top-level "flywheel-spawn-log" key
+# (antigravity), or any hook-block whose command EXACTLY EQUALS one of
+# flywheel's known hook commands (codex .hooks.<event>[] / claude-code
+# .hooks.PostToolUse[]) — see the FLYWHEEL_COMMANDS list below, sourced from
+# adapters/{claude-code/settings.json.merge, codex/hooks.json.merge,
+# antigravity/hooks.json.merge}. Exact match only, never substring — a user
+# hook whose command merely mentions "resolve-spawn.py" (e.g. in an echo or
+# comment) must NOT be treated as flywheel's. Deletes the file if nothing but
+# empty structure is left ({} or {"hooks":{}}); leaves it untouched if no
+# flywheel entries are found at all (not a flywheel file).
+restore_or_unmerge_json() { # $1 = dest_file
+  local dest_file="$1"
+  if [ -f "$dest_file.flywheel-bak" ]; then
+    mv -f "$dest_file.flywheel-bak" "$dest_file"
+    echo "  restored: ${dest_file#"$TARGET"/} (from backup)"
+    return 0
+  fi
+  [ -f "$dest_file" ] || return 0
+  if [ -z "$RUNNER" ]; then
+    echo "warning: python3 or node required to un-merge ${dest_file#"$TARGET"/} — left untouched" >&2
+    return 0
+  fi
+  local result
+  if [ "$RUNNER" = python3 ]; then
+    result=$(python3 - "$dest_file" <<'PYEOF'
+import json, os, sys
+
+# Exact command strings flywheel installs (see adapters/*/*.merge). Exact
+# equality only — a user hook that merely mentions "resolve-spawn.py" in its
+# own command string (e.g. an unrelated echo) must not match.
+FLYWHEEL_COMMANDS = {
+    "python3 flywheel/resolve-spawn.py",              # adapters/claude-code/settings.json.merge
+    "python3 flywheel/resolve-spawn.py codex",         # adapters/codex/hooks.json.merge
+    "python3 flywheel/resolve-spawn.py antigravity",   # adapters/antigravity/hooks.json.merge
+}
+
+def is_flywheel_item(item):
+    if not isinstance(item, dict):
+        return False
+    hooks_list = item.get("hooks")
+    if isinstance(hooks_list, list):
+        for h in hooks_list:
+            if isinstance(h, dict) and str(h.get("command", "")) in FLYWHEEL_COMMANDS:
+                return True
+    return False
+
+def is_empty(v):  # shallow — used to decide whether to drop a just-emptied key
+    return v == {} or v == []
+
+def is_effectively_empty(v):  # deep — used only for the final whole-file check
+    if isinstance(v, dict):
+        return all(is_effectively_empty(x) for x in v.values())
+    if isinstance(v, list):
+        return len(v) == 0
+    return False
+
+def clean(node):
+    if isinstance(node, dict):
+        out = {}
+        any_removed = False
+        for k, v in node.items():
+            if k == "flywheel-spawn-log":
+                any_removed = True
+                continue
+            new_v, removed = clean(v)
+            any_removed = any_removed or removed
+            if removed and is_empty(new_v):
+                continue  # this key was emptied by our removal — drop it
+            out[k] = new_v
+        return out, any_removed
+    elif isinstance(node, list):
+        out = []
+        any_removed = False
+        for item in node:
+            if is_flywheel_item(item):
+                any_removed = True
+                continue
+            new_item, removed = clean(item)
+            any_removed = any_removed or removed
+            out.append(new_item)
+        return out, any_removed
+    else:
+        return node, False
+
+path = sys.argv[1]
+with open(path, encoding="utf-8") as f:
+    doc = json.load(f)
+new_doc, removed = clean(doc)
+if not removed:
+    print("no-flywheel-entries-found")
+elif is_effectively_empty(new_doc):
+    os.remove(path)
+    print("removed (empty after unmerge)")
+else:
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(new_doc, f, indent=2)
+        f.write("\n")
+    print("unmerged")
+PYEOF
+)
+  else
+    result=$(node - "$dest_file" <<'NODEEOF'
+const fs = require('fs');
+const path = process.argv[2];
+
+// Exact command strings flywheel installs (see adapters/*/*.merge). Exact
+// equality only — a user hook that merely mentions "resolve-spawn.py" in its
+// own command string (e.g. an unrelated echo) must not match.
+const FLYWHEEL_COMMANDS = new Set([
+  'python3 flywheel/resolve-spawn.py',              // adapters/claude-code/settings.json.merge
+  'python3 flywheel/resolve-spawn.py codex',         // adapters/codex/hooks.json.merge
+  'python3 flywheel/resolve-spawn.py antigravity',   // adapters/antigravity/hooks.json.merge
+]);
+
+function isFlywheelItem(item) {
+  if (!item || typeof item !== 'object' || Array.isArray(item)) return false;
+  const hooksList = item.hooks;
+  if (Array.isArray(hooksList)) {
+    return hooksList.some(h => h && typeof h === 'object' && FLYWHEEL_COMMANDS.has(String(h.command || '')));
+  }
+  return false;
+}
+
+function isEmpty(v) { // shallow
+  if (Array.isArray(v)) return v.length === 0;
+  if (v && typeof v === 'object') return Object.keys(v).length === 0;
+  return false;
+}
+
+function isEffectivelyEmpty(v) { // deep — final whole-file check only
+  if (Array.isArray(v)) return v.length === 0;
+  if (v && typeof v === 'object') return Object.values(v).every(isEffectivelyEmpty);
+  return false;
+}
+
+function clean(node) {
+  if (Array.isArray(node)) {
+    let anyRemoved = false;
+    const out = [];
+    for (const item of node) {
+      if (isFlywheelItem(item)) { anyRemoved = true; continue; }
+      const [newItem, removed] = clean(item);
+      anyRemoved = anyRemoved || removed;
+      out.push(newItem);
+    }
+    return [out, anyRemoved];
+  } else if (node && typeof node === 'object') {
+    let anyRemoved = false;
+    const out = {};
+    for (const k of Object.keys(node)) {
+      if (k === 'flywheel-spawn-log') { anyRemoved = true; continue; }
+      const [newV, removed] = clean(node[k]);
+      anyRemoved = anyRemoved || removed;
+      if (removed && isEmpty(newV)) continue;
+      out[k] = newV;
+    }
+    return [out, anyRemoved];
+  }
+  return [node, false];
+}
+
+const doc = JSON.parse(fs.readFileSync(path, 'utf8'));
+const [newDoc, removed] = clean(doc);
+if (!removed) {
+  console.log('no-flywheel-entries-found');
+} else if (isEffectivelyEmpty(newDoc)) {
+  fs.unlinkSync(path);
+  console.log('removed (empty after unmerge)');
+} else {
+  fs.writeFileSync(path, JSON.stringify(newDoc, null, 2) + '\n');
+  console.log('unmerged');
+}
+NODEEOF
+)
+  fi
+  echo "  ${dest_file#"$TARGET"/}: $result"
+}
+
 # --- 3. remove flywheel-managed agents/skills -------------------------------
 if [ -d "$TARGET/.claude/agents" ]; then
   for af in "$TARGET"/.claude/agents/*.md; do
@@ -146,6 +328,33 @@ if [ -d "$TARGET/.claude/skills" ]; then
   done
   rmdir "$TARGET/.claude/skills" 2>/dev/null || true
 fi
+restore_or_unmerge_json "$TARGET/.claude/settings.json"
+rmdir "$TARGET/.claude" 2>/dev/null || true
+
+if [ -d "$TARGET/.codex/agents" ]; then
+  for af in "$TARGET"/.codex/agents/*.toml; do
+    [ -e "$af" ] || continue
+    if grep -q 'flywheel-managed' "$af" 2>/dev/null; then
+      rm -f "$af"
+      echo "  removed: .codex/agents/$(basename "$af")"
+    fi
+  done
+  rmdir "$TARGET/.codex/agents" 2>/dev/null || true
+fi
+if [ -d "$TARGET/.codex/skills" ]; then
+  for sd in "$TARGET"/.codex/skills/*/; do
+    [ -d "$sd" ] || continue
+    sf="$sd/SKILL.md"
+    if [ -f "$sf" ] && grep -q 'flywheel-managed' "$sf" 2>/dev/null; then
+      rm -f "$sf"
+      echo "  removed: .codex/skills/$(basename "$sd")/SKILL.md"
+      rmdir "$sd" 2>/dev/null || true
+    fi
+  done
+  rmdir "$TARGET/.codex/skills" 2>/dev/null || true
+fi
+restore_or_unmerge_json "$TARGET/.codex/hooks.json"
+rmdir "$TARGET/.codex" 2>/dev/null || true
 
 if [ -d "$TARGET/.agents/agents" ]; then
   for ad in "$TARGET"/.agents/agents/*/; do
@@ -170,10 +379,7 @@ if [ -d "$TARGET/.agents/skills" ]; then
   done
   rmdir "$TARGET/.agents/skills" 2>/dev/null || true
 fi
-if [ -f "$TARGET/.agents/hooks.json" ]; then
-  rm -f "$TARGET/.agents/hooks.json"
-  echo "  removed: .agents/hooks.json"
-fi
+restore_or_unmerge_json "$TARGET/.agents/hooks.json"
 rmdir "$TARGET/.agents" 2>/dev/null || true
 
 # --- 4. restore opencode.json -----------------------------------------------
