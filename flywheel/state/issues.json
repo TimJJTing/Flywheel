@@ -39,7 +39,9 @@
   "priority": "P2",
   "status": "open",
   "detail": "Script cross-checks fact-shaped claims (model IDs, versions, counts) in docs/reports against FACTS.md. Minimal start: check.sh rule that claude-*/gpt-* strings outside config.json+FACTS.md must match a FACTS row. Differentiator #1. Spec: docs/research/ideas-2026-07-10.md I-A.",
-  "commits": ["2b87391"],
+  "commits": [
+   "2b87391"
+  ],
   "opened": "2026-07-10",
   "closed": null
  },
@@ -50,7 +52,9 @@
   "priority": "P2",
   "status": "open",
   "detail": "Per-session prose-rule violation counts in activity.json via hooks; dashboard trend. Turns strategy A1 from belief into curve. Spec: docs/research/ideas-2026-07-10.md I-B.",
-  "commits": ["2b87391"],
+  "commits": [
+   "2b87391"
+  ],
   "opened": "2026-07-10",
   "closed": null
  },
@@ -61,7 +65,9 @@
   "priority": "P2",
   "status": "open",
   "detail": "Fixed task set with seeded traps; bare adapter vs flywheel-installed; count fabrications + false completion claims. Gives README measured deltas; feeds adoption test. Spec: docs/research/ideas-2026-07-10.md I-C.",
-  "commits": ["2b87391"],
+  "commits": [
+   "2b87391"
+  ],
   "opened": "2026-07-10",
   "closed": null
  },
@@ -72,7 +78,9 @@
   "priority": "P3",
   "status": "open",
   "detail": "Annotate rules with [dN]/[LN] sources; uncited rule = deletion candidate. Makes A4 delete-to-add executable. Convention + check.sh warning. Spec: docs/research/ideas-2026-07-10.md I-D.",
-  "commits": ["2b87391"],
+  "commits": [
+   "2b87391"
+  ],
   "opened": "2026-07-10",
   "closed": null
  },
@@ -83,8 +91,87 @@
   "priority": "P3",
   "status": "open",
   "detail": "Manual logging fails (4 lines / 7 sessions). PostToolUse hook detects retries/tier changes in spawns.json, drafts LESSONS lines for wrapup confirmation. Spec: docs/research/ideas-2026-07-10.md I-E.",
-  "commits": ["2b87391"],
+  "commits": [
+   "2b87391"
+  ],
   "opened": "2026-07-10",
+  "closed": null
+ },
+ {
+  "id": "i9",
+  "title": "AGENTS.md single managed block conflicts across codex/opencode/antigravity",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: two non-claude adapters installed into the same target.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i10",
+  "title": "build.py/build.mjs (python/node dual paths) have no parity guard",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: any edit to dashboard build.*; drift between runtimes goes unnoticed.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i11",
+  "title": "spawns.json write race: hook flock vs coordinator whole-file Write; fcntl Unix-only",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: lost ledger rows observed, or Windows adapter support.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i12",
+  "title": "check.sh config-drift guard covers only claude-code + codex frontmatter",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: opencode/antigravity agent files drift from config.json unnoticed.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i13",
+  "title": "install ships built dashboard.html carrying flywheel's own ledger data",
+  "type": "debt",
+  "priority": "P4",
+  "status": "open",
+  "detail": "Deferred from architecture-audit-2026-07. Cosmetic: fresh target sees flywheel's history until first wrapup rebuild.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i14",
+  "title": "install.sh merge_json: malformed pre-existing JSON exits with raw python traceback",
+  "type": "defect",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Verifier follow-up (Plan 1). User file preserved, but failure mode is an uncaught JSONDecodeError, no clean message.",
+  "commits": [],
+  "opened": "2026-07-15",
+  "closed": null
+ },
+ {
+  "id": "i15",
+  "title": "uninstall .flywheel-bak restore silently discards post-install user edits",
+  "type": "defect",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Verifier follow-up (Plan 4). Stale backup overwrites later user changes on uninstall; matches opencode.json convention but unflagged. Consider warning or mtime check.",
+  "commits": [],
+  "opened": "2026-07-15",
   "closed": null
  }
 ]

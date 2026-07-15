@@ -113,9 +113,24 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch",
-  "status": "pending",
-  "outcome": "",
+  "status": "decided",
+  "outcome": "merge (decided-by-human)",
   "created": "2026-07-12",
-  "resolved": ""
+  "resolved": "2026-07-15"
+ },
+ {
+  "id": "d10",
+  "title": "Land architecture-audit fix plans 1-4 and merge to main",
+  "detail": "User-approved pipeline: hooks.json deep-merge (f9777e3), ship resolve-spawn.py+sync.py w/ check.sh guard (0177d99), wire claude-code settings.json.merge (88fa129), codex uninstall parity + JSON un-merge (be5997f). Each engineer-implemented, independently verified; Plan 4 required one retry after verifier found destructive substring-match defect.",
+  "options": [
+   "land all four",
+   "defer"
+  ],
+  "recommendation": "land all four",
+  "autonomy_row": "Merge feature branch -> main",
+  "status": "decided",
+  "outcome": "landed (decided-by-human)",
+  "created": "2026-07-15",
+  "resolved": "2026-07-15"
  }
 ]

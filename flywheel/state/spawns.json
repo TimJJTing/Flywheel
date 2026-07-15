@@ -438,5 +438,114 @@
   "task": "Apply auditor fixes to plan doc",
   "outcome": "ok",
   "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:21",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Implement Plan 1 hooks deep-merge",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:26",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Plan 1 deep-merge",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:30",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Implement Plan 2 ship scripts",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:32",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Plan 2 ship scripts",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:36",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Implement Plan 3 settings merge",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:38",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Plan 3 settings merge",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T20:41",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Implement Plan 4 uninstall parity",
+  "outcome": "ok",
+  "notes": "verifier rejected first version (substring match); fixed in retry spawn"
+ },
+ {
+  "ts": "2026-07-15T20:58",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Plan 4 uninstall parity",
+  "outcome": "ok",
+  "notes": "verdict FAILED: substring-match on resolve-spawn.py destroyed user hooks; sent back to engineer"
+ },
+ {
+  "ts": "2026-07-15T21:03",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Fix Plan 4 substring-match defect",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T21:06",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Re-verify Plan 4 after fix",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-15T21:15",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-fable-5",
+  "level": "-",
+  "task": "route audit->plans->4 fixes pipeline, merges to main",
+  "outcome": "ok"
  }
 ]
