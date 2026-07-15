@@ -119,6 +119,123 @@ copy_managed_if_ok() { # $1 = src, $2 = dest
   fi
 }
 
+# --- generic JSON deep-merge (hook files: codex, antigravity, claude-code) --
+# dict+dict -> recurse key-by-key; list+list -> append src items not already
+# present in dest (structural equality via sorted-key JSON comparison), so
+# re-running is idempotent; scalar/type-mismatch -> keep dest's value, warn.
+# Backs dest up once to <dest>.flywheel-bak before the first merge.
+merge_json() { # $1 = merge_file $2 = dest_file
+  local merge_file="$1" dest_file="$2"
+  if [ -z "$RUNNER" ]; then
+    echo "error: python3 or node required to merge $dest_file" >&2
+    exit 1
+  fi
+  if [ ! -f "$dest_file.flywheel-bak" ]; then
+    cp -f "$dest_file" "$dest_file.flywheel-bak"
+    echo "  backed up: ${dest_file#"$TARGET"/} -> ${dest_file#"$TARGET"/}.flywheel-bak"
+  fi
+  local result
+  if [ "$RUNNER" = python3 ]; then
+    result=$(python3 - "$merge_file" "$dest_file" <<'PYEOF'
+import json, sys
+
+def structurally_equal(a, b):
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+def merge(dest, src, path=""):
+    changed = False
+    if isinstance(dest, dict) and isinstance(src, dict):
+        for k, v in src.items():
+            p = f"{path}.{k}" if path else k
+            if k not in dest:
+                dest[k] = v
+                changed = True
+            else:
+                sub_changed, dest[k] = merge(dest[k], v, p)
+                changed = changed or sub_changed
+        return changed, dest
+    elif isinstance(dest, list) and isinstance(src, list):
+        for item in src:
+            if not any(structurally_equal(item, existing) for existing in dest):
+                dest.append(item)
+                changed = True
+        return changed, dest
+    else:
+        if dest != src:
+            print(f"  skip (differs): {path}", file=sys.stderr)
+        return False, dest
+
+merge_path, dest_path = sys.argv[1], sys.argv[2]
+with open(merge_path, encoding="utf-8") as f:
+    merge_doc = json.load(f)
+with open(dest_path, encoding="utf-8") as f:
+    dest_doc = json.load(f)
+changed, result_doc = merge(dest_doc, merge_doc)
+if changed:
+    with open(dest_path, "w", encoding="utf-8") as f:
+        json.dump(result_doc, f, indent=2)
+        f.write("\n")
+print("merged" if changed else "already-merged")
+PYEOF
+)
+  else
+    result=$(node - "$merge_file" "$dest_file" <<'NODEEOF'
+const fs = require('fs');
+const [,, mergePath, destPath] = process.argv;
+
+function stableStringify(v) {
+  if (Array.isArray(v)) return '[' + v.map(stableStringify).join(',') + ']';
+  if (v && typeof v === 'object') {
+    return '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + stableStringify(v[k])).join(',') + '}';
+  }
+  return JSON.stringify(v);
+}
+
+function merge(dest, src, path) {
+  let changed = false;
+  if (dest && src && typeof dest === 'object' && typeof src === 'object' &&
+      !Array.isArray(dest) && !Array.isArray(src)) {
+    for (const k of Object.keys(src)) {
+      const p = path ? `${path}.${k}` : k;
+      if (!(k in dest)) {
+        dest[k] = src[k];
+        changed = true;
+      } else {
+        const [subChanged, subResult] = merge(dest[k], src[k], p);
+        dest[k] = subResult;
+        changed = changed || subChanged;
+      }
+    }
+    return [changed, dest];
+  } else if (Array.isArray(dest) && Array.isArray(src)) {
+    for (const item of src) {
+      if (!dest.some(existing => stableStringify(existing) === stableStringify(item))) {
+        dest.push(item);
+        changed = true;
+      }
+    }
+    return [changed, dest];
+  } else {
+    if (JSON.stringify(dest) !== JSON.stringify(src)) {
+      console.error(`  skip (differs): ${path}`);
+    }
+    return [false, dest];
+  }
+}
+
+const mergeDoc = JSON.parse(fs.readFileSync(mergePath, 'utf8'));
+const destDoc = JSON.parse(fs.readFileSync(destPath, 'utf8'));
+const [changed, resultDoc] = merge(destDoc, mergeDoc, '');
+if (changed) {
+  fs.writeFileSync(destPath, JSON.stringify(resultDoc, null, 2) + '\n');
+}
+console.log(changed ? 'merged' : 'already-merged');
+NODEEOF
+)
+  fi
+  echo "  ${dest_file#"$TARGET"/}: $result"
+}
+
 # --- 1. flywheel/ payload: MANAGED (always overwrite) ----------------------
 if [ "$TARGET" != "$SCRIPT_DIR" ]; then
   mkdir -p "$TARGET/flywheel/state" "$TARGET/flywheel/dashboard"
@@ -199,12 +316,12 @@ if [ "$DO_CODEX" = 1 ]; then
     [ -d "$sd" ] || continue
     copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.codex/skills/$(basename "$sd")/SKILL.md"
   done
-  # hooks.json is strict JSON and cannot carry the "flywheel-managed" marker
-  # copy_managed_if_ok keys off, so an existing unmanaged hooks.json is always left
-  # alone (first install writes it; re-install over a user's own file skips it).
-  # ponytail: no JSON deep-merge for hooks.json; add one (mirroring the opencode.json
-  # merge path below) when a real repo ships its own hooks.json.
-  copy_managed_if_ok "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
+  if [ ! -f "$TARGET/.codex/hooks.json" ]; then
+    cp -f "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
+    echo "  created: .codex/hooks.json"
+  else
+    merge_json "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
+  fi
 fi
 
 if [ "$DO_ANTIGRAVITY" = 1 ]; then
@@ -220,7 +337,12 @@ if [ "$DO_ANTIGRAVITY" = 1 ]; then
     name="$(basename "$sd")"
     copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.agents/skills/$name/SKILL.md"
   done
-  copy_managed_if_ok "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
+  if [ ! -f "$TARGET/.agents/hooks.json" ]; then
+    cp -f "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
+    echo "  created: .agents/hooks.json"
+  else
+    merge_json "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
+  fi
 fi
 
 if [ "$DO_CLAUDE" = 1 ]; then
