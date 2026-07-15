@@ -397,7 +397,7 @@
   "level": "high",
   "task": "Verify gen_architecture.py dynamic discovery rewrite (9 acceptance criteria)",
   "outcome": "ok",
-  "notes": "verdict VERIFIED 9/9; probe: removed ledger→node absent→restored; same model as parent"
+  "notes": "verdict VERIFIED 9/9; probe: removed ledger\u2192node absent\u2192restored; same model as parent"
  },
  {
   "ts": "2026-07-13T01:55",
@@ -408,5 +408,35 @@
   "task": "Rework gen_architecture.py: dynamic discovery of diagram, tech-stack, edges",
   "outcome": "ok",
   "notes": "coordinator session 13; routed verifier; committed e88049e"
+ },
+ {
+  "ts": "2026-07-13T02:20",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Audit flywheel for design issues",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-13T02:26",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Audit architecture-audit plan doc",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-13T02:32",
+  "agent": "utility",
+  "adapter": "claude-code",
+  "model": "claude-haiku-4-5-20251001",
+  "level": "medium",
+  "task": "Apply auditor fixes to plan doc",
+  "outcome": "ok",
+  "notes": "auto-logged"
  }
 ]
