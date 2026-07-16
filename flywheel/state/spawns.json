@@ -766,5 +766,115 @@
   "task": "Correct coordinator ledger and merge repair",
   "outcome": "ok",
   "notes": "verified complex-coordination policy mapping; routed fresh post-merge verifier"
+ },
+ {
+  "ts": "2026-07-17T00:32",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+ },
+ {
+  "ts": "2026-07-17T00:49",
+  "agent": "researcher",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+ },
+ {
+  "ts": "2026-07-17T00:53",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T00:56",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T00:57",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T00:58",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:02",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:02",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:06",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:10",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:15",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
  }
 ]
