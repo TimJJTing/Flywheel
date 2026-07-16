@@ -147,12 +147,12 @@
  {
   "id": "d12",
   "title": "Merge Codex adapter repair branch",
-  "detail": "Branch flywheel/improve-codex-adapter contains a paused, unverified implementation checkpoint for the approved Codex adapter full-verification plan.",
+  "detail": "Branch flywheel/improve-codex-adapter now contains verified commit 9719554. Deterministic lifecycle/resolver suites, fresh verifier review, and an isolated live Codex hook probe passed; remaining trust/account/runtime-telemetry limitations are documented.",
   "options": [
    "merge after independent verification",
    "reject"
   ],
-  "recommendation": "merge only after the full suite, live Codex dogfood, limitations report, and fresh GPT-5.6 verifier all pass",
+  "recommendation": "approve merge; required deterministic verification, live isolated hook proof, limitations report, and fresh GPT-5.6 verifier verdict now pass",
   "autonomy_row": "Merge flywheel self-improvement branch",
   "status": "pending",
   "outcome": null,

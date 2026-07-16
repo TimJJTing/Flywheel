@@ -151,5 +151,13 @@
   "commits": [
    "37c84f4"
   ]
+ },
+ {
+  "ts": "2026-07-16",
+  "session": 17,
+  "summary": "Codex adapter lifecycle, sync, dogfood, docs, and live hook repair completed and independently verified",
+  "commits": [
+   "9719554"
+  ]
  }
 ]

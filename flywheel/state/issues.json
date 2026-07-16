@@ -191,10 +191,13 @@
   "title": "Codex adapter payload, lifecycle, sync, dogfood, and docs are inconsistent",
   "type": "defect",
   "priority": "P1",
-  "status": "in-progress",
-  "detail": "Session 16 confirmed dangling managed ADAPTERS.md references, obsolete skill path, reinstall/uninstall hook ownership defect, missing Codex sync projection, and stale user/dogfood docs. Approved plan: docs/plans/codex-adapter-full-verification.md. Partial checkpoint is unverified; models must be migrated to corresponding GPT-5.6 values next session.",
-  "commits": [],
+  "status": "done",
+  "detail": "Session 17 completed the approved repair: safe lifecycle ownership, config-driven Codex sync, supported shared skills, current docs, dogfood projection, GPT-5.6 mappings, and live-verified config-pin hook rows. Fresh verifier verdict VERIFIED; bounded live limitations are in the report.",
+  "commits": [
+   "37c84f4",
+   "9719554"
+  ],
   "opened": "2026-07-16",
-  "closed": null
+  "closed": "2026-07-16"
  }
 ]

@@ -1,33 +1,26 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-16 (session 16, paused mid Codex-adapter repair)
+Updated: 2026-07-16 (session 17, Codex adapter repair verified; merge pending)
 
 ## Current state
-- Work is checkpointed on `flywheel/improve-codex-adapter`; do not merge yet.
-- `docs/plans/codex-adapter-full-verification.md` passed an independent plan audit
-  after one REVISE cycle; implementation was interrupted at the user's request.
-- Confirmed defects: installed ADAPTERS.md has dangling repo-only references; Codex
-  skills use the obsolete `.codex/skills` path; reinstall/uninstall can restore a
-  dangling hook; sync cannot regenerate Codex TOML; docs and dogfood are stale.
-- Partial, UNVERIFIED edits touch install/uninstall ownership, Codex sync, JSON-only
-  spawn output, adapter-neutral skills, ADAPTERS.md, and two new test files.
-- No full suite, live CLI verification, verifier review, or limitations report ran.
-- User requires every newly spawned agent to use its corresponding GPT-5.6 model;
-  current `config.json` still contains GPT-5.5/GPT-5.4 entries.
+- `flywheel/improve-codex-adapter` contains verified commit `9719554`; do not merge
+  until the human resolves d12.
+- Codex lifecycle ownership, config-driven TOML sync, `.agents/skills`, installed
+  docs, repo dogfood, and safe `SubagentStop` logging are repaired.
+- Fresh verifier verdict: VERIFIED after 20 resolver tests, Python/Node lifecycle,
+  check/dashboard/diff checks, and extra ownership/path probes.
+- Isolated Codex CLI 0.144.5 live probe logged exactly utility=Luna/low,
+  engineer=Terra/high, verifier=Sol/high from config-derived agent rows.
+- Remaining limits: persisted dogfood trust UI, all-pin account entitlement, and
+  child runtime model/effort telemetry are unconfirmed; see verification report.
 
 ## In flight
-- Paused: Codex adapter user payload + dogfood repair (issue i16, plan above).
+- None.
 
 ## Next actions (in order)
-1. Re-read the approved plan and review every checkpoint diff/test hunk.
-2. Verify official GPT-5.6 tier mappings; update FACTS/config, audit, then sync.
-3. Finish lifecycle tests, docs/limitations, `.codex` dogfood, and protected shared
-   `.agents/skills` projection (may require scoped filesystem approval).
-4. Run syntax/unit/lifecycle/check/install/live-Codex verification; dispatch a fresh
-   GPT-5.6 verifier and resolve every finding.
-5. Ask the human before merging this self-improvement branch (decision d12).
+1. Human resolves d12: approve or reject merge of the verified repair branch.
+2. If approved, merge to main and rerun `bash flywheel/check.sh` on main.
 
 ## Blockers / decisions pending the human
-- d12: merge/reject only after independent verification; autonomy level 3 requires
-  human approval. Protected `.agents` writes may require scoped approval.
+- d12: approve/reject merge; autonomy level 3 requires human approval.

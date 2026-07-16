@@ -626,5 +626,125 @@
   "task": "inspect, plan, and checkpoint Codex adapter repair",
   "outcome": "ok",
   "notes": "session model was not exposed precisely; future agents must use corresponding GPT-5.6 models"
+ },
+ {
+  "ts": "2026-07-16T23:01",
+  "agent": "utility",
+  "adapter": "codex",
+  "model": "gpt-5.6-luna",
+  "level": "low",
+  "task": "Final isolated live hook probe",
+  "outcome": "ok",
+  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
+ },
+ {
+  "ts": "2026-07-16T23:01",
+  "agent": "engineer",
+  "adapter": "codex",
+  "model": "gpt-5.6-terra",
+  "level": "high",
+  "task": "Final isolated live hook probe",
+  "outcome": "ok",
+  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
+ },
+ {
+  "ts": "2026-07-16T23:02",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Final isolated live hook probe",
+  "outcome": "ok",
+  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
+ },
+ {
+  "ts": "2026-07-16T22:05",
+  "agent": "plan-auditor",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Audit GPT-5.6 tier mappings",
+  "outcome": "retried",
+  "notes": "config pin; first REVISE found missing URL/stale comment, then APPROVED"
+ },
+ {
+  "ts": "2026-07-16T22:06",
+  "agent": "utility",
+  "adapter": "codex",
+  "model": "gpt-5.6-luna",
+  "level": "low",
+  "task": "Inventory paused adapter checkpoint",
+  "outcome": "ok",
+  "notes": "config pin; reviewed full branch diff and matrix gaps"
+ },
+ {
+  "ts": "2026-07-16T22:10",
+  "agent": "engineer",
+  "adapter": "codex",
+  "model": "gpt-5.6-terra",
+  "level": "high",
+  "task": "Complete approved Codex adapter repair",
+  "outcome": "escalated",
+  "notes": "config pin; two verifier retries preceded strategist safe-I/O escalation"
+ },
+ {
+  "ts": "2026-07-16T22:20",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Verify Codex adapter repair",
+  "outcome": "retried",
+  "notes": "config pin; found malformed-uninstall, default-agent, and FIFO issues"
+ },
+ {
+  "ts": "2026-07-16T22:45",
+  "agent": "researcher",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Plan safe transcript resolution",
+  "outcome": "retried",
+  "notes": "config pin; cwd-containment plan revised to sibling transcript authorization"
+ },
+ {
+  "ts": "2026-07-16T22:48",
+  "agent": "plan-auditor",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Audit safe transcript plan",
+  "outcome": "retried",
+  "notes": "config pin; first REVISE rejected live-incompatible cwd policy, then APPROVED"
+ },
+ {
+  "ts": "2026-07-16T22:52",
+  "agent": "engineer",
+  "adapter": "codex",
+  "model": "gpt-5.6-terra",
+  "level": "high",
+  "task": "Implement safe transcript reader",
+  "outcome": "ok",
+  "notes": "config pin; 20 resolver tests and full lifecycle passed"
+ },
+ {
+  "ts": "2026-07-16T23:05",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Final independent adapter verification",
+  "outcome": "ok",
+  "notes": "config pin; VERIFIED after full suite and durable live evidence review"
+ },
+ {
+  "ts": "2026-07-16T23:08",
+  "agent": "coordinator",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "Route and integrate Codex adapter repair",
+  "outcome": "ok",
+  "notes": "session runtime model not exposed; no model guess recorded"
  }
 ]
