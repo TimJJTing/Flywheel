@@ -140,7 +140,19 @@ strip_block "$TARGET/AGENTS.md"
 restore_or_unmerge_json() { # $1 = dest_file
   local dest_file="$1"
   if [ -f "$dest_file.flywheel-bak" ]; then
+    # Compare against the post-merge snapshot (.flywheel-merged), not the
+    # pre-merge .flywheel-bak — the merge itself always changes dest, so
+    # diffing against the pre-merge backup would flag every install as
+    # "edited" even with zero user changes. Installs from before
+    # .flywheel-merged existed have no reliable post-merge baseline to diff
+    # against — skip edit-detection entirely and restore silently, exactly
+    # the pre-fix behavior (ponytail: no snapshot, no comparison, not a guess).
+    if [ -f "$dest_file.flywheel-merged" ] && [ -f "$dest_file" ] && ! cmp -s "$dest_file" "$dest_file.flywheel-merged"; then
+      cp -f "$dest_file" "$dest_file.flywheel-uninstalled"
+      echo "  warning: ${dest_file#"$TARGET"/} was edited after install — saved as ${dest_file#"$TARGET"/}.flywheel-uninstalled" >&2
+    fi
     mv -f "$dest_file.flywheel-bak" "$dest_file"
+    rm -f "$dest_file.flywheel-merged"
     echo "  restored: ${dest_file#"$TARGET"/} (from backup)"
     return 0
   fi
@@ -384,7 +396,15 @@ rmdir "$TARGET/.agents" 2>/dev/null || true
 
 # --- 4. restore opencode.json -----------------------------------------------
 if [ -f "$TARGET/opencode.json.flywheel-bak" ]; then
+  # See restore_or_unmerge_json above: diff against the post-merge snapshot,
+  # not the pre-merge backup, or every install reads as "edited". No snapshot
+  # (pre-fix install) -> no reliable baseline -> skip detection, restore silently.
+  if [ -f "$TARGET/opencode.json.flywheel-merged" ] && [ -f "$TARGET/opencode.json" ] && ! cmp -s "$TARGET/opencode.json" "$TARGET/opencode.json.flywheel-merged"; then
+    cp -f "$TARGET/opencode.json" "$TARGET/opencode.json.flywheel-uninstalled"
+    echo "  warning: opencode.json was edited after install — saved as opencode.json.flywheel-uninstalled" >&2
+  fi
   mv -f "$TARGET/opencode.json.flywheel-bak" "$TARGET/opencode.json"
+  rm -f "$TARGET/opencode.json.flywheel-merged"
   echo "  restored: opencode.json (from backup)"
 elif [ -f "$TARGET/opencode.json" ]; then
   MERGE_FILE="$SCRIPT_DIR/adapters/opencode/opencode.json.merge"

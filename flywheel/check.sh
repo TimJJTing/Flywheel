@@ -251,6 +251,78 @@ sys.exit(0 if ok else 1)
   [ $? -ne 0 ] && FAIL=1
 fi
 
+# --- dashboard builder parity (i10): build.py and build.mjs must emit the ---
+# same dashboard.html for the same state. Builds into temp copies; restores
+# whatever was at dashboard.html before this check ran (it's gitignored, but
+# don't clobber a developer's local build regardless).
+DASH_DIR="$FLYWHEEL_DIR/dashboard"
+DASH_OUT="$DASH_DIR/dashboard.html"
+if command -v python3 >/dev/null 2>&1 && command -v node >/dev/null 2>&1; then
+  DASH_BACKUP=""
+  [ -f "$DASH_OUT" ] && { DASH_BACKUP=$(mktemp); cp "$DASH_OUT" "$DASH_BACKUP"; }
+  PY_OUT=$(mktemp)
+  JS_OUT=$(mktemp)
+  FLYWHEEL_BUILD_TS="1970-01-01T00:00" python3 "$DASH_DIR/build.py" >/dev/null 2>&1
+  py_rc=$?
+  [ "$py_rc" -eq 0 ] && cp "$DASH_OUT" "$PY_OUT"
+  FLYWHEEL_BUILD_TS="1970-01-01T00:00" node "$DASH_DIR/build.mjs" >/dev/null 2>&1
+  js_rc=$?
+  [ "$js_rc" -eq 0 ] && cp "$DASH_OUT" "$JS_OUT"
+  if [ -n "$DASH_BACKUP" ]; then cp "$DASH_BACKUP" "$DASH_OUT"; rm -f "$DASH_BACKUP";
+  else rm -f "$DASH_OUT"; fi
+  if [ "$py_rc" -ne 0 ] || [ "$js_rc" -ne 0 ]; then
+    echo "✗ dashboard build.py/build.mjs parity: one or both builds failed (py=$py_rc js=$js_rc)"
+    FAIL=1
+  elif diff -q "$PY_OUT" "$JS_OUT" >/dev/null 2>&1; then
+    echo "✓ dashboard build.py/build.mjs parity: identical output"
+  else
+    echo "✗ dashboard build.py/build.mjs parity: outputs differ — keep build.py and build.mjs in sync"
+    FAIL=1
+  fi
+  rm -f "$PY_OUT" "$JS_OUT"
+else
+  echo "⚠ dashboard build.py/build.mjs parity check skipped (python3 and/or node not both available)"
+fi
+
+# opencode agent model pinning (i12) vs config.json. opencode has no per-repo
+# "installed" agent dir here (no .opencode/); the source of truth that ships
+# to every install is adapters/opencode/opencode.json.merge, so check that.
+OPENCODE_MERGE="$REPO_ROOT/adapters/opencode/opencode.json.merge"
+if [ -f "$OPENCODE_MERGE" ] && command -v python3 >/dev/null 2>&1; then
+  python3 -c '
+import json, sys
+merge_path, config_path = sys.argv[1], sys.argv[2]
+tiers = json.load(open(config_path, encoding="utf-8")).get("tiers", {})
+agents = json.load(open(merge_path, encoding="utf-8")).get("agent", {})
+ok = True
+for tier_key, agent in agents.items():
+    expect = tiers.get(tier_key, {}).get("adapters", {}).get("opencode", {})
+    exp_provider, exp_model = expect.get("provider"), expect.get("model")
+    if exp_model == "Pending verification":
+        print(f"⚠ opencode.json.merge[{tier_key}] check skipped (config model still Pending verification)")
+        continue
+    exp = f"{exp_provider}/{exp_model}" if exp_provider else exp_model
+    got = agent.get("model")
+    if got != exp:
+        print(f"✗ opencode.json.merge[{tier_key}] model ({got}) != config.json {tier_key} ({exp})")
+        ok = False
+    else:
+        print(f"✓ opencode.json.merge[{tier_key}] model matches config.json")
+if not ok:
+    print("  → config.json is source of truth; edit adapters/opencode/opencode.json.merge to match")
+sys.exit(0 if ok else 1)
+' "$OPENCODE_MERGE" "$FLYWHEEL_DIR/config.json"
+  [ $? -ne 0 ] && FAIL=1
+else
+  echo "⚠ opencode.json.merge drift check skipped (python3 not available)"
+fi
+
+# antigravity (i12): adapters/antigravity/agents/*/agent.json carry no model or
+# level field at all — verified (FACTS.md, 2026-07-12): Antigravity subagents
+# inherit the parent session's model and cannot be routed to a different one.
+# There is nothing per-agent here that could drift from config.json, so this
+# adapter is exempt from the drift check by design, not by oversight.
+
 # --- resolve-spawn.py presence guard ----------------------------------------
 # Every adapter hook file that references resolve-spawn.py must find it at
 # flywheel/resolve-spawn.py, or spawn auto-logging silently no-ops (see

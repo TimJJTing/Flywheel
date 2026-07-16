@@ -119,6 +119,15 @@ copy_managed_if_ok() { # $1 = src, $2 = dest
   fi
 }
 
+# --- shared JSON validity check (merge_json + the opencode.json merge block) --
+is_valid_json() { # $1 = file
+  if [ "$RUNNER" = python3 ]; then
+    python3 -c "import json,sys; json.load(open(sys.argv[1], encoding='utf-8'))" "$1" 2>/dev/null
+  else
+    node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$1" 2>/dev/null
+  fi
+}
+
 # --- generic JSON deep-merge (hook files: codex, antigravity, claude-code) --
 # dict+dict -> recurse key-by-key; list+list -> append src items not already
 # present in dest (structural equality via sorted-key JSON comparison), so
@@ -129,6 +138,12 @@ merge_json() { # $1 = merge_file $2 = dest_file
   if [ -z "$RUNNER" ]; then
     echo "error: python3 or node required to merge $dest_file" >&2
     exit 1
+  fi
+  # Malformed dest JSON must not crash install or clobber the user's file —
+  # warn and skip the merge, leaving dest untouched (no backup either).
+  if ! is_valid_json "$dest_file"; then
+    echo "  warning: ${dest_file#"$TARGET"/} is not valid JSON — skipping flywheel merge, file left untouched" >&2
+    return 0
   fi
   if [ ! -f "$dest_file.flywheel-bak" ]; then
     cp -f "$dest_file" "$dest_file.flywheel-bak"
@@ -233,6 +248,10 @@ console.log(changed ? 'merged' : 'already-merged');
 NODEEOF
 )
   fi
+  # Snapshot of the post-merge result, so uninstall can tell a genuine
+  # post-install user edit (dest != this snapshot) apart from the merge
+  # itself (dest always differs from the pre-merge .flywheel-bak).
+  cp -f "$dest_file" "$dest_file.flywheel-merged"
   echo "  ${dest_file#"$TARGET"/}: $result"
 }
 
@@ -249,6 +268,10 @@ if [ "$TARGET" != "$SCRIPT_DIR" ]; then
   done
   if [ -d "$PAYLOAD/dashboard" ] && [ -n "$(ls -A "$PAYLOAD/dashboard" 2>/dev/null)" ]; then
     cp -Rf "$PAYLOAD/dashboard/." "$TARGET/flywheel/dashboard/"
+    # dashboard.html is a BUILT artifact carrying the flywheel repo's own
+    # ledger data — drop it here and rebuild from the target's own (fresh)
+    # config/state below, once those exist.
+    rm -f "$TARGET/flywheel/dashboard/dashboard.html"
     echo "  managed: flywheel/dashboard/*"
   fi
 
@@ -279,6 +302,16 @@ if [ "$TARGET" != "$SCRIPT_DIR" ]; then
       echo "  kept: flywheel/state/$b (already present)"
     fi
   done
+
+  if [ -f "$TARGET/flywheel/dashboard/build.py" ]; then
+    if [ "$RUNNER" = python3 ]; then
+      python3 "$TARGET/flywheel/dashboard/build.py" >/dev/null 2>&1 && echo "  built: flywheel/dashboard/dashboard.html" || echo "  warning: dashboard.html build failed — first wrapup will build it" >&2
+    elif [ "$RUNNER" = node ] && [ -f "$TARGET/flywheel/dashboard/build.mjs" ]; then
+      node "$TARGET/flywheel/dashboard/build.mjs" >/dev/null 2>&1 && echo "  built: flywheel/dashboard/dashboard.html" || echo "  warning: dashboard.html build failed — first wrapup will build it" >&2
+    else
+      echo "  note: no python3/node — flywheel/dashboard/dashboard.html not built yet (first wrapup will build it)"
+    fi
+  fi
 fi
 
 # --- 2. adapters -------------------------------------------------------------
@@ -377,6 +410,8 @@ if [ "$DO_OPENCODE" = 1 ]; then
     if [ ! -f "$DEST" ]; then
       cp -f "$MERGE_FILE" "$DEST"
       echo "  created: opencode.json"
+    elif ! is_valid_json "$DEST"; then
+      echo "  warning: ${DEST#"$TARGET"/} is not valid JSON — skipping flywheel merge, file left untouched" >&2
     else
       if [ ! -f "$DEST.flywheel-bak" ]; then
         cp -f "$DEST" "$DEST.flywheel-bak"
@@ -432,6 +467,7 @@ console.log(changed ? 'merged' : 'already-merged');
 NODEEOF
 )
       fi
+      cp -f "$DEST" "$DEST.flywheel-merged"
       echo "  opencode.json: $RESULT"
     fi
   fi
