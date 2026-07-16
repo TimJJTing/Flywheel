@@ -7,7 +7,7 @@ across hundreds of sessions. Flywheel is not another agent framework — it is a
 **self-amending operating policy** for LLM-run projects: facts are verified or marked
 `Pending verification` (never recalled), completion is never self-graded, and the
 rules amend themselves session by session from a friction log. The repo itself is the
-harness — portable to any adapter (Claude Code, Codex CLI, OpenCode), bound to none.
+harness — portable to Claude Code, Codex CLI, OpenCode, and Antigravity, bound to none.
 
 Install it into any repo — greenfield or legacy, any tech stack — and every AI coding
 session gains:
@@ -20,13 +20,14 @@ session gains:
 - **A CEO dashboard**: one offline HTML file showing projects, progress, open issues,
   decisions awaiting you, and exactly which agent (model, effort) did what.
 - **A self-improvement flywheel**: every N sessions the framework reviews its own
-  friction log and improves itself — each change one branch, one commit, individually
-  revertible.
+  friction log and improves itself — each change has one branch and one implementation
+  commit, followed only by optional bookkeeping.
 - **Clean git history as a feature**: conventional commits, branch scheme, and ledger
   entries cross-linked to hashes so the dashboard is an audit trail.
 
-Works with **Claude Code**, **Codex CLI** (full custom subagents), and **OpenCode**;
-porting to another adapter is a five-question exercise (`flywheel/ADAPTERS.md`).
+Works with **Claude Code**, **Codex CLI** (full custom subagents), **OpenCode**, and
+**Antigravity CLI**; porting another adapter is a five-question exercise
+(`flywheel/ADAPTERS.md`).
 
 Codex installs six agents under `.codex/agents`, adapter-neutral skills under
 `.agents/skills`, and a project hook under `.codex/hooks.json`. Project trust is

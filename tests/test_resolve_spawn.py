@@ -30,6 +30,8 @@ class ResolveSpawnTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         (self.root / "flywheel" / "state").mkdir(parents=True)
         shutil.copy(REPO / "flywheel" / "config.json", self.root / "flywheel" / "config.json")
+        self.script = self.root / "flywheel" / "resolve-spawn.py"
+        shutil.copy(SCRIPT, self.script)
         self.ledger.write_text("[]\n", encoding="utf-8")
 
     def tearDown(self):
@@ -43,11 +45,12 @@ class ResolveSpawnTests(unittest.TestCase):
         before = self.ledger.read_bytes() if self.ledger.exists() else None
         stdin = payload if isinstance(payload, str) else json.dumps(payload)
         proc = subprocess.run(
-            ["python3", str(SCRIPT), adapter], input=stdin, text=True,
+            ["python3", str(self.script), adapter], input=stdin, text=True,
             capture_output=True, cwd=REPO, check=False, timeout=timeout,
         )
         self.assertEqual(proc.returncode, 0)
         self.assertEqual(proc.stderr, "")
+        self.last_stdout = proc.stdout
         lines = [line for line in proc.stdout.splitlines() if line.strip()]
         self.assertEqual(len(lines), 1, proc.stdout)
         output = json.loads(lines[0])
@@ -61,6 +64,16 @@ class ResolveSpawnTests(unittest.TestCase):
     def expected_cell(self, tier):
         config = json.loads((self.root / "flywheel" / "config.json").read_text(encoding="utf-8"))
         return config["tiers"][tier]["adapters"]["codex"]
+
+    def adapter_cell(self, tier, adapter):
+        config = json.loads((self.root / "flywheel" / "config.json").read_text(encoding="utf-8"))
+        return config["tiers"][tier]["adapters"][adapter]
+
+    def assert_terminal_row(self, actual, expected):
+        self.assertEqual(set(actual), {"ts", "agent", "adapter", "model", "level",
+                                       "task", "outcome", "notes"})
+        self.assertRegex(actual["ts"], r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$")
+        self.assertEqual(actual, {"ts": actual["ts"], **expected})
 
     def transcript(self, name, agent_path=None, top_level=False, raw=None):
         path = self.root / f"{name}.jsonl"
@@ -109,6 +122,19 @@ class ResolveSpawnTests(unittest.TestCase):
         self.assertTrue(changed)
         row = self.spawns()[-1]
         self.assertEqual((row["model"], row["level"]), ("Pending verification", "-"))
+
+    def test_codex_rows_ignore_agent_and_session_identifiers(self):
+        self.run_hook({
+            "agent_type": "utility", "agent_id": "must-not-persist",
+            "session_id": "must-not-persist", "turn_id": "must-not-persist",
+            "cwd": str(self.root),
+        })
+        cell = self.expected_cell("utility")
+        self.assert_terminal_row(self.spawns()[-1], {
+            "agent": "utility", "adapter": "codex", "model": cell["model"],
+            "level": cell["level"], "task": "", "outcome": "ok",
+            "notes": "auto-logged (codex; model from config, payload model is parent's)",
+        })
 
     def test_live_default_payload_derives_all_six_agents_from_nested_metadata(self):
         for agent, tier in AGENT_TO_TIER.items():
@@ -398,10 +424,129 @@ class ResolveSpawnTests(unittest.TestCase):
             return self.run_hook({"agent_type": "utility", "cwd": str(self.root), "turn_id": str(i)})
         with ThreadPoolExecutor(max_workers=8) as pool:
             results = list(pool.map(once, range(20)))
-        self.assertTrue(all(changed for _, changed in results))
+        # A per-process before/after byte comparison races with other successful
+        # writers; characterize the durable ledger and successful stdout instead.
+        self.assertTrue(all(output["systemMessage"].startswith("spawn utility ->")
+                            for output, _ in results))
         rows = self.spawns()
         self.assertEqual(len(rows), 20)
         self.assertTrue(all(row["agent"] == "utility" for row in rows))
+
+    def test_claude_post_tool_use_override_is_a_complete_golden(self):
+        description = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen"
+        output, changed = self.run_hook({
+            "hook_event_name": "PostToolUse",
+            "tool_name": "Agent",
+            "tool_input": {
+                "subagent_type": "researcher",
+                "model": "requested-alias",
+                "description": description,
+            },
+            "tool_response": {"resolvedModel": "resolved-model-id"},
+            "cwd": str(self.root),
+        }, adapter="claude-code")
+        self.assertTrue(changed)
+        self.assertEqual(output, {"systemMessage": "spawn researcher -> resolved-model-id / high"})
+        self.assertEqual(self.last_stdout,
+                         '{"systemMessage": "spawn researcher -> resolved-model-id / high"}\n')
+        self.assert_terminal_row(self.spawns()[-1], {
+            "agent": "researcher",
+            "adapter": "claude-code",
+            "model": "resolved-model-id",
+            "level": self.adapter_cell("strategist", "claude-code")["level"],
+            "task": "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen",
+            "outcome": "ok",
+            "notes": "auto-logged; override requested: requested-alias",
+        })
+
+    def test_claude_resolved_model_mismatch_and_config_fallback_goldens(self):
+        configured = self.adapter_cell("engineer", "claude-code")
+        cases = [
+            ({"resolvedModel": "runtime-different"}, "runtime-different",
+             f"auto-logged; resolved model differs from config ({configured['model']})"),
+            ({}, configured["model"], "auto-logged"),
+        ]
+        for response, model, notes in cases:
+            with self.subTest(response=response):
+                output, changed = self.run_hook({
+                    "tool_input": {"subagent_type": "engineer", "description": "build exact thing"},
+                    "tool_response": response,
+                    "cwd": str(self.root),
+                }, adapter="claude-code")
+                self.assertTrue(changed)
+                self.assertEqual(self.last_stdout,
+                                 json.dumps({"systemMessage": f"spawn engineer -> {model} / {configured['level']}"}) + "\n")
+                self.assert_terminal_row(self.spawns()[-1], {
+                    "agent": "engineer", "adapter": "claude-code", "model": model,
+                    "level": configured["level"], "task": "build exact thing", "outcome": "ok",
+                    "notes": notes,
+                })
+
+    def test_claude_unknown_agent_golden(self):
+        self.run_hook({
+            "tool_input": {"subagent_type": "future-agent", "description": "unknown still logs"},
+            "tool_response": {}, "cwd": str(self.root),
+        }, adapter="claude-code")
+        self.assertEqual(self.last_stdout,
+                         '{"systemMessage": "spawn future-agent -> Pending verification / -"}\n')
+        self.assert_terminal_row(self.spawns()[-1], {
+            "agent": "future-agent", "adapter": "claude-code",
+            "model": "Pending verification", "level": "-", "task": "unknown still logs",
+            "outcome": "ok", "notes": "auto-logged",
+        })
+
+    def test_antigravity_invoke_subagent_multi_row_order_and_truncation_golden(self):
+        prompt = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen"
+        payload = {
+            "hook_event_name": "PostToolUse", "tool_name": "invoke_subagent",
+            "model": "parent-runtime-model",
+            "tool_input": {"Subagents": [
+                {"TypeName": "utility", "Prompt": prompt},
+                {"TypeName": "future-agent", "Prompt": "unknown task"},
+                {"TypeName": "plan-auditor", "Prompt": "audit plan"},
+            ]},
+            "tool_response": {"resolvedModel": "must-not-override-parent"},
+            "cwd": str(self.root),
+        }
+        output, changed = self.run_hook(payload, adapter="antigravity")
+        self.assertTrue(changed)
+        self.assertEqual(output, {"systemMessage": "spawn log appended 3 rows"})
+        self.assertEqual(self.last_stdout, '{"systemMessage": "spawn log appended 3 rows"}\n')
+        expected = [
+            ("utility", self.adapter_cell("utility", "antigravity")["level"],
+             "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen"),
+            ("future-agent", "-", "unknown task"),
+            ("plan-auditor", self.adapter_cell("auditor", "antigravity")["level"], "audit plan"),
+        ]
+        for row, (agent, level, task) in zip(self.spawns()[-3:], expected):
+            self.assert_terminal_row(row, {
+                "agent": agent, "adapter": "antigravity", "model": "parent-runtime-model",
+                "level": level, "task": task, "outcome": "ok",
+                "notes": "auto-logged (antigravity; same model as parent)",
+            })
+
+    def test_antigravity_parent_resolution_precedence_and_config_fallback_goldens(self):
+        fallback = self.adapter_cell("utility", "antigravity")["model"]
+        cases = [
+            ({"parent_model": "parent-field", "tool_response": {"resolvedModel": "response-field"}}, "parent-field"),
+            ({"tool_response": {"resolvedModel": "response-field"}}, "response-field"),
+            ({"tool_response": {}}, fallback),
+        ]
+        for extra, expected_model in cases:
+            with self.subTest(extra=extra):
+                payload = {
+                    "tool_input": {"Subagents": [{"TypeName": "architect", "Prompt": "design"}]},
+                    "cwd": str(self.root), **extra,
+                }
+                self.run_hook(payload, adapter="antigravity")
+                level = self.adapter_cell("architect", "antigravity")["level"]
+                self.assertEqual(self.last_stdout,
+                                 json.dumps({"systemMessage": f"spawn architect -> {expected_model} / {level}"}) + "\n")
+                self.assert_terminal_row(self.spawns()[-1], {
+                    "agent": "architect", "adapter": "antigravity", "model": expected_model,
+                    "level": level, "task": "design", "outcome": "ok",
+                    "notes": "auto-logged (antigravity; same model as parent)",
+                })
 
 
 if __name__ == "__main__":

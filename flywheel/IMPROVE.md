@@ -1,7 +1,8 @@
 # Improve — the flywheel's flywheel (the COO office optimizing itself)
 
 Iteration by iteration, the framework adapts to THIS project. Every self-improvement is
-one branch + one commit = individually revertible. The CEO never wakes up to an
+one branch + one implementation commit = individually revertible. After that commit,
+wrapup may add at most one bookkeeping-only commit. The CEO never wakes up to an
 unrecognizable system.
 
 ## Trigger
@@ -26,8 +27,11 @@ unrecognizable system.
    - Structural files still require the MAINTENANCE.md §1 process (strategist plan +
      auditor approval) — the branch is where the approved edit lands.
    - Run `flywheel/check.sh` + rebuild the dashboard.
-   - ONE commit: `improve(flywheel): <slug>`, body cites the motivating LESSONS/issue
-     line.
+   - ONE implementation commit: `improve(flywheel): <slug>`, body cites the motivating
+     LESSONS/issue line.
+   - Wrapup may then add at most one bookkeeping-only commit, limited to `STATUS.md`,
+     `LESSONS.md`, state ledgers, and generated dashboard/architecture output. No
+     implementation path may enter it.
 5. **Merge gate = AUTONOMY.md row "Merge flywheel self-improvement branch":**
    - A (levels 1–3): create a `pending` decisions.json entry (options: merge/reject,
      recommendation + branch name in detail). Leave the branch. Continue other work.

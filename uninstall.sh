@@ -203,18 +203,13 @@ import json, os, sys
 FLYWHEEL_COMMANDS = {
     "python3 flywheel/resolve-spawn.py",              # adapters/claude-code/settings.json.merge
     "python3 flywheel/resolve-spawn.py codex",         # adapters/codex/hooks.json.merge
+    'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex',
     "python3 flywheel/resolve-spawn.py antigravity",   # adapters/antigravity/hooks.json.merge
 }
 
-def is_flywheel_item(item):
-    if not isinstance(item, dict):
-        return False
-    hooks_list = item.get("hooks")
-    if isinstance(hooks_list, list):
-        for h in hooks_list:
-            if isinstance(h, dict) and str(h.get("command", "")) in FLYWHEEL_COMMANDS:
-                return True
-    return False
+def is_flywheel_handler(item):
+    return (isinstance(item, dict)
+            and str(item.get("command", "")) in FLYWHEEL_COMMANDS)
 
 def is_empty(v):  # shallow — used to decide whether to drop a just-emptied key
     return v == {} or v == []
@@ -244,11 +239,14 @@ def clean(node):
         out = []
         any_removed = False
         for item in node:
-            if is_flywheel_item(item):
+            if is_flywheel_handler(item):
                 any_removed = True
                 continue
             new_item, removed = clean(item)
             any_removed = any_removed or removed
+            if (removed and isinstance(item, dict) and isinstance(item.get("hooks"), list)
+                    and (not isinstance(new_item, dict) or not new_item.get("hooks"))):
+                continue
             out.append(new_item)
         return out, any_removed
     else:
@@ -281,16 +279,13 @@ const path = process.argv[2];
 const FLYWHEEL_COMMANDS = new Set([
   'python3 flywheel/resolve-spawn.py',              // adapters/claude-code/settings.json.merge
   'python3 flywheel/resolve-spawn.py codex',         // adapters/codex/hooks.json.merge
+  'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex',
   'python3 flywheel/resolve-spawn.py antigravity',   // adapters/antigravity/hooks.json.merge
 ]);
 
-function isFlywheelItem(item) {
-  if (!item || typeof item !== 'object' || Array.isArray(item)) return false;
-  const hooksList = item.hooks;
-  if (Array.isArray(hooksList)) {
-    return hooksList.some(h => h && typeof h === 'object' && FLYWHEEL_COMMANDS.has(String(h.command || '')));
-  }
-  return false;
+function isFlywheelHandler(item) {
+  return item && typeof item === 'object' && !Array.isArray(item) &&
+    FLYWHEEL_COMMANDS.has(String(item.command || ''));
 }
 
 function isEmpty(v) { // shallow
@@ -310,9 +305,12 @@ function clean(node) {
     let anyRemoved = false;
     const out = [];
     for (const item of node) {
-      if (isFlywheelItem(item)) { anyRemoved = true; continue; }
+      if (isFlywheelHandler(item)) { anyRemoved = true; continue; }
       const [newItem, removed] = clean(item);
       anyRemoved = anyRemoved || removed;
+      if (removed && item && typeof item === 'object' && !Array.isArray(item) &&
+          Array.isArray(item.hooks) &&
+          (!newItem || typeof newItem !== 'object' || !Array.isArray(newItem.hooks) || newItem.hooks.length === 0)) continue;
       out.push(newItem);
     }
     return [out, anyRemoved];
@@ -513,7 +511,7 @@ for json_file in "$TARGET/.codex/hooks.json" "$TARGET/.agents/hooks.json" "$TARG
   if [ "$RUNNER" = python3 ]; then
     HAS_COMMAND=$(python3 - "$json_file" <<'PYEOF'
 import json, sys
-commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", "python3 flywheel/resolve-spawn.py antigravity"}
+commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
 def found(v):
     if isinstance(v, dict):
         return (v.get("command") in commands) or any(found(x) for x in v.values())
@@ -526,7 +524,7 @@ PYEOF
   else
     HAS_COMMAND=$(node - "$json_file" <<'NODEEOF'
 const fs = require('fs');
-const commands = new Set(['python3 flywheel/resolve-spawn.py', 'python3 flywheel/resolve-spawn.py codex', 'python3 flywheel/resolve-spawn.py antigravity']);
+const commands = new Set(['python3 flywheel/resolve-spawn.py', 'python3 flywheel/resolve-spawn.py codex', 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', 'python3 flywheel/resolve-spawn.py antigravity']);
 function found(v) {
   if (Array.isArray(v)) return v.some(found);
   if (v && typeof v === 'object') return commands.has(v.command) || Object.values(v).some(found);

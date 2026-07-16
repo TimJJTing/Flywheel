@@ -46,7 +46,7 @@ run_uninstall() {
 json_hook_count() {
   "$HOST_PYTHON" - "$1" <<'PY'
 import json, sys
-commands = {"python3 flywheel/resolve-spawn.py codex"}
+commands = {'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex'}
 def count(v):
     if isinstance(v, dict): return (1 if v.get("command") in commands else 0) + sum(count(x) for x in v.values())
     if isinstance(v, list): return sum(count(x) for x in v)
@@ -68,7 +68,7 @@ assert_no_flywheel_commands() {
   local t="$1"
   "$HOST_PYTHON" - "$t" <<'PY'
 import json, pathlib, sys
-commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", "python3 flywheel/resolve-spawn.py antigravity"}
+commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
 def found(v):
     if isinstance(v, dict): return v.get("command") in commands or any(found(x) for x in v.values())
     if isinstance(v, list): return any(found(x) for x in v)
@@ -130,7 +130,7 @@ PY
   "$HOST_PYTHON" - "$t/.codex/hooks.json" <<'PY'
 import pathlib, sys
 p=pathlib.Path(sys.argv[1]); data=p.read_bytes(); last=data.rfind(b"}")
-assert last >= 0 and b"python3 flywheel/resolve-spawn.py codex" in data
+assert last >= 0 and b'python3 \\"$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py\\" codex' in data
 p.write_bytes(data[:last] + data[last + 1:] + b"user-malformed-tail\n")
 PY
   cp "$t/.codex/hooks.json" "$t/expected-malformed-recovery"
@@ -139,7 +139,7 @@ PY
   assert_file "$t/.codex/hooks.json.flywheel-uninstalled"
   cmp -s "$t/expected-malformed-recovery" "$t/.codex/hooks.json.flywheel-uninstalled" || fail "malformed recovery bytes changed"
   grep -q 'removed from the active path' "$TMPROOT/corrupt-uninstall-$runner.log" || fail "malformed quarantine warning missing"
-  grep -q 'python3 flywheel/resolve-spawn.py codex' "$t/.codex/hooks.json.flywheel-uninstalled" || fail "reproducer did not retain command in recovery artifact"
+  grep -q 'git rev-parse --show-toplevel' "$t/.codex/hooks.json.flywheel-uninstalled" || fail "reproducer did not retain command in recovery artifact"
   assert_no_managed_sidecars "$t"
   assert_no_flywheel_commands "$t"
 
@@ -242,11 +242,16 @@ PY
     assert_no_managed_sidecars "$t"
     assert_no_flywheel_commands "$t"
   done
-  for adapters in codex,claude-code codex,opencode codex,claude-code,opencode,antigravity; do
+  # Characterization matrix for the three auto-logging adapters: each adapter,
+  # each relevant pair, and all together. Every case installs, reinstalls, and
+  # uninstalls under both JSON runners.
+  for adapters in claude-code antigravity claude-code,antigravity codex,claude-code codex,antigravity codex,claude-code,antigravity codex,opencode codex,claude-code,opencode,antigravity; do
     t="$(new_repo "combo-${adapters//,/-}-$runner")"
     run_install "$runner" "$t" "$adapters"
     run_install "$runner" "$t" "$adapters"
-    assert_file "$t/.codex/hooks.json"
+    case ",$adapters," in *,codex,*) assert_file "$t/.codex/hooks.json";; esac
+    case ",$adapters," in *,claude-code,*) assert_file "$t/.claude/settings.json";; esac
+    case ",$adapters," in *,antigravity,*) assert_file "$t/.agents/hooks.json";; esac
     case "$adapters" in *opencode*) cmp -s "$ROOT/adapters/opencode/AGENTS.md.block" "$t/AGENTS.md" || fail "OpenCode AGENTS precedence missing";; esac
     run_uninstall "$runner" "$t"
     assert_no_managed_sidecars "$t"

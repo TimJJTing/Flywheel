@@ -7,6 +7,26 @@ set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
+# Never sweep an implementation path that the caller already staged into the
+# bookkeeping commit. Reject before generation, staging, or committing.
+cd "$REPO_ROOT"
+OUTSIDE_STAGED=""
+while IFS= read -r staged_path; do
+  [ -n "$staged_path" ] || continue
+  case "$staged_path" in
+    flywheel/STATUS.md|flywheel/LESSONS.md|flywheel/state/*.json|flywheel/dashboard/dashboard.html|docs/ARCHITECTURE.md) ;;
+    *) OUTSIDE_STAGED="${OUTSIDE_STAGED}${OUTSIDE_STAGED:+
+}${staged_path}" ;;
+  esac
+done <<EOF
+$(git diff --cached --name-only 2>/dev/null)
+EOF
+if [ -n "$OUTSIDE_STAGED" ]; then
+  echo "✗ wrapup aborted: staged paths outside the bookkeeping allowlist:" >&2
+  echo "$OUTSIDE_STAGED" >&2
+  exit 1
+fi
+
 # 1. Auto-generate architecture docs if python3 is available.
 if command -v python3 >/dev/null 2>&1; then
   python3 "$SCRIPT_DIR/dashboard/gen_architecture.py" "$REPO_ROOT" 2>/dev/null || echo "⚠ warning: architecture auto-generation failed"

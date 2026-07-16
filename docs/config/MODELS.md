@@ -25,6 +25,8 @@ default model (Claude Code: `model: inherit` in the agent files).
    - **OpenCode:** the `model` ("provider/model-id") in opencode.json's agent entries.
    - **Codex:** `.codex/agents/<agent>.toml` and the shipped adapter templates;
      config `level` becomes native `model_reasoning_effort`.
+   - **Antigravity:** agent definitions identify roles, but spawned agents inherit
+     the active parent model; configured values provide the documented fallback.
 4. `bash flywheel/check.sh` must pass.
 
 ## Per-adapter value shapes
@@ -34,6 +36,11 @@ default model (Claude Code: `model: inherit` in the agent files).
 | claude-code | `model` (alias or full ID), `level` | projected to native `effort:` frontmatter by `sync.py` (see docs/config/ADAPTERS.md); values are adapter-version-dependent — verify live, record in FACTS |
 | codex | `model`, `level` | projected to TOML `model` / `model_reasoning_effort`; pending cells retain their installed template and are not verified pins |
 | opencode | `provider`, `model` | no level knob; opencode.json wants `"provider/model-id"` as one string — join them |
+| antigravity | `model`, `level` | subagents inherit the active parent model; configured values are fallback pins, not proof of child runtime telemetry |
+
+Configuration values are policy pins or fallbacks, not universally runtime telemetry.
+Claude Code can report the resolved child model, Codex stop rows record config pins,
+and Antigravity rows record the inherited parent model or configured fallback.
 
 ## Adding an adapter
 

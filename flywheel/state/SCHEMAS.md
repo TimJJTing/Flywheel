@@ -28,9 +28,9 @@ on the writing agent.
   "model":"","level":"",
   "task":"<=15 words","outcome":"ok|retried|escalated|failed","notes":"" }
 // agent: add "coordinator" for the main session itself.
-// adapter: claude-code | codex | opencode.
-// model: the actual resolved model ID — always the real value, never a
-//   placeholder that defers to the caller, never blank.
-// level: effort (claude-code) / reasoning (codex) value; "-" when the adapter
-//   has no knob (opencode) or unknown.
+// adapter: claude-code | codex | opencode | antigravity.
+// model provenance is adapter-specific: resolved child runtime (claude-code),
+//   configuration pin (codex), inherited parent/configured fallback (antigravity),
+//   or the best verified manual value; use "Pending verification" when unavailable.
+// level: configured effort/reasoning value; "-" when unsupported or unknown.
 ```

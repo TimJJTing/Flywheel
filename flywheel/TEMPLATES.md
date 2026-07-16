@@ -1,9 +1,10 @@
 # Delegation Prompt Templates
 
 Fill every `{PLACEHOLDER}`. Do not dispatch if GOAL, ACCEPTANCE CRITERIA, or REPORT
-FORMAT is empty (ORCHESTRATION.md §2). Model/level are pinned in agent frontmatter,
-synced from flywheel/config.json by flywheel/sync.py; the PostToolUse hook reports the
-resolved model on every spawn.
+FORMAT is empty (ORCHESTRATION.md §2). Model/level configuration is synced from
+flywheel/config.json by flywheel/sync.py where supported; adapter-native logging
+records adapter-specific provenance (resolved child runtime, config pin, or inherited
+parent), not universally the actual child runtime model.
 On adapters without subagents, these same templates are pasted in-session as role
 adoptions (ORCHESTRATION.md §8).
 

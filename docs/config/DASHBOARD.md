@@ -39,11 +39,12 @@ All flat JSON arrays. IDs: `p1`/`i1`/`d1`… (max existing + 1). Dates ISO-8601.
   "task":"","outcome":"ok|retried|escalated|failed","notes":"" }
 ```
 
-`model` is always the actual resolved model ID (never a placeholder deferring to the
-caller). `level` is the effort (claude-code) / reasoning (codex) value, `-` when the
-adapter has no knob. One row each session should have `agent:"coordinator"` — the
-main session's own model/level, the biggest single cost, otherwise invisible to the
-ledger.
+`model` provenance depends on the adapter: Claude Code can report the resolved child
+model; Codex stop rows contain configuration pins, not child runtime telemetry;
+Antigravity rows contain the inherited parent model or configured fallback. Manual
+rows use the best verified value or `Pending verification`. `level` is configured
+effort/reasoning, or `-` when unsupported/unknown. One row each session should have
+`agent:"coordinator"` for the otherwise-invisible main session.
 
 `flywheel/check.sh` validates all five parse and that recorded commit hashes exist.
 

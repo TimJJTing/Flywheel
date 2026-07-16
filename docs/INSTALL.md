@@ -4,15 +4,15 @@
 
 - git (strongly recommended; the ledger↔commit linking and improve branches need it)
 - python3 (3.9+) or node — for the dashboard build; nothing else
-- One supported adapter: Claude Code, Codex CLI, or OpenCode (or port your own —
-  `flywheel/ADAPTERS.md`)
+- One supported adapter: Claude Code, Codex CLI, OpenCode, or Antigravity CLI (or
+  port your own — `flywheel/ADAPTERS.md`)
 
 ## Install
 
 ```bash
 cd /path/to/flywheel        # this repo
 ./install.sh /path/to/your/project --adapters claude-code
-# multiple: --adapters claude-code,codex,opencode
+# multiple: --adapters claude-code,codex,opencode,antigravity
 ```
 
 What it does:
@@ -24,6 +24,8 @@ What it does:
   replacing only between markers on re-runs. **Your existing content is never
   touched.** Claude Code also gets `.claude/agents/` + `.claude/skills/` files, each
   tagged `flywheel-managed` (unmanaged same-named files are skipped with a warning).
+  Antigravity gets `.agents/agents/`, shared `.agents/skills/`, and its
+  `.agents/hooks.json` integration.
 - Idempotent: running it twice changes nothing.
 
 Then: open your adapter in the project and paste `docs/SEED-PROMPT.md` (from this

@@ -201,6 +201,60 @@ NODEEOF
     cp -f "$dest_file" "$dest_file.flywheel-bak"
     echo "  backed up: ${dest_file#"$TARGET"/} -> ${dest_file#"$TARGET"/}.flywheel-bak"
   fi
+  # Codex's native hook command is project-root anchored. Remove only the legacy
+  # relative handler object before merging the replacement; sibling handlers and
+  # their matcher group remain user-owned. Keep Python/Node behavior equivalent.
+  if [ "$merge_file" = "$ADAPTERS_DIR/codex/hooks.json.merge" ] && \
+     grep -Fq 'python3 flywheel/resolve-spawn.py codex' "$dest_file"; then
+    if [ "$RUNNER" = python3 ]; then
+      python3 - "$dest_file" <<'PYEOF'
+import json, sys
+legacy = "python3 flywheel/resolve-spawn.py codex"
+path = sys.argv[1]
+doc = json.load(open(path, encoding="utf-8"))
+def clean(v):
+    if isinstance(v, list):
+        out = []
+        for item in v:
+            if isinstance(item, dict) and item.get("command") == legacy:
+                continue
+            new = clean(item)
+            if (isinstance(item, dict) and isinstance(item.get("hooks"), list)
+                    and (not isinstance(new, dict) or not new.get("hooks"))):
+                continue
+            out.append(new)
+        return out
+    if isinstance(v, dict):
+        return {k: clean(x) for k, x in v.items()}
+    return v
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(clean(doc), f, indent=2)
+    f.write("\n")
+PYEOF
+    else
+      node - "$dest_file" <<'NODEEOF'
+const fs = require('fs');
+const path = process.argv[2];
+const legacy = 'python3 flywheel/resolve-spawn.py codex';
+function clean(v) {
+  if (Array.isArray(v)) {
+    const out = [];
+    for (const item of v) {
+      if (item && typeof item === 'object' && !Array.isArray(item) && item.command === legacy) continue;
+      const next = clean(item);
+      if (item && typeof item === 'object' && !Array.isArray(item) && Array.isArray(item.hooks) &&
+          (!next || typeof next !== 'object' || !Array.isArray(next.hooks) || next.hooks.length === 0)) continue;
+      out.push(next);
+    }
+    return out;
+  }
+  if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k,x]) => [k, clean(x)]));
+  return v;
+}
+fs.writeFileSync(path, JSON.stringify(clean(JSON.parse(fs.readFileSync(path, 'utf8'))), null, 2) + '\n');
+NODEEOF
+    fi
+  fi
   local result
   if [ "$RUNNER" = python3 ]; then
     result=$(python3 - "$merge_file" "$dest_file" <<'PYEOF'

@@ -300,7 +300,11 @@ BUILDERS = {
 def main():
     adapter = sys.argv[1] if len(sys.argv) > 1 else "claude-code"
     payload = json.load(sys.stdin)
-    cwd = payload.get("cwd") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    installed_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    # A Codex session may start below the project root, so payload cwd is session
+    # context rather than the installed adapter's identity. Other adapters retain
+    # their established cwd resolution unchanged.
+    cwd = installed_root if adapter == "codex" else (payload.get("cwd") or installed_root)
 
     builder = BUILDERS.get(adapter, build_rows_claude_code)
     rows_fields = builder(payload, cwd)
