@@ -132,5 +132,16 @@
   "outcome": "landed (decided-by-human)",
   "created": "2026-07-15",
   "resolved": "2026-07-15"
+ },
+ {
+  "id": "d11",
+  "ts": "2026-07-16",
+  "decision": "i9 (AGENTS.md block collision) and i11 (spawns.json write race) kept deferred: triggers unfired, fixes cost more than waiting",
+  "class": "R",
+  "decided_by": "llm",
+  "rationale": "strategist analysis docs/plans/i9-i11-decision.md; install.sh already handles i9 collision deterministically with a note; only concurrent spawns.json writers already flock-locked",
+  "commits": [
+   "8622ff0"
+  ]
  }
 ]

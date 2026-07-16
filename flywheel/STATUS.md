@@ -1,30 +1,28 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-15 (session 14, architecture audit + install/uninstall fixes)
+Updated: 2026-07-16 (session 15, audit backlog i9-i15 cleared)
 
 ## Current state
-- INSTALL/UNINSTALL FIXES LANDED ON MAIN (session 14): architecture audit
-  (docs/plans/architecture-audit-2026-07.md, auditor-approved) produced 4 plans, all
-  implemented + independently verified + merged: JSON deep-merge for codex/antigravity
-  hooks.json (f9777e3), resolve-spawn.py+sync.py shipped on install + check.sh guard
-  (0177d99), claude-code settings.json.merge wired (88fa129), codex uninstall parity
-  + exact-match JSON un-merge (be5997f — first version verifier-FAILED on destructive
-  substring match, fixed and re-VERIFIED).
-- `flywheel/improve-architecture-docs` merged to main (d9 decided-by-human).
-- ANTIGRAVITY ADAPTER BUILT & VERIFIED (session 9); codex Part A BUILT + VERIFIED
-  (session 6): both awaiting live CLI verification.
+- AUDIT BACKLOG CLEARED (session 15, 8622ff0, all verifier-VERIFIED): i14 graceful
+  malformed-JSON skip (shared is_valid_json, both merge call sites); i15 edit-safe
+  uninstall via .flywheel-merged post-merge snapshot (first version verifier-FAILED
+  on pre-fix-install false positive, fixed: no snapshot = silent restore); i13 fresh
+  dashboard rebuild on install; i10 build.py/build.mjs parity guard in check.sh;
+  i12 opencode.json.merge drift check + antigravity exemption comment.
+- i9/i11 KEPT DEFERRED (d11, docs/plans/i9-i11-decision.md): triggers unfired;
+  i9 collision already handled+noted by install.sh; i11 concurrent writers already
+  flock-locked.
+- Session 14: 4 audit plans merged (f9777e3, 0177d99, 88fa129, be5997f).
+- Antigravity adapter (s9) + codex Part A (s6) built+verified; awaiting live CLI runs.
 
 ## In flight
 - None.
 
 ## Next actions (in order)
-1. Deferred audit items logged as issues i9–i15 (state/issues.json) — pick up next
-   session; i14/i15 are verifier-flagged defects (graceful merge_json error, stale
-   .flywheel-bak restore warning).
-2. Antigravity/Codex live verification: run SEED-PROMPT.md in `agy` or `codex` session.
-3. Real-world adoption test: install into actual project, run SEED-PROMPT.md live.
-4. opencode spawn-log plugin: verify opencode plugin API live, replace stub.
+1. Antigravity/Codex live verification: run SEED-PROMPT.md in `agy` or `codex` session.
+2. Real-world adoption test: install into actual project, run SEED-PROMPT.md live.
+3. opencode spawn-log plugin: verify opencode plugin API live, replace stub.
 
 ## Blockers / decisions pending the human
 - None.

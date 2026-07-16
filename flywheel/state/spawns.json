@@ -547,5 +547,54 @@
   "level": "-",
   "task": "route audit->plans->4 fixes pipeline, merges to main",
   "outcome": "ok"
+ },
+ {
+  "ts": "2026-07-16T18:40",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Fix i13 i14 i15 install/uninstall",
+  "outcome": "ok",
+  "notes": "2 follow-ups: opencode is_valid_json guard; i15 fallback false-positive fix after verifier FAILED"
+ },
+ {
+  "ts": "2026-07-16T18:41",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Fix i10 i12 check.sh guards",
+  "outcome": "ok",
+  "notes": "1 follow-up: opencode drift-check skip warning line"
+ },
+ {
+  "ts": "2026-07-16T18:41",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-4-8",
+  "level": "high",
+  "task": "Plan i9 i11 design decisions",
+  "outcome": "ok",
+  "notes": "both kept deferred; docs/plans/i9-i11-decision.md"
+ },
+ {
+  "ts": "2026-07-16T18:49",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i10-i15 code changes",
+  "outcome": "ok",
+  "notes": "first pass FAILED i15 fallback false positive; re-verify pass: all VERIFIED"
+ },
+ {
+  "ts": "2026-07-16T19:05",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-fable-5",
+  "level": "-",
+  "task": "route i9-i15: 2 engineers + strategist parallel, verifier loop",
+  "outcome": "ok"
  }
 ]

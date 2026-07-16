@@ -135,5 +135,13 @@
    "88fa129",
    "be5997f"
   ]
+ },
+ {
+  "ts": "2026-07-16",
+  "session": 15,
+  "summary": "i9-i15 audit backlog: i10/i12-i15 fixed+verified (8622ff0); i9/i11 deferred per strategist decision doc",
+  "commits": [
+   "8622ff0"
+  ]
  }
 ]
