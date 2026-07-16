@@ -35,6 +35,10 @@ Fill FACTS.md toolchain + big-files sections from the commands you ran in Step 2
 Write the one-line project description into the adapter block's "Project:" line and
 config.json "project_name".
 
+Run `python3 flywheel/sync.py` after changing config and before live tier spawns. A
+pending/missing cell intentionally leaves its installed projection untouched; do not
+describe or live-spawn that retained template as a verified pin.
+
 STEP 4 — VERIFY THE TIERS LIVE (adapters with subagents)
 Spawn each tier agent with a dummy brief ("reply with your model ID and tier name").
 Record per-tier results in FACTS.md §Adapter capabilities. If spawns fail, record the

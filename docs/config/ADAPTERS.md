@@ -8,16 +8,21 @@ the flywheel-repo-side detail.
 | Adapter | Files | Mode |
 |---|---|---|
 | claude-code | `CLAUDE.md.block`, 6 agents, 3 skills | Full reference: subagents, per-agent model/level pinning, skills |
-| codex | `AGENTS.md.block` | Degraded: no subagents; in-session role adoption + fresh-session verification + human model switching |
+| codex | `AGENTS.md.block`, 6 TOML agents, 3 shared skills, `hooks.json.merge` | Full custom subagents with per-agent model/reasoning projection |
 | opencode | `AGENTS.md.block`, `opencode.json.merge` | Subagents via opencode.json `"agent"` entries (`mode: "subagent"`) |
 
 Verified facts about adapter schemas (keep current, re-verify on adapter upgrades):
 - OpenCode agent config: `"agent"` key in opencode.json; fields `description`
   (required), `mode` (`primary|subagent|all`), `model` (`"provider/model-id"`),
   `prompt`, `temperature`, `permission`. Source: opencode.ai/docs/agents, 2026-07-06.
-- Codex CLI: treated as no-subagents; its AGENTS.md is read as project instructions.
-  Model/reasoning switching is human-performed. Anything finer:
-  `Pending verification` — re-check Codex docs when installing.
+- Codex CLI discovers project agents in `.codex/agents/*.toml` and project skills in
+  `.agents/skills/*/SKILL.md`. `sync.py` projects config `model` and `level` to TOML
+  `model` and `model_reasoning_effort`. Project config/hooks require trust; inspect
+  non-managed hook commands. CLI 0.144.5 reports a custom agent as `default`; the
+  resolver reads only bounded first-row `session_meta` from `agent_transcript_path`,
+  validates `/root/<known-agent>`, and resolves its config pin. Parent payload model
+  and transcript runtime model/effort are not ledger truth; availability varies by
+  account/version.
 - Claude Code agent frontmatter fields used: `name`, `description`, `model`, `effort`.
   `effort` is the native key — flywheel's config.json stores this as `level` and
   `sync.py` projects it to `effort:` at write time (see docs/config/MODELS.md).
@@ -28,8 +33,8 @@ Verified facts about adapter schemas (keep current, re-verify on adapter upgrade
 
 `./install.sh <target> --adapters claude-code,codex,opencode` — any subset. Codex and
 OpenCode share AGENTS.md; when both are selected only one flywheel block is written
-(OpenCode's, which is a superset — the degraded-mode rules matter only when subagents
-are missing, and install prints a note).
+(OpenCode's, and install prints a note). AGENTS.md precedence is a documented
+shared-file limitation; adapter-specific agents and skills are installed separately.
 
 ## Writing a new adapter
 

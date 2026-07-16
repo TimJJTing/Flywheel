@@ -3,7 +3,7 @@
 # at bootstrap per config.json tiers.engineer.adapters.codex — never edit from memory.
 name = "engineer"
 description = "Engineer tier. Implements code from a written plan or precise spec - business logic, refactors, scripts, tests. Requires acceptance criteria in the prompt. Do not use for open-ended research or planning."
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 developer_instructions = """
 You are the Engineer tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).

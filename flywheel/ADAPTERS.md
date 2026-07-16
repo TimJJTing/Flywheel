@@ -36,19 +36,18 @@ Answer these for the target tool; the answers ARE the adapter.
    session-end hook that runs `flywheel/check.sh` — that is the documented upgrade
    path, not the default. Per-spawn auto-log (d7): claude-code wires
    `flywheel/resolve-spawn.py` as a PostToolUse hook (see
-   `adapters/claude-code/settings.json.merge`). codex is NOT the "no subagents" case
-   it was assumed to be: codex documents `SubagentStart`/`SubagentStop` hook events
-   (with `agent_id`/`agent_type`, matcher-capable) and a `SessionStart` event carrying
-   the active model slug — documented at https://developers.openai.com/codex/hooks
-   (fetched 2026-07-08; study notes in the flywheel repo's `docs/research/codex-hooks.md`).
-   Per-spawn auto-logging is wired the same way as claude-code: `SubagentStop` →
-   shared `resolve-spawn.py codex` (see `adapters/codex/hooks.json.merge` in the
-   flywheel repo; plan: its `docs/plans/codex-adapter-dogfood.md` Part A). The
-   hooks.json skeleton and payload field names are doc-verified (Rev 2 of that
-   research doc) but sourced via a WebFetch summarizer, not a live codex session —
-   status is "VERIFIED (WebFetch summary; live-Pending)"; end-to-end proof (real
-   spawn, real hook fire, real row) is still owed and tracked as Part C of the
-   dogfood plan. Antigravity CLI implements
+   `adapters/claude-code/settings.json.merge`). Codex is a full custom-subagent
+   adapter: six definitions live in `.codex/agents`, shared skills in
+   `.agents/skills`, and `model` / `model_reasoning_effort` are projected from
+   `flywheel/config.json` by `python3 flywheel/sync.py`. Its `SubagentStop` hook is
+   documented at https://developers.openai.com/codex/hooks and invokes the shipped
+   `flywheel/resolve-spawn.py codex`. Project hooks/config load only after project
+   trust; review non-managed commands before trusting. CLI 0.144.5 reports custom
+   agents as `agent_type:"default"`; the resolver derives the validated tier from the
+   child transcript's bounded first `session_meta`, then records config pins. Hook
+   rows do not prove the child's runtime model/effort. Account/version model
+   availability remains a live check.
+   Antigravity CLI implements
    `PostToolUse` for tool `invoke_subagent` (see `adapters/antigravity/hooks.json.merge`)
    which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
    *(Note: The agy CLI has a known limitation where all spawned subagents run on the same model as the parent session, ignoring tier-specific model overrides).*

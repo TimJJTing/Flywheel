@@ -25,8 +25,13 @@ session gains:
 - **Clean git history as a feature**: conventional commits, branch scheme, and ledger
   entries cross-linked to hashes so the dashboard is an audit trail.
 
-Works with **Claude Code** (full), **Codex CLI** (degraded mode), and **OpenCode**;
+Works with **Claude Code**, **Codex CLI** (full custom subagents), and **OpenCode**;
 porting to another adapter is a five-question exercise (`flywheel/ADAPTERS.md`).
+
+Codex installs six agents under `.codex/agents`, adapter-neutral skills under
+`.agents/skills`, and a project hook under `.codex/hooks.json`. Project trust is
+required before local config/hooks load; actual model availability and runtime
+model/effort telemetry remain account/version/UI dependent.
 
 ## Quickstart
 

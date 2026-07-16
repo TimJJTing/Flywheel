@@ -37,6 +37,16 @@ elif command -v python3 >/dev/null 2>&1; then RUNNER=python3
 elif command -v node >/dev/null 2>&1; then RUNNER=node
 fi
 
+is_valid_json() { # $1 = file
+  if [ "$RUNNER" = python3 ]; then
+    python3 -c "import json,sys; json.load(open(sys.argv[1], encoding='utf-8'))" "$1" 2>/dev/null
+  elif [ "$RUNNER" = node ]; then
+    node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$1" 2>/dev/null
+  else
+    return 1
+  fi
+}
+
 # --- 1. archive state if there's anything worth keeping --------------------
 HAS_STATE=0
 if [ -d "$TARGET/flywheel/state" ]; then
@@ -155,7 +165,10 @@ restore_or_unmerge_json() { # $1 = dest_file
     mv -f "$dest_file.flywheel-bak" "$dest_file"
     rm -f "$dest_file.flywheel-merged" "$dest_file.flywheel-created"
     echo "  restored: ${dest_file#"$TARGET"/} (from backup)"
-    return 0
+    # Continue through the exact-command cleaner. Usually the restored user file has
+    # no Flywheel entry and is byte-identical afterward. Ambiguous legacy files can
+    # contain an old exact Flywheel command plus user additions; restoring blindly
+    # would leave a command pointing at the removed resolver.
   fi
   if [ ! -f "$dest_file" ]; then
     rm -f "$dest_file.flywheel-created" "$dest_file.flywheel-merged"
@@ -163,6 +176,20 @@ restore_or_unmerge_json() { # $1 = dest_file
   fi
   if [ -z "$RUNNER" ]; then
     echo "warning: python3 or node required to un-merge ${dest_file#"$TARGET"/} — left untouched" >&2
+    return 0
+  fi
+  if ! is_valid_json "$dest_file"; then
+    if [ -f "$dest_file.flywheel-created" ] || [ -f "$dest_file.flywheel-merged" ]; then
+      # A malformed Flywheel-owned/merged file cannot be structurally unmerged. Keep
+      # every byte for recovery, but remove it from the active adapter path so an
+      # exact Flywheel command can never point at the resolver after uninstall.
+      cp -f "$dest_file" "$dest_file.flywheel-uninstalled"
+      rm -f "$dest_file"
+      echo "  warning: ${dest_file#"$TARGET"/} is not valid JSON — preserved verbatim as ${dest_file#"$TARGET"/}.flywheel-uninstalled and removed from the active path" >&2
+    else
+      echo "  warning: ${dest_file#"$TARGET"/} is unmanaged invalid JSON — left untouched" >&2
+    fi
+    rm -f "$dest_file.flywheel-created" "$dest_file.flywheel-merged"
     return 0
   fi
   local result
@@ -465,7 +492,14 @@ fi
 rm -rf "$TARGET/flywheel"
 
 # --- 7. post-uninstall assertions -------------------------------------------
-STALE_SIDECARS=$(find "$TARGET" \( -name '*.flywheel-created' -o -name '*.flywheel-bak' -o -name '*.flywheel-merged' \) -print 2>/dev/null || true)
+STALE_SIDECARS=""
+for managed_json in "$TARGET/.codex/hooks.json" "$TARGET/.agents/hooks.json" \
+                    "$TARGET/.claude/settings.json" "$TARGET/opencode.json"; do
+  for suffix in .flywheel-created .flywheel-bak .flywheel-merged; do
+    [ -e "$managed_json$suffix" ] && STALE_SIDECARS="${STALE_SIDECARS}${STALE_SIDECARS:+
+}$managed_json$suffix"
+  done
+done
 if [ -n "$STALE_SIDECARS" ]; then
   echo "error: stale flywheel installer sidecars remain:" >&2
   printf '%s\n' "$STALE_SIDECARS" >&2
@@ -473,7 +507,36 @@ if [ -n "$STALE_SIDECARS" ]; then
 fi
 for json_file in "$TARGET/.codex/hooks.json" "$TARGET/.agents/hooks.json" "$TARGET/.claude/settings.json"; do
   [ -f "$json_file" ] || continue
-  if grep -qE '"command"[[:space:]]*:[[:space:]]*"(python3 flywheel/resolve-spawn.py|python3 flywheel/resolve-spawn.py codex|python3 flywheel/resolve-spawn.py antigravity)"' "$json_file"; then
+  if ! is_valid_json "$json_file"; then
+    continue
+  fi
+  if [ "$RUNNER" = python3 ]; then
+    HAS_COMMAND=$(python3 - "$json_file" <<'PYEOF'
+import json, sys
+commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", "python3 flywheel/resolve-spawn.py antigravity"}
+def found(v):
+    if isinstance(v, dict):
+        return (v.get("command") in commands) or any(found(x) for x in v.values())
+    if isinstance(v, list):
+        return any(found(x) for x in v)
+    return False
+print("yes" if found(json.load(open(sys.argv[1], encoding="utf-8"))) else "no")
+PYEOF
+)
+  else
+    HAS_COMMAND=$(node - "$json_file" <<'NODEEOF'
+const fs = require('fs');
+const commands = new Set(['python3 flywheel/resolve-spawn.py', 'python3 flywheel/resolve-spawn.py codex', 'python3 flywheel/resolve-spawn.py antigravity']);
+function found(v) {
+  if (Array.isArray(v)) return v.some(found);
+  if (v && typeof v === 'object') return commands.has(v.command) || Object.values(v).some(found);
+  return false;
+}
+console.log(found(JSON.parse(fs.readFileSync(process.argv[2], 'utf8'))) ? 'yes' : 'no');
+NODEEOF
+)
+  fi
+  if [ "$HAS_COMMAND" = yes ]; then
     echo "error: flywheel hook command remains in ${json_file#"$TARGET"/}" >&2
     exit 1
   fi

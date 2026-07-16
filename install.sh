@@ -138,6 +138,10 @@ is_valid_json() { # $1 = file
 #                       so post-install user additions survive.
 #   .flywheel-bak     = user pre-existing JSON; uninstall restores this backup.
 #   .flywheel-merged  = post-merge snapshot used to detect post-install edits.
+# An unmarked file structurally equal to the merge source is treated as a legacy
+# Flywheel-created file. An unmarked file with any additions is conservatively
+# treated as user-owned: it gets a backup, and uninstall restores that backup after
+# removing only exact Flywheel commands from any created-file state.
 merge_json() { # $1 = merge_file $2 = dest_file
   local merge_file="$1" dest_file="$2"
   if [ -z "$RUNNER" ]; then
@@ -176,7 +180,12 @@ const fs = require('fs');
 try {
   const a = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   const b = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
-  console.log(JSON.stringify(a) === JSON.stringify(b) ? 'yes' : 'no');
+  function stable(v) {
+    if (Array.isArray(v)) return '[' + v.map(stable).join(',') + ']';
+    if (v && typeof v === 'object') return '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}';
+    return JSON.stringify(v);
+  }
+  console.log(stable(a) === stable(b) ? 'yes' : 'no');
 } catch (e) {
   console.log('no');
 }

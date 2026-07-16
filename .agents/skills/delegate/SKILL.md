@@ -28,10 +28,21 @@ REPORT FORMAT) — copy them verbatim so the receiving agent recognizes the cont
 3. REPORT FORMAT (what to return, where long output is saved)
 If any is empty, stop and fill it — do not send the delegation anyway.
 
-## 4. Spawn the Antigravity agent
-Antigravity CLI spawns subagents via the `invoke_subagent` tool. Call `invoke_subagent` with the `TypeName` of the target custom agent (architect / researcher / engineer / utility / verifier / plan-auditor) and fill the `Prompt` parameter with your filled template.
-Note: Antigravity custom agents run on the primary session's active model. Do NOT try to override the model parameter in the tool call; if a tier's config.json cell is still `Pending verification`, warn the user to run model validation.
+## 4. Spawn the surfaced agent
+Use the spawn mechanism actually available in this runtime:
+- Codex: when custom subagent tools are surfaced, spawn the named agent from
+  `.codex/agents/*.toml` (architect / researcher / engineer / utility / verifier /
+  plan-auditor) and pass the filled template as its task. Do not restate a model in
+  the prompt; the TOML is projected from `flywheel/config.json`.
+- Antigravity: when the `invoke_subagent` tool is surfaced, call it with the target
+  `TypeName` and put the filled template in `Prompt`. Do not try to override the model;
+  Antigravity currently runs subagents on the parent session model.
+- If neither mechanism is surfaced, use ORCHESTRATION.md degraded mode: paste the
+  filled template into a fresh session and record the limitation.
 
 ## 5. Respect the limits, log the spawn
 Max two retries per tier (ORCHESTRATION.md §4); a retry must change something, never
-resend the same prompt. Independent delegations: launch in parallel. The `PostToolUse` spawn hook (`flywheel/resolve-spawn.py`, wired in `.agents/hooks.json`) auto-appends the spawn row to `flywheel/state/spawns.json`; verify/correct `outcome`/`notes` at wrapup. Never note `model: per parent` — the real model is the tier's config.json antigravity value.
+resend the same prompt. Independent delegations can run in parallel when the runtime
+supports it. Adapter hooks may auto-append spawn rows to `flywheel/state/spawns.json`;
+verify/correct `outcome`/`notes` at wrapup. Resolve model/level from
+`flywheel/config.json` and adapter facts, never from memory.

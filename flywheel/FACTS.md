@@ -13,48 +13,52 @@ Update it whenever a value is verified or found wrong; date-stamp every change.
 Source of truth for tier→model mapping: `flywheel/config.json`. This table records the
 VERIFICATION of those values (source URL + date).
 
-Note: architect uses `level: xhigh` on codex (vs. `level: medium` on claude-code) —
-an intentional cross-adapter asymmetry, not a mismatch to "fix": codex has no
-`medium`, so architect falls back to the top-tier codex model at its highest
-level, `xhigh`.
+Codex GPT-5.6 mapping policy: Sol for complex judgment, planning, verification, and
+polish; Terra for everyday implementation; Luna for clear repeatable utility work.
+Effort follows task complexity because the official manual states there is no exact
+GPT-5.5→GPT-5.6 effort mapping.
 
 | Tier | Adapter | Model ID | Verified against | Date |
 |---|---|---|---|---|
 | architect | claude-code | claude-fable-5 | session environment model table | 2026-07-07 |
-| architect | codex | gpt-5.5-pro | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| architect | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | architect | opencode | claude-fable-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | strategist | claude-code | claude-opus-4-8 | session environment model table | 2026-07-07 |
-| strategist | codex | gpt-5.5 | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| strategist | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | strategist | opencode | claude-opus-4-8 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | engineer | claude-code | claude-sonnet-5 | session environment model table | 2026-07-07 |
-| engineer | codex | gpt-5.5 | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| engineer | codex | gpt-5.6-terra | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | engineer | opencode | claude-sonnet-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | utility | claude-code | claude-haiku-4-5-20251001 | session environment model table | 2026-07-07 |
-| utility | codex | gpt-5.4-mini | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| utility | codex | gpt-5.6-luna | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | utility | opencode | claude-haiku-4-5-20251001 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | verifier | claude-code | claude-sonnet-5 | session environment model table | 2026-07-07 |
-| verifier | codex | gpt-5.5 | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| verifier | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | verifier | opencode | claude-sonnet-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | auditor | claude-code | claude-opus-4-8 | session environment model table | 2026-07-07 |
-| auditor | codex | gpt-5.5 | GPT-5.5/GPT-5.4-mini web search | 2026-07-07 |
+| auditor | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | auditor | opencode | claude-opus-4-8 | mirrors claude-code via anthropic provider | 2026-07-07 |
 
 ## Adapter capabilities (verified live, not assumed)
 
 | Fact | Value | Date |
 |---|---|---|
-| Subagent spawn works for all tier agents | Verified for claude-code (live spawn this session) | 2026-07-08 |
+| Subagent spawn/custom-agent discovery works | Verified for claude-code (2026-07-08); Codex CLI 0.144.5 live-spawned the custom utility agent (2026-07-16) | 2026-07-16 |
 | Per-agent level pinning works (native effort/reasoning key) | Pending verification | — |
 | claude-code Agent-spawn hook payload | matcher/tool_name is `"Agent"` (not `"Task"`); PreToolUse has no resolved model; PostToolUse adds `tool_response.resolvedModel` (actual model ID) — see `flywheel/resolve-spawn.py` | 2026-07-08 |
 | opencode per-spawn hook wiring (`adapters/opencode/plugin/spawn-log.ts`) | Pending verification — no opencode session available to test | 2026-07-08 |
-| codex subagent hook events (SubagentStart/SubagentStop, SessionStart model field) | Documented at https://developers.openai.com/codex/hooks (see `docs/research/codex-hooks.md`); not yet live-verified against a running codex session | 2026-07-08 |
+| codex SubagentStop payload | Live CLI 0.144.5 reports custom agent `agent_type:"default"` and parent `model`; child transcript first `session_meta` exposes `payload.source.subagent.thread_spawn.agent_path:"/root/utility"` and top-level `payload.agent_path` | 2026-07-16 |
+| Codex project skill discovery | `.agents/skills` discovery verified live with CLI 0.144.5 | 2026-07-16 |
+| Codex project trust/config/hooks | Project-local configuration and hooks load only for trusted projects; non-managed command hooks require explicit review/trust | 2026-07-16 |
+| Codex live model availability | Account and CLI-version dependent; configured pins are not proof of entitlement | 2026-07-16 |
+| Codex child runtime telemetry | Stable stop-hook payload does not expose the child's actual model/effort; resolver rows record config pins, not runtime proof | 2026-07-16 |
 | Antigravity CLI (agy) subagent model inheritance | Spawned subagents inherit the active model of the parent session; routing subagents to different models is not supported (known limitation) | 2026-07-12 |
 
 ## Toolchain (versions from commands run in THIS repo)
 
 | Tool | Version | Command run | Date |
 |---|---|---|---|
-| (fill at bootstrap: language runtimes, package manager, test runner, git) | Pending verification | — | — |
+| Codex CLI | 0.144.5 | `codex --version` | 2026-07-16 |
 
 ## Big files — NEVER Read wholesale
 

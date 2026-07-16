@@ -17,13 +17,14 @@ default model (Claude Code: `model: inherit` in the agent files).
 1. Verify the new ID against the provider/adapter live docs; record source + date in
    FACTS.md (MAINTENANCE.md: changing an existing fact needs an auditor check).
 2. Edit `tiers.<tier>.adapters.<adapter>` in config.json.
-3. Update the adapter mirror:
+3. Run `python3 flywheel/sync.py` to update adapter mirrors:
    - **Claude Code:** the `model:` frontmatter in `.claude/agents/<agent>.md`
      (agent↔tier mapping: researcher=strategist, plan-auditor=auditor, others
      same-named). `flywheel/check.sh` cross-checks frontmatter vs config and fails
      on drift.
    - **OpenCode:** the `model` ("provider/model-id") in opencode.json's agent entries.
-   - **Codex:** nothing to edit — the block quotes config.json at runtime.
+   - **Codex:** `.codex/agents/<agent>.toml` and the shipped adapter templates;
+     config `level` becomes native `model_reasoning_effort`.
 4. `bash flywheel/check.sh` must pass.
 
 ## Per-adapter value shapes
@@ -31,7 +32,7 @@ default model (Claude Code: `model: inherit` in the agent files).
 | Adapter | Keys | Notes |
 |---|---|---|
 | claude-code | `model` (alias or full ID), `level` | projected to native `effort:` frontmatter by `sync.py` (see docs/config/ADAPTERS.md); values are adapter-version-dependent — verify live, record in FACTS |
-| codex | `model`, `level` | native key is `reasoning`; applied by the human switching models — the block instructs |
+| codex | `model`, `level` | projected to TOML `model` / `model_reasoning_effort`; pending cells retain their installed template and are not verified pins |
 | opencode | `provider`, `model` | no level knob; opencode.json wants `"provider/model-id"` as one string — join them |
 
 ## Adding an adapter

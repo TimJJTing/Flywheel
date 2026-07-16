@@ -13,7 +13,7 @@
           "level": "medium"
         },
         "codex": {
-          "model": "gpt-5.5-pro",
+          "model": "gpt-5.6-sol",
           "level": "xhigh"
         },
         "opencode": {
@@ -34,7 +34,7 @@
           "level": "high"
         },
         "codex": {
-          "model": "gpt-5.5",
+          "model": "gpt-5.6-sol",
           "level": "high"
         },
         "opencode": {
@@ -55,7 +55,7 @@
           "level": "high"
         },
         "codex": {
-          "model": "gpt-5.5",
+          "model": "gpt-5.6-terra",
           "level": "high"
         },
         "opencode": {
@@ -76,8 +76,8 @@
           "level": "medium"
         },
         "codex": {
-          "model": "gpt-5.4-mini",
-          "level": "high"
+          "model": "gpt-5.6-luna",
+          "level": "low"
         },
         "opencode": {
           "provider": "anthropic",
@@ -97,7 +97,7 @@
           "level": "high"
         },
         "codex": {
-          "model": "gpt-5.5",
+          "model": "gpt-5.6-sol",
           "level": "high"
         },
         "opencode": {
@@ -118,7 +118,7 @@
           "level": "high"
         },
         "codex": {
-          "model": "gpt-5.5",
+          "model": "gpt-5.6-sol",
           "level": "high"
         },
         "opencode": {

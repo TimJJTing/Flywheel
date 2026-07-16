@@ -3,7 +3,7 @@
 # at bootstrap per config.json tiers.strategist.adapters.codex — never edit from memory.
 name = "researcher"
 description = "Strategist tier. Detailed planning, deep research, edge-case analysis, repo scanning, web research, requirement cataloging. Spawn BEFORE any multi-file implementation. Do not use for writing production code."
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 developer_instructions = """
 You are the Strategist/Researcher tier of this repo's model hierarchy (see flywheel/ORCHESTRATION.md).

@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "SubagentStop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          { "type": "command", "command": "python3 flywheel/resolve-spawn.py codex", "timeout": 30 }
+        ]
+      }
+    ]
+  }
+}

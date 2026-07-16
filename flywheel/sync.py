@@ -107,6 +107,10 @@ def sync_codex_toml(tiers: dict) -> None:
                 print(f"skip {path}: not found")
                 continue
             text = path.read_text(encoding="utf-8")
+            if not re.search(r'^model\s*=\s*"[^"]*"', text, flags=re.M):
+                raise RuntimeError(f"cannot project codex model: {path} has no model key")
+            if not re.search(r'^model_reasoning_effort\s*=\s*"[^"]*"', text, flags=re.M):
+                raise RuntimeError(f"cannot project codex level: {path} has no model_reasoning_effort key")
             new_text = re.sub(r'^model\s*=\s*"[^"]*"', f'model = "{model}"', text, count=1, flags=re.M)
             new_text = re.sub(
                 r'^model_reasoning_effort\s*=\s*"[^"]*"',
