@@ -6,7 +6,9 @@
   "priority": "P3",
   "status": "open",
   "detail": "cp identical-file guard aborts; dogfood install was hand-wired. Fine for real targets; document or guard.",
-  "commits": [],
+  "commits": [
+   "37c84f4"
+  ],
   "opened": "2026-07-06",
   "closed": null
  },
@@ -183,5 +185,16 @@
   ],
   "opened": "2026-07-15",
   "closed": "2026-07-16"
+ },
+ {
+  "id": "i16",
+  "title": "Codex adapter payload, lifecycle, sync, dogfood, and docs are inconsistent",
+  "type": "defect",
+  "priority": "P1",
+  "status": "in-progress",
+  "detail": "Session 16 confirmed dangling managed ADAPTERS.md references, obsolete skill path, reinstall/uninstall hook ownership defect, missing Codex sync projection, and stale user/dogfood docs. Approved plan: docs/plans/codex-adapter-full-verification.md. Partial checkpoint is unverified; models must be migrated to corresponding GPT-5.6 values next session.",
+  "commits": [],
+  "opened": "2026-07-16",
+  "closed": null
  }
 ]

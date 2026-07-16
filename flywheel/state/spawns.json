@@ -596,5 +596,35 @@
   "level": "-",
   "task": "route i9-i15: 2 engineers + strategist parallel, verifier loop",
   "outcome": "ok"
+ },
+ {
+  "ts": "2026-07-16T21:00",
+  "agent": "plan-auditor",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "none",
+  "task": "Audit Codex adapter full-verification plan",
+  "outcome": "ok",
+  "notes": "first pass REVISE; revised plan independently re-audited APPROVED"
+ },
+ {
+  "ts": "2026-07-16T21:35",
+  "agent": "engineer",
+  "adapter": "codex",
+  "model": "gpt-5.5",
+  "level": "high",
+  "task": "Implement approved Codex adapter repair plan",
+  "outcome": "failed",
+  "notes": "interrupted at user-requested pause; partial edits and tests are unverified; do not resume with this outdated model"
+ },
+ {
+  "ts": "2026-07-16T22:00",
+  "agent": "coordinator",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "inspect, plan, and checkpoint Codex adapter repair",
+  "outcome": "ok",
+  "notes": "session model was not exposed precisely; future agents must use corresponding GPT-5.6 models"
  }
 ]
