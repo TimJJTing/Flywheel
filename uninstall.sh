@@ -32,7 +32,8 @@ if [ ! -d "$TARGET/flywheel" ]; then
 fi
 
 RUNNER=""
-if command -v python3 >/dev/null 2>&1; then RUNNER=python3
+if [ -n "${FLYWHEEL_RUNNER:-}" ]; then RUNNER="$FLYWHEEL_RUNNER"
+elif command -v python3 >/dev/null 2>&1; then RUNNER=python3
 elif command -v node >/dev/null 2>&1; then RUNNER=node
 fi
 
@@ -152,11 +153,14 @@ restore_or_unmerge_json() { # $1 = dest_file
       echo "  warning: ${dest_file#"$TARGET"/} was edited after install — saved as ${dest_file#"$TARGET"/}.flywheel-uninstalled" >&2
     fi
     mv -f "$dest_file.flywheel-bak" "$dest_file"
-    rm -f "$dest_file.flywheel-merged"
+    rm -f "$dest_file.flywheel-merged" "$dest_file.flywheel-created"
     echo "  restored: ${dest_file#"$TARGET"/} (from backup)"
     return 0
   fi
-  [ -f "$dest_file" ] || return 0
+  if [ ! -f "$dest_file" ]; then
+    rm -f "$dest_file.flywheel-created" "$dest_file.flywheel-merged"
+    return 0
+  fi
   if [ -z "$RUNNER" ]; then
     echo "warning: python3 or node required to un-merge ${dest_file#"$TARGET"/} — left untouched" >&2
     return 0
@@ -314,6 +318,7 @@ if (!removed) {
 NODEEOF
 )
   fi
+  rm -f "$dest_file.flywheel-created" "$dest_file.flywheel-merged"
   echo "  ${dest_file#"$TARGET"/}: $result"
 }
 
@@ -458,5 +463,20 @@ fi
 
 # --- 6. remove flywheel/ ----------------------------------------------------
 rm -rf "$TARGET/flywheel"
+
+# --- 7. post-uninstall assertions -------------------------------------------
+STALE_SIDECARS=$(find "$TARGET" \( -name '*.flywheel-created' -o -name '*.flywheel-bak' -o -name '*.flywheel-merged' \) -print 2>/dev/null || true)
+if [ -n "$STALE_SIDECARS" ]; then
+  echo "error: stale flywheel installer sidecars remain:" >&2
+  printf '%s\n' "$STALE_SIDECARS" >&2
+  exit 1
+fi
+for json_file in "$TARGET/.codex/hooks.json" "$TARGET/.agents/hooks.json" "$TARGET/.claude/settings.json"; do
+  [ -f "$json_file" ] || continue
+  if grep -qE '"command"[[:space:]]*:[[:space:]]*"(python3 flywheel/resolve-spawn.py|python3 flywheel/resolve-spawn.py codex|python3 flywheel/resolve-spawn.py antigravity)"' "$json_file"; then
+    echo "error: flywheel hook command remains in ${json_file#"$TARGET"/}" >&2
+    exit 1
+  fi
+done
 echo ""
 echo "flywheel uninstalled from $TARGET."

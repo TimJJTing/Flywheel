@@ -14,13 +14,12 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
 ## 2. Update state ledgers (flywheel/state/)
 - `activity.json`: append one entry {ts, session (= previous max +1), summary ≤1 line,
   commits: [hashes made this session — fill after step 5, or amend]}.
-- `spawns.json`: the `SubagentStop` hook (`flywheel/resolve-spawn.py`, wired in
-  `.codex/hooks.json`) already auto-appended a row per subagent spawned this session —
-  verify those rows and correct any wrong `outcome`/`notes` (the hook logs
+- `spawns.json`: adapter hooks may have auto-appended rows for subagents spawned this
+  session — verify those rows and correct any wrong `outcome`/`notes` (hooks log
   `outcome:"ok"`; fix it if a spawn actually retried/escalated/failed). Append one row
-  by hand for the coordinator itself (this session's main model — no session-level event
-  captures it). Resolve the real model from `flywheel/config.json` codex entries; never
-  write `model:"per parent"`.
+  by hand for the coordinator itself when no session-level event captured it. Resolve
+  model/level from `flywheel/config.json` plus adapter facts; never write unverified
+  model guesses.
 - `projects.json` / `issues.json`: update statuses, milestones, and commits arrays for
   anything this session advanced. Friction you noticed → new issue with
   `type: "friction"` (feeds the improve pass).

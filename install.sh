@@ -41,7 +41,8 @@ if ! git -C "$TARGET" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 fi
 
 RUNNER=""
-if command -v python3 >/dev/null 2>&1; then RUNNER=python3
+if [ -n "${FLYWHEEL_RUNNER:-}" ]; then RUNNER="$FLYWHEEL_RUNNER"
+elif command -v python3 >/dev/null 2>&1; then RUNNER=python3
 elif command -v node >/dev/null 2>&1; then RUNNER=node
 fi
 if [ -z "$RUNNER" ]; then
@@ -132,12 +133,24 @@ is_valid_json() { # $1 = file
 # dict+dict -> recurse key-by-key; list+list -> append src items not already
 # present in dest (structural equality via sorted-key JSON comparison), so
 # re-running is idempotent; scalar/type-mismatch -> keep dest's value, warn.
-# Backs dest up once to <dest>.flywheel-bak before the first merge.
+# Ownership sidecars:
+#   .flywheel-created = Flywheel created this JSON; uninstall exact-unmerges commands
+#                       so post-install user additions survive.
+#   .flywheel-bak     = user pre-existing JSON; uninstall restores this backup.
+#   .flywheel-merged  = post-merge snapshot used to detect post-install edits.
 merge_json() { # $1 = merge_file $2 = dest_file
   local merge_file="$1" dest_file="$2"
   if [ -z "$RUNNER" ]; then
     echo "error: python3 or node required to merge $dest_file" >&2
     exit 1
+  fi
+  mkdir -p "$(dirname "$dest_file")"
+  if [ ! -f "$dest_file" ]; then
+    cp -f "$merge_file" "$dest_file"
+    : > "$dest_file.flywheel-created"
+    cp -f "$dest_file" "$dest_file.flywheel-merged"
+    echo "  created: ${dest_file#"$TARGET"/} (flywheel-owned JSON)"
+    return 0
   fi
   # Malformed dest JSON must not crash install or clobber the user's file —
   # warn and skip the merge, leaving dest untouched (no backup either).
@@ -145,7 +158,37 @@ merge_json() { # $1 = merge_file $2 = dest_file
     echo "  warning: ${dest_file#"$TARGET"/} is not valid JSON — skipping flywheel merge, file left untouched" >&2
     return 0
   fi
-  if [ ! -f "$dest_file.flywheel-bak" ]; then
+  local same_as_merge="no"
+  if [ "$RUNNER" = python3 ]; then
+    same_as_merge=$(python3 - "$merge_file" "$dest_file" <<'PYEOF'
+import json, sys
+try:
+    a = json.load(open(sys.argv[1], encoding="utf-8"))
+    b = json.load(open(sys.argv[2], encoding="utf-8"))
+    print("yes" if a == b else "no")
+except Exception:
+    print("no")
+PYEOF
+)
+  else
+    same_as_merge=$(node - "$merge_file" "$dest_file" <<'NODEEOF'
+const fs = require('fs');
+try {
+  const a = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+  const b = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
+  console.log(JSON.stringify(a) === JSON.stringify(b) ? 'yes' : 'no');
+} catch (e) {
+  console.log('no');
+}
+NODEEOF
+)
+  fi
+  if [ -f "$dest_file.flywheel-created" ] || [ "$same_as_merge" = "yes" ]; then
+    if [ ! -f "$dest_file.flywheel-created" ]; then
+      : > "$dest_file.flywheel-created"
+      echo "  marked: ${dest_file#"$TARGET"/} (legacy flywheel-owned JSON)"
+    fi
+  elif [ ! -f "$dest_file.flywheel-bak" ]; then
     cp -f "$dest_file" "$dest_file.flywheel-bak"
     echo "  backed up: ${dest_file#"$TARGET"/} -> ${dest_file#"$TARGET"/}.flywheel-bak"
   fi
@@ -347,14 +390,19 @@ if [ "$DO_CODEX" = 1 ]; then
   done
   for sd in "$ADAPTERS_DIR"/codex/skills/*/; do
     [ -d "$sd" ] || continue
-    copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.codex/skills/$(basename "$sd")/SKILL.md"
+    name="$(basename "$sd")"
+    dest="$TARGET/.agents/skills/$name/SKILL.md"
+    copy_managed_if_ok "$sd/SKILL.md" "$dest"
+    legacy="$TARGET/.codex/skills/$name/SKILL.md"
+    if [ -f "$dest" ] && grep -q 'flywheel-managed' "$dest" 2>/dev/null &&
+       [ -f "$legacy" ] && grep -q 'flywheel-managed' "$legacy" 2>/dev/null; then
+      rm -f "$legacy"
+      echo "  migrated: .codex/skills/$name/SKILL.md -> .agents/skills/$name/SKILL.md"
+      rmdir "$TARGET/.codex/skills/$name" 2>/dev/null || true
+    fi
   done
-  if [ ! -f "$TARGET/.codex/hooks.json" ]; then
-    cp -f "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
-    echo "  created: .codex/hooks.json"
-  else
-    merge_json "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
-  fi
+  rmdir "$TARGET/.codex/skills" 2>/dev/null || true
+  merge_json "$ADAPTERS_DIR/codex/hooks.json.merge" "$TARGET/.codex/hooks.json"
 fi
 
 if [ "$DO_ANTIGRAVITY" = 1 ]; then
@@ -370,12 +418,7 @@ if [ "$DO_ANTIGRAVITY" = 1 ]; then
     name="$(basename "$sd")"
     copy_managed_if_ok "$sd/SKILL.md" "$TARGET/.agents/skills/$name/SKILL.md"
   done
-  if [ ! -f "$TARGET/.agents/hooks.json" ]; then
-    cp -f "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
-    echo "  created: .agents/hooks.json"
-  else
-    merge_json "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
-  fi
+  merge_json "$ADAPTERS_DIR/antigravity/hooks.json.merge" "$TARGET/.agents/hooks.json"
 fi
 
 if [ "$DO_CLAUDE" = 1 ]; then
@@ -395,12 +438,7 @@ if [ "$DO_CLAUDE" = 1 ]; then
   done
 
   mkdir -p "$TARGET/.claude"
-  if [ ! -f "$TARGET/.claude/settings.json" ]; then
-    cp -f "$ADAPTERS_DIR/claude-code/settings.json.merge" "$TARGET/.claude/settings.json"
-    echo "  created: .claude/settings.json"
-  else
-    merge_json "$ADAPTERS_DIR/claude-code/settings.json.merge" "$TARGET/.claude/settings.json"
-  fi
+  merge_json "$ADAPTERS_DIR/claude-code/settings.json.merge" "$TARGET/.claude/settings.json"
 fi
 
 if [ "$DO_OPENCODE" = 1 ]; then

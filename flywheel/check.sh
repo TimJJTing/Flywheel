@@ -245,7 +245,7 @@ for agent, tier_key in mapping.items():
     else:
         print(f"✓ {agent}.toml frontmatter matches config.json")
 if not ok:
-    print("  → config.json is source of truth; edit .codex/agents/*.toml to match")
+    print("  → config.json is source of truth; run: python3 flywheel/sync.py")
 sys.exit(0 if ok else 1)
 ' "$CODEX_AGENTS_DIR" "$FLYWHEEL_DIR/config.json"
   [ $? -ne 0 ] && FAIL=1
@@ -309,7 +309,7 @@ for tier_key, agent in agents.items():
     else:
         print(f"✓ opencode.json.merge[{tier_key}] model matches config.json")
 if not ok:
-    print("  → config.json is source of truth; edit adapters/opencode/opencode.json.merge to match")
+    print("  → config.json is source of truth; run: python3 flywheel/sync.py")
 sys.exit(0 if ok else 1)
 ' "$OPENCODE_MERGE" "$FLYWHEEL_DIR/config.json"
   [ $? -ne 0 ] && FAIL=1

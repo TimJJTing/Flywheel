@@ -28,7 +28,7 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
   at every autonomy level.
 
 ## Skill whitelist (ignore other skills unless the user names them)
-Repo skills: `delegate`, `wrapup`, `improve` (in `.codex/skills/`).
+Repo skills: `delegate`, `wrapup`, `improve` (in `.agents/skills/`).
 
 Note: `model` / `model_reasoning_effort` in each `.codex/agents/*.toml` must mirror
 `flywheel/config.json` tiers.<tier>.adapters.codex — the seed prompt fills both from

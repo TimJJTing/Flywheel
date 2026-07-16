@@ -190,14 +190,17 @@ def main():
         json.dump(data, f, indent=1)
         f.write("\n")
 
-    for row in rows:
-        print(json.dumps({"systemMessage": f"spawn {row['agent']} → {row['model']} / {row['level']}"}))
+    if len(rows) == 1:
+        row = rows[0]
+        message = f"spawn {row['agent']} -> {row['model']} / {row['level']}"
+    else:
+        message = f"spawn log appended {len(rows)} rows"
+    print(json.dumps({"systemMessage": message}))
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception:
-        pass
+        print(json.dumps({"systemMessage": "spawn log skipped"}))
     sys.exit(0)
-
