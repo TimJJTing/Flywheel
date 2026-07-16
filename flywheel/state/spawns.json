@@ -741,10 +741,30 @@
   "ts": "2026-07-16T23:08",
   "agent": "coordinator",
   "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
+  "model": "gpt-5.6-sol",
+  "level": "high",
   "task": "Route and integrate Codex adapter repair",
   "outcome": "ok",
-  "notes": "session runtime model not exposed; no model guess recorded"
+  "notes": "verified GPT-5.6 complex-coordination policy mapping; runtime child telemetry unavailable"
+ },
+ {
+  "ts": "2026-07-16T23:20",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Verify merge and coordinator ledger correction",
+  "outcome": "ok",
+  "notes": "config pin; VERIFIED merge history, ledger edits, 20 resolver tests, lifecycle suite, and check.sh"
+ },
+ {
+  "ts": "2026-07-16T23:20",
+  "agent": "coordinator",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+  "task": "Correct coordinator ledger and merge repair",
+  "outcome": "ok",
+  "notes": "verified complex-coordination policy mapping; routed fresh post-merge verifier"
  }
 ]

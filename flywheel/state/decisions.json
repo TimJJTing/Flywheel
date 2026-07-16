@@ -154,9 +154,9 @@
   ],
   "recommendation": "approve merge; required deterministic verification, live isolated hook proof, limitations report, and fresh GPT-5.6 verifier verdict now pass",
   "autonomy_row": "Merge flywheel self-improvement branch",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "merged to main at 1c5ac18 (decided-by-human)",
   "created": "2026-07-16",
-  "resolved": null
+  "resolved": "2026-07-16"
  }
 ]
