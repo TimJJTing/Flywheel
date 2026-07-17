@@ -192,11 +192,12 @@
   "type": "defect",
   "priority": "P1",
   "status": "done",
-  "detail": "Session 17 completed the approved repair: safe lifecycle ownership, config-driven Codex sync, supported shared skills, current docs, dogfood projection, GPT-5.6 mappings, and live-verified config-pin hook rows. Fresh verifier verdict VERIFIED; bounded live limitations are in the report.",
+  "detail": "Session 17 completed the approved repair. Session 20's pre-merge native audit retained the official git-root SubagentStop design, removed dogfood-only Codex hook/skill compatibility and no-op scope/matcher paths, and earned a fresh verifier retry verdict of VERIFIED. Bounded live limitations are documented.",
     "commits": [
       "37c84f4",
       "9719554",
-      "7350d44"
+      "7350d44",
+      "7fcc696"
     ],
   "opened": "2026-07-16",
   "closed": "2026-07-16"

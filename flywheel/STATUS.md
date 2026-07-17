@@ -1,16 +1,17 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-17 (session 19, Codex robustness repair verified; merge pending)
+Updated: 2026-07-17 (session 20, pre-merge simplification verified)
 
 ## Current state
-- Branch `flywheel/improve-codex-adapter-robustness` contains the isolated repair at
-  `7350d44`; prior audit bookkeeping is `a7be606`.
-- Real-repo utility dogfood passed; fresh verifier and plan-auditor verdicts are both
-  VERIFIED. Unit/spec tests (30), dual lifecycle runners, scope, sync/drift,
-  check.sh, and an extra nested-cwd resolver probe passed.
-- Remaining bounded limits: persisted human `/hooks` trust, all-pin account
-  entitlement, and child runtime model/effort telemetry are unconfirmed.
+- Branch `flywheel/improve-codex-adapter-robustness` adds verified simplification
+  commit `7fcc696` after repair `7350d44` and bookkeeping `a884c06`.
+- Official Codex docs confirm the git-root `SubagentStop` hook is native. Old Codex
+  hook/skill migration, the no-op matcher, and the one-time scope script are removed.
+- Fresh verifier retry is VERIFIED: 30 unit/spec tests, dual lifecycle runners,
+  sync/drift, check.sh, nested-cwd Codex, and direct Agy probes passed.
+- Remaining bounded limits: persisted human `/hooks` trust, all-pin entitlement,
+  child runtime telemetry, and fresh live Claude/Agy sessions are unconfirmed.
 
 ## In flight
 - None.

@@ -162,12 +162,12 @@
   {
     "id": "d13",
     "title": "Merge Codex adapter robustness branch",
-    "detail": "Branch flywheel/improve-codex-adapter-robustness contains 7350d44. Real-repo utility dogfood passed and fresh verifier plus plan-auditor verdicts are VERIFIED; persisted human /hooks trust and actual child runtime telemetry remain bounded limitations.",
+    "detail": "Branch flywheel/improve-codex-adapter-robustness contains repair 7350d44 and pre-merge simplification 7fcc696. Official Codex docs confirm the git-root SubagentStop design; dogfood-only compatibility/no-op paths were removed. Real-repo dogfood, fresh auditor approval, and verifier retry are VERIFIED; persisted /hooks trust, entitlement, runtime child telemetry, and fresh live Claude/Agy sessions remain bounded limitations.",
     "options": [
       "merge verified branch",
       "reject"
     ],
-    "recommendation": "merge verified branch",
+    "recommendation": "merge the simplified, independently verified branch",
     "autonomy_row": "Merge flywheel self-improvement branch",
     "status": "pending",
     "outcome": "",

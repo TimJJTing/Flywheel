@@ -176,5 +176,13 @@
       "a7be606",
       "7350d44"
     ]
+  },
+  {
+    "ts": "2026-07-17T17:55",
+    "session": 20,
+    "summary": "Pre-merge Codex-native audit removed dogfood-only compatibility/no-op paths; verifier retry VERIFIED",
+    "commits": [
+      "7fcc696"
+    ]
   }
 ]

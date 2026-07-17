@@ -1,932 +1,221 @@
 [
- {
-  "ts": "2026-07-06T12:00",
-  "agent": "explore",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "-",
-  "task": "inventory source repo framework scaffolding",
-  "outcome": "ok",
-  "notes": "vocabulary-universe survey"
- },
- {
-  "ts": "2026-07-06T12:10",
-  "agent": "plan",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "-",
-  "task": "design flywheel repo implementation plan",
-  "outcome": "ok",
-  "notes": ""
- },
- {
-  "ts": "2026-07-06T13:00",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "dashboard template, build scripts, check.sh",
-  "outcome": "ok",
-  "notes": "6/6 criteria PASS; handled mid-task config schema change"
- },
- {
-  "ts": "2026-07-06T13:10",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "install.sh and uninstall.sh with tests",
-  "outcome": "ok",
-  "notes": "6/6 criteria PASS; fixed own trailing-newline bug"
- },
- {
-  "ts": "2026-07-06T15:00",
-  "agent": "plan-auditor",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "v0.1 cross-examination of all docs",
-  "outcome": "ok",
-  "notes": "REVISE(1 blocker,3 major,3 minor) \u2014 all fixed; first spawn died on session limit, retried"
- },
- {
-  "ts": "2026-07-06T15:00",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "E2E rehearsal install/seed/check/uninstall in scratch repo",
-  "outcome": "ok",
-  "notes": "FAILED crit 2+3c (same blocker + hash EOF bug) \u2014 both fixed and retested"
- },
- {
-  "ts": "2026-07-07T01:40",
-  "agent": "utility",
-  "adapter": "claude-code",
-  "model": "claude-haiku-4-5-20251001",
-  "level": "medium",
-  "task": "terminology sweep harness to adapter/framework, 43 files",
-  "outcome": "ok",
-  "notes": "6/6 criteria PASS; 3 judgment calls, none ambiguous"
- },
- {
-  "ts": "2026-07-07T02:10",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "verify wrapup.sh, drift check, compact.py in scratch clone",
-  "outcome": "retried",
-  "notes": "crit 8 FAIL (compact.py idempotency) \u2014 fixed, re-verified VERIFIED at ea96af3/6573b3f"
- },
- {
-  "ts": "2026-07-07T02:10",
-  "agent": "plan-auditor",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "audit six improve commits before merge",
-  "outcome": "ok",
-  "notes": "REVISE (5 major, 4 minor) \u2014 all applied in 6573b3f, re-audit APPROVE"
- },
- {
-  "ts": "2026-07-07T03:30",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "build flywheel/sync.py config->projections generator",
-  "outcome": "ok",
-  "notes": "92 lines; self-caught a git checkout slip, restored"
- },
- {
-  "ts": "2026-07-07T03:40",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "verify sync.py idempotency + drift-repair",
-  "outcome": "ok",
-  "notes": "VERIFIED 7/7, tree left byte-identical"
- },
- {
-  "ts": "2026-07-08T13:00",
-  "agent": "explore",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "-",
-  "task": "map spawns ledger + dashboard render",
-  "outcome": "ok",
-  "notes": "planning recon"
- },
- {
-  "ts": "2026-07-08T13:00",
-  "agent": "explore",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "-",
-  "task": "map hooks + wrapup mechanics per adapter",
-  "outcome": "ok",
-  "notes": "planning recon"
- },
- {
-  "ts": "2026-07-08T13:30",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "unify effort/reasoning to level + enrich ledger",
-  "outcome": "ok",
-  "notes": "24 files; 8/8 criteria PASS self-reported"
- },
- {
-  "ts": "2026-07-08T13:50",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "verify level unification + ledger",
-  "outcome": "ok",
-  "notes": "VERIFIED 8/8 + probes, tree clean"
- },
- {
-  "ts": "2026-07-08T13:50",
-  "agent": "plan-auditor",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "audit config + rule-doc changes",
-  "outcome": "ok",
-  "notes": "APPROVE, 5 minors \u2014 all applied"
- },
- {
-  "ts": "2026-07-08T14:00",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "-",
-  "task": "unify effort/reasoning to level vocabulary + dashboard ledger enrichment",
-  "outcome": "ok",
-  "notes": "coordinator session; routed engineer/utility/auditor/verifier per plan"
- },
- {
-  "ts": "2026-07-08T14:33",
-  "agent": "utility",
-  "adapter": "claude-code",
-  "model": "claude-haiku-4-5-20251001",
-  "level": "medium",
-  "task": "hook payload test spawn",
-  "outcome": "ok",
-  "notes": "manual: spawned during dump-hook phase, no auto row"
- },
- {
-  "ts": "2026-07-08T14:34",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "build resolve-spawn hook + doc cleanup",
-  "outcome": "retried",
-  "notes": "manual: pre-hook; verifier found flock race, retried"
- },
- {
-  "ts": "2026-07-08T14:39",
-  "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Researcher: study codex hooks doc",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-08T14:40",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify spawn hook implementation",
-  "outcome": "ok",
-  "notes": "auto-logged; verdict FAILED - found flock race corruption"
- },
- {
-  "ts": "2026-07-08T14:43",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Fix flock race + codex doc fix",
-  "outcome": "ok",
-  "notes": "auto-logged; retry of 14:34 task, fix verified"
- },
- {
-  "ts": "2026-07-08T14:47",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Re-verify flock fix + doc corrections",
-  "outcome": "ok",
-  "notes": "auto-logged; verdict VERIFIED (3x20 concurrent stress)"
- },
- {
-  "ts": "2026-07-08T15:00",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-fable-5",
-  "level": "medium",
-  "task": "spawn-visibility hook (d7) + TEMPLATES cleanup + codex hooks research",
-  "outcome": "ok",
-  "notes": "coordinator session 5; routed engineer/verifier/researcher/utility"
- },
- {
-  "ts": "2026-07-08T19:03",
-  "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Draft codex adapter research + skeleton",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-09T21:35",
-  "agent": "plan-auditor",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Audit codex adapter dogfood plan",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-09T21:38",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Apply audit fixes, execute Part A codex wiring",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-09T21:47",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify codex adapter Part A wiring",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-09T21:50",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "-",
-  "task": "route codex adapter research/audit/build/verify (Part A)",
-  "outcome": "ok",
-  "notes": "coordinator session 6; routed researcher/plan-auditor/engineer/verifier"
- },
- {
-  "ts": "2026-07-09T23:30",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-fable-5",
-  "level": "-",
-  "task": "strategy consulting session: landscape, motto, assumptions doc",
-  "outcome": "ok",
-  "notes": "coordinator session 7; no subagents spawned (consulting + doc writing)"
- },
- {
-  "ts": "2026-07-10T12:59",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-fable-5",
-  "level": "-",
-  "task": "consulting: five new ideas spec'd and ledgered i4-i8",
-  "outcome": "ok",
-  "notes": "coordinator session 8; no subagents spawned; backfilled 907cdcc into session 7 activity"
- },
- {
-  "ts": "2026-07-11T17:45",
-  "agent": "researcher",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Research Claude Code adapter agents, skills, hooks, templates in detail",
-  "outcome": "ok",
-  "notes": "manual-logged (same model as parent)"
- },
- {
-  "ts": "2026-07-11T17:45",
-  "agent": "researcher",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Research Antigravity CLI capabilities by reading the reference docs",
-  "outcome": "ok",
-  "notes": "manual-logged (same model as parent)"
- },
- {
-  "ts": "2026-07-11T17:45",
-  "agent": "researcher",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Research the flywheel install script and adapter system",
-  "outcome": "ok",
-  "notes": "manual-logged (same model as parent)"
- },
- {
-  "ts": "2026-07-11T18:21",
-  "agent": "coordinator",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "-",
-  "task": "Google Antigravity CLI (agy) support design and implementation plan + dogfooding",
-  "outcome": "ok",
-  "notes": "coordinator session 9; routed researcher for adapter investigation; implemented agy support"
- },
- {
-  "ts": "2026-07-11T19:22",
-  "agent": "coordinator",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "-",
-  "task": "6-way comparative analysis (Flywheel, GStack, BMAD, GSD, Spec Kit, OpenSpec)",
-  "outcome": "ok",
-  "notes": "coordinator session 10; consulting session comparing agentic frameworks; no subagents spawned"
- },
- {
-  "ts": "2026-07-12T19:07",
-  "agent": "plan-auditor",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Audit initial implementation plan for architecture docs and diagram",
-  "outcome": "failed",
-  "notes": "verdict FAILED: identified 5 findings (budget path, node compat, sequencing, merge gate, budget value); same model as parent"
- },
- {
-  "ts": "2026-07-12T19:08",
-  "agent": "plan-auditor",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Audit corrected implementation plan for architecture docs and diagram",
-  "outcome": "ok",
-  "notes": "verdict VERIFIED with suggestions on commit length/motivating cite; same model as parent"
- },
- {
-  "ts": "2026-07-12T20:00",
-  "agent": "coordinator",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "-",
-  "task": "Implement automated architecture documentation generation and dashboard integration",
-  "outcome": "ok",
-  "notes": "coordinator session 11; routed self/plan-auditor; committed code changes to flywheel/improve-architecture-docs"
- },
- {
-  "ts": "2026-07-13T01:52",
-  "agent": "verifier",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "high",
-  "task": "Verify gen_architecture.py dynamic discovery rewrite (9 acceptance criteria)",
-  "outcome": "ok",
-  "notes": "verdict VERIFIED 9/9; probe: removed ledger\u2192node absent\u2192restored; same model as parent"
- },
- {
-  "ts": "2026-07-13T01:55",
-  "agent": "coordinator",
-  "adapter": "antigravity",
-  "model": "gemini-3.5-flash-latest",
-  "level": "-",
-  "task": "Rework gen_architecture.py: dynamic discovery of diagram, tech-stack, edges",
-  "outcome": "ok",
-  "notes": "coordinator session 13; routed verifier; committed e88049e"
- },
- {
-  "ts": "2026-07-13T02:20",
-  "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Audit flywheel for design issues",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-13T02:26",
-  "agent": "plan-auditor",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Audit architecture-audit plan doc",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-13T02:32",
-  "agent": "utility",
-  "adapter": "claude-code",
-  "model": "claude-haiku-4-5-20251001",
-  "level": "medium",
-  "task": "Apply auditor fixes to plan doc",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:21",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Implement Plan 1 hooks deep-merge",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:26",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify Plan 1 deep-merge",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:30",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Implement Plan 2 ship scripts",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:32",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify Plan 2 ship scripts",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:36",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Implement Plan 3 settings merge",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:38",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify Plan 3 settings merge",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T20:41",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Implement Plan 4 uninstall parity",
-  "outcome": "ok",
-  "notes": "verifier rejected first version (substring match); fixed in retry spawn"
- },
- {
-  "ts": "2026-07-15T20:58",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify Plan 4 uninstall parity",
-  "outcome": "ok",
-  "notes": "verdict FAILED: substring-match on resolve-spawn.py destroyed user hooks; sent back to engineer"
- },
- {
-  "ts": "2026-07-15T21:03",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Fix Plan 4 substring-match defect",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T21:06",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Re-verify Plan 4 after fix",
-  "outcome": "ok",
-  "notes": "auto-logged"
- },
- {
-  "ts": "2026-07-15T21:15",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-fable-5",
-  "level": "-",
-  "task": "route audit->plans->4 fixes pipeline, merges to main",
-  "outcome": "ok"
- },
- {
-  "ts": "2026-07-16T18:40",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Fix i13 i14 i15 install/uninstall",
-  "outcome": "ok",
-  "notes": "2 follow-ups: opencode is_valid_json guard; i15 fallback false-positive fix after verifier FAILED"
- },
- {
-  "ts": "2026-07-16T18:41",
-  "agent": "engineer",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Fix i10 i12 check.sh guards",
-  "outcome": "ok",
-  "notes": "1 follow-up: opencode drift-check skip warning line"
- },
- {
-  "ts": "2026-07-16T18:41",
-  "agent": "researcher",
-  "adapter": "claude-code",
-  "model": "claude-opus-4-8",
-  "level": "high",
-  "task": "Plan i9 i11 design decisions",
-  "outcome": "ok",
-  "notes": "both kept deferred; docs/plans/i9-i11-decision.md"
- },
- {
-  "ts": "2026-07-16T18:49",
-  "agent": "verifier",
-  "adapter": "claude-code",
-  "model": "claude-sonnet-5",
-  "level": "high",
-  "task": "Verify i10-i15 code changes",
-  "outcome": "ok",
-  "notes": "first pass FAILED i15 fallback false positive; re-verify pass: all VERIFIED"
- },
- {
-  "ts": "2026-07-16T19:05",
-  "agent": "coordinator",
-  "adapter": "claude-code",
-  "model": "claude-fable-5",
-  "level": "-",
-  "task": "route i9-i15: 2 engineers + strategist parallel, verifier loop",
-  "outcome": "ok"
- },
- {
-  "ts": "2026-07-16T21:00",
-  "agent": "plan-auditor",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "none",
-  "task": "Audit Codex adapter full-verification plan",
-  "outcome": "ok",
-  "notes": "first pass REVISE; revised plan independently re-audited APPROVED"
- },
- {
-  "ts": "2026-07-16T21:35",
-  "agent": "engineer",
-  "adapter": "codex",
-  "model": "gpt-5.5",
-  "level": "high",
-  "task": "Implement approved Codex adapter repair plan",
-  "outcome": "failed",
-  "notes": "interrupted at user-requested pause; partial edits and tests are unverified; do not resume with this outdated model"
- },
- {
-  "ts": "2026-07-16T22:00",
-  "agent": "coordinator",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "inspect, plan, and checkpoint Codex adapter repair",
-  "outcome": "ok",
-  "notes": "session model was not exposed precisely; future agents must use corresponding GPT-5.6 models"
- },
- {
-  "ts": "2026-07-16T23:01",
-  "agent": "utility",
-  "adapter": "codex",
-  "model": "gpt-5.6-luna",
-  "level": "low",
-  "task": "Final isolated live hook probe",
-  "outcome": "ok",
-  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
- },
- {
-  "ts": "2026-07-16T23:01",
-  "agent": "engineer",
-  "adapter": "codex",
-  "model": "gpt-5.6-terra",
-  "level": "high",
-  "task": "Final isolated live hook probe",
-  "outcome": "ok",
-  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
- },
- {
-  "ts": "2026-07-16T23:02",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Final isolated live hook probe",
-  "outcome": "ok",
-  "notes": "config pin; custom agent derived from SubagentStop transcript session_meta"
- },
- {
-  "ts": "2026-07-16T22:05",
-  "agent": "plan-auditor",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Audit GPT-5.6 tier mappings",
-  "outcome": "retried",
-  "notes": "config pin; first REVISE found missing URL/stale comment, then APPROVED"
- },
- {
-  "ts": "2026-07-16T22:06",
-  "agent": "utility",
-  "adapter": "codex",
-  "model": "gpt-5.6-luna",
-  "level": "low",
-  "task": "Inventory paused adapter checkpoint",
-  "outcome": "ok",
-  "notes": "config pin; reviewed full branch diff and matrix gaps"
- },
- {
-  "ts": "2026-07-16T22:10",
-  "agent": "engineer",
-  "adapter": "codex",
-  "model": "gpt-5.6-terra",
-  "level": "high",
-  "task": "Complete approved Codex adapter repair",
-  "outcome": "escalated",
-  "notes": "config pin; two verifier retries preceded strategist safe-I/O escalation"
- },
- {
-  "ts": "2026-07-16T22:20",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Verify Codex adapter repair",
-  "outcome": "retried",
-  "notes": "config pin; found malformed-uninstall, default-agent, and FIFO issues"
- },
- {
-  "ts": "2026-07-16T22:45",
-  "agent": "researcher",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Plan safe transcript resolution",
-  "outcome": "retried",
-  "notes": "config pin; cwd-containment plan revised to sibling transcript authorization"
- },
- {
-  "ts": "2026-07-16T22:48",
-  "agent": "plan-auditor",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Audit safe transcript plan",
-  "outcome": "retried",
-  "notes": "config pin; first REVISE rejected live-incompatible cwd policy, then APPROVED"
- },
- {
-  "ts": "2026-07-16T22:52",
-  "agent": "engineer",
-  "adapter": "codex",
-  "model": "gpt-5.6-terra",
-  "level": "high",
-  "task": "Implement safe transcript reader",
-  "outcome": "ok",
-  "notes": "config pin; 20 resolver tests and full lifecycle passed"
- },
- {
-  "ts": "2026-07-16T23:05",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Final independent adapter verification",
-  "outcome": "ok",
-  "notes": "config pin; VERIFIED after full suite and durable live evidence review"
- },
- {
-  "ts": "2026-07-16T23:08",
-  "agent": "coordinator",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Route and integrate Codex adapter repair",
-  "outcome": "ok",
-  "notes": "verified GPT-5.6 complex-coordination policy mapping; runtime child telemetry unavailable"
- },
- {
-  "ts": "2026-07-16T23:20",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Verify merge and coordinator ledger correction",
-  "outcome": "ok",
-  "notes": "config pin; VERIFIED merge history, ledger edits, 20 resolver tests, lifecycle suite, and check.sh"
- },
- {
-  "ts": "2026-07-16T23:20",
-  "agent": "coordinator",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "Correct coordinator ledger and merge repair",
-  "outcome": "ok",
-  "notes": "verified complex-coordination policy mapping; routed fresh post-merge verifier"
- },
- {
-  "ts": "2026-07-17T00:32",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
- },
- {
-  "ts": "2026-07-17T00:49",
-  "agent": "researcher",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
- },
- {
-  "ts": "2026-07-17T00:53",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T00:56",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T00:57",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T00:58",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:02",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:02",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:06",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:10",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:15",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:23",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
- {
-  "ts": "2026-07-17T01:32",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
+  {
+    "ts": "2026-07-16T23:02",
+    "ts_range": [
+      "2026-07-06T12:00",
+      "2026-07-16T23:02"
+    ],
+    "sessions": 73,
+    "summary": "compacted 73 entries — full history in git log of this file",
+    "commits": [],
+    "agent": "(compacted)",
+    "adapter": "",
+    "model": "",
+    "level": "",
+    "task": "compacted 73 entries — full history in git log of this file",
+    "outcome": "ok",
+    "notes": ""
+  },
+  {
+    "ts": "2026-07-16T23:05",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Final independent adapter verification",
+    "outcome": "ok",
+    "notes": "config pin; VERIFIED after full suite and durable live evidence review"
+  },
+  {
+    "ts": "2026-07-16T23:08",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Route and integrate Codex adapter repair",
+    "outcome": "ok",
+    "notes": "verified GPT-5.6 complex-coordination policy mapping; runtime child telemetry unavailable"
+  },
+  {
+    "ts": "2026-07-16T23:20",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify merge and coordinator ledger correction",
+    "outcome": "ok",
+    "notes": "config pin; VERIFIED merge history, ledger edits, 20 resolver tests, lifecycle suite, and check.sh"
+  },
+  {
+    "ts": "2026-07-16T23:20",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Correct coordinator ledger and merge repair",
+    "outcome": "ok",
+    "notes": "verified complex-coordination policy mapping; routed fresh post-merge verifier"
+  },
+  {
+    "ts": "2026-07-17T00:32",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T00:49",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T00:53",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T00:56",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T00:57",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T00:58",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:02",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:02",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:06",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:10",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:15",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:23",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-17T01:32",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
   {
     "ts": "2026-07-17T17:05",
-  "agent": "utility",
-  "adapter": "codex",
-  "model": "gpt-5.6-luna",
-  "level": "low",
+    "agent": "utility",
+    "adapter": "codex",
+    "model": "gpt-5.6-luna",
+    "level": "low",
     "task": "Dogfood real-repo Codex projections",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
- },
- {
-  "ts": "2026-07-17T17:07",
-  "agent": "default",
-  "adapter": "codex",
-  "model": "Pending verification",
-  "level": "-",
-  "task": "",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's)"
- },
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T17:07",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
   {
     "ts": "2026-07-17T17:08",
-  "agent": "verifier",
-  "adapter": "codex",
-  "model": "gpt-5.6-sol",
-  "level": "high",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
     "task": "Verify Codex robustness repair",
-  "outcome": "ok",
-  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
- },
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
   {
     "ts": "2026-07-17T17:09",
     "agent": "auditor",
@@ -944,6 +233,86 @@
     "model": "Pending verification",
     "level": "-",
     "task": "Coordinate dogfood reviews and bookkeeping",
+    "outcome": "ok",
+    "notes": "manual session row; coordinator runtime model and level unavailable"
+  },
+  {
+    "ts": "2026-07-17T17:37",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit Codex-native design and removable compatibility",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T17:40",
+    "agent": "auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit pre-merge simplification plan",
+    "outcome": "retried",
+    "notes": "auto-logged default row reconciled; initial plan required scope-script and skill-compatibility revisions; config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-17T17:41",
+    "agent": "auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Approve revised pre-merge simplification plan",
+    "outcome": "ok",
+    "notes": "auto-logged default row reconciled from APPROVED follow-up; config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-17T17:47",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Implement approved Codex simplification",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T17:52",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Correct stale completed-plan wording",
+    "outcome": "retried",
+    "notes": "verifier-requested documentation retry; config pin, not runtime telemetry; agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-17T17:50",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify simplified Codex branch and adapter safety",
+    "outcome": "retried",
+    "notes": "manual row; implementation passed but stale plan wording failed first verdict; config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-17T17:53",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Recheck corrected plan and regression gates",
+    "outcome": "ok",
+    "notes": "manual row; retry verdict VERIFIED; config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-17T17:55",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "Coordinate native audit simplification and verification",
     "outcome": "ok",
     "notes": "manual session row; coordinator runtime model and level unavailable"
   }
