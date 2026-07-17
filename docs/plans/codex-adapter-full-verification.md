@@ -1,7 +1,9 @@
 # Codex adapter repair and full-verification plan
 
-Status: revised after plan-auditor findings; requires an `APPROVED` re-audit before
-structural files are edited.
+Status: completed and verified. This document is retained as the historical
+implementation and verification record; its pre-edit approval gate was satisfied and
+is no longer an active requirement. Pre-branch Codex migration compatibility was
+retired before merge because the adapter is dogfood-only.
 
 ## Decision
 
@@ -13,8 +15,8 @@ session can prove discovery, per-agent model pinning, and hook firing.
 
 ## Confirmed gaps
 
-1. Current Codex discovers project skills under `.agents/skills`, but `install.sh`
-   writes `.codex/skills`; installed skills are invisible.
+1. Current Codex discovers project skills under `.agents/skills`; installation must
+   write and uninstall Flywheel-managed skills only at that supported shared path.
 2. A clean install followed by reinstall creates `.codex/hooks.json.flywheel-bak`
    from Flywheel's own hook. Uninstall restores that backup and leaves a hook pointing
    to the deleted `flywheel/resolve-spawn.py`.
@@ -37,18 +39,12 @@ Files: `install.sh`, `uninstall.sh`, `adapters/codex/AGENTS.md.block`.
 
 - Copy Codex skill sources to `.agents/skills/<name>/SKILL.md`; update the Codex
   managed block to name that supported location.
-- Migrate an old Flywheel-managed `.codex/skills/<name>/SKILL.md` during reinstall:
-  install the supported copy, remove only the legacy file carrying the
-  `flywheel-managed` marker, and remove empty legacy directories. Never remove an
-  unmanaged legacy file.
-- Make JSON ownership explicit with a `.flywheel-created` sidecar. The complete state
-  machine is: absent → copy, mark created, snapshot, no backup; marked-created → merge
-  without backup and refresh snapshot; valid pre-existing unmarked → back up once,
-  merge, snapshot; malformed pre-existing → byte-identical skip with no sidecars;
-  legacy unmarked content structurally equal to Flywheel's merge source → mark created
-  without backing up Flywheel's own content. If an ambiguous legacy file has user
-  additions, preserve it as pre-existing and document that the old Flywheel entry may
-  require exact-command unmerge rather than blind restore.
+- Make JSON ownership explicit with a `.flywheel-created` sidecar. The completed
+  current-install state machine is: absent → copy, mark created, snapshot, no backup;
+  marked-created → merge without backup and refresh snapshot; valid pre-existing
+  unmarked → back up once, merge, snapshot; malformed pre-existing → byte-identical
+  skip with no sidecars. Support for migrating pre-branch Codex hook installations is
+  retired and is not a shipped compatibility guarantee.
 - On uninstall, marked-created files are exact-command unmerged so post-install user
   additions survive; remove empty JSON plus `.flywheel-created`/`.flywheel-merged`.
   Backed-up files restore the pre-install backup, preserve detected post-install edits
@@ -90,12 +86,11 @@ Files: `flywheel/ADAPTERS.md`, `README.md`, `docs/config/ADAPTERS.md`,
   hook payload supplies the child's actual model/effort, so spawn rows resolve pins
   from config and prove configuration, not runtime telemetry.
 
-Structural paths in this change are `flywheel/ADAPTERS.md`, `flywheel/check.sh`, and
-`adapters/codex/AGENTS.md.block` (adapter block). Apply every existing dirty hunk and
-future edit to those paths only after this plan receives `APPROVED`, on a
-`flywheel/improve-codex-adapter` branch. Adapter skill bodies require engineer+ under
-the approved plan. At autonomy level 3, do not merge that branch without a pending
-human decision.
+Structural paths in the completed change were `flywheel/ADAPTERS.md`,
+`flywheel/check.sh`, and `adapters/codex/AGENTS.md.block` (adapter block). The required
+plan approval and engineer-level implementation review were obtained before those
+edits. At autonomy level 3, the verified branch remains unmerged pending the human
+merge decision.
 
 ### 4. Dogfood without breaking Antigravity
 
@@ -109,11 +104,9 @@ Files: `.codex/agents/*.toml`, `.codex/hooks.json`, `.agents/skills/*/SKILL.md`,
   Antigravity `invoke_subagent`); `wrapup` describes hook logging without assuming one
   hook path; `improve` remains adapter-neutral. Never detect an adapter by guessing an
   unavailable tool: if neither mechanism is surfaced, use ORCHESTRATION degraded mode.
-- Install the same neutral bytes for either adapter. Only remove legacy
-  `.codex/skills` after the supported `.agents/skills` copy is confirmed present;
-  preserve the legacy managed copy if an unmanaged destination collision prevented
-  installation. Test Codex→Antigravity and Antigravity→Codex install orders, each
-  reinstall, and uninstall; the shared skill hashes must remain identical.
+- Install the same neutral bytes for either adapter at `.agents/skills`. Test
+  Codex→Antigravity and Antigravity→Codex install orders, each reinstall, and
+  uninstall; the shared skill hashes must remain identical.
 - Run `check.sh` and the live probe from this repo. Dogfood is not verified merely
   because a scratch install succeeds.
 
@@ -124,7 +117,7 @@ equivalent hermetic runner) and wire them into `flywheel/check.sh` only if runti
 acceptable. The suite must use temporary git repositories and assert:
 
 1. Clean Codex install: managed block, six TOMLs, three `.agents/skills`, one valid
-   hook; zero `.codex/skills`; no repo-only paths in installed managed docs.
+   hook, and no repo-only paths in installed managed docs.
 2. Existing valid hook JSON: user hook preserved, Flywheel hook added once, backup and
    post-merge snapshot correct.
 3. Existing malformed hook JSON: warning, byte-identical file, no backup/snapshot.
@@ -133,7 +126,8 @@ acceptable. The suite must use temporary git repositories and assert:
    JSON and unmanaged skills restored/preserved.
 6. Post-install user edit: `.flywheel-uninstalled` preserves edits and original JSON
    is restored per the documented contract.
-7. Legacy `.codex/skills` migration: managed files move/remove; unmanaged files stay.
+7. Current shared-skill collision safety: unmanaged files stay; non-conflicting
+   Flywheel-managed skills install and uninstall safely.
 8. Sync/drift: all six tier mappings, pending skip, mismatch failure, second sync no
    diff.
 9. Resolver: each known `agent_type`, unknown type, missing/invalid config, parent

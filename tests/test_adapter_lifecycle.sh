@@ -68,7 +68,7 @@ assert_no_flywheel_commands() {
   local t="$1"
   "$HOST_PYTHON" - "$t" <<'PY'
 import json, pathlib, sys
-commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
+commands = {"python3 flywheel/resolve-spawn.py", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
 def found(v):
     if isinstance(v, dict): return v.get("command") in commands or any(found(x) for x in v.values())
     if isinstance(v, list): return any(found(x) for x in v)
@@ -98,7 +98,6 @@ exercise_runner() {
   assert_eq "$(json_hook_count "$t/.codex/hooks.json")" 1 "one Codex hook"
   assert_file "$t/.codex/hooks.json.flywheel-created"
   assert_no_file "$t/.codex/hooks.json.flywheel-bak"
-  [ ! -d "$t/.codex/skills" ] || fail "legacy skill directory created"
   ! rg -n 'docs/(plans/codex-adapter-dogfood|research/codex-hooks)\.md' "$t/flywheel/ADAPTERS.md" >/dev/null || fail "installed doc has repo-only reference"
   tree_before="$(find "$t/.codex" "$t/.agents/skills" -type f -exec shasum {} \; | sort)"
   run_install "$runner" "$t" codex
@@ -213,17 +212,14 @@ PY
   run_uninstall "$runner" "$t"
   cmp -s "$t/.codex/hooks.json" "$t/original-malformed" || fail "malformed uninstall changed user file"
 
-  # 5,7: unmanaged collision safety and legacy managed migration contract.
+  # 5: unmanaged shared-skill collision safety.
   t="$(new_repo "skills-$runner")"
-  mkdir -p "$t/.agents/skills/delegate" "$t/.codex/skills/delegate" "$t/.codex/skills/improve" "$t/.codex/skills/wrapup"
+  mkdir -p "$t/.agents/skills/delegate"
   printf 'user destination\n' > "$t/.agents/skills/delegate/SKILL.md"
-  for s in delegate improve wrapup; do cp "$ROOT/adapters/codex/skills/$s/SKILL.md" "$t/.codex/skills/$s/SKILL.md"; done
-  printf 'user legacy\n' > "$t/.codex/skills/wrapup/SKILL.md"
   run_install "$runner" "$t" codex
   grep -q 'user destination' "$t/.agents/skills/delegate/SKILL.md" || fail "unmanaged destination overwritten"
-  assert_file "$t/.codex/skills/delegate/SKILL.md"
-  assert_no_file "$t/.codex/skills/improve/SKILL.md"
-  grep -q 'user legacy' "$t/.codex/skills/wrapup/SKILL.md" || fail "unmanaged legacy removed"
+  assert_file "$t/.agents/skills/improve/SKILL.md"
+  assert_file "$t/.agents/skills/wrapup/SKILL.md"
   run_uninstall "$runner" "$t"
   grep -q 'user destination' "$t/.agents/skills/delegate/SKILL.md" || fail "unmanaged shared skill removed"
 
@@ -258,7 +254,7 @@ PY
     assert_no_flywheel_commands "$t"
   done
 
-  echo "PASS lifecycle ownership/migration/combinations runner=$runner"
+  echo "PASS lifecycle ownership/current-skills/combinations runner=$runner"
 }
 
 exercise_sync_and_drift() {

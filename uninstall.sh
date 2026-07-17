@@ -202,7 +202,6 @@ import json, os, sys
 # own command string (e.g. an unrelated echo) must not match.
 FLYWHEEL_COMMANDS = {
     "python3 flywheel/resolve-spawn.py",              # adapters/claude-code/settings.json.merge
-    "python3 flywheel/resolve-spawn.py codex",         # adapters/codex/hooks.json.merge
     'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex',
     "python3 flywheel/resolve-spawn.py antigravity",   # adapters/antigravity/hooks.json.merge
 }
@@ -278,7 +277,6 @@ const path = process.argv[2];
 // own command string (e.g. an unrelated echo) must not match.
 const FLYWHEEL_COMMANDS = new Set([
   'python3 flywheel/resolve-spawn.py',              // adapters/claude-code/settings.json.merge
-  'python3 flywheel/resolve-spawn.py codex',         // adapters/codex/hooks.json.merge
   'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex',
   'python3 flywheel/resolve-spawn.py antigravity',   // adapters/antigravity/hooks.json.merge
 ]);
@@ -382,18 +380,6 @@ if [ -d "$TARGET/.codex/agents" ]; then
     fi
   done
   rmdir "$TARGET/.codex/agents" 2>/dev/null || true
-fi
-if [ -d "$TARGET/.codex/skills" ]; then
-  for sd in "$TARGET"/.codex/skills/*/; do
-    [ -d "$sd" ] || continue
-    sf="$sd/SKILL.md"
-    if [ -f "$sf" ] && grep -q 'flywheel-managed' "$sf" 2>/dev/null; then
-      rm -f "$sf"
-      echo "  removed: .codex/skills/$(basename "$sd")/SKILL.md"
-      rmdir "$sd" 2>/dev/null || true
-    fi
-  done
-  rmdir "$TARGET/.codex/skills" 2>/dev/null || true
 fi
 restore_or_unmerge_json "$TARGET/.codex/hooks.json"
 rmdir "$TARGET/.codex" 2>/dev/null || true
@@ -511,7 +497,7 @@ for json_file in "$TARGET/.codex/hooks.json" "$TARGET/.agents/hooks.json" "$TARG
   if [ "$RUNNER" = python3 ]; then
     HAS_COMMAND=$(python3 - "$json_file" <<'PYEOF'
 import json, sys
-commands = {"python3 flywheel/resolve-spawn.py", "python3 flywheel/resolve-spawn.py codex", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
+commands = {"python3 flywheel/resolve-spawn.py", 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', "python3 flywheel/resolve-spawn.py antigravity"}
 def found(v):
     if isinstance(v, dict):
         return (v.get("command") in commands) or any(found(x) for x in v.values())
@@ -524,7 +510,7 @@ PYEOF
   else
     HAS_COMMAND=$(node - "$json_file" <<'NODEEOF'
 const fs = require('fs');
-const commands = new Set(['python3 flywheel/resolve-spawn.py', 'python3 flywheel/resolve-spawn.py codex', 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', 'python3 flywheel/resolve-spawn.py antigravity']);
+const commands = new Set(['python3 flywheel/resolve-spawn.py', 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex', 'python3 flywheel/resolve-spawn.py antigravity']);
 function found(v) {
   if (Array.isArray(v)) return v.some(found);
   if (v && typeof v === 'object') return commands.has(v.command) || Object.values(v).some(found);

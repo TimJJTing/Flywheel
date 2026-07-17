@@ -14,7 +14,9 @@
   → `Ran 30 tests`, `OK`.
 - `bash tests/test_adapter_lifecycle.sh` → Python and Node lifecycle passes,
   sync/drift pass, adapter lifecycle matrix pass.
-- `bash tests/test_adapter_scope.sh main` → `PASS adapter isolation path scope`.
+- Before deletion, the one-time adapter-isolation checker was run against
+  `$(git merge-base main HEAD)` → `PASS adapter isolation path scope`. It was an
+  audit aid, not a permanent command gate, and was deleted after this result.
 - `bash flywheel/check.sh` → `✓ all checks passed`.
 - Shell syntax, `git diff --check`, dashboard Python/Node parity, and the targeted
   secrets scan passed.

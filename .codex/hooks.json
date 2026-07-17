@@ -2,7 +2,6 @@
   "hooks": {
     "SubagentStop": [
       {
-        "matcher": ".*",
         "hooks": [
           { "type": "command", "command": "python3 \"$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py\" codex", "timeout": 30 }
         ]

@@ -19,16 +19,14 @@ behavior difference is a release blocker.
   payload `cwd`, so nested-directory sessions reach the correct config and ledger.
 - Preserve current safe transcript-based role recovery when Codex reports
   `agent_type:"default"`.
-- Migrate the legacy relative Codex hook without duplicating handlers.
 - Keep Codex ledger rows terminal and ID-free. Model/reasoning values remain
   configuration pins, not runtime telemetry.
 
 ### Universal fixes
 
-- Remove Flywheel hooks at individual-handler granularity during migration and
-  uninstall: preserve sibling user handlers and matcher groups; correctly handle
-  legacy-only, mixed, backed-up, and Flywheel-created files; maintain Python and Node
-  fallback parity.
+- Remove current Flywheel hooks at individual-handler granularity during uninstall:
+  preserve sibling user handlers and matcher groups; correctly handle backed-up and
+  Flywheel-created files; maintain Python and Node fallback parity.
 - Correct shared documentation: include `antigravity` in the adapter enum; describe
   per-adapter auto-logging accurately; replace universal `PostToolUse` wording with
   adapter-neutral wording; clarify config pins versus actual runtime telemetry.
@@ -43,7 +41,9 @@ behavior difference is a release blocker.
   selection, payload parsing/spawn construction, truncation, notes, ordering,
   fallback behavior, stdout, or adapter-specific skills, except the intentionally
   universal improve-doctrine update.
-- Add a path-scope check rejecting changes to Claude/Agy agent or hook assets.
+- Before merge, perform a one-time diff audit rejecting changes to Claude/Agy agent
+  or hook assets. The audit passed against the merge base on 2026-07-17; its temporary
+  checker was then deleted rather than retained as a permanent gate.
 - Any Claude/Agy behavioral delta outside the named universal fixes requires separate
   user approval.
 
@@ -61,7 +61,7 @@ previously at risk.
 
 Also cover nested-cwd Codex logging; known/default roles; malformed transcripts,
 config, and ledger; concurrency and safe failure; absence of Agent ID/session ID;
-handler migration and backup restoration; wrapup allowlist in a temporary Git repo;
+handler-level uninstall and backup restoration; wrapup allowlist in a temporary Git repo;
 dashboard parity, shell syntax, check.sh, diff-check, secrets scan, and clean status.
 
 The verifier reports independently on Codex repair, universal fixes, Claude

@@ -16,7 +16,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 RESOLVER = REPO / "flywheel" / "resolve-spawn.py"
 NEW_CODEX_COMMAND = 'python3 "$(git rev-parse --show-toplevel)/flywheel/resolve-spawn.py" codex'
-LEGACY_CODEX_COMMAND = "python3 flywheel/resolve-spawn.py codex"
 
 
 def hook_commands(value):
@@ -56,6 +55,16 @@ class CodexRootSpec(unittest.TestCase):
 
 
 class HandlerLifecycleSpec(unittest.TestCase):
+    def test_hook_sources_omit_noop_matcher_and_keep_one_current_command(self):
+        for path in (REPO / ".codex" / "hooks.json",
+                     REPO / "adapters" / "codex" / "hooks.json.merge"):
+            with self.subTest(path=path):
+                data = json.loads(path.read_text(encoding="utf-8"))
+                groups = data["hooks"]["SubagentStop"]
+                self.assertEqual(len(groups), 1)
+                self.assertNotIn("matcher", groups[0])
+                self.assertEqual(hook_commands(data).count(NEW_CODEX_COMMAND), 1)
+
     def install(self, target, runner):
         env = {**os.environ, "FLYWHEEL_RUNNER": runner}
         return subprocess.run(
@@ -76,31 +85,13 @@ class HandlerLifecycleSpec(unittest.TestCase):
         (root / ".codex" / "hooks.json").write_text(
             json.dumps(hooks, indent=2) + "\n", encoding="utf-8")
 
-    def test_legacy_handler_migrates_without_duplicate_and_keeps_sibling(self):
-        for runner in ("python3", "node"):
-            with self.subTest(runner=runner), tempfile.TemporaryDirectory(dir=REPO) as tmp:
-                root = Path(tmp)
-                self.seed_repo(root, {"hooks": {"SubagentStop": [{
-                    "matcher": ".*", "hooks": [
-                        {"type": "command", "command": LEGACY_CODEX_COMMAND, "timeout": 30},
-                        {"type": "command", "command": "echo keep-user-handler"},
-                    ],
-                }]}})
-                proc = self.install(root, runner)
-                self.assertEqual(proc.returncode, 0, proc.stderr)
-                data = json.loads((root / ".codex" / "hooks.json").read_text())
-                commands = hook_commands(data)
-                self.assertEqual(commands.count(NEW_CODEX_COMMAND), 1)
-                self.assertNotIn(LEGACY_CODEX_COMMAND, commands)
-                self.assertEqual(commands.count("echo keep-user-handler"), 1)
-
     def test_backup_restore_removes_only_flywheel_handler(self):
         for runner in ("python3", "node"):
             with self.subTest(runner=runner), tempfile.TemporaryDirectory(dir=REPO) as tmp:
                 root = Path(tmp)
                 self.seed_repo(root, {"hooks": {"SubagentStop": [{
-                    "matcher": ".*", "hooks": [
-                        {"type": "command", "command": LEGACY_CODEX_COMMAND, "timeout": 30},
+                    "hooks": [
+                        {"type": "command", "command": NEW_CODEX_COMMAND, "timeout": 30},
                         {"type": "command", "command": "echo keep-user-handler"},
                     ],
                 }]}})
