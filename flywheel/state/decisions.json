@@ -144,8 +144,8 @@
    "8622ff0"
   ]
  },
- {
-  "id": "d12",
+  {
+    "id": "d12",
   "title": "Merge Codex adapter repair branch",
   "detail": "Branch flywheel/improve-codex-adapter now contains verified commit 9719554. Deterministic lifecycle/resolver suites, fresh verifier review, and an isolated live Codex hook probe passed; remaining trust/account/runtime-telemetry limitations are documented.",
   "options": [
@@ -156,7 +156,22 @@
   "autonomy_row": "Merge flywheel self-improvement branch",
   "status": "approved",
   "outcome": "merged to main at 1c5ac18 (decided-by-human)",
-  "created": "2026-07-16",
-  "resolved": "2026-07-16"
- }
+    "created": "2026-07-16",
+    "resolved": "2026-07-16"
+  },
+  {
+    "id": "d13",
+    "title": "Merge Codex adapter robustness branch",
+    "detail": "Branch flywheel/improve-codex-adapter-robustness contains 7350d44. Real-repo utility dogfood passed and fresh verifier plus plan-auditor verdicts are VERIFIED; persisted human /hooks trust and actual child runtime telemetry remain bounded limitations.",
+    "options": [
+      "merge verified branch",
+      "reject"
+    ],
+    "recommendation": "merge verified branch",
+    "autonomy_row": "Merge flywheel self-improvement branch",
+    "status": "pending",
+    "outcome": "",
+    "created": "2026-07-17",
+    "resolved": null
+  }
 ]

@@ -876,5 +876,75 @@
   "task": "",
   "outcome": "ok",
   "notes": "auto-logged (codex; model from config, payload model is parent's)"
- }
+ },
+ {
+  "ts": "2026-07-17T01:23",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+ {
+  "ts": "2026-07-17T01:32",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+  {
+    "ts": "2026-07-17T17:05",
+  "agent": "utility",
+  "adapter": "codex",
+  "model": "gpt-5.6-luna",
+  "level": "low",
+    "task": "Dogfood real-repo Codex projections",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+ },
+ {
+  "ts": "2026-07-17T17:07",
+  "agent": "default",
+  "adapter": "codex",
+  "model": "Pending verification",
+  "level": "-",
+  "task": "",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's)"
+ },
+  {
+    "ts": "2026-07-17T17:08",
+  "agent": "verifier",
+  "adapter": "codex",
+  "model": "gpt-5.6-sol",
+  "level": "high",
+    "task": "Verify Codex robustness repair",
+  "outcome": "ok",
+  "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+ },
+  {
+    "ts": "2026-07-17T17:09",
+    "agent": "auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit repair delivery and dogfood",
+    "outcome": "ok",
+    "notes": "auto-logged default row reconciled from completed plan-auditor review; model from config, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-17T17:10",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "Coordinate dogfood reviews and bookkeeping",
+    "outcome": "ok",
+    "notes": "manual session row; coordinator runtime model and level unavailable"
+  }
 ]

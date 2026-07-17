@@ -1,25 +1,22 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-16 (session 18, Codex adapter repair merged and verified)
+Updated: 2026-07-17 (session 19, Codex robustness repair verified; merge pending)
 
 ## Current state
-- `main` now includes the Codex adapter repair through `1c5ac18`; d12 was approved
-  by the human and resolved.
-- Codex lifecycle ownership, config-driven TOML sync, `.agents/skills`, installed
-  docs, repo dogfood, and safe `SubagentStop` logging are repaired.
-- Post-merge verifier verdict: VERIFIED after 20 resolver tests, all four lifecycle
-  checks, check.sh, JSON validation, and fast-forward/history probes.
-- Isolated Codex CLI 0.144.5 live probe logged exactly utility=Luna/low,
-  engineer=Terra/high, verifier=Sol/high from config-derived agent rows.
-- Remaining limits: persisted dogfood trust UI, all-pin account entitlement, and
-  child runtime model/effort telemetry are unconfirmed; see verification report.
+- Branch `flywheel/improve-codex-adapter-robustness` contains the isolated repair at
+  `7350d44`; prior audit bookkeeping is `a7be606`.
+- Real-repo utility dogfood passed; fresh verifier and plan-auditor verdicts are both
+  VERIFIED. Unit/spec tests (30), dual lifecycle runners, scope, sync/drift,
+  check.sh, and an extra nested-cwd resolver probe passed.
+- Remaining bounded limits: persisted human `/hooks` trust, all-pin account
+  entitlement, and child runtime model/effort telemetry are unconfirmed.
 
 ## In flight
 - None.
 
 ## Next actions (in order)
-1. Continue prioritized work from the dashboard; no merge follow-up remains.
+1. Human decides d13: merge the verified self-improvement branch or reject it.
 
 ## Blockers / decisions pending the human
-- None.
+- d13 — merge `flywheel/improve-codex-adapter-robustness` into `main` (L3 ask-first).

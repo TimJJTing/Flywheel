@@ -193,10 +193,11 @@
   "priority": "P1",
   "status": "done",
   "detail": "Session 17 completed the approved repair: safe lifecycle ownership, config-driven Codex sync, supported shared skills, current docs, dogfood projection, GPT-5.6 mappings, and live-verified config-pin hook rows. Fresh verifier verdict VERIFIED; bounded live limitations are in the report.",
-  "commits": [
-   "37c84f4",
-   "9719554"
-  ],
+    "commits": [
+      "37c84f4",
+      "9719554",
+      "7350d44"
+    ],
   "opened": "2026-07-16",
   "closed": "2026-07-16"
  }

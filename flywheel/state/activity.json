@@ -160,12 +160,21 @@
    "9719554"
   ]
  },
- {
-  "ts": "2026-07-16",
-  "session": 18,
+  {
+    "ts": "2026-07-16",
+    "session": 18,
   "summary": "Approved Codex adapter repair fast-forwarded to main; coordinator ledger corrected and post-merge verification passed",
   "commits": [
-   "1c5ac18"
-  ]
- }
+      "1c5ac18"
+    ]
+  },
+  {
+    "ts": "2026-07-17",
+    "session": 19,
+    "summary": "Real-repo Codex dogfood and fresh verifier/auditor reviews completed; verified branch awaits merge approval",
+    "commits": [
+      "a7be606",
+      "7350d44"
+    ]
+  }
 ]
