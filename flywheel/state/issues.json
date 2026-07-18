@@ -186,8 +186,8 @@
   "opened": "2026-07-15",
   "closed": "2026-07-16"
  },
- {
-  "id": "i16",
+  {
+    "id": "i16",
   "title": "Codex adapter payload, lifecycle, sync, dogfood, and docs are inconsistent",
   "type": "defect",
   "priority": "P1",
@@ -199,7 +199,20 @@
       "7350d44",
       "7fcc696"
     ],
-  "opened": "2026-07-16",
-  "closed": "2026-07-16"
- }
+    "opened": "2026-07-16",
+    "closed": "2026-07-16"
+  },
+  {
+    "id": "i17",
+    "title": "Codex coordinator rows remain Pending verification",
+    "type": "friction",
+    "priority": "P2",
+    "status": "closed",
+    "detail": "Codex exposed no coordinator hook event, so wrapup could not safely prove the active model. A bounded resolver now validates CODEX_THREAD_ID rollout identity and records current-turn model/effort while preserving keyed pending fallback and human edits; verifier returned VERIFIED.",
+    "commits": [
+      "2a2cc34"
+    ],
+    "opened": "2026-07-18",
+    "closed": "2026-07-18"
+  }
 ]

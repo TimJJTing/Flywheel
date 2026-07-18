@@ -6,13 +6,13 @@
       "2026-07-16T23:02"
     ],
     "sessions": 73,
-    "summary": "compacted 73 entries — full history in git log of this file",
+    "summary": "compacted 73 entries \u2014 full history in git log of this file",
     "commits": [],
     "agent": "(compacted)",
     "adapter": "",
     "model": "",
     "level": "",
-    "task": "compacted 73 entries — full history in git log of this file",
+    "task": "compacted 73 entries \u2014 full history in git log of this file",
     "outcome": "ok",
     "notes": ""
   },
@@ -335,5 +335,85 @@
     "task": "Merge and verify Codex robustness branch",
     "outcome": "ok",
     "notes": "manual session row; coordinator runtime model and level unavailable"
+  },
+  {
+    "ts": "2026-07-18T16:34",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-18T16:35",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-18T16:37",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-18T17:56",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Assess Codex coordinator telemetry implementation",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-18T17:57",
+    "agent": "auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit Codex coordinator telemetry plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; approved plan with required safety changes"
+  },
+  {
+    "ts": "2026-07-18T18:06",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Finish safe Codex coordinator model resolver",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-18T18:18",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify Codex coordinator model resolver",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+  },
+  {
+    "ts": "2026-07-18T18:19",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Coordinate Codex model capture implementation",
+    "outcome": "ok",
+    "notes": "auto-resolved from Codex turn_context; session-key:f15cff0a598b; implementation independently VERIFIED"
   }
 ]

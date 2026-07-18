@@ -1,23 +1,23 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-18 (session 21, Codex robustness merged and verified)
+Updated: 2026-07-18 (session 22, Codex coordinator telemetry verified)
 
 ## Current state
-- `main` fast-forwarded to `f2e6948`, including Codex repair `7350d44`,
-  simplification `7fcc696`, and their bookkeeping commits.
-- Official Codex docs confirm the git-root `SubagentStop` hook is native. Old Codex
-  hook/skill migration, the no-op matcher, and the one-time scope script are removed.
-- Fresh post-merge verifier is VERIFIED: exact no-merge topology, 30 unit/spec tests,
-  dual lifecycle runners, sync/drift, check.sh, and history probe passed.
-- Remaining bounded limits: persisted human `/hooks` trust, all-pin entitlement,
-  child runtime telemetry, and fresh live Claude/Agy sessions are unconfirmed.
+- `main` remains at `f2e6948`; verified improvement branch
+  `flywheel/improve-codex-coordinator-model` contains implementation `2a2cc34`.
+- Codex coordinator wrapup now validates `CODEX_THREAD_ID` rollout identity and
+  upserts current-turn model/effort, with keyed pending fallback and preserved edits.
+- Fresh verifier returned VERIFIED: 37 resolver tests, extra preservation probe,
+  dual lifecycle runners, sync/drift, check.sh, and diff check passed.
+- Live dogfood resolved this coordinator as `gpt-5.6-sol` / `high` from telemetry.
 
 ## In flight
-- None.
+- Decision `d14` awaits human approval to merge the verified improvement branch.
 
 ## Next actions (in order)
-1. Continue normal work from verified `main`.
+1. Human: approve or reject merge of `flywheel/improve-codex-coordinator-model`.
+2. If approved, fast-forward `main` and run a fresh post-merge verifier.
 
 ## Blockers / decisions pending the human
-- None.
+- `d14`: merge self-improvement branch requires human approval at autonomy level 3.
