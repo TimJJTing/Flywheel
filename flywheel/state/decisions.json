@@ -169,9 +169,9 @@
     ],
     "recommendation": "merge the simplified, independently verified branch",
     "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "pending",
-    "outcome": "",
+    "status": "approved",
+    "outcome": "Human approved; main fast-forwarded to f2e6948 and fresh post-merge verification passed.",
     "created": "2026-07-17",
-    "resolved": null
+    "resolved": "2026-07-18"
   }
 ]
