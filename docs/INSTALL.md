@@ -26,6 +26,11 @@ What it does:
   tagged `flywheel-managed` (unmanaged same-named files are skipped with a warning).
   Antigravity gets `.agents/agents/`, shared `.agents/skills/`, and its
   `.agents/hooks.json` integration.
+- Uses thin public entry points backed by `scripts/lifecycle/` shared ownership/core
+  helpers and one `adapters/<adapter>/lifecycle.sh` module per adapter. Shared skills
+  come from `adapters/shared/skills/` and install recursively into `.claude/skills/`
+  and/or `.agents/skills/`; each managed file owns only itself, so unmanaged nested
+  files are preserved.
 - Idempotent: running it twice changes nothing.
 
 Then: open your adapter in the project and paste `docs/SEED-PROMPT.md` (from this
@@ -51,8 +56,10 @@ improvements via the improve protocol so they live in your repo's history.
 ./uninstall.sh /path/to/your/project        # add --yes for non-interactive
 ```
 
-Strips the marker blocks (leaving your CLAUDE.md/AGENTS.md content), removes only
-`flywheel-managed` agent/skill files, restores `opencode.json` from backup, and
+Strips the marker blocks (leaving your CLAUDE.md/AGENTS.md content), asks every known
+adapter lifecycle module to clean legacy installs, removes only `flywheel-managed`
+agent/skill files (including stale managed nested skill references), restores
+`opencode.json` from backup, and
 offers to archive your state (ledgers, STATUS, LESSONS, FACTS, config) to
 `flywheel-archive/` before deleting `flywheel/`.
 

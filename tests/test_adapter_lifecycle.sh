@@ -12,6 +12,27 @@ assert_file() { [ -f "$1" ] || fail "missing file: $1"; }
 assert_no_file() { [ ! -e "$1" ] || fail "unexpected file: $1"; }
 assert_eq() { [ "$1" = "$2" ] || fail "expected '$1' == '$2' ($3)"; }
 
+assert_lifecycle_boundaries() {
+  local skill file
+  if rg -n 'shared_skills|\.agents/skills' \
+      "$ROOT/adapters/codex/lifecycle.sh" "$ROOT/adapters/antigravity/lifecycle.sh"; then
+    fail "Codex/Antigravity module owns shared skill destination"
+  fi
+  for skill in delegate improve wrapup; do
+    grep -q 'read exactly one file in `references/`' \
+      "$ROOT/adapters/shared/skills/$skill/SKILL.md" || fail "$skill does not route through exactly one adapter reference"
+    if rg -n 'Codex|Claude|Antigravity|\.codex|\.claude' \
+        "$ROOT/adapters/shared/skills/$skill/SKILL.md"; then
+      fail "$skill common entry point contains adapter-specific execution details"
+    fi
+    diff -ru "$ROOT/adapters/shared/skills/$skill" "$ROOT/.agents/skills/$skill" ||
+      fail "$skill dogfood projection differs from canonical tree"
+  done
+  while IFS= read -r file; do
+    grep -q 'flywheel-managed' "$file" || fail "managed marker missing: $file"
+  done < <(find "$ROOT/adapters/shared/skills" "$ROOT/.agents/skills" -type f -name '*.md' | sort)
+}
+
 mkdir -p "$NODE_PATH"
 for command_name in bash node git dirname mkdir cp ls rm grep rmdir basename mv wc tr; do
   command_path="$(command -v "$command_name" || true)"
@@ -83,11 +104,33 @@ PY
 }
 
 exercise_runner() {
-  local runner="$1" t before after tree_before tree_after warning
+  local runner="$1" t before after tree_before tree_after warning log source_file relative count
   if ! command -v "$runner" >/dev/null 2>&1; then
     echo "SKIP lifecycle runner=$runner unavailable"
     return
   fi
+
+  # Unknown adapter names remain ignored for backward compatibility; core still
+  # installs and uninstall remains able to clean it without an adapter manifest.
+  t="$(new_repo "unknown-$runner")"
+  run_install "$runner" "$t" future-adapter
+  assert_file "$t/flywheel/INDEX.md"
+  assert_no_file "$t/AGENTS.md"
+  run_uninstall "$runner" "$t"
+  assert_no_file "$t/flywheel"
+
+  # The shared coordinator writes each canonical .agents skill file exactly once,
+  # even when both consumers are selected together.
+  t="$(new_repo "single-shared-owner-$runner")"
+  log="$TMPROOT/single-shared-owner-$runner.log"
+  run_install "$runner" "$t" codex,antigravity "$log"
+  while IFS= read -r source_file; do
+    relative="${source_file#"$ROOT/adapters/shared/skills/"}"
+    count="$(grep -Fxc "  updated: .agents/skills/$relative" "$log" || true)"
+    assert_eq "$count" 1 "single shared write for $relative"
+  done < <(find "$ROOT/adapters/shared/skills" -type f | sort)
+  run_uninstall "$runner" "$t"
+  assert_no_file "$t/.agents/skills"
 
   # 1,4,5: clean layout, exact managed block, idempotent reinstall, one/two uninstall.
   t="$(new_repo "clean-$runner")"
@@ -223,6 +266,31 @@ PY
   run_uninstall "$runner" "$t"
   grep -q 'user destination' "$t/.agents/skills/delegate/SKILL.md" || fail "unmanaged shared skill removed"
 
+  # Recursive shared skills: every file owns itself. Unmanaged nested collisions
+  # survive install/uninstall, while stale managed references are removed even when
+  # they are no longer present in the canonical source tree.
+  t="$(new_repo "recursive-skills-$runner")"
+  for root in .agents/skills .claude/skills; do
+    mkdir -p "$t/$root/delegate/references"
+    printf 'user adapter notes\n' > "$t/$root/delegate/references/codex.md"
+  done
+  run_install "$runner" "$t" codex,claude-code
+  for root in .agents/skills .claude/skills; do
+    assert_file "$t/$root/delegate/SKILL.md"
+    grep -q 'user adapter notes' "$t/$root/delegate/references/codex.md" || fail "unmanaged reference overwritten: $root"
+    assert_file "$t/$root/delegate/references/claude-code.md"
+    printf '<!-- flywheel-managed -->\nstale\n' > "$t/$root/delegate/references/removed-adapter.md"
+    printf 'keep sibling\n' > "$t/$root/delegate/references/user-notes.md"
+  done
+  run_uninstall "$runner" "$t"
+  for root in .agents/skills .claude/skills; do
+    assert_no_file "$t/$root/delegate/SKILL.md"
+    assert_no_file "$t/$root/delegate/references/removed-adapter.md"
+    assert_no_file "$t/$root/delegate/references/claude-code.md"
+    grep -q 'user adapter notes' "$t/$root/delegate/references/codex.md" || fail "unmanaged reference removed: $root"
+    grep -q 'keep sibling' "$t/$root/delegate/references/user-notes.md" || fail "unmanaged nested sibling removed: $root"
+  done
+
   # 10: both shared-skill orders, reinstalls, and Claude/OpenCode combinations.
   for order in codex-antigravity antigravity-codex; do
     t="$(new_repo "$order-$runner")"
@@ -231,8 +299,7 @@ PY
     run_install "$runner" "$t" "${order%-*}"
     run_install "$runner" "$t" "${order#*-}"
     for s in delegate improve wrapup; do
-      cmp -s "$ROOT/adapters/codex/skills/$s/SKILL.md" "$ROOT/adapters/antigravity/skills/$s/SKILL.md" || fail "source skill mismatch $s"
-      cmp -s "$ROOT/adapters/codex/skills/$s/SKILL.md" "$t/.agents/skills/$s/SKILL.md" || fail "installed skill mismatch $s/$order"
+      cmp -s "$ROOT/adapters/shared/skills/$s/SKILL.md" "$t/.agents/skills/$s/SKILL.md" || fail "installed skill mismatch $s/$order"
     done
     run_uninstall "$runner" "$t"
     assert_no_managed_sidecars "$t"
@@ -298,6 +365,7 @@ PY
   echo "PASS lifecycle sync/drift all six projections"
 }
 
+assert_lifecycle_boundaries
 exercise_runner python3
 exercise_runner node
 exercise_sync_and_drift

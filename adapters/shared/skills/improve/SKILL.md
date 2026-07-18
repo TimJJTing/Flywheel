@@ -8,9 +8,12 @@ description: Use when wrapup announced "improve pass due", the user asks for it,
 
 Execute `flywheel/IMPROVE.md` exactly. Condensed checklist:
 
-1. **Audit:** dispatch `plan-auditor` over `flywheel/*.md` + the CLAUDE.md flywheel
-   block (contradictions, ground truth, ambiguity, executability). BLOCKER/MAJOR
-   findings become improvement candidates.
+Before auditing, read exactly one file in `references/`: the file matching the active
+adapter. It identifies the adapter-owned marker block included in the audit.
+
+1. **Audit:** dispatch `plan-auditor` over `flywheel/*.md` plus the marker block named
+   by the active-adapter reference. BLOCKER/MAJOR findings become improvement
+   candidates.
 2. **Gather:** `flywheel/LESSONS.md`; `flywheel/state/issues.json` where
    `type=="friction"`; latest `bash flywheel/check.sh` output; `spawns.json` rows with
    outcome retried/escalated/failed.

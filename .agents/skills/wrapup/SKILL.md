@@ -14,18 +14,13 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
 ## 2. Update state ledgers (flywheel/state/)
 - `activity.json`: append one entry {ts, session (= previous max +1), summary ≤1 line,
   commits: [hashes made this session — fill after step 5, or amend]}.
-- If this coordinator is running in Codex, immediately before reviewing
-  `spawns.json`, run `python3 flywheel/resolve-spawn.py codex-coordinator`. It safely
-  upserts this session from current-turn telemetry, records a keyed pending row when
-  only session identity is available, or leaves the ledger unchanged when identity
-  cannot be validated.
-- `spawns.json`: adapter hooks may have auto-appended rows for subagents spawned this
-  session — verify those rows and correct any wrong `outcome`/`notes` (hooks log
-  `outcome:"ok"`; fix it if a spawn actually retried/escalated/failed). Append one row
-  by hand for the coordinator itself when no session-level event captured it or the
-  Codex resolver reports telemetry unavailable. Resolve manual model/level from
-  adapter facts; never write unverified model guesses or treat a config pin as Codex
-  coordinator runtime telemetry.
+- Before reviewing `spawns.json`, read exactly one file in `references/`: the file
+  matching the active adapter. Perform its telemetry and coordinator-row steps.
+- `spawns.json`: verify any automatically appended subagent rows and correct wrong
+  `outcome`/`notes` values; a default successful outcome must be changed when a spawn
+  actually retried, escalated, or failed. Add the coordinator row as directed by the
+  active-adapter reference. Resolve manual model/level only from verified adapter
+  facts; never write inheritance placeholders or unverified model guesses.
 - `projects.json` / `issues.json`: update statuses, milestones, and commits arrays for
   anything this session advanced. Friction you noticed → new issue with
   `type: "friction"` (feeds the improve pass).
@@ -43,15 +38,16 @@ line to `flywheel/LESSONS.md`: date | task | tier path | cause | rule to update.
 
 ## 5. Run the mechanical script
 - First commit any NON-wrapup changes (code, docs) per `flywheel/GIT.md` — specific
-  files, conventional message, never `-A`/`.`, never `--no-verify` — and append those
+  files, conventional message, never `-A`/`.` or `--no-verify` — and append those
   hashes to this session's activity.json entry (else next session's drift check flags
   them).
 - Then `bash flywheel/wrapup.sh` — automatically runs `gen_architecture.py` to update
   `docs/ARCHITECTURE.md` if python3 is present, executes `check.sh` (aborts on ✗; fix
   or log a justified override in LESSONS.md), rebuilds the dashboard, warns if
-  activity.json is stale, commits the wrapup file set (including state ledgers, dashboard,
-  and architecture doc) as `chore(flywheel): update state ledgers + dashboard`, and
-  announces "improve pass due" on the `improve_cadence_sessions` boundary.
+  activity.json is stale, commits the wrapup file set (including state ledgers,
+  dashboard, and architecture doc) as
+  `chore(flywheel): update state ledgers + dashboard`, and announces "improve pass
+  due" on the `improve_cadence_sessions` boundary.
 
 ## 6. Report
 Return the commit hash(es) (`git rev-parse --short HEAD`) and a one-line summary per

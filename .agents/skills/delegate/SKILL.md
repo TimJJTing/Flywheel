@@ -28,17 +28,9 @@ REPORT FORMAT) — copy them verbatim so the receiving agent recognizes the cont
 3. REPORT FORMAT (what to return, where long output is saved)
 If any is empty, stop and fill it — do not send the delegation anyway.
 
-## 4. Spawn the surfaced agent
-Use the spawn mechanism actually available in this runtime:
-- Codex: when custom subagent tools are surfaced, spawn the named agent from
-  `.codex/agents/*.toml` (architect / researcher / engineer / utility / verifier /
-  plan-auditor) and pass the filled template as its task. Do not restate a model in
-  the prompt; the TOML is projected from `flywheel/config.json`.
-- Antigravity: when the `invoke_subagent` tool is surfaced, call it with the target
-  `TypeName` and put the filled template in `Prompt`. Do not try to override the model;
-  Antigravity currently runs subagents on the parent session model.
-- If neither mechanism is surfaced, use ORCHESTRATION.md degraded mode: paste the
-  filled template into a fresh session and record the limitation.
+## 4. Spawn for the active adapter
+Before dispatching, read exactly one file in `references/`: the file matching the
+active adapter. Follow its native spawn and fallback instructions.
 
 ## 5. Respect the limits, log the spawn
 Max two retries per tier (ORCHESTRATION.md §4); a retry must change something, never
