@@ -1,22 +1,21 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-18 (session 23, Codex coordinator telemetry merged)
+Updated: 2026-07-18 (session 24, adapter lifecycle modularization assessed)
 
 ## Current state
-- `main` fast-forwarded to `38ec544`, including verified Codex coordinator telemetry
-  implementation `2a2cc34` and its bookkeeping commit.
-- Codex coordinator wrapup now validates `CODEX_THREAD_ID` rollout identity and
-  upserts current-turn model/effort, with keyed pending fallback and preserved edits.
-- Fresh post-merge verifier returned VERIFIED: exact topology, 37 resolver tests,
-  extra preservation probe, lifecycle matrix, sync/drift, check.sh, and diff check.
-- Live dogfood resolved this coordinator as `gpt-5.6-sol` / `high` from telemetry.
+- `main` remains clean of product changes after an architectural assessment.
+- Recommended thin public install/uninstall entry points, shared safety helpers, and
+  one lifecycle module per adapter; shared destinations remain centrally coordinated.
+- Recommended unified skills with narrow adapter-specific references, not fully
+  duplicated per-adapter skill trees.
+- Existing Python/Node lifecycle matrix provides the characterization safety net.
 
 ## In flight
 - None.
 
 ## Next actions (in order)
-1. Continue normal work from verified `main`.
+1. Await human direction on whether to plan and implement the lifecycle refactor.
 
 ## Blockers / decisions pending the human
 - None.
