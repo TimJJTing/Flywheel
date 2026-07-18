@@ -188,5 +188,20 @@
     "outcome": "Human approved; main fast-forwarded to 38ec544 and fresh post-merge verification passed.",
     "created": "2026-07-18",
     "resolved": "2026-07-18"
+  },
+  {
+    "id": "d15",
+    "title": "Merge adapter lifecycle feature branch",
+    "detail": "Branch feature/adapter-lifecycle contains 1eaf28e. The corrected implementation passed the Python/Node lifecycle matrix, 41 Python tests, check.sh, and a fresh verifier's ownership, recursive cleanup, adapter isolation, parity, and sensitive-content probes.",
+    "options": [
+      "merge verified branch",
+      "reject"
+    ],
+    "recommendation": "merge the independently verified behavior-preserving refactor",
+    "autonomy_row": "Merge feature branch -> main",
+    "status": "decided-by-llm",
+    "outcome": "Main fast-forwarded to 1eaf28e under autonomy level 3.",
+    "created": "2026-07-18",
+    "resolved": "2026-07-18"
   }
 ]

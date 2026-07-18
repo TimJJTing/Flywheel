@@ -41,6 +41,10 @@
    {
     "title": "Default models set + config.json single-source (sync.py)",
     "done": true
+   },
+   {
+    "title": "Modular adapter lifecycle + canonical skills",
+    "done": true
    }
   ],
   "detail": "Portable framework extracted from vocabulary-universe; see README.md.",
@@ -54,8 +58,9 @@
    "e18bac2",
    "3d2ebce",
    "6573b3f",
-   "4d2d17b"
+   "4d2d17b",
+   "1eaf28e"
   ],
-  "updated": "2026-07-07"
+  "updated": "2026-07-18"
  }
 ]

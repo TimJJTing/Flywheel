@@ -214,5 +214,13 @@
     "session": 24,
     "summary": "Adapter lifecycle modularization assessed; thin entry points plus shared safety helpers recommended",
     "commits": []
+  },
+  {
+    "ts": "2026-07-18T19:36",
+    "session": 25,
+    "summary": "Adapter lifecycle and canonical skill refactor implemented, verifier-corrected, VERIFIED, and merged to main",
+    "commits": [
+      "1eaf28e"
+    ]
   }
 ]
