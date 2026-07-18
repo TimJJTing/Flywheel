@@ -88,14 +88,13 @@ Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, 
   it inline in the main session, check §1 routing table first.
 - Main-session context is the scarcest resource. When a task will generate > ~100 lines
   of tool output, that alone is reason to delegate.
-- Auto-logging is adapter-specific: Claude Code records the resolved child model from
-  its Agent response; Codex records configured model/reasoning pins because its stop
-  payload has no child runtime telemetry; Antigravity records the inherited parent
-  model (or configured utility fallback). These rows are appended by adapter-native
-  events through `flywheel/resolve-spawn.py`. For adapters without auto-logging, log
-  every spawn manually (agent, adapter, best verified model provenance, level, task
-  ≤15 words, outcome). At wrapup, verify/correct outcome/notes and append the
-  coordinator row by hand; no spawn event covers it.
+- Model provenance is adapter-specific: Claude Code children use the Agent response;
+  Codex children use config pins (its stop payload lacks child runtime telemetry);
+  Antigravity children inherit the parent model or configured fallback. Codex
+  coordinators resolve current-turn rollout telemetry at wrapup. All automatic rows
+  go through `flywheel/resolve-spawn.py`; otherwise log manually with best verified
+  provenance and `Pending verification` when unavailable. At wrapup, correct child
+  outcomes/notes and ensure the coordinator has exactly one row.
 
 ## 7. Session start / end protocol
 

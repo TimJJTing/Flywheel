@@ -1,4 +1,5 @@
 import json
+import hashlib
 import importlib.util
 import os
 import socket
@@ -41,12 +42,13 @@ class ResolveSpawnTests(unittest.TestCase):
     def ledger(self):
         return self.root / "flywheel" / "state" / "spawns.json"
 
-    def run_hook(self, payload, adapter="codex", timeout=2):
+    def run_hook(self, payload, adapter="codex", timeout=2, env=None):
         before = self.ledger.read_bytes() if self.ledger.exists() else None
         stdin = payload if isinstance(payload, str) else json.dumps(payload)
         proc = subprocess.run(
             ["python3", str(self.script), adapter], input=stdin, text=True,
             capture_output=True, cwd=REPO, check=False, timeout=timeout,
+            env={**os.environ, **(env or {})},
         )
         self.assertEqual(proc.returncode, 0)
         self.assertEqual(proc.stderr, "")
@@ -57,6 +59,34 @@ class ResolveSpawnTests(unittest.TestCase):
         self.assertEqual(set(output), {"systemMessage"})
         after = self.ledger.read_bytes() if self.ledger.exists() else None
         return output, before != after
+
+    def coordinator_rollout(self, thread_id, records=None, raw=None, name="rollout"):
+        home = self.root / "home"
+        sessions = home / ".codex" / "sessions" / "2026" / "07" / "18"
+        sessions.mkdir(parents=True, exist_ok=True)
+        path = sessions / f"{name}-{thread_id}.jsonl"
+        if raw is not None:
+            path.write_bytes(raw)
+        else:
+            path.write_text("".join(json.dumps(record) + "\n" for record in records),
+                            encoding="utf-8")
+        return home, path
+
+    def coordinator_records(self, thread_id, contexts=None, **meta_overrides):
+        meta = {
+            "id": thread_id, "cwd": str(self.root), "source": "cli",
+            "thread_source": "user",
+        }
+        meta.update(meta_overrides)
+        records = [{"type": "session_meta", "payload": meta}]
+        for context in contexts or []:
+            payload = {"cwd": str(self.root), **context}
+            records.append({"type": "turn_context", "payload": payload})
+        return records
+
+    def run_coordinator(self, thread_id, home, timeout=2):
+        return self.run_hook("", adapter="codex-coordinator", timeout=timeout,
+                             env={"HOME": str(home), "CODEX_THREAD_ID": thread_id})
 
     def spawns(self):
         return json.loads(self.ledger.read_text(encoding="utf-8"))
@@ -431,6 +461,288 @@ class ResolveSpawnTests(unittest.TestCase):
         rows = self.spawns()
         self.assertEqual(len(rows), 20)
         self.assertTrue(all(row["agent"] == "utility" for row in rows))
+
+    def test_codex_coordinator_uses_newest_runtime_context_and_short_hash(self):
+        thread_id = "12345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(thread_id, [
+            {"model": "old-runtime", "effort": "low"},
+            {"model": "new-runtime", "effort": "high"},
+        ])
+        home, rollout = self.coordinator_rollout(thread_id, records)
+        output, changed = self.run_coordinator(thread_id, home)
+        self.assertTrue(changed)
+        digest = hashlib.sha256(thread_id.encode("ascii")).hexdigest()[:12]
+        self.assertEqual(output, {"systemMessage": "spawn coordinator -> new-runtime / high"})
+        self.assert_terminal_row(self.spawns()[-1], {
+            "agent": "coordinator", "adapter": "codex", "model": "new-runtime",
+            "level": "high", "task": "", "outcome": "ok",
+            "notes": f"auto-resolved from Codex turn_context; session-key:{digest}",
+        })
+        serialized = json.dumps(output) + json.dumps(self.spawns())
+        self.assertNotIn(thread_id, serialized)
+        self.assertNotIn(str(rollout), serialized)
+
+    def test_codex_coordinator_is_idempotent_and_preserves_human_fields(self):
+        thread_id = "22345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(thread_id, [
+            {"model": "runtime-one", "effort": "medium"},
+        ])
+        home, rollout = self.coordinator_rollout(thread_id, records)
+        self.run_coordinator(thread_id, home)
+        rows = self.spawns()
+        rows[0]["task"] = "human task"
+        rows[0]["outcome"] = "retried"
+        rows[0]["notes"] += "; human note"
+        original_ts = rows[0]["ts"]
+        self.ledger.write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
+        records.append({"type": "turn_context", "payload": {
+            "cwd": str(self.root), "model": "runtime-two", "effort": "high",
+        }})
+        rollout.write_text("".join(json.dumps(record) + "\n" for record in records),
+                           encoding="utf-8")
+        self.run_coordinator(thread_id, home)
+        self.assertEqual(len(self.spawns()), 1)
+        row = self.spawns()[0]
+        self.assertEqual((row["model"], row["level"]),
+                         ("runtime-two", "high"))
+        self.assertEqual((row["task"], row["outcome"], row["notes"], row["ts"]),
+                         ("human task", "retried",
+                          f"auto-resolved from Codex turn_context; session-key:"
+                          f"{hashlib.sha256(thread_id.encode('ascii')).hexdigest()[:12]}; human note",
+                          original_ts))
+
+    def test_codex_coordinator_pending_then_valid_upgrades_same_row(self):
+        thread_id = "32345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(thread_id, [
+            {"model": "must-not-fallback", "effort": "medium"},
+            {"model": "", "effort": "high"},
+        ])
+        home, _ = self.coordinator_rollout(thread_id, records)
+        output, changed = self.run_coordinator(thread_id, home)
+        self.assertTrue(changed)
+        self.assertEqual((self.spawns()[0]["model"], self.spawns()[0]["level"]),
+                         ("Pending verification", "-"))
+        self.assertIn("Pending verification / -", output["systemMessage"])
+        self.assertNotIn("must-not-fallback", json.dumps(output))
+        records[-1]["payload"]["model"] = "validated-runtime"
+        path = next((home / ".codex" / "sessions").rglob(f"*-{thread_id}.jsonl"))
+        path.write_text("".join(json.dumps(record) + "\n" for record in records),
+                        encoding="utf-8")
+        self.run_coordinator(thread_id, home)
+        self.assertEqual(len(self.spawns()), 1)
+        self.assertEqual((self.spawns()[0]["model"], self.spawns()[0]["level"]),
+                         ("validated-runtime", "high"))
+
+    def test_codex_coordinator_reconciles_one_manual_pending_but_not_ambiguous(self):
+        thread_id = "33345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(
+            thread_id, [{"model": "runtime", "effort": "medium"}]
+        )
+        home, _ = self.coordinator_rollout(thread_id, records)
+        timestamp = __import__("datetime").datetime.now().strftime("%Y-%m-%dT%H:%M")
+        manual = {
+            "ts": timestamp, "agent": "coordinator", "adapter": "codex",
+            "model": "Pending verification", "level": "-", "task": "curated task",
+            "outcome": "retried", "notes": "curated manual note",
+        }
+        self.ledger.write_text(json.dumps([manual], indent=2) + "\n", encoding="utf-8")
+        self.run_coordinator(thread_id, home)
+        rows = self.spawns()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual((rows[0]["model"], rows[0]["level"], rows[0]["task"],
+                          rows[0]["outcome"]),
+                         ("runtime", "medium", "curated task", "retried"))
+        self.assertTrue(rows[0]["notes"].startswith("curated manual note; session-key:"))
+
+        second_id = "34345678-1234-1234-1234-123456789abc"
+        second_records = self.coordinator_records(
+            second_id, [{"model": "second-runtime", "effort": "high"}]
+        )
+        second_home, _ = self.coordinator_rollout(second_id, second_records,
+                                                   name="ambiguous")
+        ambiguous = [dict(manual, notes="candidate one"),
+                     dict(manual, notes="candidate two")]
+        self.ledger.write_text(json.dumps(ambiguous, indent=2) + "\n", encoding="utf-8")
+        self.run_coordinator(second_id, second_home)
+        rows = self.spawns()
+        self.assertEqual(len(rows), 3)
+        self.assertEqual([row["notes"] for row in rows[:2]],
+                         ["candidate one", "candidate two"])
+        self.assertEqual(rows[-1]["model"], "second-runtime")
+
+    def test_codex_coordinator_identity_failures_never_mutate(self):
+        valid_id = "42345678-1234-1234-1234-123456789abc"
+        cases = {
+            "missing-id": ({}, None),
+            "malformed-id": ({"CODEX_THREAD_ID": "../../secret"}, None),
+            "wrong-meta-id": ({"CODEX_THREAD_ID": valid_id}, {"id": "52345678-1234-1234-1234-123456789abc"}),
+            "wrong-source": ({"CODEX_THREAD_ID": valid_id}, {"source": "api"}),
+            "wrong-thread-source": ({"CODEX_THREAD_ID": valid_id}, {"thread_source": "subagent"}),
+            "agent-path": ({"CODEX_THREAD_ID": valid_id}, {"agent_path": "/root/engineer"}),
+            "wrong-cwd": ({"CODEX_THREAD_ID": valid_id}, {"cwd": str(self.root.parent)}),
+        }
+        for label, (extra_env, overrides) in cases.items():
+            with self.subTest(case=label):
+                self.ledger.write_text("[]\n", encoding="utf-8")
+                case_home = self.root / f"home-{label}"
+                if overrides is not None:
+                    records = self.coordinator_records(valid_id, [
+                        {"model": "secret-model", "effort": "high"},
+                    ], **overrides)
+                    case_home, _ = self.coordinator_rollout(valid_id, records,
+                                                             name=f"rollout-{label}")
+                output, changed = self.run_hook(
+                    "", adapter="codex-coordinator",
+                    env={"HOME": str(case_home), "CODEX_THREAD_ID": "", **extra_env})
+                self.assertFalse(changed)
+                self.assertEqual(self.spawns(), [])
+                self.assertNotIn(valid_id, json.dumps(output))
+
+    def test_codex_coordinator_zero_duplicate_and_bad_file_types_fail_closed(self):
+        thread_id = "62345678-1234-1234-1234-123456789abc"
+        empty_home = self.root / "empty-home"
+        empty_home.mkdir()
+        _, changed = self.run_coordinator(thread_id, empty_home)
+        self.assertFalse(changed)
+
+        records = self.coordinator_records(thread_id, [{"model": "x", "effort": "high"}])
+        home, first = self.coordinator_rollout(thread_id, records, name="first")
+        self.coordinator_rollout(thread_id, records, name="second")
+        _, changed = self.run_coordinator(thread_id, home)
+        self.assertFalse(changed)
+
+        for offset, kind in enumerate(("symlink", "fifo", "directory"), start=1):
+            with self.subTest(kind=kind):
+                case_id = f"{offset}2345678-2234-1234-1234-123456789abc"
+                case_home = self.root / f"home-{kind}"
+                sessions = case_home / ".codex" / "sessions"
+                sessions.mkdir(parents=True)
+                candidate = sessions / f"rollout-{case_id}.jsonl"
+                if kind == "symlink":
+                    target = sessions / "target.jsonl"
+                    target.write_text("fixture-secret\n", encoding="utf-8")
+                    candidate.symlink_to(target)
+                elif kind == "fifo":
+                    os.mkfifo(candidate)
+                else:
+                    candidate.mkdir()
+                output, changed = self.run_coordinator(case_id, case_home)
+                self.assertFalse(changed)
+                self.assertNotIn("fixture-secret", json.dumps(output))
+
+    def test_codex_coordinator_inode_and_size_changes_fail_closed(self):
+        thread_id = "67345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(
+            thread_id, [{"model": "runtime", "effort": "high"}]
+        )
+        home, rollout = self.coordinator_rollout(thread_id, records)
+        spec = importlib.util.spec_from_file_location("resolve_spawn_coordinator", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        replacement = rollout.with_name("replacement.jsonl")
+        replacement.write_text(rollout.read_text(encoding="utf-8"), encoding="utf-8")
+        original_open = module.os.open
+        swapped = False
+
+        def swapping_open(path, flags, *args, **kwargs):
+            nonlocal swapped
+            if os.fspath(path) == str(rollout) and not swapped:
+                swapped = True
+                os.replace(replacement, rollout)
+            return original_open(path, flags, *args, **kwargs)
+
+        with mock.patch.object(module.os, "open", side_effect=swapping_open):
+            self.assertEqual(module.codex_coordinator_telemetry(
+                str(self.root), {"CODEX_THREAD_ID": thread_id},
+                sessions_root=home / ".codex" / "sessions"), (None, None, None))
+
+        # A concurrent append changes the post-read size and invalidates the fixed
+        # snapshot even though its original bytes parsed successfully.
+        original_fstat = module.os.fstat
+        fstat_calls = 0
+
+        def growing_fstat(fd):
+            nonlocal fstat_calls
+            fstat_calls += 1
+            if fstat_calls == 2:
+                with rollout.open("ab") as stream:
+                    stream.write(b"{}\n")
+            return original_fstat(fd)
+
+        with mock.patch.object(module.os, "fstat", side_effect=growing_fstat):
+            self.assertEqual(module.codex_coordinator_telemetry(
+                str(self.root), {"CODEX_THREAD_ID": thread_id},
+                sessions_root=home / ".codex" / "sessions"), (None, None, None))
+
+    def test_codex_coordinator_malformed_incomplete_oversized_and_wrong_context_fail_closed(self):
+        thread_id = "72345678-1234-1234-1234-123456789abc"
+        valid = self.coordinator_records(thread_id, [{"model": "runtime", "effort": "high"}])
+        raw_cases = {
+            "malformed": b"{bad json\n",
+            "incomplete": json.dumps(valid[0]).encode() + b"\n" + json.dumps(valid[1]).encode(),
+            "oversized-line": b"{" + b"x" * (128 * 1024) + b"}\n",
+            "oversized-file": b"{}\n" * ((32 * 1024 * 1024 // 3) + 1),
+        }
+        for label, raw in raw_cases.items():
+            with self.subTest(case=label):
+                self.ledger.write_text("[]\n", encoding="utf-8")
+                home, _ = self.coordinator_rollout(thread_id, raw=raw, name=label)
+                _, changed = self.run_coordinator(thread_id, home)
+                self.assertFalse(changed)
+        for label, context in {
+            "missing-model": {"effort": "high"},
+            "missing-effort": {"model": "runtime"},
+            "blank-model": {"model": " ", "effort": "high"},
+            "wrong-cwd": {"cwd": str(self.root.parent), "model": "runtime", "effort": "high"},
+        }.items():
+            with self.subTest(case=label):
+                self.ledger.write_text("[]\n", encoding="utf-8")
+                records = self.coordinator_records(thread_id, [context])
+                home, _ = self.coordinator_rollout(thread_id, records, name=f"context-{label}")
+                _, changed = self.run_coordinator(thread_id, home)
+                self.assertFalse(changed)
+
+    def test_codex_coordinator_accepts_repo_descendant_cwds(self):
+        thread_id = "82345678-1234-1234-1234-123456789abc"
+        descendant = self.root / "nested"
+        descendant.mkdir()
+        records = self.coordinator_records(thread_id, [], cwd=str(descendant))
+        records.append({"type": "turn_context", "payload": {
+            "cwd": str(descendant), "model": "runtime", "effort": "medium",
+        }})
+        home, _ = self.coordinator_rollout(thread_id, records)
+        _, changed = self.run_coordinator(thread_id, home)
+        self.assertTrue(changed)
+
+    def test_codex_coordinator_ignores_codex_home(self):
+        thread_id = "92345678-1234-1234-1234-123456789abc"
+        records = self.coordinator_records(thread_id, [{"model": "runtime", "effort": "medium"}])
+        home, _ = self.coordinator_rollout(thread_id, records)
+        fake_codex_home = self.root / "must-not-use"
+        output, changed = self.run_hook(
+            "", adapter="codex-coordinator",
+            env={"HOME": str(home), "CODEX_HOME": str(fake_codex_home),
+                 "CODEX_THREAD_ID": thread_id})
+        self.assertTrue(changed)
+        self.assertIn("runtime", output["systemMessage"])
+
+    def test_codex_coordinator_drops_unrelated_secrets_and_writes_two_space_json(self):
+        thread_id = "a2345678-1234-1234-1234-123456789abc"
+        secret = "fixture-secret-must-not-survive"
+        records = self.coordinator_records(
+            thread_id, [{"model": "runtime", "effort": "medium", "prompt": secret}],
+            unrelated=secret,
+        )
+        records.insert(1, {"type": "response_item", "payload": {"text": secret}})
+        home, _ = self.coordinator_rollout(thread_id, records)
+        output, changed = self.run_coordinator(thread_id, home)
+        self.assertTrue(changed)
+        serialized = json.dumps(output) + self.ledger.read_text(encoding="utf-8")
+        self.assertNotIn(secret, serialized)
+        self.assertTrue(self.ledger.read_text(encoding="utf-8").startswith(
+            '[\n  {\n    "ts"'
+        ))
 
     def test_claude_post_tool_use_override_is_a_complete_golden(self):
         description = "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen"

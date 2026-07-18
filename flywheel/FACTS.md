@@ -52,6 +52,7 @@ GPT-5.5→GPT-5.6 effort mapping.
 | Codex project trust/config/hooks | Project-local configuration and hooks load only for trusted projects; non-managed command hooks require explicit review/trust | 2026-07-16 |
 | Codex live model availability | Account and CLI-version dependent; configured pins are not proof of entitlement | 2026-07-16 |
 | Codex child runtime telemetry | Stable stop-hook payload does not expose the child's actual model/effort; resolver rows record config pins, not runtime proof | 2026-07-16 |
+| Codex coordinator runtime telemetry | Exact `CODEX_THREAD_ID` rollout `turn_context` exposes the current turn's model/effort; the bounded wrapup resolver records it only after coordinator identity and repo cwd validation | 2026-07-18 |
 | Antigravity CLI (agy) subagent model inheritance | Spawned subagents inherit the active model of the parent session; routing subagents to different models is not supported (known limitation) | 2026-07-12 |
 
 ## Toolchain (versions from commands run in THIS repo)

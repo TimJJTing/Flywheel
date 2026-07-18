@@ -14,12 +14,18 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
 ## 2. Update state ledgers (flywheel/state/)
 - `activity.json`: append one entry {ts, session (= previous max +1), summary ≤1 line,
   commits: [hashes made this session — fill after step 5, or amend]}.
+- If this coordinator is running in Codex, immediately before reviewing
+  `spawns.json`, run `python3 flywheel/resolve-spawn.py codex-coordinator`. It safely
+  upserts this session from current-turn telemetry, records a keyed pending row when
+  only session identity is available, or leaves the ledger unchanged when identity
+  cannot be validated.
 - `spawns.json`: adapter hooks may have auto-appended rows for subagents spawned this
   session — verify those rows and correct any wrong `outcome`/`notes` (hooks log
   `outcome:"ok"`; fix it if a spawn actually retried/escalated/failed). Append one row
-  by hand for the coordinator itself when no session-level event captured it. Resolve
-  model/level from `flywheel/config.json` plus adapter facts; never write unverified
-  model guesses.
+  by hand for the coordinator itself when no session-level event captured it or the
+  Codex resolver reports telemetry unavailable. Resolve manual model/level from
+  adapter facts; never write unverified model guesses or treat a config pin as Codex
+  coordinator runtime telemetry.
 - `projects.json` / `issues.json`: update statuses, milestones, and commits arrays for
   anything this session advanced. Friction you noticed → new issue with
   `type: "friction"` (feeds the improve pass).

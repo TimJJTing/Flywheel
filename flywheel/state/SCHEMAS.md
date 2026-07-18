@@ -30,7 +30,8 @@ on the writing agent.
 // agent: add "coordinator" for the main session itself.
 // adapter: claude-code | codex | opencode | antigravity.
 // model provenance is adapter-specific: resolved child runtime (claude-code),
-//   configuration pin (codex), inherited parent/configured fallback (antigravity),
-//   or the best verified manual value; use "Pending verification" when unavailable.
-// level: configured effort/reasoning value; "-" when unsupported or unknown.
+//   configuration pin (codex child), current-turn telemetry (codex coordinator),
+//   inherited parent/configured fallback (antigravity), or best verified manual
+//   value; use "Pending verification" when unavailable.
+// level: matching effort/reasoning provenance; "-" when unsupported or unknown.
 ```
