@@ -1,22 +1,23 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-18 (session 25, adapter lifecycle modularization merged)
+Updated: 2026-07-19 (session 26, on-demand improve pass in progress)
 
 ## Current state
-- `main` fast-forwarded to verified lifecycle refactor `1eaf28e`.
-- `install.sh` and `uninstall.sh` are thin entry points over shared lifecycle helpers
-  and four adapter-private modules; legacy uninstall behavior remains intact.
-- Skills now use one canonical managed tree with adapter-neutral entry points and
-  adapter-specific references, recursively installed with collision-safe ownership.
-- Fresh final verifier returned VERIFIED: Python/Node lifecycle matrix, 41 Python
-  tests, single-write shared ownership, recursive cleanup, isolation, and parity.
+- `main` remains at `33daf75`.
+- Current branch `flywheel/improve-codex-marker-block` contains verified implementation
+  `d05d459` and is pending the level-3 self-improvement merge gate (`d16`).
+- Fresh verification passed the lifecycle Python/Node matrix, `check.sh`, canonical
+  block equality, and package-provenance checks.
 
 ## In flight
-- None.
+- Verified structural plan `docs/plans/improve-bookkeeping-commit-policy.md` remains
+  in flight as the second independent improvement.
 
 ## Next actions (in order)
-1. Continue normal work from verified `main`.
+1. Resolve pending merge decision `d16` when the human is available.
+2. Checkout `main`, then create `flywheel/improve-bookkeeping-commit-policy` and
+   implement the verified bookkeeping policy plan independently.
 
 ## Blockers / decisions pending the human
-- None.
+- `d16`: merge or reject verified branch `flywheel/improve-codex-marker-block`.
