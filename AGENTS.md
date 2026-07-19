@@ -9,11 +9,11 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
 1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
    `bash flywheel/check.sh`: ledger-untracked-commit warnings = work done outside the
    framework — triage, backfill ledgers/docs, note in STATUS.md.
-2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are Antigravity custom
-   subagents (`.agents/agents/{agent_name}/agent.json`); spawn a subagent by invoking it
-   by its TypeName (architect / researcher / engineer / utility / verifier / plan-auditor)
-   and fill the matching template from `flywheel/TEMPLATES.md`. Use the `delegate` skill
-   to compose the delegation.
+2. Route work per `flywheel/ORCHESTRATION.md` §1. The six tiers are codex custom
+   subagents (`.codex/agents/*.toml`); codex only spawns one when explicitly asked, so
+   name the agent to spawn (architect / researcher / engineer / utility / verifier /
+   plan-auditor) and fill the matching template from `flywheel/TEMPLATES.md`. Use the
+   `delegate` skill to compose the delegation.
 3. Before ending / context low: run the `wrapup` skill — update STATUS.md +
    `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` (check, dashboard, commit
    per `flywheel/GIT.md`). Uncommitted = lost.
@@ -29,4 +29,8 @@ Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand
 
 ## Skill whitelist (ignore other skills unless the user names them)
 Repo skills: `delegate`, `wrapup`, `improve` (in `.agents/skills/`).
+
+Note: `model` / `model_reasoning_effort` in each `.codex/agents/*.toml` must mirror
+`flywheel/config.json` tiers.<tier>.adapters.codex — the seed prompt fills both from
+live provider docs; `flywheel/check.sh` cross-checks them.
 <!-- flywheel:end -->
