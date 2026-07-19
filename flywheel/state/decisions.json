@@ -203,5 +203,20 @@
     "outcome": "Main fast-forwarded to 1eaf28e under autonomy level 3.",
     "created": "2026-07-18",
     "resolved": "2026-07-18"
+  },
+  {
+    "id": "d16",
+    "title": "Merge bookkeeping commit policy improvement branch",
+    "detail": "Branch flywheel/improve-bookkeeping-commit-policy contains ba1fa56. A fresh verifier returned VERIFIED after the focused bookkeeping allowlist test and flywheel/check.sh passed; the implementation exactly aligns the documented bookkeeping-only commit policy. Autonomy level 3 requires the Merge flywheel self-improvement branch gate to remain pending for human review.",
+    "options": [
+      "merge",
+      "reject"
+    ],
+    "recommendation": "merge flywheel/improve-bookkeeping-commit-policy",
+    "autonomy_row": "Merge flywheel self-improvement branch",
+    "status": "pending",
+    "outcome": "",
+    "created": "2026-07-19",
+    "resolved": null
   }
 ]

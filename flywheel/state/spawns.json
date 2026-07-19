@@ -505,5 +505,55 @@
     "task": "Verify corrected lifecycle refactor",
     "outcome": "ok",
     "notes": "config pin, not runtime telemetry; fresh final verdict VERIFIED across all criteria"
+  },
+  {
+    "ts": "2026-07-19T14:59",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Implement bookkeeping policy alignment",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; implemented the approved bookkeeping policy alignment"
+  },
+  {
+    "ts": "2026-07-19T15:01",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify bookkeeping policy alignment",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; final implementation VERIFIED and approved plan hash reported"
+  },
+  {
+    "ts": "2026-07-19T15:01",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Bind approved bookkeeping plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; exact approved plan identity VERIFIED"
+  },
+  {
+    "ts": "2026-07-19T15:03",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Coordinate on-demand improve pass",
+    "outcome": "ok",
+    "notes": "auto-resolved from Codex turn_context; session-key:56f6e4fdeca7"
+  },
+  {
+    "ts": "2026-07-19T15:05",
+    "agent": "utility",
+    "adapter": "codex",
+    "model": "gpt-5.6-luna",
+    "level": "low",
+    "task": "Prepare policy branch bookkeeping",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; bookkeeping prepared and validated"
   }
 ]
