@@ -22,8 +22,9 @@ so a messy history breaks transparency, not just aesthetics.
 - `main` — always releasable; only verified work merges in.
 - `feature/<slug>` — product work.
 - `fix/<slug>` — bug fixes.
-- `flywheel/improve-<slug>` — flywheel self-improvements, ONE improvement per branch,
-  ONE commit per branch (IMPROVE.md). Individually revertible by design.
+- `flywheel/improve-<slug>` — flywheel self-improvements, ONE improvement and ONE
+  implementation commit per branch, followed by at most one bookkeeping-only wrapup
+  commit (IMPROVE.md). Individually revertible by design.
 - Merging anything → consult the autonomy matrix (AUTONOMY.md) for whether to ask,
   report, or just do.
 
