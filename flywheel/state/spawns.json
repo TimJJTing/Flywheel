@@ -78,13 +78,13 @@
   },
   {
     "ts": "2026-07-17T00:53",
-    "agent": "default",
+    "agent": "utility",
     "adapter": "codex",
-    "model": "Pending verification",
-    "level": "-",
-    "task": "",
+    "model": "gpt-5.6-luna",
+    "level": "low",
+    "task": "Prepare marker branch bookkeeping",
     "outcome": "ok",
-    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+    "notes": "config pin, not runtime telemetry; bookkeeping prepared and validated"
   },
   {
     "ts": "2026-07-17T00:56",
@@ -505,5 +505,145 @@
     "task": "Verify corrected lifecycle refactor",
     "outcome": "ok",
     "notes": "config pin, not runtime telemetry; fresh final verdict VERIFIED across all criteria"
+  },
+  {
+    "ts": "2026-07-19T13:24",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit Flywheel improve candidates",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; found two MAJOR candidates"
+  },
+  {
+    "ts": "2026-07-19T13:27",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Plan bookkeeping commit policy",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-19T13:30",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Plan Codex marker repair",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-19T13:30",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit bookkeeping policy plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; initial plan VERIFIED"
+  },
+  {
+    "ts": "2026-07-19T13:32",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Clarify bookkeeping plan packaging",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-19T13:33",
+    "agent": "researcher",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Clarify marker plan packaging",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-19T13:53",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Re-audit bookkeeping plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; final plan VERIFIED after handoff retry"
+  },
+  {
+    "ts": "2026-07-19T13:53",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Re-audit Codex marker plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; final plan VERIFIED after handoff retry"
+  },
+  {
+    "ts": "2026-07-19T14:45",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Implement Codex marker repair",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry"
+  },
+  {
+    "ts": "2026-07-19T14:48",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify Codex marker repair",
+    "outcome": "retried",
+    "notes": "config pin, not runtime telemetry; implementation VERIFIED; plan identity lacked baseline hash"
+  },
+  {
+    "ts": "2026-07-19T14:48",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Hash approved marker plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; hash-bound plan VERIFIED"
+  },
+  {
+    "ts": "2026-07-19T14:49",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Close marker package provenance",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; final package VERIFIED"
+  },
+  {
+    "ts": "2026-07-19T14:51",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Coordinate on-demand improve pass",
+    "outcome": "ok",
+    "notes": "auto-resolved from Codex turn_context; session-key:56f6e4fdeca7"
+  },
+  {
+    "ts": "2026-07-19T14:54",
+    "agent": "utility",
+    "adapter": "codex",
+    "model": "gpt-5.6-luna",
+    "level": "low",
+    "task": "Prepare marker branch bookkeeping",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; bookkeeping prepared and validated"
   }
 ]
