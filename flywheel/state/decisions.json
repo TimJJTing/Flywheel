@@ -230,7 +230,7 @@
     "recommendation": "merge flywheel/improve-bookkeeping-commit-policy",
     "autonomy_row": "Merge flywheel self-improvement branch",
     "status": "approved",
-    "outcome": "Human approved; merged to main after reconciling the independent branch ledgers.",
+    "outcome": "Human approved; main merged the branch as 1db5716 after reconciling the independent branch ledgers.",
     "created": "2026-07-19",
     "resolved": "2026-07-19"
   }

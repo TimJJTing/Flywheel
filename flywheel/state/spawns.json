@@ -634,7 +634,7 @@
     "level": "high",
     "task": "Coordinate on-demand improve pass",
     "outcome": "ok",
-    "notes": "auto-resolved from Codex turn_context; session-key:56f6e4fdeca7"
+    "notes": "auto-resolved from Codex turn_context; session-key:56f6e4fdeca7; both approved improvements merged and freshly verified"
   },
   {
     "ts": "2026-07-19T14:54",
@@ -685,5 +685,15 @@
     "task": "Prepare policy branch bookkeeping",
     "outcome": "ok",
     "notes": "config pin, not runtime telemetry; bookkeeping prepared and validated"
+  },
+  {
+    "ts": "2026-07-19T15:25",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify both approved improvements after merge",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; fresh post-merge verdict VERIFIED across ancestry, tests, ledgers, canonical blocks, and Antigravity isolation"
   }
 ]

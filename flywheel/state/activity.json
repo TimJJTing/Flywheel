@@ -238,5 +238,14 @@
     "commits": [
       "ba1fa56"
     ]
+  },
+  {
+    "ts": "2026-07-19T15:30",
+    "session": 28,
+    "summary": "Human-approved marker-block and bookkeeping-policy improvements merged to main; fresh post-merge verification passed",
+    "commits": [
+      "cc9467b",
+      "1db5716"
+    ]
   }
 ]
