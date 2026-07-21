@@ -62,7 +62,7 @@
     "adapter": "codex",
     "model": "gpt-5.6-sol",
     "level": "high",
-    "task": "",
+    "task": "Add safe install confirmation and document restoration caveats",
     "outcome": "ok",
     "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
   },
@@ -695,5 +695,15 @@
     "task": "Verify both approved improvements after merge",
     "outcome": "ok",
     "notes": "config pin, not runtime telemetry; fresh post-merge verdict VERIFIED across ancestry, tests, ledgers, canonical blocks, and Antigravity isolation"
+  },
+  {
+    "ts": "2026-07-21T16:50",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-resolved from Codex turn_context; session-key:9db5557230ef"
   }
 ]

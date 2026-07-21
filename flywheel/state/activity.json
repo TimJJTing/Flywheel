@@ -247,5 +247,13 @@
       "cc9467b",
       "1db5716"
     ]
+  },
+  {
+    "ts": "2026-07-21T16:53",
+    "session": 29,
+    "summary": "Installer confirmation gate and exact-restoration caveats implemented; independent verification pending",
+    "commits": [
+      "58a015a"
+    ]
   }
 ]
