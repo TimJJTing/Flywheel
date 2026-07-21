@@ -233,5 +233,20 @@
     "outcome": "Human approved; main merged the branch as 1db5716 after reconciling the independent branch ledgers.",
     "created": "2026-07-19",
     "resolved": "2026-07-19"
+  },
+  {
+    "id": "d18",
+    "title": "Merge installer confirmation feature branch",
+    "detail": "Branch feature/install-confirmation contains 58a015a. A fresh verifier returned VERIFIED after 41 unit tests, both lifecycle runners, fail-closed and EOF probes, combined-adapter prompt-scope review, documentation review, diff hygiene, and framework checks passed.",
+    "options": [
+      "merge verified branch",
+      "reject"
+    ],
+    "recommendation": "merge the independently verified installer safety boundary",
+    "autonomy_row": "Merge feature branch -> main",
+    "status": "decided-by-llm",
+    "outcome": "Main fast-forwarded to b9d28cd under autonomy level 3.",
+    "created": "2026-07-21",
+    "resolved": "2026-07-21"
   }
 ]
