@@ -68,7 +68,7 @@ class HandlerLifecycleSpec(unittest.TestCase):
     def install(self, target, runner):
         env = {**os.environ, "FLYWHEEL_RUNNER": runner}
         return subprocess.run(
-            ["bash", str(REPO / "install.sh"), str(target), "--adapters", "codex"],
+            ["bash", str(REPO / "install.sh"), str(target), "--adapters", "codex", "--yes"],
             text=True, capture_output=True, env=env, check=False,
         )
 

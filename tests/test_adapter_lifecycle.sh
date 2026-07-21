@@ -49,9 +49,9 @@ new_repo() {
 run_install() {
   local runner="$1" target="$2" adapters="$3" log="${4:-$TMPROOT/install.log}"
   if [ "$runner" = node ]; then
-    PATH="$NODE_PATH" FLYWHEEL_RUNNER=node "$NODE_PATH/bash" "$ROOT/install.sh" "$target" --adapters "$adapters" >"$log" 2>&1
+    PATH="$NODE_PATH" FLYWHEEL_RUNNER=node "$NODE_PATH/bash" "$ROOT/install.sh" "$target" --adapters "$adapters" --yes >"$log" 2>&1
   else
-    FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$target" --adapters "$adapters" >"$log" 2>&1
+    FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$target" --adapters "$adapters" --yes >"$log" 2>&1
   fi
 }
 
@@ -101,6 +101,35 @@ for rel in (".codex/hooks.json", ".agents/hooks.json", ".claude/settings.json"):
         except json.JSONDecodeError: continue
         assert not found(data), rel
 PY
+}
+
+exercise_install_confirmation() {
+  local t log agents_before claude_before
+  t="$(new_repo confirmation-decline)"
+  log="$TMPROOT/confirmation-decline.log"
+  printf '# Existing AGENTS\r\n\r\nKeep these bytes.\r\n' > "$t/AGENTS.md"
+  printf '# Existing CLAUDE\n\nKeep these bytes.\n' > "$t/CLAUDE.md"
+  agents_before="$(shasum "$t/AGENTS.md")"
+  claude_before="$(shasum "$t/CLAUDE.md")"
+  if printf 'n\n' | FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$t" --adapters codex >"$log" 2>&1; then
+    fail "declined install unexpectedly succeeded"
+  fi
+  grep -q 'Proceed with installation? \[y/N\]' "$log" || fail "confirmation prompt missing"
+  grep -q 'Installation cancelled; no files were changed.' "$log" || fail "decline result missing"
+  assert_no_file "$t/flywheel"
+  assert_no_file "$t/.codex"
+  assert_no_file "$t/.agents"
+  assert_no_file "$t/docs"
+  assert_eq "$agents_before" "$(shasum "$t/AGENTS.md")" "decline changed AGENTS.md"
+  assert_eq "$claude_before" "$(shasum "$t/CLAUDE.md")" "decline changed CLAUDE.md"
+
+  t="$(new_repo confirmation-accept)"
+  log="$TMPROOT/confirmation-accept.log"
+  printf 'y\n' | FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$t" --adapters codex >"$log" 2>&1
+  assert_file "$t/flywheel/INDEX.md"
+  assert_file "$t/AGENTS.md"
+  run_uninstall python3 "$t"
+  echo "PASS install confirmation gate"
 }
 
 exercise_runner() {
@@ -366,6 +395,7 @@ PY
 }
 
 assert_lifecycle_boundaries
+exercise_install_confirmation
 exercise_runner python3
 exercise_runner node
 exercise_sync_and_drift

@@ -15,14 +15,23 @@ cd /path/to/flywheel        # this repo
 # multiple: --adapters claude-code,codex,opencode,antigravity
 ```
 
+Before its first write, the installer shows the target, selected adapters, affected
+paths, and the Markdown restoration caveats below. It proceeds only after an explicit
+`y`/`yes`; any other answer or unavailable input cancels without changing files. For
+reviewed automation, add `--yes` to bypass the prompt.
+
 What it does:
 - Copies the `flywheel/` payload into your project. Doctrine files are **managed**
   (overwritten on reinstall/upgrade); `config.json`, `FACTS.md`, `STATUS.md`,
   `LESSONS.md`, `state/*.json` are **yours** (created once, never overwritten).
 - Wires the adapter: adds a marker block (`<!-- flywheel:begin/end -->`) to
   CLAUDE.md / AGENTS.md — creating the file if absent, appending if it exists,
-  replacing only between markers on re-runs. **Your existing content is never
-  touched.** Claude Code also gets `.claude/agents/` + `.claude/skills/` files, each
+  replacing only the first matching block on re-runs. Text outside that block is
+  retained, but restoration is not byte-exact: the marker helper can trim trailing
+  blank lines, collapse runs of 3+ blank lines during uninstall, and—under the default
+  Python runner—normalize CRLF line endings to LF. There is no automatic backup of
+  these two Markdown files. Commit or copy them before installation if exact recovery
+  matters. Claude Code also gets `.claude/agents/` + `.claude/skills/` files, each
   tagged `flywheel-managed` (unmanaged same-named files are skipped with a warning).
   Antigravity gets `.agents/agents/`, shared `.agents/skills/`, and its
   `.agents/hooks.json` integration.
@@ -56,7 +65,8 @@ improvements via the improve protocol so they live in your repo's history.
 ./uninstall.sh /path/to/your/project        # add --yes for non-interactive
 ```
 
-Strips the marker blocks (leaving your CLAUDE.md/AGENTS.md content), asks every known
+Strips the first marker block (leaving other CLAUDE.md/AGENTS.md text subject to the
+whitespace and line-ending caveats above), asks every known
 adapter lifecycle module to clean legacy installs, removes only `flywheel-managed`
 agent/skill files (including stale managed nested skill references), restores
 `opencode.json` from backup, and

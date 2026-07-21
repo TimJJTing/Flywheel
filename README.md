@@ -42,6 +42,10 @@ git clone <this repo> && cd flywheel
 # then, inside your project's adapter, paste docs/SEED-PROMPT.md
 ```
 
+The installer previews its write scope and asks for confirmation before changing any
+files. See [the install safety and restoration details](docs/INSTALL.md); use `--yes`
+only for already-reviewed automation.
+
 The seed prompt makes the LLM adopt the system, survey your codebase (if legacy),
 verify model IDs against live docs (never from memory), seed the state ledgers, and
 build your first dashboard: `flywheel/dashboard/dashboard.html` — double-click it.
