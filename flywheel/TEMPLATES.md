@@ -30,7 +30,7 @@ ACCEPTANCE CRITERIA
    (file:line, URL, or command output). Verify: {manual review}
 3. An engineer session could act on it without asking a question — concrete paths,
    signatures, per-step verification commands. Verify: {manual review}
-4. Saved under docs/plans/ or docs/research/. Verify: `ls {expected path}`
+4. Saved under docs/flywheel/plans/ or docs/flywheel/research/. Verify: `ls {expected path}`
 
 REPORT FORMAT
 Return only: conclusions, decision + one-line rationale, saved-file path,
@@ -47,20 +47,20 @@ Plan the CSV-import feature: how uploaded files are validated, parsed, and store
 so engineer can implement without redesigning the data model mid-task.
 
 CONTEXT
-Read first: flywheel/FACTS.md, docs/plans/product-overview.md (if it exists).
-Files you may touch: docs/plans/ only (write the new plan there).
+Read first: flywheel/FACTS.md, docs/flywheel/plans/product-overview.md (if it exists).
+Files you may touch: docs/flywheel/plans/ only (write the new plan there).
 
 ACCEPTANCE CRITERIA
 1. Recommends one parsing approach (e.g. stdlib csv vs streaming parser) with a
    ranked runner-up, not "both are viable." Verify: manual read of conclusion.
 2. Found/Assumed/Could not find sections present; each Found item cites a file:line
-   or doc URL. Verify: `grep -c '^## Found' docs/plans/csv-import.md`
+   or doc URL. Verify: `grep -c '^## Found' docs/flywheel/plans/csv-import.md`
 3. Plan gives engineer concrete function signatures + a test command to verify each
    phase. Verify: manual read.
-4. Saved to docs/plans/csv-import.md. Verify: `ls docs/plans/csv-import.md`
+4. Saved to docs/flywheel/plans/csv-import.md. Verify: `ls docs/flywheel/plans/csv-import.md`
 
 REPORT FORMAT
-Conclusions + decision + rationale + docs/plans/csv-import.md path +
+Conclusions + decision + rationale + docs/flywheel/plans/csv-import.md path +
 Found/Assumed/Could not find summary, ≤10 lines.
 ```
 
@@ -90,7 +90,7 @@ N. If spec is ambiguous on something implementation-changing: STOP and report
 REPORT FORMAT
 Per file: `path:line` + what changed. Verification command + quoted decisive output
 line, per criterion (PASS/FAIL). Deviations from plan. Open issues. Long logs ->
-save under docs/research/ and return the path.
+save under docs/flywheel/research/ and return the path.
 ```
 
 ### Worked example
@@ -98,17 +98,17 @@ save under docs/research/ and return the path.
 Agent: engineer
 
 GOAL & MOTIVATION
-Implement the CSV row validator per docs/plans/csv-import.md §2, so malformed rows
+Implement the CSV row validator per docs/flywheel/plans/csv-import.md §2, so malformed rows
 are rejected with line numbers before anything is written to the database.
 
 CONTEXT
-Read first: flywheel/FACTS.md, docs/plans/csv-import.md §2.
-Files you may touch: src/importer.py, tests/test_importer.py.
+Read first: flywheel/FACTS.md, docs/flywheel/plans/csv-import.md §2.
+Files you may touch: src/importer.py, test_importer.py.
 Do not touch: fixtures/large-sample.csv (3 MB — FACTS §Big files; sample via head).
 
 ACCEPTANCE CRITERIA
 1. `validate_rows` rejects a row with a missing required column, reporting its line
-   number. Verify: `pytest tests/test_importer.py -q` -> `N passed`.
+   number. Verify: `pytest test_importer.py -q` -> `N passed`.
 2. Handles the 4 malformed-row cases listed in the plan. Verify: same command,
    decisive line quoted.
 3. If the plan does not say whether duplicate IDs are an error or a merge, STOP and
@@ -116,7 +116,7 @@ ACCEPTANCE CRITERIA
 
 REPORT FORMAT
 src/importer.py:L{n} — added validate_rows(). Verification: `pytest
-tests/test_importer.py -q` -> "12 passed". Deviations: none. Open issues: none.
+test_importer.py -q` -> "12 passed". Deviations: none. Open issues: none.
 ```
 
 ---
@@ -142,7 +142,7 @@ ACCEPTANCE CRITERIA
 
 REPORT FORMAT
 file:line list (or table) of findings/changes. Counts with the producing command
-quoted. No prose summary beyond one line. Long lists -> save under docs/research/
+quoted. No prose summary beyond one line. Long lists -> save under docs/flywheel/research/
 and return the path.
 ```
 
@@ -164,7 +164,7 @@ ACCEPTANCE CRITERIA
 
 REPORT FORMAT
 Table: file:line | enclosing function. Total count + the grep command used. Save
-full list to docs/research/fetch-user-callers.txt if > 30 entries; return path + count.
+full list to docs/flywheel/research/fetch-user-callers.txt if > 30 entries; return path + count.
 ```
 
 ---
@@ -207,12 +207,12 @@ independently before marking done in STATUS.md (ORCHESTRATION.md §5: author nev
 issues the verdict).
 
 CONTEXT
-Read first: flywheel/FACTS.md, src/importer.py, tests/test_importer.py, engineer's
-report (in transcript or docs/research/).
+Read first: flywheel/FACTS.md, src/importer.py, test_importer.py, engineer's
+report (in transcript or docs/flywheel/research/).
 Files you may touch: none.
 
 ACCEPTANCE CRITERIA
-1. Re-run `pytest tests/test_importer.py -q`, confirm "12 passed", not just trust
+1. Re-run `pytest test_importer.py -q`, confirm "12 passed", not just trust
    the quoted line.
 2. Probe a case not in the author's tests, e.g. a row with a BOM prefix. Verify:
    scratch script calling validate_rows directly.

@@ -1,3 +1,6 @@
 flywheel/dashboard/dashboard.html
 *.bak
+*.flywheel-created
+*.flywheel-merged
+*.flywheel-bak
 .DS_Store

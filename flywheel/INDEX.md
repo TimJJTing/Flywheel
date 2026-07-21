@@ -16,7 +16,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
   wholesale — slice via grep/jq/python, or delegate to `utility`.
 - HR2. Model names / level values / API params come from `flywheel/config.json` +
   `flywheel/FACTS.md` only. Missing → write `Pending verification`, never invent.
-- HR3. No agent declares its own work complete — dispatch `verifier` / `auditor`.
+- HR3. No agent declares its own work complete — dispatch `verifier` / `plan-auditor`.
 - HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind
   at every autonomy level.
 
@@ -32,7 +32,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/IMPROVE.md` | Improve pass due (wrapup says so) or friction accumulating |
 | `flywheel/ADAPTERS.md` | Porting flywheel to another adapter |
 | `flywheel/LESSONS.md` | After any escalation or surprising failure (append) |
-| `docs/ARCHITECTURE.md` | Understanding current repo structure or architecture diagram |
+| `docs/flywheel/ARCHITECTURE.md` | Understanding current repo structure or architecture diagram |
 
 ## State (the CEO dashboard's source of truth)
 `flywheel/state/{projects,issues,decisions,activity,spawns}.json` — schemas in

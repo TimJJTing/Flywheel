@@ -29,13 +29,13 @@ check_budget DIAGNOSIS.md 85
 check_budget TEMPLATES.md 230
 check_budget FACTS.md 80
 
-if [ -f "$REPO_ROOT/docs/ARCHITECTURE.md" ]; then
-  n=$(wc -l < "$REPO_ROOT/docs/ARCHITECTURE.md" | tr -d ' ')
+if [ -f "$REPO_ROOT/docs/flywheel/ARCHITECTURE.md" ]; then
+  n=$(wc -l < "$REPO_ROOT/docs/flywheel/ARCHITECTURE.md" | tr -d ' ')
   limit=150
-  if [ "$n" -le "$limit" ]; then echo "✓ docs/ARCHITECTURE.md: $n/$limit lines";
-  else echo "✗ docs/ARCHITECTURE.md: $n lines exceeds budget $limit"; FAIL=1; fi
+  if [ "$n" -le "$limit" ]; then echo "✓ docs/flywheel/ARCHITECTURE.md: $n/$limit lines";
+  else echo "✗ docs/flywheel/ARCHITECTURE.md: $n lines exceeds budget $limit"; FAIL=1; fi
 else
-  echo "✗ docs/ARCHITECTURE.md: missing"; FAIL=1
+  echo "✗ docs/flywheel/ARCHITECTURE.md: missing"; FAIL=1
 fi
 
 if [ -f "$FLYWHEEL_DIR/LESSONS.md" ]; then
@@ -60,6 +60,8 @@ done
 # Every flywheel/*.md path referenced in INDEX.md must exist.
 missing_refs=0
 for ref in $(grep -oE 'flywheel/[A-Za-z0-9_./-]*\.md' "$FLYWHEEL_DIR/INDEX.md" | sort -u); do
+  # docs/flywheel/... contains this substring but is not a flywheel/ core path.
+  [ "$ref" = "flywheel/ARCHITECTURE.md" ] && continue
   if [ ! -f "$REPO_ROOT/$ref" ]; then
     echo "✗ INDEX.md references missing file: $ref"; FAIL=1; missing_refs=1
   fi
@@ -145,11 +147,11 @@ if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   # Check if structural files have changed without updating ARCHITECTURE.md
   struct_changes=$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null | grep -E '^( M| A|\?\?) (flywheel/(INDEX|ORCHESTRATION|AUTONOMY|MAINTENANCE|TEMPLATES|FACTS|DIAGNOSIS|JUDGMENT|GIT|IMPROVE|ADAPTERS)\.md|flywheel/check\.sh|flywheel/wrapup\.sh|flywheel/config\.json|\.agents/|\.claude/|\.codex/)' || true)
   if [ -n "$struct_changes" ]; then
-    arch_changed=$(git -C "$REPO_ROOT" status --porcelain docs/ARCHITECTURE.md 2>/dev/null)
+    arch_changed=$(git -C "$REPO_ROOT" status --porcelain docs/flywheel/ARCHITECTURE.md 2>/dev/null)
     if [ -z "$arch_changed" ]; then
       echo "⚠ Structural changes detected in:"
       printf '%s\n' "$struct_changes" | cut -c4- | sed 's/^/    /'
-      echo "  but docs/ARCHITECTURE.md was not updated. Please review if the architecture needs updating or run gen_architecture.py."
+      echo "  but docs/flywheel/ARCHITECTURE.md was not updated. Please review if the architecture needs updating or run gen_architecture.py."
     fi
   fi
 else
@@ -284,10 +286,8 @@ else
   echo "⚠ dashboard build.py/build.mjs parity check skipped (python3 and/or node not both available)"
 fi
 
-# opencode agent model pinning (i12) vs config.json. opencode has no per-repo
-# "installed" agent dir here (no .opencode/); the source of truth that ships
-# to every install is adapters/opencode/opencode.json.merge, so check that.
-OPENCODE_MERGE="$REPO_ROOT/adapters/opencode/opencode.json.merge"
+# OpenCode agent model pinning vs the preserved installed config.
+OPENCODE_MERGE="$REPO_ROOT/opencode.json"
 if [ -f "$OPENCODE_MERGE" ] && command -v python3 >/dev/null 2>&1; then
   python3 -c '
 import json, sys
@@ -299,25 +299,25 @@ for tier_key, agent in agents.items():
     expect = tiers.get(tier_key, {}).get("adapters", {}).get("opencode", {})
     exp_provider, exp_model = expect.get("provider"), expect.get("model")
     if exp_model == "Pending verification":
-        print(f"⚠ opencode.json.merge[{tier_key}] check skipped (config model still Pending verification)")
+        print(f"⚠ opencode.json[{tier_key}] check skipped (config model still Pending verification)")
         continue
     exp = f"{exp_provider}/{exp_model}" if exp_provider else exp_model
     got = agent.get("model")
     if got != exp:
-        print(f"✗ opencode.json.merge[{tier_key}] model ({got}) != config.json {tier_key} ({exp})")
+        print(f"✗ opencode.json[{tier_key}] model ({got}) != config.json {tier_key} ({exp})")
         ok = False
     else:
-        print(f"✓ opencode.json.merge[{tier_key}] model matches config.json")
+        print(f"✓ opencode.json[{tier_key}] model matches config.json")
 if not ok:
     print("  → config.json is source of truth; run: python3 flywheel/sync.py")
 sys.exit(0 if ok else 1)
 ' "$OPENCODE_MERGE" "$FLYWHEEL_DIR/config.json"
   [ $? -ne 0 ] && FAIL=1
 else
-  echo "⚠ opencode.json.merge drift check skipped (python3 not available)"
+  echo "⚠ opencode.json drift check skipped (not installed or python3 unavailable)"
 fi
 
-# antigravity (i12): adapters/antigravity/agents/*/agent.json carry no model or
+# Antigravity projections carry no model or
 # level field at all — verified (FACTS.md, 2026-07-12): Antigravity subagents
 # inherit the parent session's model and cannot be routed to a different one.
 # There is nothing per-agent here that could drift from config.json, so this
@@ -326,7 +326,7 @@ fi
 # --- resolve-spawn.py presence guard ----------------------------------------
 # Every adapter hook file that references resolve-spawn.py must find it at
 # flywheel/resolve-spawn.py, or spawn auto-logging silently no-ops (see
-# docs/plans/architecture-audit-2026-07.md Plan 2, Finding A).
+# docs/flywheel/plans/architecture-audit-2026-07.md Plan 2, Finding A).
 RESOLVE_SPAWN_REFERENCED=0
 for hook_file in "$REPO_ROOT/.codex/hooks.json" "$REPO_ROOT/.agents/hooks.json" "$REPO_ROOT/.claude/settings.json"; do
   if [ -f "$hook_file" ] && grep -q "resolve-spawn.py" "$hook_file"; then

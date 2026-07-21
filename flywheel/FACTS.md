@@ -46,7 +46,6 @@ GPT-5.5→GPT-5.6 effort mapping.
 | Subagent spawn/custom-agent discovery works | Verified for claude-code (2026-07-08); Codex CLI 0.144.5 live-spawned the custom utility agent (2026-07-16) | 2026-07-16 |
 | Per-agent level pinning works (native effort/reasoning key) | Pending verification | — |
 | claude-code Agent-spawn hook payload | matcher/tool_name is `"Agent"` (not `"Task"`); PreToolUse has no resolved model; PostToolUse adds `tool_response.resolvedModel` (actual model ID) — see `flywheel/resolve-spawn.py` | 2026-07-08 |
-| opencode per-spawn hook wiring (`adapters/opencode/plugin/spawn-log.ts`) | Pending verification — no opencode session available to test | 2026-07-08 |
 | codex SubagentStop payload | Live CLI 0.144.5 reports custom agent `agent_type:"default"` and parent `model`; child transcript first `session_meta` exposes `payload.source.subagent.thread_spawn.agent_path:"/root/utility"` and top-level `payload.agent_path` | 2026-07-16 |
 | Codex project skill discovery | `.agents/skills` discovery verified live with CLI 0.144.5 | 2026-07-16 |
 | Codex project trust/config/hooks | Project-local configuration and hooks load only for trusted projects; non-managed command hooks require explicit review/trust | 2026-07-16 |

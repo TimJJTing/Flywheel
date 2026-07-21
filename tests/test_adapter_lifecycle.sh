@@ -15,26 +15,26 @@ assert_eq() { [ "$1" = "$2" ] || fail "expected '$1' == '$2' ($3)"; }
 assert_lifecycle_boundaries() {
   local skill file
   if rg -n 'shared_skills|\.agents/skills' \
-      "$ROOT/adapters/codex/lifecycle.sh" "$ROOT/adapters/antigravity/lifecycle.sh"; then
+      "$ROOT/installer/adapters/codex.sh" "$ROOT/installer/adapters/antigravity.sh"; then
     fail "Codex/Antigravity module owns shared skill destination"
   fi
   for skill in delegate improve wrapup; do
     grep -q 'read exactly one file in `references/`' \
-      "$ROOT/adapters/shared/skills/$skill/SKILL.md" || fail "$skill does not route through exactly one adapter reference"
+      "$ROOT/distribution/shared/skills/$skill/SKILL.md" || fail "$skill does not route through exactly one adapter reference"
     if rg -n 'Codex|Claude|Antigravity|\.codex|\.claude' \
-        "$ROOT/adapters/shared/skills/$skill/SKILL.md"; then
+        "$ROOT/distribution/shared/skills/$skill/SKILL.md"; then
       fail "$skill common entry point contains adapter-specific execution details"
     fi
-    diff -ru "$ROOT/adapters/shared/skills/$skill" "$ROOT/.agents/skills/$skill" ||
+    diff -ru "$ROOT/distribution/shared/skills/$skill" "$ROOT/.agents/skills/$skill" ||
       fail "$skill dogfood projection differs from canonical tree"
   done
   while IFS= read -r file; do
     grep -q 'flywheel-managed' "$file" || fail "managed marker missing: $file"
-  done < <(find "$ROOT/adapters/shared/skills" "$ROOT/.agents/skills" -type f -name '*.md' | sort)
+  done < <(find "$ROOT/distribution/shared/skills" "$ROOT/.agents/skills" -type f -name '*.md' | sort)
 }
 
 mkdir -p "$NODE_PATH"
-for command_name in bash node git dirname mkdir cp ls rm grep rmdir basename mv wc tr; do
+for command_name in bash node git dirname mkdir cp diff find ls mktemp rm sed grep rmdir basename mv wc tr; do
   command_path="$(command -v "$command_name" || true)"
   [ -n "$command_path" ] && ln -s "$command_path" "$NODE_PATH/$command_name"
 done
@@ -61,6 +61,15 @@ run_uninstall() {
     PATH="$NODE_PATH" FLYWHEEL_RUNNER=node "$NODE_PATH/bash" "$ROOT/uninstall.sh" "$target" --yes >"$log" 2>&1
   else
     FLYWHEEL_RUNNER=python3 bash "$ROOT/uninstall.sh" "$target" --yes >"$log" 2>&1
+  fi
+}
+
+run_check() {
+  local runner="$1" target="$2" adapters="$3" log="${4:-$TMPROOT/check.log}"
+  if [ "$runner" = node ]; then
+    PATH="$NODE_PATH" FLYWHEEL_RUNNER=node "$NODE_PATH/bash" "$ROOT/install.sh" "$target" --adapters "$adapters" --check >"$log" 2>&1
+  else
+    FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$target" --adapters "$adapters" --check >"$log" 2>&1
   fi
 }
 
@@ -139,14 +148,11 @@ exercise_runner() {
     return
   fi
 
-  # Unknown adapter names remain ignored for backward compatibility; core still
-  # installs and uninstall remains able to clean it without an adapter manifest.
+  # Unknown adapter names fail before writing.
   t="$(new_repo "unknown-$runner")"
-  run_install "$runner" "$t" future-adapter
-  assert_file "$t/flywheel/INDEX.md"
-  assert_no_file "$t/AGENTS.md"
-  run_uninstall "$runner" "$t"
+  if run_install "$runner" "$t" future-adapter; then fail "unknown adapter accepted"; fi
   assert_no_file "$t/flywheel"
+  assert_no_file "$t/AGENTS.md"
 
   # The shared coordinator writes each canonical .agents skill file exactly once,
   # even when both consumers are selected together.
@@ -154,17 +160,17 @@ exercise_runner() {
   log="$TMPROOT/single-shared-owner-$runner.log"
   run_install "$runner" "$t" codex,antigravity "$log"
   while IFS= read -r source_file; do
-    relative="${source_file#"$ROOT/adapters/shared/skills/"}"
+    relative="${source_file#"$ROOT/distribution/shared/skills/"}"
     count="$(grep -Fxc "  updated: .agents/skills/$relative" "$log" || true)"
     assert_eq "$count" 1 "single shared write for $relative"
-  done < <(find "$ROOT/adapters/shared/skills" -type f | sort)
+  done < <(find "$ROOT/distribution/shared/skills" -type f | sort)
   run_uninstall "$runner" "$t"
   assert_no_file "$t/.agents/skills"
 
   # 1,4,5: clean layout, exact managed block, idempotent reinstall, one/two uninstall.
   t="$(new_repo "clean-$runner")"
   run_install "$runner" "$t" codex
-  cmp -s "$ROOT/adapters/codex/AGENTS.md.block" "$t/AGENTS.md" || fail "managed block differs"
+  cmp -s "$ROOT/distribution/adapters/codex/AGENTS.md.block" "$t/AGENTS.md" || fail "managed block differs"
   assert_eq "$(find "$t/.codex/agents" -name '*.toml' | wc -l | tr -d ' ')" 6 "six agents"
   assert_eq "$(find "$t/.agents/skills" -name SKILL.md | wc -l | tr -d ' ')" 3 "three skills"
   assert_eq "$(json_hook_count "$t/.codex/hooks.json")" 1 "one Codex hook"
@@ -241,7 +247,7 @@ PY
   # content is backed up but exact-command-cleaned on uninstall.
   t="$(new_repo "legacy-json-$runner")"
   mkdir -p "$t/.codex"
-  "$HOST_PYTHON" - "$ROOT/adapters/codex/hooks.json.merge" "$t/.codex/hooks.json" <<'PY'
+  "$HOST_PYTHON" - "$ROOT/distribution/adapters/codex/hooks.json.merge" "$t/.codex/hooks.json" <<'PY'
 import json, sys
 def reversed_keys(v):
     if isinstance(v, dict): return {k: reversed_keys(v[k]) for k in reversed(list(v))}
@@ -258,7 +264,7 @@ PY
 
   t="$(new_repo "ambiguous-json-$runner")"
   mkdir -p "$t/.codex"
-  "$HOST_PYTHON" - "$ROOT/adapters/codex/hooks.json.merge" "$t/.codex/hooks.json" <<'PY'
+  "$HOST_PYTHON" - "$ROOT/distribution/adapters/codex/hooks.json.merge" "$t/.codex/hooks.json" <<'PY'
 import json, sys
 d=json.load(open(sys.argv[1])); d["hooks"]["Stop"]=[{"matcher":"*","hooks":[{"type":"command","command":"echo keep"}]}]
 open(sys.argv[2],"w").write(json.dumps(d,indent=2)+"\n")
@@ -328,7 +334,7 @@ PY
     run_install "$runner" "$t" "${order%-*}"
     run_install "$runner" "$t" "${order#*-}"
     for s in delegate improve wrapup; do
-      cmp -s "$ROOT/adapters/shared/skills/$s/SKILL.md" "$t/.agents/skills/$s/SKILL.md" || fail "installed skill mismatch $s/$order"
+      cmp -s "$ROOT/distribution/shared/skills/$s/SKILL.md" "$t/.agents/skills/$s/SKILL.md" || fail "installed skill mismatch $s/$order"
     done
     run_uninstall "$runner" "$t"
     assert_no_managed_sidecars "$t"
@@ -344,11 +350,40 @@ PY
     case ",$adapters," in *,codex,*) assert_file "$t/.codex/hooks.json";; esac
     case ",$adapters," in *,claude-code,*) assert_file "$t/.claude/settings.json";; esac
     case ",$adapters," in *,antigravity,*) assert_file "$t/.agents/hooks.json";; esac
-    case "$adapters" in *opencode*) cmp -s "$ROOT/adapters/opencode/AGENTS.md.block" "$t/AGENTS.md" || fail "OpenCode AGENTS precedence missing";; esac
+    case "$adapters" in *opencode*) cmp -s "$ROOT/distribution/adapters/opencode/AGENTS.md.block" "$t/AGENTS.md" || fail "OpenCode AGENTS precedence missing";; esac
     run_uninstall "$runner" "$t"
     assert_no_managed_sidecars "$t"
     assert_no_flywheel_commands "$t"
   done
+
+  # Flywheel-created OpenCode files are marker-owned, snapshotted only after target
+  # config projection, and preserve nested post-install edits on uninstall.
+  t="$(new_repo "opencode-ownership-$runner")"
+  run_install "$runner" "$t" opencode
+  assert_file "$t/opencode.json.flywheel-created"
+  assert_file "$t/opencode.json.flywheel-merged"
+  "$HOST_PYTHON" - "$t/flywheel/config.json" <<'PY'
+import json,sys
+p=sys.argv[1]; d=json.load(open(p));
+d['tiers']['engineer']['adapters']['opencode']={'provider':'target-provider','model':'target-model'}
+open(p,'w').write(json.dumps(d,indent=2)+'\n')
+PY
+  run_install "$runner" "$t" opencode
+  grep -q 'target-provider/target-model' "$t/opencode.json" || fail "OpenCode target projection missing"
+  cmp -s "$t/opencode.json" "$t/opencode.json.flywheel-merged" || fail "OpenCode snapshot precedes projection"
+  before="$(tree_hash "$t")"
+  run_check "$runner" "$t" opencode "$TMPROOT/opencode-check-$runner.log"
+  assert_eq "$before" "$(tree_hash "$t")" "OpenCode clean --check wrote target"
+  grep -q '^PASS --check:' "$TMPROOT/opencode-check-$runner.log" || fail "OpenCode clean --check drifted"
+  "$HOST_PYTHON" - "$t/opencode.json" <<'PY'
+import json,sys
+p=sys.argv[1]; d=json.load(open(p)); d['agent']['engineer']['description']='user nested description edit'
+open(p,'w').write(json.dumps(d,indent=2)+'\n')
+PY
+  run_uninstall "$runner" "$t"
+  assert_no_file "$t/opencode.json"
+  assert_file "$t/opencode.json.flywheel-uninstalled"
+  grep -q 'user nested description edit' "$t/opencode.json.flywheel-uninstalled" || fail "edited OpenCode content not recovered"
 
   echo "PASS lifecycle ownership/current-skills/combinations runner=$runner"
 }
@@ -357,8 +392,6 @@ exercise_sync_and_drift() {
   local t before second agent tier model level
   t="$(new_repo sync)"
   run_install python3 "$t" codex
-  mkdir -p "$t/adapters/codex"
-  cp -R "$ROOT/adapters/codex/agents" "$t/adapters/codex/agents"
   "$HOST_PYTHON" - "$t/flywheel/config.json" <<'PY'
 import json, sys
 p=sys.argv[1]; d=json.load(open(p));
@@ -370,14 +403,14 @@ PY
   for item in architect:architect researcher:strategist engineer:engineer utility:utility verifier:verifier plan-auditor:auditor; do
     agent="${item%%:*}"; tier="${item#*:}"
     case "$tier" in architect) model=test-model-0; level=minimal;; strategist) model=test-model-1; level=low;; engineer) model=test-model-2; level=medium;; utility) model=test-model-3; level=high;; verifier) model=test-model-4; level=xhigh;; auditor) model=test-model-5; level=low;; esac
-    for dir in "$t/.codex/agents" "$t/adapters/codex/agents"; do
+    for dir in "$t/.codex/agents"; do
       grep -q "model = \"$model\"" "$dir/$agent.toml" || fail "sync model missing $dir/$agent"
       grep -q "model_reasoning_effort = \"$level\"" "$dir/$agent.toml" || fail "sync level missing $dir/$agent"
     done
   done
-  before="$(find "$t/.codex/agents" "$t/adapters/codex/agents" -type f -exec shasum {} \; | sort)"
+  before="$(find "$t/.codex/agents" -type f -exec shasum {} \; | sort)"
   (cd "$t" && python3 flywheel/sync.py >"$TMPROOT/sync-second.log")
-  second="$(find "$t/.codex/agents" "$t/adapters/codex/agents" -type f -exec shasum {} \; | sort)"
+  second="$(find "$t/.codex/agents" -type f -exec shasum {} \; | sort)"
   assert_eq "$before" "$second" "second sync no diff"
   "$HOST_PYTHON" - "$t/flywheel/config.json" <<'PY'
 import json, sys
@@ -387,11 +420,92 @@ PY
   before="$(shasum "$t/.codex/agents/utility.toml")"
   (cd "$t" && python3 flywheel/sync.py >"$TMPROOT/sync-pending.log")
   assert_eq "$before" "$(shasum "$t/.codex/agents/utility.toml")" "pending local retained"
-  grep -q 'pending/missing' "$TMPROOT/sync-pending.log" || fail "pending skip not reported"
   sed -i.bak 's/model = "test-model-2"/model = "drift"/' "$t/.codex/agents/engineer.toml"
   if (cd "$t" && bash flywheel/check.sh >"$TMPROOT/drift.log" 2>&1); then fail "drift check unexpectedly passed"; fi
   grep -q 'python3 flywheel/sync.py' "$TMPROOT/drift.log" || fail "drift repair hint missing"
   echo "PASS lifecycle sync/drift all six projections"
+}
+
+tree_hash() {
+  local t="$1"
+  find "$t" -type f -not -path "$t/.git/*" -exec shasum {} \; | sort | shasum | awk '{print $1}'
+}
+
+exercise_cli_contract() {
+  local t before after log restricted="$TMPROOT/runnerless-path"
+  t="$(new_repo check-contract)"
+  run_install python3 "$t" codex
+  before="$(tree_hash "$t")"
+  log="$TMPROOT/check-clean.log"
+  FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$t" --adapters codex --check >"$log" 2>&1
+  grep -q '^PASS --check:' "$log" || fail "clean --check PASS line missing"
+  after="$(tree_hash "$t")"
+  assert_eq "$before" "$after" "clean --check wrote target"
+  ! grep -q 'Proceed with installation' "$log" || fail "--check prompted"
+
+  printf '\ndrift\n' >> "$t/flywheel/INDEX.md"
+  before="$(tree_hash "$t")"
+  if FLYWHEEL_RUNNER=python3 bash "$ROOT/install.sh" "$t" --adapters codex --check >"$log" 2>&1; then
+    fail "drifting --check unexpectedly passed"
+  fi
+  grep -q 'installation drift detected' "$log" || fail "drift diagnostics missing"
+  assert_eq "$before" "$(tree_hash "$t")" "drifting --check wrote target"
+
+  before="$(tree_hash "$t")"
+  if bash "$ROOT/install.sh" "$t" --adapters codex --check --yes >"$log" 2>&1; then
+    fail "--check --yes unexpectedly passed"
+  fi
+  grep -q 'mutually exclusive' "$log" || fail "mutual exclusion message missing"
+  assert_eq "$before" "$(tree_hash "$t")" "--check --yes wrote target"
+
+  mkdir -p "$restricted"
+  for command_name in bash dirname; do ln -s "$(command -v "$command_name")" "$restricted/$command_name"; done
+  t="$(new_repo runnerless)"
+  before="$(tree_hash "$t")"
+  if PATH="$restricted" "$restricted/bash" "$ROOT/install.sh" "$t" --adapters codex --yes >"$log" 2>&1; then
+    fail "runnerless install unexpectedly passed"
+  fi
+  grep -q 'requires python3 or node' "$log" || fail "runnerless error missing"
+  assert_eq "$before" "$(tree_hash "$t")" "runnerless probe wrote target"
+  echo "PASS CLI --check zero-write/noninteractive/mutual-exclusion/runnerless"
+}
+
+exercise_preservation_and_architecture() {
+  local t
+  t="$(new_repo preservation)"
+  run_install python3 "$t" codex
+  printf '# user status\n' > "$t/flywheel/STATUS.md"
+  printf '[{"id":"keep"}]\n' > "$t/flywheel/state/projects.json"
+  printf '\nmanaged drift\n' >> "$t/flywheel/INDEX.md"
+  "$HOST_PYTHON" - "$t/flywheel/config.json" <<'PY'
+import json,sys
+p=sys.argv[1]; d=json.load(open(p)); d['project_name']='target';
+d['tiers']['engineer']['adapters']['codex']={'model':'target-model','level':'low'}
+open(p,'w').write(json.dumps(d,indent=2)+'\n')
+PY
+  run_install python3 "$t" codex
+  grep -q '^# user status' "$t/flywheel/STATUS.md" || fail "STATUS was not preserved"
+  grep -q '"id":"keep"' "$t/flywheel/state/projects.json" || fail "state was not preserved"
+  ! grep -q 'managed drift' "$t/flywheel/INDEX.md" || fail "managed core did not refresh"
+  grep -q 'model = "target-model"' "$t/.codex/agents/engineer.toml" || fail "target config projection lost"
+  assert_file "$t/docs/flywheel/ARCHITECTURE.md"
+  grep -q '^<!-- flywheel-generated:architecture -->$' "$t/docs/flywheel/ARCHITECTURE.md" || fail "architecture marker missing"
+  mkdir -p "$t/docs/flywheel/plans" "$t/docs/flywheel/research"
+  printf 'keep plan\n' > "$t/docs/flywheel/plans/keep.md"
+  printf 'keep research\n' > "$t/docs/flywheel/research/keep.md"
+  printf '# mutable lessons\nentry\n' > "$t/flywheel/LESSONS.md"
+  run_uninstall python3 "$t"
+  assert_no_file "$t/docs/flywheel/ARCHITECTURE.md"
+  assert_file "$t/docs/flywheel/plans/keep.md"
+  assert_file "$t/docs/flywheel/research/keep.md"
+  for file in STATUS.md LESSONS.md FACTS.md config.json state/projects.json; do assert_file "$t/flywheel-archive/$file"; done
+
+  t="$(new_repo unmarked-architecture)"
+  run_install python3 "$t" codex
+  printf '# user architecture\n' > "$t/docs/flywheel/ARCHITECTURE.md"
+  run_uninstall python3 "$t"
+  grep -q 'user architecture' "$t/docs/flywheel/ARCHITECTURE.md" || fail "unmarked architecture removed"
+  echo "PASS create-once preservation/managed refresh/architecture ownership/archive recovery"
 }
 
 assert_lifecycle_boundaries
@@ -399,4 +513,6 @@ exercise_install_confirmation
 exercise_runner python3
 exercise_runner node
 exercise_sync_and_drift
+exercise_cli_contract
+exercise_preservation_and_architecture
 echo "PASS adapter lifecycle matrix"

@@ -47,7 +47,7 @@ function main() {
   const activity = loadJson(path.join(STATE_DIR, "activity.json"));
   const spawns = loadJson(path.join(STATE_DIR, "spawns.json"));
 
-  const archPath = path.join(FLYWHEEL_DIR, "..", "docs", "ARCHITECTURE.md");
+  const archPath = path.join(FLYWHEEL_DIR, "..", "docs", "flywheel", "ARCHITECTURE.md");
   let archMarkdown = "";
   let mermaidText = "";
   if (fs.existsSync(archPath)) {
@@ -62,7 +62,7 @@ function main() {
       }
       archMarkdown = textWithoutMermaid;
     } catch (e) {
-      console.warn(`warning: failed to parse docs/ARCHITECTURE.md: ${e.message}`);
+      console.warn(`warning: failed to parse docs/flywheel/ARCHITECTURE.md: ${e.message}`);
     }
   }
 

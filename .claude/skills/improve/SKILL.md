@@ -8,9 +8,12 @@ description: Use when wrapup announced "improve pass due", the user asks for it,
 
 Execute `flywheel/IMPROVE.md` exactly. Condensed checklist:
 
-1. **Audit:** dispatch `plan-auditor` over `flywheel/*.md` + the CLAUDE.md flywheel
-   block (contradictions, ground truth, ambiguity, executability). BLOCKER/MAJOR
-   findings become improvement candidates.
+Before auditing, read exactly one file in `references/`: the file matching the active
+adapter. It identifies the adapter-owned marker block included in the audit.
+
+1. **Audit:** dispatch `plan-auditor` over `flywheel/*.md` plus the marker block named
+   by the active-adapter reference. BLOCKER/MAJOR findings become improvement
+   candidates.
 2. **Gather:** `flywheel/LESSONS.md`; `flywheel/state/issues.json` where
    `type=="friction"`; latest `bash flywheel/check.sh` output; `spawns.json` rows with
    outcome retried/escalated/failed.
@@ -21,7 +24,10 @@ Execute `flywheel/IMPROVE.md` exactly. Condensed checklist:
    - Structural files → MAINTENANCE.md §1 process first (researcher plan +
      plan-auditor approval).
    - Apply; `bash flywheel/check.sh`; rebuild dashboard.
-   - ONE commit: `improve(flywheel): <slug>`, body cites the motivating line.
+   - ONE implementation commit: `improve(flywheel): <slug>`, body cites the
+     motivating line.
+   - Wrapup may add at most one bookkeeping-only commit, limited to STATUS, LESSONS,
+     state ledgers, and generated dashboard/architecture output.
    - `git checkout main` before the next improvement (branches are independent).
 5. **Merge gate:** AUTONOMY.md row "Merge flywheel self-improvement branch" at the
    current level (config.json). A → pending decisions.json entry with branch name,

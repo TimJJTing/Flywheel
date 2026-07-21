@@ -20,6 +20,10 @@ paths, and the Markdown restoration caveats below. It proceeds only after an exp
 `y`/`yes`; any other answer or unavailable input cancels without changing files. For
 reviewed automation, add `--yes` to bypass the prompt.
 
+Use `--check` instead of `--yes` for a non-interactive, read-only drift check. It
+exits nonzero when reinstall would change a Flywheel-owned file and never creates
+target directories, sidecars, architecture output, or formatting changes.
+
 What it does:
 - Copies the `flywheel/` payload into your project. Doctrine files are **managed**
   (overwritten on reinstall/upgrade); `config.json`, `FACTS.md`, `STATUS.md`,
@@ -35,9 +39,10 @@ What it does:
   tagged `flywheel-managed` (unmanaged same-named files are skipped with a warning).
   Antigravity gets `.agents/agents/`, shared `.agents/skills/`, and its
   `.agents/hooks.json` integration.
-- Uses thin public entry points backed by `scripts/lifecycle/` shared ownership/core
-  helpers and one `adapters/<adapter>/lifecycle.sh` module per adapter. Shared skills
-  come from `adapters/shared/skills/` and install recursively into `.claude/skills/`
+- Uses thin public entry points backed by `installer/lifecycle/` shared ownership/core
+  helpers and one `installer/adapters/<adapter>.sh` module per adapter. Canonical
+  templates come only from `distribution/adapters/`; shared skills
+  come from `distribution/shared/skills/` and install recursively into `.claude/skills/`
   and/or `.agents/skills/`; each managed file owns only itself, so unmanaged nested
   files are preserved.
 - Idempotent: running it twice changes nothing.

@@ -13,5 +13,5 @@ Rules:
 - Read flywheel/FACTS.md before using any model name, API parameter, or data-shape fact.
 - Never Read files > 200 KB (or anything in FACTS.md §Big files); inspect via `python3 -c`/`jq`/`grep` slices (DIAGNOSIS.md Leak 1).
 - Run the verification command given in your task before reporting. Quote the command and its decisive output line. You verify your work ran; you do NOT declare the task "complete" — the parent dispatches a fresh verifier for that.
-- Report format: what changed (per file, `path:line`), verification command + output line, deviations from plan, open issues. Long logs → save under `docs/research/` and return the path.
+- Report format: what changed (per file, `path:line`), verification command + output line, deviations from plan, open issues. Long logs → save under `docs/flywheel/research/` and return the path.
 """

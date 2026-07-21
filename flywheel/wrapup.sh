@@ -14,7 +14,7 @@ OUTSIDE_STAGED=""
 while IFS= read -r staged_path; do
   [ -n "$staged_path" ] || continue
   case "$staged_path" in
-    flywheel/STATUS.md|flywheel/LESSONS.md|flywheel/state/*.json|flywheel/dashboard/dashboard.html|docs/ARCHITECTURE.md) ;;
+    flywheel/STATUS.md|flywheel/LESSONS.md|flywheel/state/*.json|flywheel/dashboard/dashboard.html|docs/flywheel/ARCHITECTURE.md) ;;
     *) OUTSIDE_STAGED="${OUTSIDE_STAGED}${OUTSIDE_STAGED:+
 }${staged_path}" ;;
   esac
@@ -68,7 +68,7 @@ fi
 # 5. Stage exactly the wrapup file set; commit only if something changed.
 cd "$REPO_ROOT"
 git add -- flywheel/STATUS.md flywheel/LESSONS.md flywheel/state/*.json \
-  flywheel/dashboard/dashboard.html docs/ARCHITECTURE.md 2>/dev/null
+  flywheel/dashboard/dashboard.html docs/flywheel/ARCHITECTURE.md 2>/dev/null
 if git diff --cached --quiet; then
   echo "✓ nothing to commit (wrapup file set unchanged)"
 else

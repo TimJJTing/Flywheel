@@ -42,8 +42,8 @@ first (usually `flywheel/FACTS.md` + the relevant plan).
 
 - Return ONLY: conclusions, decisions + one-line rationale, `file:line` pointers,
   PASS/FAIL per acceptance criterion, saved-file paths.
-- Long output (plans, research, logs, extractions) → save under `docs/plans/`,
-  `docs/research/`, or a scratchpad; return the path + ≤ 10-line summary.
+- Long output (plans, research, logs, extractions) → save under `docs/flywheel/plans/`,
+  `docs/flywheel/research/`, or a scratchpad; return the path + ≤ 10-line summary.
 - Numbers require the producing command + its decisive output line.
 - Unknowns are stated as `Pending verification` or `Could not find` — never filled in.
 

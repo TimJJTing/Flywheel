@@ -44,10 +44,10 @@ ALL must hold:
   carries a source (URL, file:line, or command output).
 - r3. An engineer-tier session could act on it without asking a question (paths,
   signatures, criteria, verification command per step).
-- r4. Saved to `docs/plans/` or `docs/research/`; only the path + conclusions returned.
+- r4. Saved to `docs/flywheel/plans/` or `docs/flywheel/research/`; only the path + conclusions returned.
 
 ✓ "Recommend library A over B: benchmarked both on 50 real inputs, 43 vs 31 correct
-(script + results at docs/research/parser-bench.md). Assumed: sample representative.
+(script + results at docs/flywheel/research/parser-bench.md). Assumed: sample representative.
 Could not find: B's maintenance status." Decision + evidence + gaps.
 ✗ "Both libraries are viable options with different trade-offs" + 3 pages of prose in
 the chat reply. No decision (r1), nothing saved (r4), parent context flooded.

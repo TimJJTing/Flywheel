@@ -17,7 +17,7 @@ context. The session then summarizes early, loses the plan, and repeats work.
    sample records via `jq` / `python3 -c` / equivalent.
 3. For big HTML/text: delegate to `utility` ("Extract X from <file>; return ≤ 30
    lines"), or `grep -n` for the specific section first.
-4. Subagent reports: long output goes to a file under `docs/research/` or a scratchpad;
+4. Subagent reports: long output goes to a file under `docs/flywheel/research/` or a scratchpad;
    the subagent returns only conclusions + `file:line` pointers + the saved path.
 5. Shell output: pipe through `| head -20` / `| tail -20` by default; quote only the
    single decisive error line.
@@ -72,6 +72,6 @@ system, one fabricated value propagates into every later session.
 **Compliance check:** Every number/ID in your final report either cites FACTS.md, or
 is paired with the command that produced it.
 
-**Example (good):** "Coverage 87% — `<test cmd> --cov` → `87%`, log at docs/research/run-01.md."
+**Example (good):** "Coverage 87% — `<test cmd> --cov` → `87%`, log at docs/flywheel/research/run-01.md."
 **Example (bad):** "This library achieves ~99% accuracy, so the pipeline should be
 fine" — cited from memory, nothing ran.

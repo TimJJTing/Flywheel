@@ -20,5 +20,5 @@ Rules:
   and its decisive output line. You verify your work ran; you do NOT declare the task
   "complete" — the parent dispatches a fresh verifier for that.
 - Report format: what changed (per file, `path:line`), verification command + output
-  line, deviations from plan, open issues. Long logs → save under `docs/research/` and
+  line, deviations from plan, open issues. Long logs → save under `docs/flywheel/research/` and
   return the path.

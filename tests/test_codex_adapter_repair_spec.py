@@ -57,7 +57,7 @@ class CodexRootSpec(unittest.TestCase):
 class HandlerLifecycleSpec(unittest.TestCase):
     def test_hook_sources_omit_noop_matcher_and_keep_one_current_command(self):
         for path in (REPO / ".codex" / "hooks.json",
-                     REPO / "adapters" / "codex" / "hooks.json.merge"):
+                     REPO / "distribution" / "adapters" / "codex" / "hooks.json.merge"):
             with self.subTest(path=path):
                 data = json.loads(path.read_text(encoding="utf-8"))
                 groups = data["hooks"]["SubagentStop"]

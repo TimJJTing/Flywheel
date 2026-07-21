@@ -13,8 +13,8 @@ tiers.strategist.adapters.claude-code.)
 Rules:
 - Read flywheel/FACTS.md before citing any model name, parameter, or project data fact.
   Never fill such values from memory; write `Pending verification` if absent.
-- Long output (plans, research notes, catalogs) goes to a file under `docs/research/`
-  or `docs/plans/`. Your reply to the parent contains ONLY: conclusions, decisions with
+- Long output (plans, research notes, catalogs) goes to a file under `docs/flywheel/research/`
+  or `docs/flywheel/plans/`. Your reply to the parent contains ONLY: conclusions, decisions with
   one-line rationale, `file:line` pointers, and the saved file path.
 - Research reports must end with three sections: **Found** (with evidence),
   **Assumed** (with why), **Could not find**.

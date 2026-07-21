@@ -1,7 +1,7 @@
 <!-- flywheel:begin -->
 # Flywheel framework (managed block — edits outside the markers are yours, inside are flywheel's)
 
-Project: flywheel — the portable agent-framework boilerplate itself (dogfooding its own system).
+Project: (one line — what this project is; seed prompt fills this)
 
 ## Always loaded
 @flywheel/INDEX.md
@@ -20,7 +20,7 @@ Project: flywheel — the portable agent-framework boilerplate itself (dogfoodin
   wholesale — slice via grep/jq/python, or delegate to `utility`.
 - HR2. Model names / level values / API params come from `flywheel/config.json` +
   `flywheel/FACTS.md` only. Missing → write `Pending verification`, never invent.
-- HR3. No agent declares its own work complete — dispatch `verifier` / `auditor`.
+- HR3. No agent declares its own work complete — dispatch `verifier` / `plan-auditor`.
 - HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind
   at every autonomy level.
 
@@ -30,4 +30,4 @@ line; DIAGNOSIS.md Leak 2 explains why this list stays short.)
 <!-- flywheel:end -->
 
 Motto: "Heroes come and go; policies compound." Strategy & roadmap assumptions:
-`docs/research/strategy-2026-07.md` — read before any feature/priority/roadmap decision.
+`docs/flywheel/research/strategy-2026-07.md` — read before any feature/priority/roadmap decision.

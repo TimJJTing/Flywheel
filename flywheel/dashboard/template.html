@@ -342,7 +342,7 @@ function renderHeader() {
 async function renderArchitecture() {
   const elHtml = document.getElementById("arch-html");
   const elMermaid = document.getElementById("arch-mermaid");
-  
+
   if (DATA.architecture_markdown) {
     if (window.marked) {
       elHtml.innerHTML = window.marked.parse(DATA.architecture_markdown);
@@ -358,7 +358,7 @@ async function renderArchitecture() {
   } else {
     elHtml.innerHTML = renderEmpty("No tech-stack info available.");
   }
-  
+
   if (DATA.architecture_mermaid) {
     if (window.mermaid) {
       elMermaid.removeAttribute("data-processed");

@@ -55,7 +55,7 @@ build your first dashboard: `flywheel/dashboard/dashboard.html` — double-click
 | Want to… | Read |
 |---|---|
 | Understand the idea (CEO/COO analogy) | [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) |
-| Strategy / competitive positioning | [docs/research/strategy-2026-07.md](docs/research/strategy-2026-07.md) |
+| Strategy / competitive positioning | [docs/flywheel/research/strategy-2026-07.md](docs/flywheel/research/strategy-2026-07.md) |
 | See what it does day-to-day | [docs/BEHAVIORS.md](docs/BEHAVIORS.md), [docs/USAGE.md](docs/USAGE.md) |
 | Install / uninstall / upgrade | [docs/INSTALL.md](docs/INSTALL.md) |
 | The bootstrap prompt | [docs/SEED-PROMPT.md](docs/SEED-PROMPT.md) |
@@ -64,9 +64,10 @@ build your first dashboard: `flywheel/dashboard/dashboard.html` — double-click
 | Configure models, autonomy, dashboard, adapters | [docs/config/](docs/config/) |
 | Companion skills/plugins | [docs/COMPANIONS.md](docs/COMPANIONS.md) |
 
-The portable payload itself lives in [`flywheel/`](flywheel/) — a dozen budgeted
-markdown doctrine files, a JSON config, five state ledgers, a dashboard, and a
-mechanical rule-checker (`check.sh`). No runtime dependencies beyond git and
+Canonical release inputs live in [`distribution/`](distribution/); this repository's
+[`flywheel/`](flywheel/) is a real dogfood installation with the same mutable layout
+an adopter receives. Repository-only lifecycle and validation code lives under
+`installer/`, `dev/`, and `tests/`. No runtime dependencies beyond git and
 python3-or-node.
 
 ## What to .gitignore (in your project)

@@ -7,7 +7,7 @@ adapter files, and before any consistency audit.
 
 | Path | Any tier, autonomous | Requires |
 |---|---|---|
-| `flywheel/STATUS.md`, `flywheel/LESSONS.md`, `flywheel/state/*.json`, `docs/plans/*`, `docs/research/*`, `docs/ARCHITECTURE.md` | Yes — append/update | — |
+| `flywheel/STATUS.md`, `flywheel/LESSONS.md`, `flywheel/state/*.json`, `docs/flywheel/plans/*`, `docs/flywheel/research/*`, `docs/flywheel/ARCHITECTURE.md` | Yes — append/update | — |
 | Adapter skill bodies, project code, tests | engineer+ per approved plan | utility only for explicit mechanical batch edits |
 | `flywheel/FACTS.md` | Add a new verified fact | Changing/removing an existing fact → `auditor` check first |
 | `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check. Then run `python3 flywheel/sync.py` to regenerate the projections — config.json is the source of truth; agent frontmatter and `opencode.json.merge` are generated from it, never hand-edited. `check.sh` fails on drift. |
@@ -32,7 +32,7 @@ committing doc changes until fixed or consciously overridden with a LESSONS.md e
   total — check.sh sums it. Keep new adapter blocks ≤ 50 lines (audit-pass check).
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
-  `docs/research/lessons-archive-YYYYMM.md`.
+  `docs/flywheel/research/lessons-archive-YYYYMM.md`.
 - `state/activity.json` / `spawns.json` > 100 entries (check.sh warns) → run
   `python3 flywheel/compact.py` during the next improve pass: squashes all but the
   newest 30 into one summary entry keeping milestone hashes; git keeps full history.

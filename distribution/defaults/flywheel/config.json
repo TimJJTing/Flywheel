@@ -1,0 +1,135 @@
+{
+  "flywheel_version": "0.1.0",
+  "project_name": "Pending verification",
+  "autonomy": 3,
+  "improve_cadence_sessions": 5,
+  "audit_cadence_sessions": 5,
+  "tiers": {
+    "architect": {
+      "role": "last resort: twice-failed plans, irreversible forks, rule conflicts",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-fable-5",
+          "level": "medium"
+        },
+        "codex": {
+          "model": "gpt-5.6-sol",
+          "level": "xhigh"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-fable-5"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    },
+    "strategist": {
+      "role": "plans, deep research, edge cases, requirement catalogs",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-opus-4-8",
+          "level": "high"
+        },
+        "codex": {
+          "model": "gpt-5.6-sol",
+          "level": "high"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    },
+    "engineer": {
+      "role": "all production code, refactors, complex scripts",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-sonnet-5",
+          "level": "high"
+        },
+        "codex": {
+          "model": "gpt-5.6-terra",
+          "level": "high"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-sonnet-5"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    },
+    "utility": {
+      "role": "batch reads/edits, searches, checklist checks",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-haiku-4-5-20251001",
+          "level": "medium"
+        },
+        "codex": {
+          "model": "gpt-5.6-luna",
+          "level": "low"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-haiku-4-5-20251001"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    },
+    "verifier": {
+      "role": "fresh-context verification of code claims",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-sonnet-5",
+          "level": "high"
+        },
+        "codex": {
+          "model": "gpt-5.6-sol",
+          "level": "high"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-sonnet-5"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    },
+    "auditor": {
+      "role": "fresh-context audit of plans and system docs",
+      "adapters": {
+        "claude-code": {
+          "model": "claude-opus-4-8",
+          "level": "high"
+        },
+        "codex": {
+          "model": "gpt-5.6-sol",
+          "level": "high"
+        },
+        "opencode": {
+          "provider": "anthropic",
+          "model": "claude-opus-4-8"
+        },
+        "antigravity": {
+          "model": "Pending verification",
+          "level": "high"
+        }
+      }
+    }
+  }
+}

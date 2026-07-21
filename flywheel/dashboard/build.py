@@ -38,7 +38,7 @@ def main():
     activity = load_json(os.path.join(STATE_DIR, "activity.json"))
     spawns = load_json(os.path.join(STATE_DIR, "spawns.json"))
 
-    arch_path = os.path.abspath(os.path.join(FLYWHEEL_DIR, "..", "docs", "ARCHITECTURE.md"))
+    arch_path = os.path.abspath(os.path.join(FLYWHEEL_DIR, "..", "docs", "flywheel", "ARCHITECTURE.md"))
     arch_markdown = ""
     mermaid_text = ""
     if os.path.isfile(arch_path):
@@ -54,7 +54,7 @@ def main():
                 text_without_mermaid = arch_content.replace(mermaid_match.group(0), "")
             arch_markdown = text_without_mermaid
         except Exception as e:
-            print(f"warning: failed to parse docs/ARCHITECTURE.md: {e}")
+            print(f"warning: failed to parse docs/flywheel/ARCHITECTURE.md: {e}")
 
     generated = os.environ.get("FLYWHEEL_BUILD_TS") or datetime.now().strftime("%Y-%m-%dT%H:%M")
 

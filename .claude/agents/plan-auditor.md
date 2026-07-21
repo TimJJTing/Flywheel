@@ -27,4 +27,4 @@ Check, in order:
 
 Report: numbered findings, each `severity(BLOCKER|MAJOR|MINOR) — file:line — problem —
 proposed fix`. End with verdict `APPROVED` or `REVISE (n blockers)`. Save long findings
-to docs/research/ and return the path.
+to docs/flywheel/research/ and return the path.

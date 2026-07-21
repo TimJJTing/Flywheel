@@ -44,14 +44,15 @@ Adapter-specific agents, skills, and hooks are installed separately.
 ## Writing a new adapter
 
 1. Answer the five questions in `flywheel/ADAPTERS.md`; that IS the design.
-2. Create `adapters/<adapter>/` with a `*.block` file (always-loaded surface ≤ 50
+2. Create `distribution/adapters/<adapter>/` with a `*.block` file (always-loaded surface ≤ 50
    lines: pointer to INDEX.md + session protocol + the four hard rules verbatim) and
    whatever agent/skill definitions the adapter supports, each containing the string
    `flywheel-managed`.
 3. Add the adapter's per-tier config shape under `tiers.<tier>.adapters.<name>` in
    config.json (the map is open; see docs/config/MODELS.md).
-4. Wire it into install.sh (block target file + copy rules) — follow the existing
-   three cases.
+4. Add lifecycle behavior under `installer/adapters/<adapter>.sh` and wire selection
+   through the shared installer coordinator; canonical install data stays in
+   `distribution/`.
 5. Test: install into a scratch repo, run the seed prompt, confirm FACTS gets filled
    and the dashboard builds. Record adapter facts you verified (with source + date)
    in this file.

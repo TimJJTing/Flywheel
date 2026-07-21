@@ -36,7 +36,7 @@ Answer these for the target tool; the answers ARE the adapter.
    session-end hook that runs `flywheel/check.sh` — that is the documented upgrade
    path, not the default. Per-spawn auto-log (d7): claude-code wires
    `flywheel/resolve-spawn.py` as a PostToolUse hook (see
-   `adapters/claude-code/settings.json.merge`). Codex is a full custom-subagent
+   the Claude settings merge input). Codex is a full custom-subagent
    adapter: six definitions live in `.codex/agents`, shared skills in
    `.agents/skills`, and `model` / `model_reasoning_effort` are projected from
    `flywheel/config.json` by `python3 flywheel/sync.py`. Its `SubagentStop` hook is
@@ -48,7 +48,7 @@ Answer these for the target tool; the answers ARE the adapter.
    rows do not prove the child's runtime model/effort. Account/version model
    availability remains a live check.
    Antigravity CLI implements
-   `PostToolUse` for tool `invoke_subagent` (see `adapters/antigravity/hooks.json.merge`)
+   `PostToolUse` for tool `invoke_subagent` (see the Antigravity hook merge input)
    which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
    *(Note: The agy CLI has a known limitation where all spawned subagents run on the same model as the parent session, ignoring tier-specific model overrides).*
 

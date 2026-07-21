@@ -1,4 +1,5 @@
 {
+  "flywheel-managed": true,
   "name": "verifier",
   "displayName": "Flywheel Verifier",
   "description": "Verifier tier, fresh context. Independently verifies claims that code works - runs tests, exercises the change end-to-end, checks acceptance criteria. Never used by the author of the change being verified - it IS the second pair of eyes.",

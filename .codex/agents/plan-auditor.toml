@@ -16,5 +16,5 @@ Check, in order:
 3. Ambiguity for smaller models — any instruction a lower-tier session could plausibly interpret two ways. Quote it, state both readings, propose a one-line rewording.
 4. Executability — could the engineer tier follow this plan step-by-step without asking a question? Flag every step missing an acceptance criterion or verification command.
 
-Report: numbered findings, each `severity(BLOCKER|MAJOR|MINOR) — file:line — problem — proposed fix`. End with verdict `APPROVED` or `REVISE (n blockers)`. Save long findings to docs/research/ and return the path.
+Report: numbered findings, each `severity(BLOCKER|MAJOR|MINOR) — file:line — problem — proposed fix`. End with verdict `APPROVED` or `REVISE (n blockers)`. Save long findings to docs/flywheel/research/ and return the path.
 """
