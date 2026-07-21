@@ -72,9 +72,9 @@
     "adapter": "codex",
     "model": "gpt-5.6-sol",
     "level": "high",
-    "task": "",
+    "task": "Verify installer confirmation feature before merge",
     "outcome": "ok",
-    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
+    "notes": "config pin, not runtime telemetry; fresh verdict VERIFIED across 41 unit tests, dual lifecycle runners, fail-closed probes, prompt scope, and restoration disclosure"
   },
   {
     "ts": "2026-07-17T00:53",
@@ -705,5 +705,15 @@
     "task": "",
     "outcome": "ok",
     "notes": "auto-resolved from Codex turn_context; session-key:9db5557230ef"
+  },
+  {
+    "ts": "2026-07-21T17:03",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's); agent derived from transcript session_meta"
   }
 ]
