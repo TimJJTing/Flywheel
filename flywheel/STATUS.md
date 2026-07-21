@@ -1,21 +1,22 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-21 (session 30, installer confirmation merged)
+Updated: 2026-07-21 (session 31, file-boundary improvement verified)
 
 ## Current state
-- `main` includes the fail-closed pre-write installer prompt and explicit `--yes`
-  automation opt-in from `58a015a`.
-- README and install docs now disclose that AGENTS.md/CLAUDE.md restoration is not
-  byte-exact and that those files receive no automatic backup.
-- A fresh verifier returned VERIFIED after 41 unit tests, both lifecycle runners,
-  fail-closed/EOF probes, combined-adapter scope review, and framework checks.
+- `flywheel/improve-file-boundaries` contains verified implementation `b34653c`:
+  canonical inputs live under `distribution/`, lifecycle code under `installer/`,
+  repo checks under `dev/`, and artifacts under `docs/flywheel/`.
+- A fresh verifier returned VERIFIED after both lifecycle runners, 41 unit tests,
+  installed/repository checks, root zero-write validation, and independent OpenCode
+  edit-recovery and target-config projection probes.
 
 ## In flight
-- None.
+- Level-3 merge gate for `flywheel/improve-file-boundaries` awaits human review.
 
 ## Next actions (in order)
-1. Await the human's next priority.
+1. Human chooses merge or reject for the verified improvement branch.
+2. If merged, run fresh post-merge checks on `main`.
 
 ## Blockers / decisions pending the human
-- None.
+- d19: merge `flywheel/improve-file-boundaries` (recommended) or reject.

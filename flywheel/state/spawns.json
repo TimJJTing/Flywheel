@@ -725,5 +725,125 @@
     "task": "Coordinate installer verification and merge",
     "outcome": "ok",
     "notes": "auto-resolved from Codex turn_context; session-key:59cac09fbbc2; verifier returned VERIFIED and main fast-forwarded under autonomy level 3"
+  },
+  {
+    "ts": "2026-07-21T17:45",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-21T17:46",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-21T17:47",
+    "agent": "default",
+    "adapter": "codex",
+    "model": "Pending verification",
+    "level": "-",
+    "task": "",
+    "outcome": "ok",
+    "notes": "auto-logged (codex; model from config, payload model is parent's)"
+  },
+  {
+    "ts": "2026-07-21T18:08",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit file-boundary improvement doctrine",
+    "outcome": "retried",
+    "notes": "config pin, not runtime telemetry; initial audit found an uncovered HR3 marker contradiction"
+  },
+  {
+    "ts": "2026-07-21T18:08",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Re-audit corrected improvement scope",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; corrected scope VERIFIED"
+  },
+  {
+    "ts": "2026-07-21T18:10",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Audit written file-boundary plan",
+    "outcome": "retried",
+    "notes": "config pin, not runtime telemetry; requested archive, FACTS, and CLI acceptance details"
+  },
+  {
+    "ts": "2026-07-21T18:10",
+    "agent": "plan-auditor",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Re-audit written file-boundary plan",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; written plan VERIFIED"
+  },
+  {
+    "ts": "2026-07-21T18:29",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Implement file-boundary reorganization",
+    "outcome": "retried",
+    "notes": "config pin, not runtime telemetry; fresh verifier found OpenCode edit-loss and snapshot-ordering defects"
+  },
+  {
+    "ts": "2026-07-21T18:37",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Verify file-boundary reorganization",
+    "outcome": "failed",
+    "notes": "config pin, not runtime telemetry; reproduced OpenCode nested-edit loss, false sidecar drift, and stale migrated references"
+  },
+  {
+    "ts": "2026-07-21T18:43",
+    "agent": "engineer",
+    "adapter": "codex",
+    "model": "gpt-5.6-terra",
+    "level": "high",
+    "task": "Correct OpenCode ownership and migrated references",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; added both-runner edit-recovery and projected-snapshot regressions"
+  },
+  {
+    "ts": "2026-07-21T18:48",
+    "agent": "verifier",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Re-verify corrected file-boundary reorganization",
+    "outcome": "ok",
+    "notes": "config pin, not runtime telemetry; final verdict VERIFIED across exact reproducers, full suites, and extra ownership probe"
+  },
+  {
+    "ts": "2026-07-21T18:50",
+    "agent": "coordinator",
+    "adapter": "codex",
+    "model": "gpt-5.6-sol",
+    "level": "high",
+    "task": "Coordinate file-boundary improvement",
+    "outcome": "ok",
+    "notes": "auto-resolved from Codex turn_context; session-key:69d88b392579; implementation b34653c verified and merge gate left pending"
   }
 ]

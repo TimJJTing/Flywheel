@@ -49,6 +49,10 @@
       {
         "title": "Pre-write install confirmation + restoration disclosure",
         "done": true
+      },
+      {
+        "title": "Distribution, dogfood, and development file boundaries",
+        "done": true
       }
   ],
   "detail": "Portable framework extracted from vocabulary-universe; see README.md.",
@@ -64,7 +68,8 @@
    "6573b3f",
    "4d2d17b",
       "1eaf28e",
-      "58a015a"
+      "58a015a",
+      "b34653c"
     ],
     "updated": "2026-07-21"
  }

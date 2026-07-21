@@ -29,7 +29,7 @@
   "type": "debt",
   "priority": "P2",
   "status": "open",
-  "detail": "Add 'docs/research/strategy-2026-07.md | before feature/priority/roadmap decisions' to INDEX.md on-demand table. INDEX.md is structural (MAINTENANCE.md par.1): strategist plan + auditor + improve branch. Fold into the due improve pass, together with A1 (prose-rule to check.sh migrations) and A4 (delete-to-add rule for IMPROVE.md) from the strategy doc.",
+  "detail": "Add 'docs/flywheel/research/strategy-2026-07.md | before feature/priority/roadmap decisions' to INDEX.md on-demand table. INDEX.md is structural (MAINTENANCE.md par.1): strategist plan + auditor + improve branch. Fold into the due improve pass, together with A1 (prose-rule to check.sh migrations) and A4 (delete-to-add rule for IMPROVE.md) from the strategy doc.",
   "commits": [],
   "opened": "2026-07-09",
   "closed": null
@@ -40,7 +40,7 @@
   "type": "question",
   "priority": "P2",
   "status": "open",
-  "detail": "Script cross-checks fact-shaped claims (model IDs, versions, counts) in docs/reports against FACTS.md. Minimal start: check.sh rule that claude-*/gpt-* strings outside config.json+FACTS.md must match a FACTS row. Differentiator #1. Spec: docs/research/ideas-2026-07-10.md I-A.",
+  "detail": "Script cross-checks fact-shaped claims (model IDs, versions, counts) in docs/reports against FACTS.md. Minimal start: check.sh rule that claude-*/gpt-* strings outside config.json+FACTS.md must match a FACTS row. Differentiator #1. Spec: docs/flywheel/research/ideas-2026-07-10.md I-A.",
   "commits": [
    "2b87391"
   ],
@@ -53,7 +53,7 @@
   "type": "question",
   "priority": "P2",
   "status": "open",
-  "detail": "Per-session prose-rule violation counts in activity.json via hooks; dashboard trend. Turns strategy A1 from belief into curve. Spec: docs/research/ideas-2026-07-10.md I-B.",
+  "detail": "Per-session prose-rule violation counts in activity.json via hooks; dashboard trend. Turns strategy A1 from belief into curve. Spec: docs/flywheel/research/ideas-2026-07-10.md I-B.",
   "commits": [
    "2b87391"
   ],
@@ -66,7 +66,7 @@
   "type": "question",
   "priority": "P2",
   "status": "open",
-  "detail": "Fixed task set with seeded traps; bare adapter vs flywheel-installed; count fabrications + false completion claims. Gives README measured deltas; feeds adoption test. Spec: docs/research/ideas-2026-07-10.md I-C.",
+  "detail": "Fixed task set with seeded traps; bare adapter vs flywheel-installed; count fabrications + false completion claims. Gives README measured deltas; feeds adoption test. Spec: docs/flywheel/research/ideas-2026-07-10.md I-C.",
   "commits": [
    "2b87391"
   ],
@@ -79,7 +79,7 @@
   "type": "question",
   "priority": "P3",
   "status": "open",
-  "detail": "Annotate rules with [dN]/[LN] sources; uncited rule = deletion candidate. Makes A4 delete-to-add executable. Convention + check.sh warning. Spec: docs/research/ideas-2026-07-10.md I-D.",
+  "detail": "Annotate rules with [dN]/[LN] sources; uncited rule = deletion candidate. Makes A4 delete-to-add executable. Convention + check.sh warning. Spec: docs/flywheel/research/ideas-2026-07-10.md I-D.",
   "commits": [
    "2b87391"
   ],
@@ -92,7 +92,7 @@
   "type": "question",
   "priority": "P3",
   "status": "open",
-  "detail": "Manual logging fails (4 lines / 7 sessions). PostToolUse hook detects retries/tier changes in spawns.json, drafts LESSONS lines for wrapup confirmation. Spec: docs/research/ideas-2026-07-10.md I-E.",
+  "detail": "Manual logging fails (4 lines / 7 sessions). PostToolUse hook detects retries/tier changes in spawns.json, drafts LESSONS lines for wrapup confirmation. Spec: docs/flywheel/research/ideas-2026-07-10.md I-E.",
   "commits": [
    "2b87391"
   ],
@@ -105,7 +105,7 @@
   "type": "debt",
   "priority": "P3",
   "status": "open",
-  "detail": "Deferred from architecture-audit-2026-07. Trigger: two non-claude adapters installed into the same target. Session 15: strategist decision = keep deferred (docs/plans/i9-i11-decision.md), triggers unfired.",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: two non-claude adapters installed into the same target. Session 15: strategist decision = keep deferred (docs/flywheel/plans/i9-i11-decision.md), triggers unfired.",
   "commits": [],
   "opened": "2026-07-15",
   "closed": null
@@ -129,7 +129,7 @@
   "type": "debt",
   "priority": "P3",
   "status": "open",
-  "detail": "Deferred from architecture-audit-2026-07. Trigger: lost ledger rows observed, or Windows adapter support. Session 15: strategist decision = keep deferred (docs/plans/i9-i11-decision.md), triggers unfired.",
+  "detail": "Deferred from architecture-audit-2026-07. Trigger: lost ledger rows observed, or Windows adapter support. Session 15: strategist decision = keep deferred (docs/flywheel/plans/i9-i11-decision.md), triggers unfired.",
   "commits": [],
   "opened": "2026-07-15",
   "closed": null

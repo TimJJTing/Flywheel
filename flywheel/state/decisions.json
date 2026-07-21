@@ -31,7 +31,7 @@
   "recommendation": "",
   "autonomy_row": "Architectural fork",
   "status": "decided-by-llm",
-  "outcome": "defaults/ holds the bootstrap-owned seeds",
+  "outcome": "distribution/defaults/flywheel/ holds the bootstrap-owned seeds",
   "created": "2026-07-06",
   "resolved": "2026-07-06"
  },
@@ -82,14 +82,14 @@
   "recommendation": "defer, keep manual wrapup logging",
   "autonomy_row": "Edit flywheel structural docs",
   "status": "decided-by-llm",
-  "outcome": "built for claude-code: single PostToolUse hook (matcher \"Agent\") on flywheel/resolve-spawn.py does notify+log in one pass, using tool_response.resolvedModel as ground truth; coordinator row remains manual at wrapup (SessionEnd payload carries no model). opencode: stub written (adapters/opencode/plugin/spawn-log.ts), Pending verification. codex: NOT N/A after all -- docs/research/codex-hooks.md (fetched 2026-07-08) shows codex documents SubagentStart/SubagentStop hook events with agent_id/agent_type, so per-spawn capture is possible via a SubagentStop hook using the same shared resolver; deferred pending a live codex session to verify exact trigger wording and the hooks.json skeleton.",
+  "outcome": "built for claude-code: single PostToolUse hook (matcher \"Agent\") on flywheel/resolve-spawn.py does notify+log in one pass, using tool_response.resolvedModel as ground truth; coordinator row remains manual at wrapup (SessionEnd payload carries no model). opencode: experimental stub written and later retired. codex: NOT N/A after all -- docs/flywheel/research/codex-hooks.md (fetched 2026-07-08) shows codex documents SubagentStart/SubagentStop hook events with agent_id/agent_type, so per-spawn capture is possible via a SubagentStop hook using the same shared resolver; deferred pending a live codex session to verify exact trigger wording and the hooks.json skeleton.",
   "created": "2026-07-08",
   "resolved": "2026-07-08"
  },
  {
   "id": "d8",
   "title": "Motto + niche positioning adopted",
-  "detail": "Strategy session 2026-07-09: motto 'Heroes come and go; policies compound.' chosen by human; niche = self-amending operating policy (invest in FACTS anti-fabrication, never-self-verified, improve loop; not the org chart -- BMAD owns that). Full findings + 5 revised assumptions: docs/research/strategy-2026-07.md. Embedded in README.md and CLAUDE.md (outside managed block).",
+  "detail": "Strategy session 2026-07-09: motto 'Heroes come and go; policies compound.' chosen by human; niche = self-amending operating policy (invest in FACTS anti-fabrication, never-self-verified, improve loop; not the org chart -- BMAD owns that). Full findings + 5 revised assumptions: docs/flywheel/research/strategy-2026-07.md. Embedded in README.md and CLAUDE.md (outside managed block).",
   "options": [
    "Heroes come and go; policies compound.",
    "Policies over heroes.",
@@ -106,7 +106,7 @@
  {
   "id": "d9",
   "title": "Merge self-improvement branch flywheel/improve-architecture-docs",
-  "detail": "Adds docs/ARCHITECTURE.md with tech-stack and auto-generated Mermaid diagram. Updates check.sh, wrapup.sh, SKILL.md, and dashboard compile scripts (build.py, build.mjs, template.html) to render interactive relative links in the diagram. Adds installer/uninstaller support.",
+  "detail": "Adds docs/flywheel/ARCHITECTURE.md with tech-stack and auto-generated Mermaid diagram. Updates check.sh, wrapup.sh, SKILL.md, and dashboard compile scripts (build.py, build.mjs, template.html) to render interactive relative links in the diagram. Adds installer/uninstaller support.",
   "options": [
    "merge",
    "reject"
@@ -139,7 +139,7 @@
   "decision": "i9 (AGENTS.md block collision) and i11 (spawns.json write race) kept deferred: triggers unfired, fixes cost more than waiting",
   "class": "R",
   "decided_by": "llm",
-  "rationale": "strategist analysis docs/plans/i9-i11-decision.md; install.sh already handles i9 collision deterministically with a note; only concurrent spawns.json writers already flock-locked",
+  "rationale": "strategist analysis docs/flywheel/plans/i9-i11-decision.md; install.sh already handles i9 collision deterministically with a note; only concurrent spawns.json writers already flock-locked",
   "commits": [
    "8622ff0"
   ]
@@ -248,5 +248,20 @@
     "outcome": "Main fast-forwarded to b9d28cd under autonomy level 3.",
     "created": "2026-07-21",
     "resolved": "2026-07-21"
+  },
+  {
+    "id": "d19",
+    "title": "Merge file-boundary improvement branch",
+    "detail": "Branch flywheel/improve-file-boundaries contains b34653c. A fresh verifier returned VERIFIED after the Python/Node lifecycle matrix, 41 unit tests, installed and repository checks, root zero-write dogfood validation, stale-link review, and independent OpenCode nested-edit recovery and target-config projection probes.",
+    "options": [
+      "merge",
+      "reject"
+    ],
+    "recommendation": "merge flywheel/improve-file-boundaries",
+    "autonomy_row": "Merge flywheel self-improvement branch",
+    "status": "pending",
+    "outcome": null,
+    "created": "2026-07-21",
+    "resolved": null
   }
 ]

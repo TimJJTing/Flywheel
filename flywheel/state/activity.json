@@ -64,7 +64,7 @@
  {
   "ts": "2026-07-09T23:30",
   "session": 7,
-  "summary": "strategy consulting: landscape vs BMAD/Agent OS/Spec Kit, motto adopted, docs/research/strategy-2026-07.md + README/CLAUDE.md updated",
+  "summary": "strategy consulting: landscape vs BMAD/Agent OS/Spec Kit, motto adopted, docs/flywheel/research/strategy-2026-07.md + README/CLAUDE.md updated",
   "commits": [
    "7b62d3a",
    "907cdcc"
@@ -262,6 +262,14 @@
     "summary": "Installer confirmation feature independently verified and merged to main",
     "commits": [
       "b9d28cd"
+    ]
+  },
+  {
+    "ts": "2026-07-21T18:52",
+    "session": 31,
+    "summary": "Distribution/dogfood file boundaries implemented and independently verified; improvement branch awaits merge review",
+    "commits": [
+      "b34653c"
     ]
   }
 ]
