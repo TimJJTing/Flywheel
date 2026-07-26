@@ -23,9 +23,9 @@ GPT-5.5→GPT-5.6 effort mapping.
 | architect | claude-code | claude-fable-5 | session environment model table | 2026-07-07 |
 | architect | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | architect | opencode | claude-fable-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
-| strategist | claude-code | claude-opus-4-8 | session environment model table | 2026-07-07 |
+| strategist | claude-code | claude-opus-5 | session environment model table | 2026-07-07 |
 | strategist | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
-| strategist | opencode | claude-opus-4-8 | mirrors claude-code via anthropic provider | 2026-07-07 |
+| strategist | opencode | claude-opus-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
 | engineer | claude-code | claude-sonnet-5 | session environment model table | 2026-07-07 |
 | engineer | codex | gpt-5.6-terra | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | engineer | opencode | claude-sonnet-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
@@ -35,9 +35,9 @@ GPT-5.5→GPT-5.6 effort mapping.
 | verifier | claude-code | claude-sonnet-5 | session environment model table | 2026-07-07 |
 | verifier | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
 | verifier | opencode | claude-sonnet-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
-| auditor | claude-code | claude-opus-4-8 | session environment model table | 2026-07-07 |
+| auditor | claude-code | claude-opus-5 | session environment model table | 2026-07-07 |
 | auditor | codex | gpt-5.6-sol | https://learn.chatgpt.com/docs/models.md, Recommended models / Where each model shines | 2026-07-16 |
-| auditor | opencode | claude-opus-4-8 | mirrors claude-code via anthropic provider | 2026-07-07 |
+| auditor | opencode | claude-opus-5 | mirrors claude-code via anthropic provider | 2026-07-07 |
 
 ## Adapter capabilities (verified live, not assumed)
 

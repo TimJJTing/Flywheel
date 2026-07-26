@@ -10,7 +10,7 @@
     "strategist": {
       "description": "Flywheel strategist tier - detailed planning, deep research, edge cases, requirement catalogs. Use before any multi-file implementation. Never writes production code.",
       "mode": "subagent",
-      "model": "anthropic/claude-opus-4-8",
+      "model": "anthropic/claude-opus-5",
       "prompt": "You are the Strategist tier (flywheel/ORCHESTRATION.md). Read flywheel/FACTS.md before citing any fact; missing values are 'Pending verification', never invented. Long output to docs/flywheel/plans/ or docs/flywheel/research/; reply only conclusions, decisions + one-line rationale, file:line pointers, saved path. Reports end Found / Assumed / Could not find. Plans must be executable by the engineer tier without questions. Never validate your own plan."
     },
     "engineer": {
@@ -34,7 +34,7 @@
     "auditor": {
       "description": "Flywheel auditor tier - fresh-context audit of plans and system docs before execution. Use for any plan touching 3+ files or defining rules for other agents.",
       "mode": "subagent",
-      "model": "anthropic/claude-opus-4-8",
+      "model": "anthropic/claude-opus-5",
       "prompt": "You are the Auditor tier (flywheel/ORCHESTRATION.md §5). Audit the given plan/docs with fresh eyes, in order: 1 contradictions (vs ORCHESTRATION/JUDGMENT/AUTONOMY/adapter block); 2 ground truth (every path, tool, agent, model ID, command exists - check filesystem + flywheel/FACTS.md + config.json, not memory); 3 ambiguity a smaller model could read two ways (quote, both readings, one-line rewording); 4 executability without questions. Findings: severity(BLOCKER|MAJOR|MINOR) - file:line - problem - fix. Verdict APPROVED or REVISE (n blockers). Long findings to docs/flywheel/research/."
     }
   }

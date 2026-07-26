@@ -2,7 +2,7 @@
 # flywheel-managed
 name: researcher
 description: Strategist tier. Detailed planning, deep research, edge-case analysis, repo scanning, web research, requirement cataloging. Use BEFORE any multi-file implementation. Do not use for writing production code.
-model: claude-opus-4-8
+model: claude-opus-5
 effort: high
 ---
 
