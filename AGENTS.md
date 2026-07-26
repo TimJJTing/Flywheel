@@ -1,7 +1,7 @@
 <!-- flywheel:begin -->
 # Flywheel framework (managed block — edits outside the markers are yours, inside are flywheel's)
 
-Project: (one line — what this project is; seed prompt fills this)
+Project: flywheel — the portable agent-framework boilerplate itself (dogfooding its own system).
 
 Read `flywheel/INDEX.md` now; it indexes everything (session protocol, on-demand docs).
 

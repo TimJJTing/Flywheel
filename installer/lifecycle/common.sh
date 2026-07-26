@@ -39,7 +39,14 @@ content = open(target_path, encoding="utf-8").read() if os.path.exists(target_pa
 if content is None:
     out = block
 elif begin in content and end in content:
-    out = re.sub(re.escape(begin) + r"[\s\S]*?" + re.escape(end), lambda _: block.strip(), content, count=1)
+    region_re = re.compile(re.escape(begin) + r"[\s\S]*?" + re.escape(end))
+    old_region = region_re.search(content).group(0)
+    new_block = block.strip()
+    old_project = re.search(r"^Project: .*$", old_region, re.MULTILINE)
+    if old_project and not old_project.group(0)[len("Project: "):].startswith("(one line"):
+        preserved = old_project.group(0)
+        new_block = re.sub(r"^Project: .*$", lambda _: preserved, new_block, count=1, flags=re.MULTILINE)
+    out = region_re.sub(lambda _: new_block, content, count=1)
 else:
     out = content.rstrip("\n") + "\n\n" + block.strip() + "\n"
 open(target_path, "w", encoding="utf-8").write(out)
@@ -56,7 +63,15 @@ const esc = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 let out;
 if (content === null) out = block;
 else if (content.includes(begin) && content.includes(end)) {
-  out = content.replace(new RegExp(esc(begin) + '[\\s\\S]*?' + esc(end)), block.trim());
+  const regionRe = new RegExp(esc(begin) + '[\\s\\S]*?' + esc(end));
+  const oldRegion = content.match(regionRe)[0];
+  let newBlock = block.trim();
+  const oldProject = oldRegion.match(/^Project: .*$/m);
+  if (oldProject && !oldProject[0].slice('Project: '.length).startsWith('(one line')) {
+    const preserved = oldProject[0];
+    newBlock = newBlock.replace(/^Project: .*$/m, () => preserved);
+  }
+  out = content.replace(regionRe, () => newBlock);
 } else out = content.replace(/\n+$/, '') + '\n\n' + block.trim() + '\n';
 fs.writeFileSync(targetPath, out);
 NODEEOF

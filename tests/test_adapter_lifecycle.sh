@@ -388,6 +388,26 @@ PY
   echo "PASS lifecycle ownership/current-skills/combinations runner=$runner"
 }
 
+exercise_project_line_preservation() {
+  local runner="$1" t sentinel
+  t="$(new_repo "project-line-$runner")"
+  run_install "$runner" "$t" codex
+  sentinel='Project: sentinel $& value \1 backslash-and-amp'
+  "$HOST_PYTHON" - "$t/AGENTS.md" "$sentinel" <<'PY'
+import re, sys
+path, sentinel = sys.argv[1], sys.argv[2]
+content = open(path, encoding="utf-8").read()
+content = re.sub(r"^Project: .*$", lambda _: sentinel, content, count=1, flags=re.MULTILINE)
+content = content.replace("<!-- flywheel:end -->", "managed drift\n<!-- flywheel:end -->", 1)
+open(path, "w", encoding="utf-8").write(content)
+PY
+  run_install "$runner" "$t" codex
+  grep -Fxq "$sentinel" "$t/AGENTS.md" || fail "project line not preserved across refresh (runner=$runner)"
+  grep -q 'Read `flywheel/INDEX.md` now' "$t/AGENTS.md" || fail "managed block did not refresh (runner=$runner)"
+  ! grep -q 'managed drift' "$t/AGENTS.md" || fail "managed drift survived refresh (runner=$runner)"
+  echo "PASS project line preserved across refresh runner=$runner"
+}
+
 exercise_sync_and_drift() {
   local t before second agent tier model level
   t="$(new_repo sync)"
@@ -512,6 +532,8 @@ assert_lifecycle_boundaries
 exercise_install_confirmation
 exercise_runner python3
 exercise_runner node
+exercise_project_line_preservation python3
+exercise_project_line_preservation node
 exercise_sync_and_drift
 exercise_cli_contract
 exercise_preservation_and_architecture
