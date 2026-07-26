@@ -160,116 +160,124 @@
    "9719554"
   ]
  },
-  {
-    "ts": "2026-07-16",
-    "session": 18,
+ {
+  "ts": "2026-07-16",
+  "session": 18,
   "summary": "Approved Codex adapter repair fast-forwarded to main; coordinator ledger corrected and post-merge verification passed",
   "commits": [
-      "1c5ac18"
-    ]
-  },
-  {
-    "ts": "2026-07-17",
-    "session": 19,
-    "summary": "Real-repo Codex dogfood and fresh verifier/auditor reviews completed; verified branch awaits merge approval",
-    "commits": [
-      "a7be606",
-      "7350d44"
-    ]
-  },
-  {
-    "ts": "2026-07-17T17:55",
-    "session": 20,
-    "summary": "Pre-merge Codex-native audit removed dogfood-only compatibility/no-op paths; verifier retry VERIFIED",
-    "commits": [
-      "7fcc696"
-    ]
-  },
-  {
-    "ts": "2026-07-18T16:23",
-    "session": 21,
-    "summary": "Human-approved Codex robustness branch fast-forwarded to main; fresh post-merge verifier returned VERIFIED",
-    "commits": [
-      "f2e6948"
-    ]
-  },
-  {
-    "ts": "2026-07-18T18:19",
-    "session": 22,
-    "summary": "Codex coordinator runtime model capture implemented and independently VERIFIED; branch awaits merge approval",
-    "commits": [
-      "2a2cc34"
-    ]
-  },
-  {
-    "ts": "2026-07-18T18:28",
-    "session": 23,
-    "summary": "Human-approved Codex coordinator-model branch fast-forwarded to main; fresh post-merge verifier returned VERIFIED",
-    "commits": [
-      "38ec544"
-    ]
-  },
-  {
-    "ts": "2026-07-18T18:39",
-    "session": 24,
-    "summary": "Adapter lifecycle modularization assessed; thin entry points plus shared safety helpers recommended",
-    "commits": []
-  },
-  {
-    "ts": "2026-07-18T19:36",
-    "session": 25,
-    "summary": "Adapter lifecycle and canonical skill refactor implemented, verifier-corrected, VERIFIED, and merged to main",
-    "commits": [
-      "1eaf28e"
-    ]
-  },
-  {
-    "ts": "2026-07-19T14:53",
-    "session": 26,
-    "summary": "Verified Codex marker-block improvement d05d459 left pending on flywheel/improve-codex-marker-block",
-    "commits": [
-      "d05d459"
-    ]
-  },
-  {
-    "ts": "2026-07-19T15:05",
-    "session": 27,
-    "summary": "Verified bookkeeping policy improvement ba1fa56 left pending on flywheel/improve-bookkeeping-commit-policy",
-    "commits": [
-      "ba1fa56"
-    ]
-  },
-  {
-    "ts": "2026-07-19T15:30",
-    "session": 28,
-    "summary": "Human-approved marker-block and bookkeeping-policy improvements merged to main; fresh post-merge verification passed",
-    "commits": [
-      "cc9467b",
-      "1db5716"
-    ]
-  },
-  {
-    "ts": "2026-07-21T16:53",
-    "session": 29,
-    "summary": "Installer confirmation gate and exact-restoration caveats implemented; independent verification pending",
-    "commits": [
-      "58a015a"
-    ]
-  },
-  {
-    "ts": "2026-07-21T17:04",
-    "session": 30,
-    "summary": "Installer confirmation feature independently verified and merged to main",
-    "commits": [
-      "b9d28cd"
-    ]
-  },
-  {
-    "ts": "2026-07-21T18:52",
-    "session": 31,
-    "summary": "Distribution/dogfood file boundaries implemented and independently verified; improvement branch awaits merge review",
-    "commits": [
-      "b34653c"
-    ]
-  }
+   "1c5ac18"
+  ]
+ },
+ {
+  "ts": "2026-07-17",
+  "session": 19,
+  "summary": "Real-repo Codex dogfood and fresh verifier/auditor reviews completed; verified branch awaits merge approval",
+  "commits": [
+   "a7be606",
+   "7350d44"
+  ]
+ },
+ {
+  "ts": "2026-07-17T17:55",
+  "session": 20,
+  "summary": "Pre-merge Codex-native audit removed dogfood-only compatibility/no-op paths; verifier retry VERIFIED",
+  "commits": [
+   "7fcc696"
+  ]
+ },
+ {
+  "ts": "2026-07-18T16:23",
+  "session": 21,
+  "summary": "Human-approved Codex robustness branch fast-forwarded to main; fresh post-merge verifier returned VERIFIED",
+  "commits": [
+   "f2e6948"
+  ]
+ },
+ {
+  "ts": "2026-07-18T18:19",
+  "session": 22,
+  "summary": "Codex coordinator runtime model capture implemented and independently VERIFIED; branch awaits merge approval",
+  "commits": [
+   "2a2cc34"
+  ]
+ },
+ {
+  "ts": "2026-07-18T18:28",
+  "session": 23,
+  "summary": "Human-approved Codex coordinator-model branch fast-forwarded to main; fresh post-merge verifier returned VERIFIED",
+  "commits": [
+   "38ec544"
+  ]
+ },
+ {
+  "ts": "2026-07-18T18:39",
+  "session": 24,
+  "summary": "Adapter lifecycle modularization assessed; thin entry points plus shared safety helpers recommended",
+  "commits": []
+ },
+ {
+  "ts": "2026-07-18T19:36",
+  "session": 25,
+  "summary": "Adapter lifecycle and canonical skill refactor implemented, verifier-corrected, VERIFIED, and merged to main",
+  "commits": [
+   "1eaf28e"
+  ]
+ },
+ {
+  "ts": "2026-07-19T14:53",
+  "session": 26,
+  "summary": "Verified Codex marker-block improvement d05d459 left pending on flywheel/improve-codex-marker-block",
+  "commits": [
+   "d05d459"
+  ]
+ },
+ {
+  "ts": "2026-07-19T15:05",
+  "session": 27,
+  "summary": "Verified bookkeeping policy improvement ba1fa56 left pending on flywheel/improve-bookkeeping-commit-policy",
+  "commits": [
+   "ba1fa56"
+  ]
+ },
+ {
+  "ts": "2026-07-19T15:30",
+  "session": 28,
+  "summary": "Human-approved marker-block and bookkeeping-policy improvements merged to main; fresh post-merge verification passed",
+  "commits": [
+   "cc9467b",
+   "1db5716"
+  ]
+ },
+ {
+  "ts": "2026-07-21T16:53",
+  "session": 29,
+  "summary": "Installer confirmation gate and exact-restoration caveats implemented; independent verification pending",
+  "commits": [
+   "58a015a"
+  ]
+ },
+ {
+  "ts": "2026-07-21T17:04",
+  "session": 30,
+  "summary": "Installer confirmation feature independently verified and merged to main",
+  "commits": [
+   "b9d28cd"
+  ]
+ },
+ {
+  "ts": "2026-07-21T18:52",
+  "session": 31,
+  "summary": "Distribution/dogfood file boundaries implemented and independently verified; improvement branch awaits merge review",
+  "commits": [
+   "b34653c"
+  ]
+ },
+ {
+  "ts": "2026-07-26T13:45",
+  "session": 32,
+  "summary": "Merge inspection of the file-boundary branch found and fixed a Project-line regression; main fast-forwarded to fe20156",
+  "commits": [
+   "fe20156"
+  ]
+ }
 ]

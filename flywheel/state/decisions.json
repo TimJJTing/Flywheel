@@ -144,8 +144,8 @@
    "8622ff0"
   ]
  },
-  {
-    "id": "d12",
+ {
+  "id": "d12",
   "title": "Merge Codex adapter repair branch",
   "detail": "Branch flywheel/improve-codex-adapter now contains verified commit 9719554. Deterministic lifecycle/resolver suites, fresh verifier review, and an isolated live Codex hook probe passed; remaining trust/account/runtime-telemetry limitations are documented.",
   "options": [
@@ -156,112 +156,128 @@
   "autonomy_row": "Merge flywheel self-improvement branch",
   "status": "approved",
   "outcome": "merged to main at 1c5ac18 (decided-by-human)",
-    "created": "2026-07-16",
-    "resolved": "2026-07-16"
-  },
-  {
-    "id": "d13",
-    "title": "Merge Codex adapter robustness branch",
-    "detail": "Branch flywheel/improve-codex-adapter-robustness contains repair 7350d44 and pre-merge simplification 7fcc696. Official Codex docs confirm the git-root SubagentStop design; dogfood-only compatibility/no-op paths were removed. Real-repo dogfood, fresh auditor approval, and verifier retry are VERIFIED; persisted /hooks trust, entitlement, runtime child telemetry, and fresh live Claude/Agy sessions remain bounded limitations.",
-    "options": [
-      "merge verified branch",
-      "reject"
-    ],
-    "recommendation": "merge the simplified, independently verified branch",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "approved",
-    "outcome": "Human approved; main fast-forwarded to f2e6948 and fresh post-merge verification passed.",
-    "created": "2026-07-17",
-    "resolved": "2026-07-18"
-  },
-  {
-    "id": "d14",
-    "title": "Merge Codex coordinator-model branch",
-    "detail": "Branch flywheel/improve-codex-coordinator-model contains 2a2cc34. A live coordinator smoke resolved gpt-5.6-sol/high from validated turn_context telemetry; 37 resolver tests, dual lifecycle runners, sync/drift, check.sh, an auditor review, and a fresh verifier verdict passed.",
-    "options": [
-      "merge verified branch",
-      "reject"
-    ],
-    "recommendation": "merge the independently verified coordinator telemetry improvement",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "approved",
-    "outcome": "Human approved; main fast-forwarded to 38ec544 and fresh post-merge verification passed.",
-    "created": "2026-07-18",
-    "resolved": "2026-07-18"
-  },
-  {
-    "id": "d15",
-    "title": "Merge adapter lifecycle feature branch",
-    "detail": "Branch feature/adapter-lifecycle contains 1eaf28e. The corrected implementation passed the Python/Node lifecycle matrix, 41 Python tests, check.sh, and a fresh verifier's ownership, recursive cleanup, adapter isolation, parity, and sensitive-content probes.",
-    "options": [
-      "merge verified branch",
-      "reject"
-    ],
-    "recommendation": "merge the independently verified behavior-preserving refactor",
-    "autonomy_row": "Merge feature branch -> main",
-    "status": "decided-by-llm",
-    "outcome": "Main fast-forwarded to 1eaf28e under autonomy level 3.",
-    "created": "2026-07-18",
-    "resolved": "2026-07-18"
-  },
-  {
-    "id": "d16",
-    "title": "Merge Codex marker-block improvement branch",
-    "detail": "Branch flywheel/improve-codex-marker-block contains d05d459. A fresh verifier returned VERIFIED after the lifecycle Python/Node matrix, check.sh, and canonical block equality checks passed. Autonomy level 3 requires the Merge flywheel self-improvement branch gate to remain pending for human review.",
-    "options": [
-      "merge",
-      "reject"
-    ],
-    "recommendation": "merge flywheel/improve-codex-marker-block",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "approved",
-    "outcome": "Human approved; main merged the branch as cc9467b.",
-    "created": "2026-07-19",
-    "resolved": "2026-07-19"
-  },
-  {
-    "id": "d17",
-    "title": "Merge bookkeeping commit policy improvement branch",
-    "detail": "Branch flywheel/improve-bookkeeping-commit-policy contains ba1fa56. A fresh verifier returned VERIFIED after the focused bookkeeping allowlist test and flywheel/check.sh passed; the implementation exactly aligns the documented bookkeeping-only commit policy. Autonomy level 3 requires the Merge flywheel self-improvement branch gate to remain pending for human review.",
-    "options": [
-      "merge",
-      "reject"
-    ],
-    "recommendation": "merge flywheel/improve-bookkeeping-commit-policy",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "approved",
-    "outcome": "Human approved; main merged the branch as 1db5716 after reconciling the independent branch ledgers.",
-    "created": "2026-07-19",
-    "resolved": "2026-07-19"
-  },
-  {
-    "id": "d18",
-    "title": "Merge installer confirmation feature branch",
-    "detail": "Branch feature/install-confirmation contains 58a015a. A fresh verifier returned VERIFIED after 41 unit tests, both lifecycle runners, fail-closed and EOF probes, combined-adapter prompt-scope review, documentation review, diff hygiene, and framework checks passed.",
-    "options": [
-      "merge verified branch",
-      "reject"
-    ],
-    "recommendation": "merge the independently verified installer safety boundary",
-    "autonomy_row": "Merge feature branch -> main",
-    "status": "decided-by-llm",
-    "outcome": "Main fast-forwarded to b9d28cd under autonomy level 3.",
-    "created": "2026-07-21",
-    "resolved": "2026-07-21"
-  },
-  {
-    "id": "d19",
-    "title": "Merge file-boundary improvement branch",
-    "detail": "Branch flywheel/improve-file-boundaries contains b34653c. A fresh verifier returned VERIFIED after the Python/Node lifecycle matrix, 41 unit tests, installed and repository checks, root zero-write dogfood validation, stale-link review, and independent OpenCode nested-edit recovery and target-config projection probes.",
-    "options": [
-      "merge",
-      "reject"
-    ],
-    "recommendation": "merge flywheel/improve-file-boundaries",
-    "autonomy_row": "Merge flywheel self-improvement branch",
-    "status": "pending",
-    "outcome": null,
-    "created": "2026-07-21",
-    "resolved": null
-  }
+  "created": "2026-07-16",
+  "resolved": "2026-07-16"
+ },
+ {
+  "id": "d13",
+  "title": "Merge Codex adapter robustness branch",
+  "detail": "Branch flywheel/improve-codex-adapter-robustness contains repair 7350d44 and pre-merge simplification 7fcc696. Official Codex docs confirm the git-root SubagentStop design; dogfood-only compatibility/no-op paths were removed. Real-repo dogfood, fresh auditor approval, and verifier retry are VERIFIED; persisted /hooks trust, entitlement, runtime child telemetry, and fresh live Claude/Agy sessions remain bounded limitations.",
+  "options": [
+   "merge verified branch",
+   "reject"
+  ],
+  "recommendation": "merge the simplified, independently verified branch",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "approved",
+  "outcome": "Human approved; main fast-forwarded to f2e6948 and fresh post-merge verification passed.",
+  "created": "2026-07-17",
+  "resolved": "2026-07-18"
+ },
+ {
+  "id": "d14",
+  "title": "Merge Codex coordinator-model branch",
+  "detail": "Branch flywheel/improve-codex-coordinator-model contains 2a2cc34. A live coordinator smoke resolved gpt-5.6-sol/high from validated turn_context telemetry; 37 resolver tests, dual lifecycle runners, sync/drift, check.sh, an auditor review, and a fresh verifier verdict passed.",
+  "options": [
+   "merge verified branch",
+   "reject"
+  ],
+  "recommendation": "merge the independently verified coordinator telemetry improvement",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "approved",
+  "outcome": "Human approved; main fast-forwarded to 38ec544 and fresh post-merge verification passed.",
+  "created": "2026-07-18",
+  "resolved": "2026-07-18"
+ },
+ {
+  "id": "d15",
+  "title": "Merge adapter lifecycle feature branch",
+  "detail": "Branch feature/adapter-lifecycle contains 1eaf28e. The corrected implementation passed the Python/Node lifecycle matrix, 41 Python tests, check.sh, and a fresh verifier's ownership, recursive cleanup, adapter isolation, parity, and sensitive-content probes.",
+  "options": [
+   "merge verified branch",
+   "reject"
+  ],
+  "recommendation": "merge the independently verified behavior-preserving refactor",
+  "autonomy_row": "Merge feature branch -> main",
+  "status": "decided-by-llm",
+  "outcome": "Main fast-forwarded to 1eaf28e under autonomy level 3.",
+  "created": "2026-07-18",
+  "resolved": "2026-07-18"
+ },
+ {
+  "id": "d16",
+  "title": "Merge Codex marker-block improvement branch",
+  "detail": "Branch flywheel/improve-codex-marker-block contains d05d459. A fresh verifier returned VERIFIED after the lifecycle Python/Node matrix, check.sh, and canonical block equality checks passed. Autonomy level 3 requires the Merge flywheel self-improvement branch gate to remain pending for human review.",
+  "options": [
+   "merge",
+   "reject"
+  ],
+  "recommendation": "merge flywheel/improve-codex-marker-block",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "approved",
+  "outcome": "Human approved; main merged the branch as cc9467b.",
+  "created": "2026-07-19",
+  "resolved": "2026-07-19"
+ },
+ {
+  "id": "d17",
+  "title": "Merge bookkeeping commit policy improvement branch",
+  "detail": "Branch flywheel/improve-bookkeeping-commit-policy contains ba1fa56. A fresh verifier returned VERIFIED after the focused bookkeeping allowlist test and flywheel/check.sh passed; the implementation exactly aligns the documented bookkeeping-only commit policy. Autonomy level 3 requires the Merge flywheel self-improvement branch gate to remain pending for human review.",
+  "options": [
+   "merge",
+   "reject"
+  ],
+  "recommendation": "merge flywheel/improve-bookkeeping-commit-policy",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "approved",
+  "outcome": "Human approved; main merged the branch as 1db5716 after reconciling the independent branch ledgers.",
+  "created": "2026-07-19",
+  "resolved": "2026-07-19"
+ },
+ {
+  "id": "d18",
+  "title": "Merge installer confirmation feature branch",
+  "detail": "Branch feature/install-confirmation contains 58a015a. A fresh verifier returned VERIFIED after 41 unit tests, both lifecycle runners, fail-closed and EOF probes, combined-adapter prompt-scope review, documentation review, diff hygiene, and framework checks passed.",
+  "options": [
+   "merge verified branch",
+   "reject"
+  ],
+  "recommendation": "merge the independently verified installer safety boundary",
+  "autonomy_row": "Merge feature branch -> main",
+  "status": "decided-by-llm",
+  "outcome": "Main fast-forwarded to b9d28cd under autonomy level 3.",
+  "created": "2026-07-21",
+  "resolved": "2026-07-21"
+ },
+ {
+  "id": "d19",
+  "title": "Merge file-boundary improvement branch",
+  "detail": "Branch flywheel/improve-file-boundaries contains b34653c. A fresh verifier returned VERIFIED after the Python/Node lifecycle matrix, 41 unit tests, installed and repository checks, root zero-write dogfood validation, stale-link review, and independent OpenCode nested-edit recovery and target-config projection probes. Merge inspection found one regression (managed refresh wiped the seeded CLAUDE.md Project line); fixed in fe20156 and independently VERIFIED before main was fast-forwarded to fe20156.",
+  "options": [
+   "merge",
+   "reject"
+  ],
+  "recommendation": "merge flywheel/improve-file-boundaries",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "resolved",
+  "outcome": "merge",
+  "created": "2026-07-21",
+  "resolved": "2026-07-26"
+ },
+ {
+  "id": "d20",
+  "title": "Third commit on the improvement branch",
+  "detail": "GIT.md limits flywheel/improve-* to one implementation commit plus one bookkeeping commit. The Project-line regression fix was committed as a separate fix(installer) commit on the same branch instead of amending b34653c, so the verified improvement stayed byte-identical and main never held the regression.",
+  "options": [
+   "separate fix commit on branch",
+   "amend b34653c",
+   "fix on main after merge"
+  ],
+  "recommendation": "separate fix commit on branch",
+  "autonomy_row": "Merge flywheel self-improvement branch",
+  "status": "resolved",
+  "outcome": "separate fix commit on branch",
+  "created": "2026-07-26",
+  "resolved": "2026-07-26"
+ }
 ]

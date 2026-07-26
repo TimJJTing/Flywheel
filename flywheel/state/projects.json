@@ -42,18 +42,18 @@
     "title": "Default models set + config.json single-source (sync.py)",
     "done": true
    },
-      {
-        "title": "Modular adapter lifecycle + canonical skills",
-        "done": true
-      },
-      {
-        "title": "Pre-write install confirmation + restoration disclosure",
-        "done": true
-      },
-      {
-        "title": "Distribution, dogfood, and development file boundaries",
-        "done": true
-      }
+   {
+    "title": "Modular adapter lifecycle + canonical skills",
+    "done": true
+   },
+   {
+    "title": "Pre-write install confirmation + restoration disclosure",
+    "done": true
+   },
+   {
+    "title": "Distribution, dogfood, and development file boundaries",
+    "done": true
+   }
   ],
   "detail": "Portable framework extracted from vocabulary-universe; see README.md.",
   "commits": [
@@ -67,10 +67,11 @@
    "3d2ebce",
    "6573b3f",
    "4d2d17b",
-      "1eaf28e",
-      "58a015a",
-      "b34653c"
-    ],
-    "updated": "2026-07-21"
+   "1eaf28e",
+   "58a015a",
+   "b34653c",
+   "fe20156"
+  ],
+  "updated": "2026-07-21"
  }
 ]
