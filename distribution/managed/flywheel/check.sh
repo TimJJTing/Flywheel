@@ -18,7 +18,7 @@ check_budget() {
 
 check_budget INDEX.md 50
 check_budget STATUS.md 40
-check_budget ORCHESTRATION.md 120
+check_budget ORCHESTRATION.md 95
 check_budget AUTONOMY.md 75
 check_budget JUDGMENT.md 130
 check_budget MAINTENANCE.md 90
@@ -45,16 +45,26 @@ if [ -f "$FLYWHEEL_DIR/LESSONS.md" ]; then
   else echo "✓ LESSONS.md: $n/80 lines"; fi
 fi
 
-# Always-loaded set (adapter file + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines.
+# Always-loaded set. To add a newly always-loaded file, append its name HERE and
+# nowhere else — both caps below read this list.
+ALWAYS_LOADED="INDEX.md ORCHESTRATION.md FACTS.md"
+# Whole-file cap: includes project-authored prose outside the marker block, which
+# flywheel does not own. Owned cap: marker block + $ALWAYS_LOADED only — the ratchet.
 for adapter_file in CLAUDE.md AGENTS.md; do
   if [ -f "$REPO_ROOT/$adapter_file" ]; then
-    total=0
-    for f in "$REPO_ROOT/$adapter_file" "$FLYWHEEL_DIR/INDEX.md" \
-             "$FLYWHEEL_DIR/ORCHESTRATION.md" "$FLYWHEEL_DIR/FACTS.md"; do
-      [ -f "$f" ] && total=$((total + $(wc -l < "$f")))
+    label="$adapter_file"
+    total=$(wc -l < "$REPO_ROOT/$adapter_file" | tr -d ' ')
+    owned=$(awk '/<!-- flywheel:begin -->/,/<!-- flywheel:end -->/' "$REPO_ROOT/$adapter_file" | wc -l | tr -d ' ')
+    for f in $ALWAYS_LOADED; do
+      label="$label+${f%.md}"
+      [ -f "$FLYWHEEL_DIR/$f" ] || continue
+      n=$(wc -l < "$FLYWHEEL_DIR/$f" | tr -d ' ')
+      total=$((total + n)); owned=$((owned + n))
     done
-    if [ "$total" -le 500 ]; then echo "✓ always-loaded set ($adapter_file+INDEX+ORCHESTRATION+FACTS): $total/500 lines";
-    else echo "✗ always-loaded set ($adapter_file+INDEX+ORCHESTRATION+FACTS): $total lines exceeds 500"; FAIL=1; fi
+    if [ "$total" -le 500 ]; then echo "✓ always-loaded set ($label): $total/500 lines";
+    else echo "✗ always-loaded set ($label): $total lines exceeds 500"; FAIL=1; fi
+    if [ "$owned" -le 305 ]; then echo "✓ flywheel-owned always-loaded ($adapter_file block+${label#*.md}): $owned/305 lines";
+    else echo "✗ flywheel-owned always-loaded ($adapter_file block+${label#*.md}): $owned lines exceeds 305"; FAIL=1; fi
   fi
 done
 

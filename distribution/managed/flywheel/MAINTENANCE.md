@@ -28,8 +28,11 @@ committing doc changes until fixed or consciously overridden with a LESSONS.md e
 - Per-file budgets: the authoritative table is the `check_budget` list at the top of
   `flywheel/check.sh` (INDEX 50, STATUS 40, ORCHESTRATION 120, and so on) — edit
   budgets there, via the structural process, never by letting a file grow past one.
-- Always-loaded set (CLAUDE.md/AGENTS.md + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines
-  total — check.sh sums it. Keep new adapter blocks ≤ 50 lines (audit-pass check).
+- Always-loaded set (adapter file + every file named in check.sh's `ALWAYS_LOADED`)
+  ≤ 500 lines total; the flywheel-owned part (marker block + those files) ≤ 305 —
+  check.sh sums both. 305 = the post-cut worst case (246) plus a reserve named in
+  check.sh's comment and the Phase 5 plan; spending it elsewhere is an improve finding.
+  Keep new adapter blocks ≤ 50 lines (audit-pass check).
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
   `docs/flywheel/research/lessons-archive-YYYYMM.md`.
