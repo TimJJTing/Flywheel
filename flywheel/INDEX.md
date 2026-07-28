@@ -30,7 +30,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/MAINTENANCE.md` | Before modifying any flywheel/ or adapter file |
 | `flywheel/GIT.md` | Before any commit, branch, or merge |
 | `flywheel/IMPROVE.md` | Improve pass due (wrapup says so) or friction accumulating |
-| `flywheel/ADAPTERS.md` | Porting flywheel to another adapter |
+| `flywheel/ADAPTERS.md` | Porting flywheel to another adapter; adapter cannot spawn subagents |
 | `flywheel/LESSONS.md` | After any escalation or surprising failure (append) |
 | `docs/flywheel/ARCHITECTURE.md` | Understanding current repo structure or architecture diagram |
 

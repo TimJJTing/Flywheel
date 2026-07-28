@@ -17,7 +17,7 @@ Answer these for the target tool; the answers ARE the adapter.
 
 2. **Does it have subagents?** Yes → define the six tiers as agents (model/effort
    from `flywheel/config.json`; mark each file `# flywheel-managed` so installs can
-   upgrade them safely). No → degraded mode (ORCHESTRATION.md §8): templates as
+   upgrade them safely). No → degraded mode (see §Degraded mode below): templates as
    in-session role adoptions; verification via a FRESH session running Template 4;
    state honestly in reports that context isolation and parallelism are lost.
 
@@ -51,6 +51,14 @@ Answer these for the target tool; the answers ARE the adapter.
    `PostToolUse` for tool `invoke_subagent` (see the Antigravity hook merge input)
    which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
    *(Note: The agy CLI has a known limitation where all spawned subagents run on the same model as the parent session, ignoring tier-specific model overrides).*
+
+## Degraded mode (adapter cannot spawn subagents)
+
+If your adapter cannot spawn subagents (see your adapter block), the tiers become
+sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template
+and announcing "operating as <tier>". Verification-never-self-performed then means:
+a FRESH session (new context) runs Template 4. Model switching is done by the human
+per config.json. What is lost: context isolation and parallelism — say so in reports.
 
 ## Rules for adapter authors
 

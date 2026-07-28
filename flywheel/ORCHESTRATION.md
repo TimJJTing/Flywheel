@@ -104,10 +104,3 @@ End (or context running low): run the wrapup procedure (adapter skill, or inline
 update STATUS.md + state ledgers, then `bash flywheel/wrapup.sh` — check, dashboard,
 commit per `flywheel/GIT.md`). What is not committed does not exist.
 
-## 8. Adapters without subagents (degraded mode)
-
-If your adapter cannot spawn subagents (see your adapter block), the tiers become
-sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template and
-announcing "operating as <tier>". Verification-never-self-performed then means: a FRESH
-session (new context) runs Template 4. Model switching is done by the human per
-config.json. What is lost: context isolation and parallelism — say so in reports.

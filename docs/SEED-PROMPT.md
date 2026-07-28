@@ -43,7 +43,7 @@ STEP 4 — VERIFY THE TIERS LIVE (adapters with subagents)
 Spawn each tier agent with a dummy brief ("reply with your model ID and tier name").
 Record per-tier results in FACTS.md §Adapter capabilities. If spawns fail, record the
 fallback that worked. On adapters without subagents, record "degraded mode" there
-instead (see flywheel/ORCHESTRATION.md §8).
+instead (see flywheel/ADAPTERS.md §Degraded mode).
 
 STEP 5 — SEED THE STATE
 Write flywheel/STATUS.md (current state, next actions). Create initial
