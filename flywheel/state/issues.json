@@ -238,5 +238,60 @@
   "commits": [],
   "opened": "2026-07-26",
   "closed": null
+ },
+ {
+  "id": "i20",
+  "title": "IMPROVE.md audit step: add skill failure-mode taxonomy",
+  "type": "friction",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Adopt named failure modes from mattpocock writing-great-skills (sediment, sprawl, no-op lines stating default behavior, duplicated sources of truth, premature completion) as an explicit rubric for the improve-pass plan-auditor dispatch in IMPROVE.md step 1. ~2 lines. Source analysis: session 33, docs/flywheel/research/positioning-and-cognitive-dashboard-2026-07.md \u00a74A.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i21",
+  "title": "wrapup skill: checkable completion criterion for spawns.json review",
+  "type": "friction",
+  "priority": "P2",
+  "status": "open",
+  "detail": "wrapup SKILL.md step 2 lacks a done-condition; auto-appended spawn rows risk rubber-stamped default outcomes (premature completion). Add: review is done when every row from this session is cross-checked against the transcript. Touches distribution source of the managed skill block.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i22",
+  "title": "Dedup skill instructions between CLAUDE.md block and skill descriptions",
+  "type": "debt",
+  "priority": "P2",
+  "status": "open",
+  "detail": "Session-protocol lines in the claude-code managed block ('use the delegate skill', wrapup in step 3) duplicate what model-invoked skill descriptions already trigger \u2014 two sources of truth, ~3-4 always-loaded lines. SEQUENCING: execute only AFTER context-engineering-revision Phase 4 lands (same managed block; avoid editing it twice in flight). Own improve branch.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i23",
+  "title": "Negation audit of style-level 'never' lines (narrow scope)",
+  "type": "debt",
+  "priority": "P3",
+  "status": "open",
+  "detail": "Pocock negation failure mode: prohibition drags forbidden behavior into context. Applies ONLY to style-steering lines; hard boundaries (HR2/HR3, git -A ban, autonomy rows) stay explicit prohibitions per GPT cross-vendor feedback. Sweep flywheel/*.md for reframable style negations. Low priority.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i24",
+  "title": "Owned-cap label prints double-plus (block++INDEX)",
+  "type": "friction",
+  "priority": "P3",
+  "status": "open",
+  "detail": "check.sh flywheel-owned label renders 'AGENTS.md block++INDEX+ORCHESTRATION+FACTS' \u2014 double plus from the plan fence's ${label#*.md} stripping logic (plan defect reproduced byte-for-byte by engineer; verifier flagged cosmetic). One-line fix in a future pass; cosmetic only, caps compute correctly.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
  }
 ]

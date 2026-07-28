@@ -279,5 +279,80 @@
   "outcome": "separate fix commit on branch",
   "created": "2026-07-26",
   "resolved": "2026-07-26"
+ },
+ {
+  "id": "d21",
+  "title": "Merge Phase 1: scaffold-density principle (flywheel/improve-scaffold-density)",
+  "detail": "Phase 1 of docs/flywheel/plans/context-engineering-revision-2026-07.md. Adds MAINTENANCE.md \u00a75 scaffold-density principle (10-line fence incl. information-hierarchy tiers), raises MAINTENANCE budget 80->90 (plan's only raise, LESSONS.md-justified). Commit 514800c off 72ad67f. Engineer A1-A6 all PASS; fresh-context verifier VERIFIED: fence byte-identical to plan, commit hygiene clean, both check suites green, adapter lifecycle tests PASS, Phase 5 headroom probe 83<=90 holds.",
+  "options": [
+   "merge",
+   "reject (branch stays, later phases rebase off it regardless)"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d22",
+  "title": "Merge Phase 2: degraded mode to ADAPTERS.md (flywheel/improve-degraded-mode-to-adapters)",
+  "detail": "Phase 2 of context-engineering-revision plan. Moves ORCHESTRATION.md \u00a78 degraded-mode into ADAPTERS.md \u00a7Degraded mode; ORCHESTRATION 113->106, ADAPTERS 66->74, always-loaded 265->258 (CLAUDE) / 268->261 (AGENTS); 4 cross-references updated; 10-file commit 38f1272 off 514800c (Phase 1 branch). History: engineer STOP exposed fence/B3 contradiction (plan amended 4232771); verifier FAILED on silent 4-word content drop traced to plan inception (plan amended 64f008e, commit re-made via --amend). Final verifier verdict VERIFIED: source-parity word diff exit 0, fence+mirror byte-identical, checks green.",
+  "options": [
+   "merge (after d21 merges; branch chains off Phase 1)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d23",
+  "title": "Merge Phase 3: DELEGATION.md extraction (flywheel/improve-delegation-mechanics-file)",
+  "detail": "Phase 3 of context-engineering-revision plan. New on-demand flywheel/DELEGATION.md (29 lines) carries ORCHESTRATION escalation-path + spawn-provenance detail; ORCHESTRATION 106->90; INDEX.md on-demand row added (43 lines); check.sh DELEGATION budget + struct_changes; MAINTENANCE structural list +DELEGATION+ADAPTERS. Always-loaded 258->243 (CLAUDE) / 261->246 (AGENTS). Commit 2130ddb off 38f1272. One pre-write engineer STOP (fence added 'the two' vs source; plan amendment 3f96aae restored parity). Verifier VERIFIED: C1-C9 re-run PASS, bidirectional word-diffs clean (no orphaned sentence), all fence+mirror byte-compares exit 0, cross-references resolve.",
+  "options": [
+   "merge (after d22; chains off Phase 2 branch)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d24",
+  "title": "Merge Phase 4: claude-code block HR pointer (flywheel/improve-claude-block-hr-pointer)",
+  "detail": "Phase 4 of context-engineering-revision plan. CLAUDE.md managed block HR1-4 duplicate replaced by 3-line pointer to canonical flywheel/INDEX.md \u00a7Hard rules (loaded via @-import); ADAPTERS.md Exception 5-for-3 swap (76 lines); dev/check.sh guard widened: @flywheel/INDEX.md exact-line import guard + cross-copy HR identity for remaining adapters. Always-loaded 243->238 CLAUDE. Commit d7dbb7f off 2130ddb. Zero STOPs. Fresh verifier VERIFIED: both negative fixtures re-run independently (import deletion FAILs guard; codex HR mutation FAILs cross-copy check), canonical HRs word-identical, pointer restates nothing, fences byte-identical, 7-file hygiene clean, all suites green.",
+  "options": [
+   "merge (after d23; chains off Phase 3 branch)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d25",
+  "title": "Merge Phase 5: always-loaded budget ratchet (flywheel/improve-always-loaded-ratchet)",
+  "detail": "Final phase of context-engineering-revision plan. check.sh refactored to single ALWAYS_LOADED variable feeding whole-file 500 cap + new flywheel-owned 305 cap (246 post-cut + named 59-line reserve: CONTEXT.md 40, skill-whitelist 6, Q1 10, FACTS 3); MAINTENANCE.md 83/90 (adapter-blocks<=50 clause preserved verbatim); IMPROVE.md +4 ratchet preference, no quota (Zero-is-a-valid-count escape hatch intact per amended E4). Commit a99f2be off d7dbb7f, 6 files. One plan-criterion defect (E4 single-line grep assumption) fixed by amendment 61878b1. Verifier VERIFIED: all E-criteria + 3 destructive fixtures self-run, byte/word-diffs clean, mirrors exit 0, suites green. Cosmetic: owned label double-plus (i24).",
+  "options": [
+   "merge (after d24; chains off Phase 4 branch; completes the 5-phase plan)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]

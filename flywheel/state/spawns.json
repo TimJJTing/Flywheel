@@ -875,5 +875,85 @@
   "task": "Inspect and merge file-boundary branch",
   "outcome": "ok",
   "notes": "model from session environment model table; Claude Code exposes no coordinator effort value, level '-' per SCHEMAS.md"
+ },
+ {
+  "ts": "2026-07-28T21:13",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Plan flywheel context-engineering revision",
+  "outcome": "ok",
+  "notes": "2 resumed revision rounds after audit FAIL + coordinator addendum; plan carried 4 latent defects found at execution time"
+ },
+ {
+  "ts": "2026-07-28T21:24",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Audit context-engineering revision plan",
+  "outcome": "ok",
+  "notes": "verdict FAILED (4 blockers/6 majors) then re-audit VERIFIED via resume; missed 3 fence defects later caught in execution"
+ },
+ {
+  "ts": "2026-07-29T00:14",
+  "agent": "utility",
+  "adapter": "claude-code",
+  "model": "claude-haiku-4-5-20251001",
+  "level": "medium",
+  "task": "Apply 5 minor plan text fixes",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T00:21",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Execute revision plan Phase 1",
+  "outcome": "ok",
+  "notes": "row covers Phases 1-4 via resumes; 2 correct STOPs (unrecorded gate; fence/criterion contradiction); Phase 2 commit re-made once after verifier content-drop FAIL"
+ },
+ {
+  "ts": "2026-07-29T00:27",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Phase 1 implementation",
+  "outcome": "ok",
+  "notes": "row covers Phase 1-3 verifications via resumes; Phase 2 first verdict FAILED (silent 4-word drop), re-verified VERIFIED"
+ },
+ {
+  "ts": "2026-07-29T01:49",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify Phase 4 implementation",
+  "outcome": "ok",
+  "notes": "row covers Phases 4-5 via resume; both VERIFIED incl. self-run destructive fixtures"
+ },
+ {
+  "ts": "2026-07-29T01:53",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Execute revision plan Phase 5",
+  "outcome": "ok",
+  "notes": "fresh spawn (prior engineer transcript expired); flagged pre-existing E4 criterion defect, VERIFIED after amendment"
+ },
+ {
+  "ts": "2026-07-29T02:05",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-fable-5",
+  "level": "",
+  "task": "Coordinate context-engineering revision (plan, audit, 5 phases)",
+  "outcome": "ok",
+  "notes": "model from session environment table 2026-07-29; 4 plan amendments authored inline (4232771, 64f008e, 3f96aae, 61878b1)"
  }
 ]
