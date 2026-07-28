@@ -27,6 +27,7 @@ check_budget IMPROVE.md 75
 check_budget ADAPTERS.md 85
 check_budget DIAGNOSIS.md 85
 check_budget TEMPLATES.md 230
+check_budget DELEGATION.md 45
 check_budget FACTS.md 80
 
 if [ -f "$REPO_ROOT/docs/flywheel/ARCHITECTURE.md" ]; then
@@ -145,7 +146,7 @@ if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   fi
 
   # Check if structural files have changed without updating ARCHITECTURE.md
-  struct_changes=$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null | grep -E '^( M| A|\?\?) (flywheel/(INDEX|ORCHESTRATION|AUTONOMY|MAINTENANCE|TEMPLATES|FACTS|DIAGNOSIS|JUDGMENT|GIT|IMPROVE|ADAPTERS)\.md|flywheel/check\.sh|flywheel/wrapup\.sh|flywheel/config\.json|\.agents/|\.claude/|\.codex/)' || true)
+  struct_changes=$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null | grep -E '^( M| A|\?\?) (flywheel/(INDEX|ORCHESTRATION|AUTONOMY|MAINTENANCE|TEMPLATES|FACTS|DIAGNOSIS|JUDGMENT|GIT|IMPROVE|ADAPTERS|DELEGATION)\.md|flywheel/check\.sh|flywheel/wrapup\.sh|flywheel/config\.json|\.agents/|\.claude/|\.codex/)' || true)
   if [ -n "$struct_changes" ]; then
     arch_changed=$(git -C "$REPO_ROOT" status --porcelain docs/flywheel/ARCHITECTURE.md 2>/dev/null)
     if [ -z "$arch_changed" ]; then

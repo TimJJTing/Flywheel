@@ -27,6 +27,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
 | `flywheel/JUDGMENT.md` | Deciding: escalate? complete? pivot? quality floor? User interrupts with a new/conflicting task? |
 | `flywheel/AUTONOMY.md` | Any decision that might need the human; merges; deletes |
 | `flywheel/TEMPLATES.md` | Composing any delegation prompt |
+| `flywheel/DELEGATION.md` | A delegation escalated, was retried, or needs a spawn row |
 | `flywheel/MAINTENANCE.md` | Before modifying any flywheel/ or adapter file |
 | `flywheel/GIT.md` | Before any commit, branch, or merge |
 | `flywheel/IMPROVE.md` | Improve pass due (wrapup says so) or friction accumulating |
