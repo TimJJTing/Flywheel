@@ -68,3 +68,13 @@ contradictions, ground truth (paths/tools/models exist), ambiguity for smaller
 models, executability. Fix BLOCKER/MAJOR findings via the structural process in §1
 before proceeding. This pass is folded into the IMPROVE.md cadence — same trigger,
 audit first, then improvements.
+
+## 5. Scaffold density scales with the weakest reader
+
+Docs read only by coordinator/architect/strategist tiers (INDEX, ORCHESTRATION,
+JUDGMENT) stay lean principles — cut those first. Docs *executed* by utility- and
+engineer-class models (TEMPLATES.md, skill bodies, checklists) keep full scaffolding
+and worked examples. Hard boundaries (HR2, HR3, AUTONOMY.md) never soften for anyone.
+Inside such a doc, order by information hierarchy: (1) steps with exhaustive, checkable
+completion criteria, (2) flat peer-set reference rules, (3) pointers to external files
+loaded only when needed. Push detail down a tier before deleting it.

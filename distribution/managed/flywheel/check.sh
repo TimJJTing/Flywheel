@@ -21,7 +21,7 @@ check_budget STATUS.md 40
 check_budget ORCHESTRATION.md 120
 check_budget AUTONOMY.md 75
 check_budget JUDGMENT.md 130
-check_budget MAINTENANCE.md 80
+check_budget MAINTENANCE.md 90
 check_budget GIT.md 55
 check_budget IMPROVE.md 75
 check_budget ADAPTERS.md 85
