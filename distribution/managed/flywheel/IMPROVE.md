@@ -49,6 +49,10 @@ unrecognizable system.
   degradation path of tiered systems.
 - If two consecutive improve passes propose nothing, that is fine. Zero is a valid
   count; manufactured improvements are negative value.
+- When two candidate improvements are otherwise equal, prefer the one that converts a
+  prose rule into a mechanical check (check.sh, a hook, a schema). Docs teach, checks
+  enforce; a rule that can be checked and is not is debt. This ranks candidates — it
+  never manufactures one (the zero-improvement rule above still stands).
 
 ✓ "LESSONS 2026-08-02: utility misread 'update all configs' as including config.json
 → improvement: add explicit exclusion to Template 3 CONTEXT line. Branch

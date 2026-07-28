@@ -29,15 +29,23 @@ if release != dogfood:
 print('PASS dogfood config divergence is allowlisted')
 PY
 
-hr3='- HR3. No agent declares its own work complete — dispatch `verifier` / `plan-auditor`.'
+hr_lines=(
+'- HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)'
+'- HR2. Model names / level values / API params come from `flywheel/config.json` +'
+'- HR3. No agent declares its own work complete — dispatch `verifier` / `plan-auditor`.'
+'- HR4. Ask-vs-act is governed by `flywheel/AUTONOMY.md`; its level-invariant rows bind'
+)
 for file in "$ROOT/distribution/managed/flywheel/INDEX.md" \
-  "$ROOT/distribution/adapters/claude-code/CLAUDE.md.block" \
   "$ROOT/distribution/adapters/codex/AGENTS.md.block" \
   "$ROOT/distribution/adapters/opencode/AGENTS.md.block" \
   "$ROOT/distribution/adapters/antigravity/AGENTS.md.block"; do
-  grep -Fxq -- "$hr3" "$file" || fail "HR3 mismatch: ${file#"$ROOT/"}"
+  for hr in "${hr_lines[@]}"; do
+    grep -Fxq -- "$hr" "$file" || fail "HR mismatch: ${file#"$ROOT/"} :: ${hr:0:8}"
+  done
 done
-[ "$FAIL" = 0 ] && pass "duplicated HR3 wording is identical"
+grep -Fxq -- '@flywheel/INDEX.md' "$ROOT/distribution/adapters/claude-code/CLAUDE.md.block" ||
+  fail "claude-code block lost its @flywheel/INDEX.md always-loaded import"
+[ "$FAIL" = 0 ] && pass "hard-rule duplicates are identical and the claude-code block imports INDEX.md"
 
 for old in adapters defaults scripts "docs/"plans "docs/"research "docs/"ARCHITECTURE.md; do
   [ ! -e "$ROOT/$old" ] || fail "retired path still exists: $old"

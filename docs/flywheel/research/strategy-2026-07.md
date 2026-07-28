@@ -41,7 +41,7 @@ Sources: [HackerNoon spec-first showdown](https://hackernoon.com/the-spec-first-
 3. **Self-amending improve loop** (IMPROVE.md, LESSONS.md, friction ledger). Competitors
    ship static methodology; flywheel amends its own.
 4. **Autonomy matrix** — explicit ask-vs-act contract (AUTONOMY.md). Rare.
-5. **Degraded mode** (ORCHESTRATION.md §8) — graceful no-subagent fallback. Nobody
+5. **Degraded mode** (ADAPTERS.md §Degraded mode) — graceful no-subagent fallback. Nobody
    designs for this.
 
 Positioning rule: pitch 1+3 ("policies that verify and amend themselves"), never the

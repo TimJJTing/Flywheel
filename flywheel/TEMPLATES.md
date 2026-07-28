@@ -6,7 +6,7 @@ flywheel/config.json by flywheel/sync.py where supported; adapter-native logging
 records adapter-specific provenance (resolved child runtime, config pin, or inherited
 parent), not universally the actual child runtime model.
 On adapters without subagents, these same templates are pasted in-session as role
-adoptions (ORCHESTRATION.md §8).
+adoptions (ADAPTERS.md §Degraded mode).
 
 ---
 

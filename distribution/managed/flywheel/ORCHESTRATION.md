@@ -50,22 +50,11 @@ first (usually `flywheel/FACTS.md` + the relevant plan).
 ## 4. Escalation / de-escalation
 
 Max **two retries per tier**, and a retry must change something (better spec, more
-context, smaller scope) — never resend the same prompt verbatim.
-
-Escalate UP after retries are exhausted:
-- `utility` fails an easy task → send to `engineer` with the failure attached.
-- `engineer` fails a coding task → back to `strategist` to refine the plan, then
-  re-issue to `engineer`.
-- A `strategist` plan fails in execution **twice** → escalate to `architect` with the
-  complete failure trace: both plans, both failure reports, verifier output. Also route
-  to `architect`: irreversible architectural forks and flywheel rule conflicts that
-  `auditor` cannot resolve. Nothing else — it is the scarcest tier.
-
-De-escalate DOWN once a pattern is solved: first instance fixed by a higher tier →
-document the pattern (in the plan or LESSONS.md) → batch-apply remaining instances
-via `utility`/`engineer`.
-
-Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, cause).
+context, smaller scope) — never resend the same prompt verbatim. After that, escalate
+one tier up; paths and de-escalation live in `flywheel/DELEGATION.md`. `architect` is
+reached only by a twice-failed strategist plan, an irreversible architectural fork, or
+a rule conflict `auditor` cannot resolve — nothing else. Log every escalation in
+`flywheel/LESSONS.md` (one line: date, task, tier path, cause).
 
 ## 5. Verification is never self-performed
 
@@ -88,13 +77,8 @@ Log every escalation in `flywheel/LESSONS.md` (one line: date, task, tier path, 
   it inline in the main session, check §1 routing table first.
 - Main-session context is the scarcest resource. When a task will generate > ~100 lines
   of tool output, that alone is reason to delegate.
-- Model provenance is adapter-specific: Claude Code children use the Agent response;
-  Codex children use config pins (its stop payload lacks child runtime telemetry);
-  Antigravity children inherit the parent model or configured fallback. Codex
-  coordinators resolve current-turn rollout telemetry at wrapup. All automatic rows
-  go through `flywheel/resolve-spawn.py`; otherwise log manually with best verified
-  provenance and `Pending verification` when unavailable. At wrapup, correct child
-  outcomes/notes and ensure the coordinator has exactly one row.
+- Spawn rows carry adapter-specific provenance and are never invented (HR2); the
+  per-adapter rules are in `flywheel/DELEGATION.md`.
 
 ## 7. Session start / end protocol
 
@@ -104,10 +88,3 @@ End (or context running low): run the wrapup procedure (adapter skill, or inline
 update STATUS.md + state ledgers, then `bash flywheel/wrapup.sh` — check, dashboard,
 commit per `flywheel/GIT.md`). What is not committed does not exist.
 
-## 8. Adapters without subagents (degraded mode)
-
-If your adapter cannot spawn subagents (see your adapter block), the tiers become
-sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template and
-announcing "operating as <tier>". Verification-never-self-performed then means: a FRESH
-session (new context) runs Template 4. Model switching is done by the human per
-config.json. What is lost: context isolation and parallelism — say so in reports.

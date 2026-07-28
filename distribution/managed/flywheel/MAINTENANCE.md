@@ -12,7 +12,7 @@ adapter files, and before any consistency audit.
 | `flywheel/FACTS.md` | Add a new verified fact | Changing/removing an existing fact → `auditor` check first |
 | `flywheel/config.json` — model/effort cells | No | Verified value (source + date in FACTS.md) + `auditor` check. Then run `python3 flywheel/sync.py` to regenerate the projections — config.json is the source of truth; agent frontmatter and `opencode.json.merge` are generated from it, never hand-edited. `check.sh` fails on drift. |
 | `flywheel/config.json` — `autonomy` value | Never by an agent | Human instruction only (AUTONOMY.md, level-invariant row) |
-| `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, adapter blocks, agent frontmatter (prose only — model/effort are generated, see the config.json row above) | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
+| `flywheel/ORCHESTRATION.md`, `JUDGMENT.md`, `AUTONOMY.md`, `MAINTENANCE.md`, `TEMPLATES.md`, `DIAGNOSIS.md`, `GIT.md`, `IMPROVE.md`, `INDEX.md`, `DELEGATION.md`, `ADAPTERS.md`, adapter blocks, agent frontmatter (prose only — model/effort are generated, see the config.json row above) | No | Written `strategist` plan + `auditor` approval, applied on a `flywheel/improve-*` branch per IMPROVE.md |
 | `flywheel/dashboard/template.html`, `build.py`, `build.mjs`, `check.sh`, `wrapup.sh`, `compact.py` | No | Same structural process (these enforce the rules mechanically) |
 
 ✓ Correct: `utility` appends a decided-by-llm entry to state/decisions.json after a
@@ -28,8 +28,11 @@ committing doc changes until fixed or consciously overridden with a LESSONS.md e
 - Per-file budgets: the authoritative table is the `check_budget` list at the top of
   `flywheel/check.sh` (INDEX 50, STATUS 40, ORCHESTRATION 120, and so on) — edit
   budgets there, via the structural process, never by letting a file grow past one.
-- Always-loaded set (CLAUDE.md/AGENTS.md + INDEX + ORCHESTRATION + FACTS) ≤ 500 lines
-  total — check.sh sums it. Keep new adapter blocks ≤ 50 lines (audit-pass check).
+- Always-loaded set (adapter file + every file named in check.sh's `ALWAYS_LOADED`)
+  ≤ 500 lines total; the flywheel-owned part (marker block + those files) ≤ 305 —
+  check.sh sums both. 305 = the post-cut worst case (246) plus a reserve named in
+  check.sh's comment and the Phase 5 plan; spending it elsewhere is an improve finding.
+  Keep new adapter blocks ≤ 50 lines (audit-pass check).
 - `flywheel/LESSONS.md` > 80 lines → dispatch `strategist` (structural process) to
   consolidate recurring lessons into JUDGMENT.md rules, archive the raw log to
   `docs/flywheel/research/lessons-archive-YYYYMM.md`.
@@ -68,3 +71,13 @@ contradictions, ground truth (paths/tools/models exist), ambiguity for smaller
 models, executability. Fix BLOCKER/MAJOR findings via the structural process in §1
 before proceeding. This pass is folded into the IMPROVE.md cadence — same trigger,
 audit first, then improvements.
+
+## 5. Scaffold density scales with the weakest reader
+
+Docs read only by coordinator/architect/strategist tiers (INDEX, ORCHESTRATION,
+JUDGMENT) stay lean principles — cut those first. Docs *executed* by utility- and
+engineer-class models (TEMPLATES.md, skill bodies, checklists) keep full scaffolding
+and worked examples. Hard boundaries (HR2, HR3, AUTONOMY.md) never soften for anyone.
+Inside such a doc, order by information hierarchy: (1) steps with exhaustive, checkable
+completion criteria, (2) flat peer-set reference rules, (3) pointers to external files
+loaded only when needed. Push detail down a tier before deleting it.

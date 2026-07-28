@@ -17,7 +17,7 @@ Answer these for the target tool; the answers ARE the adapter.
 
 2. **Does it have subagents?** Yes → define the six tiers as agents (model/effort
    from `flywheel/config.json`; mark each file `# flywheel-managed` so installs can
-   upgrade them safely). No → degraded mode (ORCHESTRATION.md §8): templates as
+   upgrade them safely). No → degraded mode (see §Degraded mode below): templates as
    in-session role adoptions; verification via a FRESH session running Template 4;
    state honestly in reports that context isolation and parallelism are lost.
 
@@ -52,6 +52,14 @@ Answer these for the target tool; the answers ARE the adapter.
    which logs the list of subagents spawned via `resolve-spawn.py antigravity`.
    *(Note: The agy CLI has a known limitation where all spawned subagents run on the same model as the parent session, ignoring tier-specific model overrides).*
 
+## Degraded mode (adapter cannot spawn subagents)
+
+If your adapter cannot spawn subagents (see your adapter block), the tiers become
+sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template
+and announcing "operating as <tier>". Verification-never-self-performed then means:
+a FRESH session (new context) runs Template 4. Model switching is done by the human
+per config.json. What is lost: context isolation and parallelism — say so in reports.
+
 ## Rules for adapter authors
 
 - Adapter-specific config keys and capabilities are FACTS: verify against the
@@ -59,8 +67,10 @@ Answer these for the target tool; the answers ARE the adapter.
   or write `Pending verification`. This system's own adapters obey this too.
 - The adapter never duplicates doctrine — it points at flywheel/ files. A rule copied
   into an adapter block will drift from its source within ten sessions.
-  Exception: the four hard rules in the block are deliberate point-of-use duplicates;
-  keep them verbatim-identical to INDEX.md's list (the MAINTENANCE.md §4 audit pass
-  diffs them — there is no mechanical check yet).
+  Exception: adapter blocks that cannot mechanically load `flywheel/INDEX.md` (codex,
+  opencode, antigravity — they only instruct a read) carry the four hard rules as
+  point-of-use duplicates, verbatim-identical to INDEX.md. Blocks that do load it
+  (claude-code, via `@flywheel/INDEX.md`) point at INDEX.md instead. The repository
+  distribution check diffs the remaining copies line-by-line.
 - Test the port with the phase-style check: install into a scratch repo, run one
   session with the seed prompt, confirm FACTS.md gets filled and the dashboard builds.
