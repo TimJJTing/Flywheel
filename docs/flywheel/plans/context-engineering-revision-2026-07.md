@@ -3,9 +3,15 @@
 Strategist plan (tier: strategist). Applies the ranked revisions in
 `docs/flywheel/research/context-engineering-guide-implications-2026-07.md`.
 
-**Status: NOT VALIDATED.** MAINTENANCE.md:15 makes every file below structural: this
-plan requires `auditor` (plan-auditor) approval before Phase 1 executes. The author
-never issues the verdict (HR3).
+**Status: VALIDATED** (2026-07-29, session 33). Fresh-context `plan-auditor` audit
+history: initial verdict FAILED (4 blockers, 6 majors, 2 minors); plan revised in
+place; re-audit VERIFIED — every fix independently re-probed, cascaded arithmetic
+recomputed, proposed check.sh block executed against simulated post-Phase-4 files.
+Re-audit surfaced 5 non-blocking minor text defects with exact prescriptions; applied
+verbatim by `utility` after the verdict and grep-verified (edits at plan lines ~178,
+~223, ~669, ~742, §6.1 K10 step). Verdicts live in the session 33 coordinator
+transcript; recorded here + activity.json per HR3 (author never self-validates —
+strategist wrote this plan, auditor issued the verdict).
 
 **Merge gate:** `flywheel/config.json` `autonomy: 3`. AUTONOMY.md:16 row "Merge
 flywheel self-improvement branch" is **A** at L3 → each phase branch gets a `pending`
