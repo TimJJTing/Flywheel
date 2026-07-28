@@ -67,8 +67,10 @@ per config.json. What is lost: context isolation and parallelism — say so in r
   or write `Pending verification`. This system's own adapters obey this too.
 - The adapter never duplicates doctrine — it points at flywheel/ files. A rule copied
   into an adapter block will drift from its source within ten sessions.
-  Exception: the four hard rules in the block are deliberate point-of-use duplicates;
-  keep them verbatim-identical to INDEX.md's list (the MAINTENANCE.md §4 audit pass
-  diffs them — there is no mechanical check yet).
+  Exception: adapter blocks that cannot mechanically load `flywheel/INDEX.md` (codex,
+  opencode, antigravity — they only instruct a read) carry the four hard rules as
+  point-of-use duplicates, verbatim-identical to INDEX.md. Blocks that do load it
+  (claude-code, via `@flywheel/INDEX.md`) point at INDEX.md instead. The repository
+  distribution check diffs the remaining copies line-by-line.
 - Test the port with the phase-style check: install into a scratch repo, run one
   session with the seed prompt, confirm FACTS.md gets filled and the dashboard builds.

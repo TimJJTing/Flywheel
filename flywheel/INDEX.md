@@ -11,7 +11,7 @@ Your adapter block loaded this file. It is an index only; rules live in the file
    + `flywheel/state/*.json`, then `bash flywheel/wrapup.sh` for the mechanical rest).
    Uncommitted = lost.
 
-## Hard rules (duplicated in the adapter block at point of use — keep identical)
+## Hard rules (canonical; blocks that cannot load this file duplicate them verbatim)
 - HR1. Never Read a file listed in `flywheel/FACTS.md` §Big files (or any file > 200 KB)
   wholesale — slice via grep/jq/python, or delegate to `utility`.
 - HR2. Model names / level values / API params come from `flywheel/config.json` +
