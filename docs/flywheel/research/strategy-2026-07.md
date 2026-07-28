@@ -97,6 +97,16 @@ over-invest in orchestration plumbing vendors will obsolete.
 OPEN RESEARCH: quarterly vendor-parity check (what did claude-code/codex/opencode ship
 natively that duplicates a flywheel file?); prune duplicated plumbing each improve pass.
 
+## Update 2026-07-28: Anthropic context-engineering guide confirms A1/A2/A4/A5
+
+Anthropic's Claude-5 context-engineering guide (claude.com/blog/the-new-rules-of-
+context-engineering-for-claude-5-generation-models) + cross-vendor GPT feedback
+independently confirm: A1 (interfaces over prose), A2 (frontier models one-shot more;
+tier overhead can exceed work), A4 (always-loaded size is the enemy), A5 (new
+absorption events: auto-memory, `/doctor` rightsizing). Hard boundaries (HR2, HR3,
+autonomy matrix) are explicitly the KEEP category per both sources — moat unchanged.
+Analysis + ranked revisions: docs/flywheel/research/context-engineering-guide-implications-2026-07.md.
+
 ## Standing instruction to future agents
 
 Before any feature/priority/roadmap decision: read this file. Align with the
