@@ -21,6 +21,12 @@ diff found the fence had silently dropped "(see your adapter block)" from the or
 ORCHESTRATION.md §8 first line — a plan-inception defect both audit passes missed
 (they compared fence-to-file, never fence-to-source). Phrase restored; still 5 prose
 lines, 8 fence lines, "operating as <tier>" unbroken.
+Amendment 3, 2026-07-29 (coordinator, parity-restoring): §6.3 DELEGATION.md fence had
+added "the two" to a sentence claimed verbatim from ORCHESTRATION.md §4 ("Escalate UP
+after retries are exhausted:") — engineer pre-commit source word-diff caught it.
+Dropped the addition: the retry limit stays stated in always-loaded ORCHESTRATION §4,
+so the qualifier was redundant, and strict source parity keeps content-preservation
+mechanically verifiable.
 
 **Merge gate:** `flywheel/config.json` `autonomy: 3`. AUTONOMY.md:16 row "Merge
 flywheel self-improvement branch" is **A** at L3 → each phase branch gets a `pending`
@@ -356,7 +362,7 @@ file holds the choreography needed only while a delegation is in flight.
 
 ## Escalation paths (ORCHESTRATION.md §4)
 
-Escalate UP after the two retries are exhausted:
+Escalate UP after retries are exhausted:
 - `utility` fails an easy task → send to `engineer` with the failure attached.
 - `engineer` fails a coding task → back to `strategist` to refine the plan, then
   re-issue to `engineer`.
