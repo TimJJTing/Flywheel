@@ -16,6 +16,11 @@ Amendment 2026-07-29 (coordinator, content-preserving): §6.2 fence prose rewrap
 "operating as <tier>" sits unbroken on one line — engineer STOP exposed a fence/B3
 self-contradiction (verbatim fence made its own grep criterion unsatisfiable). Words
 unchanged, still 8 fence lines; no other section affected.
+Amendment 2, 2026-07-29 (coordinator, content-restoring): Phase 2 verifier word-level
+diff found the fence had silently dropped "(see your adapter block)" from the original
+ORCHESTRATION.md §8 first line — a plan-inception defect both audit passes missed
+(they compared fence-to-file, never fence-to-source). Phrase restored; still 5 prose
+lines, 8 fence lines, "operating as <tier>" unbroken.
 
 **Merge gate:** `flywheel/config.json` `autonomy: 3`. AUTONOMY.md:16 row "Merge
 flywheel self-improvement branch" is **A** at L3 → each phase branch gets a `pending`
@@ -287,11 +292,11 @@ port-time knowledge (revision 2a).
 ```markdown
 ## Degraded mode (adapter cannot spawn subagents)
 
-If your adapter cannot spawn subagents, the tiers become sequential roles in one
-session: adopt a tier by pasting its TEMPLATES.md template and announcing
-"operating as <tier>". Verification-never-self-performed then means: a FRESH
-session (new context) runs Template 4. Model switching is done by the human per
-config.json. What is lost: context isolation and parallelism — say so in reports.
+If your adapter cannot spawn subagents (see your adapter block), the tiers become
+sequential roles in one session: adopt a tier by pasting its TEMPLATES.md template
+and announcing "operating as <tier>". Verification-never-self-performed then means:
+a FRESH session (new context) runs Template 4. Model switching is done by the human
+per config.json. What is lost: context isolation and parallelism — say so in reports.
 
 ```
    **8** added lines (heading + blank + 5 prose + trailing blank) → 66 + 8 = **74**.
