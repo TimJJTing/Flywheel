@@ -283,7 +283,7 @@
  {
   "ts": "2026-07-29T02:05",
   "session": 33,
-  "summary": "Context-engineering revision: plan+audit cycle, 5 phases executed+verified on chained branches (always-loaded 265->238), 4 plan defects fixed via amendments, gates d21-d25 pending",
+  "summary": "Context-engineering revision: plan+audit cycle, 5 phases executed+verified on chained branches (always-loaded 265->238), 4 plan defects fixed via amendments, gates d21-d25 approved, merged via 561aaf6",
   "commits": [
    "baf5db1",
    "72ad67f",
@@ -295,7 +295,8 @@
    "38f1272",
    "2130ddb",
    "d7dbb7f",
-   "a99f2be"
+   "a99f2be",
+   "561aaf6"
   ]
  }
 ]

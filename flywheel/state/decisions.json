@@ -290,10 +290,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d22",
@@ -305,10 +305,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d23",
@@ -320,10 +320,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d24",
@@ -335,10 +335,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d25",
@@ -350,9 +350,9 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  }
 ]
