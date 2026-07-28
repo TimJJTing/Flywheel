@@ -293,5 +293,16 @@
   "commits": [],
   "opened": "2026-07-29",
   "closed": null
+ },
+ {
+  "id": "i25",
+  "title": "docs/CONTEXT-ENGINEERING.md: document the context patterns as portable practice",
+  "type": "debt",
+  "priority": "P2",
+  "status": "open",
+  "detail": "The context-engineering practices implemented in session 33 exist only in internal files (MAINTENANCE.md par.5, IMPROVE.md preference, check.sh ratchet, LESSONS.md) and research docs; no user-facing doc states them as patterns. Write a short docs/CONTEXT-ENGINEERING.md (or PHILOSOPHY section): always-loaded budget + ratchet with named reserve, progressive disclosure via index, scaffold density scales with weakest reader, import-vs-duplicate by adapter capability (guarded @-import vs verbatim copies + cross-copy diff), execution-time mechanical verification of plans (simulate criteria, fence-to-source diffs). Positioning value: the Claude-5 context-engineering guide's advice implemented cross-vendor. Add README reading-map row when written.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
  }
 ]

@@ -37,8 +37,10 @@ systems that cheaper intelligence can follow.** Concretely:
 5. **The Commander does not step onto the battlefield.** Expensive tiers decide;
    cheap tiers execute; escalation is explicit and budgeted (max 2 retries per tier).
 6. **Rules survive only at point of use.** A rule buried in a reference file rots;
-   the four hard rules are duplicated into the always-loaded adapter block, and
-   check.sh mechanically enforces the budgets nobody would otherwise re-check.
+   the four hard rules live once in always-loaded INDEX.md — adapters that can
+   mechanically import it (claude-code's guarded `@`-import) point there, adapters
+   that can't duplicate them verbatim — and check.sh enforces both the budgets and
+   the copy/import integrity nobody would otherwise re-check.
 7. **What is not committed does not exist.** Save as you go; wrapup is a protocol,
    not a habit.
 
