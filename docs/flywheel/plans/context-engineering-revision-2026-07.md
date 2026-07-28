@@ -27,6 +27,11 @@ after retries are exhausted:") — engineer pre-commit source word-diff caught i
 Dropped the addition: the retry limit stays stated in always-loaded ORCHESTRATION §4,
 so the qualifier was redundant, and strict source parity keeps content-preservation
 mechanically verifiable.
+Amendment 4, 2026-07-29 (coordinator, criterion fix): E4's grep assumed "Zero is a
+valid count" sits on one line; it has always been wrapped across two in IMPROVE.md
+(engineer proved pre-existing on the parent branch — content intact, criterion
+broken). E4 now joins lines and squeezes spaces (`tr '\n' ' ' | tr -s ' '`). Fourth execution-time plan defect; the
+first in a criterion rather than a fence.
 
 **Merge gate:** `flywheel/config.json` `autonomy: 3`. AUTONOMY.md:16 row "Merge
 flywheel self-improvement branch" is **A** at L3 → each phase branch gets a `pending`
@@ -761,7 +766,7 @@ done
   ignores it, the file list is still effectively hardcoded.
 
   Run E3b and E3c only after the phase's implementation commit — the final `git checkout flywheel/check.sh` discards uncommitted check.sh edits.
-- E4. No quota introduced: `grep -c "Zero is a valid count" flywheel/IMPROVE.md` → `1` (the escape hatch survived).
+- E4. No quota introduced: `tr '\n' ' ' < flywheel/IMPROVE.md | tr -s ' ' | grep -c "Zero is a valid count"` → `1` (the escape hatch survived; wrap-tolerant — the phrase has always been line-wrapped in the source).
 - E5. `bash tests/test_adapter_lifecycle.sh` → `PASS`.
 - E6. `git diff --stat` → **6** files: `flywheel/check.sh`, `flywheel/MAINTENANCE.md`,
   `flywheel/IMPROVE.md` and their three `distribution/managed/flywheel/` mirrors.
