@@ -500,10 +500,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as 45b8fd9. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), tests/test_adapter_lifecycle.sh (PASS adapter lifecycle matrix), tests.test_resolve_spawn (Ran 38 tests / OK).",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d36",
@@ -515,9 +515,9 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as 58b58b0. Post-merge green: flywheel/check.sh (all checks passed, state/spawns.json 38 entries), dev/check.sh (PASS repository distribution checks), tests.test_resolve_spawn (Ran 38 tests / OK), tests/test_adapter_lifecycle.sh (PASS adapter lifecycle matrix). The pending→terminal transition remains unenforced mechanically — carried forward in STATUS.md.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  }
 ]
