@@ -355,5 +355,35 @@
   "task": "Audit i30 plan",
   "outcome": "ok",
   "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T17:34",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Implement i30 plan",
+  "outcome": "ok",
+  "notes": "auto-logged; override requested: sonnet"
+ },
+ {
+  "ts": "2026-07-29T17:49",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i30 implementation",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T21:16",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i30 implementation retry",
+  "outcome": "ok",
+  "notes": "auto-logged"
  }
 ]

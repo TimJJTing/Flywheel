@@ -504,5 +504,20 @@
   "outcome": null,
   "created": "2026-07-29",
   "resolved": null
+ },
+ {
+  "id": "d36",
+  "title": "Merge i30: auto-logged spawn rows land as pending (flywheel/improve-i30-spawn-outcome)",
+  "detail": "flywheel/resolve-spawn.py hardcoded `\"outcome\": \"ok\"` on every auto-logged row, so no row could ever read retried|escalated|failed — exactly what IMPROVE.md:23 tells the improve pass to gather, a dead input to the self-improvement loop; and for background claude-code spawns the PostToolUse hook fires when the Agent tool CALL returns (at launch), so the row asserted success before the agent finished. Now a DEFAULT_OUTCOME constant writes `pending`, the wrapup skill resolves each pending row into a terminal value, SCHEMAS.md documents the enum (including that compact.py silently swallows unresolved pending rows once the ledger is compacted), and check.sh enforces it: ✗ exit 1 on any out-of-enum value, ⚠ while any pending remain. 25 files (11 authored, 14 mechanical mirrors/projections), one commit 08ae05d off main e187bae. Plan 81874da took two auditor passes: the first found two shell-quoting blockers in the check.sh insert — a `'` inside JSON_SRC='…' and a `\"` inside node -e \"…\", the latter aborting check.sh's whole if/elif/fi compound so ALL state validation would have stopped silently while the gate still looked healthy. Fresh verifier VERIFIED 8/8: bash -n clean, all five ✓ state/*.json lines print under BOTH the python3 and the forced-node branch, python and node warning text cmp byte-identical for injected pending and out-of-enum rows, a real PostToolUse payload driven against a scratch ledger appends `outcome: pending`, `Ran 38 tests / OK`, dev/check.sh and the lifecycle suite green, all mirrors cmp/diff clean, and a row MISSING the outcome key is flagged rather than crashing or passing. PARTIAL by design: check.sh only warns on pending, and flywheel/wrapup.sh has zero references to outcome/pending/spawns — the pending→terminal transition rests entirely on the wrapup skill body (.claude/skills/wrapup/SKILL.md:19-23) being obeyed, so a pending row can persist indefinitely with the gate still passing.",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]

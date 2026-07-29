@@ -295,8 +295,20 @@
   "session": 37,
   "commits": [
    "0fe6afa",
-   "778f856"
+   "778f856",
+   "50333fc"
   ],
   "summary": "i29 fixed on `flywheel/improve-compact-ledger-indent` (0fe6afa, one implementation commit off main 726bbc9), left UNMERGED pending d34 (AUTONOMY.md merge-self-improvement row = A at L3). flywheel/compact.py:20 and its byte-identical distribution mirror now dump `indent=1, ensure_ascii=False`; it was the last flywheel/state writer still at indent=2 and the scheduled compaction would have silently reverted i28. Coordinator did the one-token edit inline (2 files), dry-ran compaction in a scratchpad copy (activity 36->31, spawns 109->31, indent=1, zero \\u escapes, rerun idempotent), then dispatched a fresh verifier per HR3: VERIFIED 7/7 with empirical hash-preservation and an A7 probe finding no third indent=2 writer of flywheel/state, so i29 closes fully on merge. Gates green on the branch: flywheel/check.sh, dev/check.sh. Verifier also flagged an uncommitted spawns.json row claiming its own success before it finished; investigated and NOT fabrication — the claude-code PostToolUse `Agent` hook (resolve-spawn.py) fires when a background Agent call returns at launch, and resolve-spawn.py:547,572 hardcode outcome \"ok\". Opened i30 for that (IMPROVE.md:23's retried|escalated|failed gather can never match). Human approved d34; merged --no-ff as 778f856, post-merge green (flywheel/check.sh, dev/check.sh, tests.test_resolve_spawn OK); i29 closed. The unblocked compaction then ran on main: activity.json 37->31, spawns.json 110->31, 21 insertions / 860 deletions — pure squash, zero indentation churn."
+ },
+ {
+  "ts": "2026-07-29T22:10",
+  "session": 38,
+  "commits": [
+   "81874da",
+   "e187bae",
+   "a6b23d4",
+   "08ae05d"
+  ],
+  "summary": "Two friction issues fixed, each on its own branch, both left UNMERGED pending the AUTONOMY.md merge-self-improvement row (A at L3). i19 (a6b23d4, 2 files): installer/lifecycle/common.sh wire_block() preserved any `Project: ` line not starting with `(one line`, so an emptied line survived every refresh instead of falling back to the placeholder; both the python3 and node heredocs now require a non-blank stripped value, plus a new dual-runner test. Verifier VERIFIED 5/5 with its own harness — all 8 runner x case combinations, a legitimate `(`-prefixed value still preserved, tab-only value replaced, refresh idempotent — and established the node path was independently broken pre-fix. i30 (plan 81874da, code 08ae05d, 25 files): auto-logged spawn rows now land as `pending` instead of an unconditional `ok`, wrapup resolves them, check.sh enforces the enum (✗ out-of-enum, ⚠ pending). Strategist plan took TWO auditor passes: the first caught two shell-quoting blockers in the check.sh insert — the node one would have aborted check.sh's whole if/elif/fi compound, silently ending all state validation while the gate still printed success; the second caught a prose-vs-fence contradiction (`four comment lines` over a six-line fence) that would have failed the step's own wc -l criterion. Verifier VERIFIED 8/8 including a forced-node-branch run and a real PostToolUse payload appending `outcome: pending`. Bookkeeping (e187bae): opened i31 (the lifecycle suite aborts on the first runner under set -euo pipefail, so a node-only regression hides behind a python3 failure — found by the i19 verifier), logged a LESSONS line on that verifier running three commands in the shared checkout instead of its worktree, and backfilled 50333fc into session 37 (check.sh had flagged it untracked). One verifier run died mid-task on an API monthly-spend-limit error; retried with a priority-ordered, economical prompt and it completed."
  }
 ]

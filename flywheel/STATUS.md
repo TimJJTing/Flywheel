@@ -1,39 +1,40 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-29 (session 37, i29 fixed + merged, compaction run)
+Updated: 2026-07-29 (session 38, i19 + i30 fixed and verified, both awaiting merge)
 
 ## Current state
-- i29 FIXED, VERIFIED and MERGED: `flywheel/improve-compact-ledger-indent` (0fe6afa,
-  one commit off main 726bbc9), d34 human-approved, merged --no-ff as 778f856.
-  `flywheel/compact.py:20` + its byte-identical distribution mirror now dump
-  `indent=1, ensure_ascii=False`; it was the last state-ledger writer still on
-  indent=2 and would have silently reverted i28 on the next compaction.
-- Fresh verifier VERIFIED 7/7 empirically on a scratch copy seeded from
-  `git show HEAD:flywheel/state/*.json` (real ledgers untouched): indent=1 output with
-  zero `\u` escapes, rerun idempotent + byte-identical, summary keeps the SCHEMAS.md
-  required fields, and 10 milestone hashes independently recomputed from the squashed
-  entries matched the summary's `commits` exactly. A7 probe: no third indent=2 writer
-  of `flywheel/state` exists, so i29 closes fully once merged.
-- i26/i27/i28 remain merged and closed (e4e03a5, 008e041, ae18bf1); detail in the
-  ledgers and `docs/flywheel/plans/improve-i26-i27-i28.md`.
-
-- Compaction (MAINTENANCE.md:39-41, blocked since i28) then ran on main: activity.json
-  37→31, spawns.json 110→31, 21 insertions / 860 deletions — pure squash, zero
-  indentation churn, which is the i29 fix doing its job. check.sh no longer prints
-  "compaction due". Full history stays in the git log of each ledger file.
+- i19 FIXED + VERIFIED, UNMERGED: `flywheel/improve-i19-blank-project-fallback` (a6b23d4,
+  one commit off main 50333fc), decision d35 pending. `installer/lifecycle/common.sh`
+  wire_block() preserved any `Project: ` line not starting with `(one line`, so an
+  emptied line survived every refresh instead of falling back to the placeholder. Both
+  the python3 (:46-50) and node (:70-77) heredocs now require a non-blank stripped
+  value; new dual-runner test at tests/test_adapter_lifecycle.sh:411-428.
+- i30 FIXED + VERIFIED, UNMERGED: `flywheel/improve-i30-spawn-outcome` (08ae05d, one
+  commit off main e187bae, plan 81874da), decision d36 pending. Auto-logged spawn rows
+  now write `pending` via a DEFAULT_OUTCOME constant instead of an unconditional `ok`;
+  wrapup resolves each; check.sh fails (✗) on out-of-enum, warns (⚠) on pending.
+  25 files = 11 authored + 14 mirrors/projections.
+- Both verifiers fresh-context (5/5, 8/8), incl. a forced-node check.sh run.
 
 ## In flight
-- Nothing. All `flywheel/improve-*` branches are merged; safe to delete.
+- Nothing executing. Two branches await the human's merge/reject on d35 and d36.
 
 ## Next actions (in order)
-1. i30 (opened this session): `resolve-spawn.py:547,572` hardcode `"outcome": "ok"`,
-   so IMPROVE.md:23's "gather spawn rows with outcome retried|escalated|failed" can
-   never match; for background spawns the PostToolUse hook also writes the row at
-   launch, asserting success before the agent finishes. Own branch, do not bundle.
-2. i25 (docs/CONTEXT-ENGINEERING.md) and open backlog i1-i11 unchanged.
+1. Human decides d35 (i19) and d36 (i30). On merge: `git merge --no-ff`, re-run
+   check.sh + dev/check.sh + tests, close the issue, record the decision outcome. The
+   branches are independent — either can merge alone.
+2. i31 (opened this session): tests/test_adapter_lifecycle.sh aborts on the first
+   runner under `set -euo pipefail`, so a node-only regression hides behind a python3
+   failure. Own branch.
+3. i25, the i30 §7 deferred FACTS row, and open backlog i1-i11 unchanged.
 
 ## Blockers / decisions pending the human
-- None.
+- d35 (merge i19) and d36 (merge i30) — both `pending` in decisions.json.
+- Carry-forward: i30 is REAL but PARTIAL. check.sh only warns on `pending` and
+  wrapup.sh never mentions outcome/pending/spawns, so pending→terminal rests on the
+  wrapup skill body (`.claude/skills/wrapup/SKILL.md:19-23`) being obeyed — a pending
+  row can persist forever with the gate passing. Same shape as i21's carry-forward.
 - Carry-forward: i21's done-condition is a real but PARTIAL fix (verifier) — no
   externally-checkable artifact, so spawn review stays rubber-stampable in principle.
+- A verifier run died on an API monthly-spend-limit error; the retry completed.

@@ -384,8 +384,11 @@
   "type": "friction",
   "priority": "P3",
   "status": "open",
-  "detail": "flywheel/resolve-spawn.py:547 and :572 hardcode `\"outcome\": \"ok\"`, so no spawn row can ever read retried/escalated/failed — yet IMPROVE.md:23 tells the improve pass to gather `state/spawns.json` rows with outcome `retried|escalated|failed`, which by construction returns nothing. Observed 2026-07-29 while fixing i29: the claude-code PostToolUse hook (.claude/settings.json, matcher `Agent`) fires when the Agent tool CALL returns, and a background spawn returns at launch, so the verifier row `{ts 2026-07-29T16:59, agent verifier, task \"Verify i29 compact indent fix\", outcome \"ok\"}` was already in the ledger while that verifier was still running — the verifier itself flagged it as a possibly fabricated success entry. Provenance is legitimate (framework hook, notes `auto-logged`), but the row asserts an outcome that did not exist yet. Fix candidates: drop the outcome field from auto-logged rows or set it to `pending`/`unknown` and have wrapup fill the real outcome, or move background-spawn logging to a completion-time signal. Own branch; do not bundle.",
-  "commits": [],
+  "detail": "flywheel/resolve-spawn.py:547 and :572 hardcode `\"outcome\": \"ok\"`, so no spawn row can ever read retried/escalated/failed — yet IMPROVE.md:23 tells the improve pass to gather `state/spawns.json` rows with outcome `retried|escalated|failed`, which by construction returns nothing. Observed 2026-07-29 while fixing i29: the claude-code PostToolUse hook (.claude/settings.json, matcher `Agent`) fires when the Agent tool CALL returns, and a background spawn returns at launch, so the verifier row `{ts 2026-07-29T16:59, agent verifier, task \"Verify i29 compact indent fix\", outcome \"ok\"}` was already in the ledger while that verifier was still running — the verifier itself flagged it as a possibly fabricated success entry. Provenance is legitimate (framework hook, notes `auto-logged`), but the row asserts an outcome that did not exist yet. Fix candidates: drop the outcome field from auto-logged rows or set it to `pending`/`unknown` and have wrapup fill the real outcome, or move background-spawn logging to a completion-time signal. Own branch; do not bundle. FIXED 2026-07-29 on flywheel/improve-i30-spawn-outcome (08ae05d, plan 81874da), verifier VERIFIED 8/8; awaiting the d36 merge decision — closes on merge. Residual, stated by the verifier: nothing mechanically forces a pending row to a terminal value (check.sh only warns), so that step rests on the wrapup skill body being obeyed.",
+  "commits": [
+   "81874da",
+   "08ae05d"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
