@@ -741,7 +741,7 @@ class ResolveSpawnTests(unittest.TestCase):
         serialized = json.dumps(output) + self.ledger.read_text(encoding="utf-8")
         self.assertNotIn(secret, serialized)
         self.assertTrue(self.ledger.read_text(encoding="utf-8").startswith(
-            '[\n  {\n    "ts"'
+            '[\n {\n  "ts"'
         ))
 
     def test_claude_post_tool_use_override_is_a_complete_golden(self):
