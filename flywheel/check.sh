@@ -63,8 +63,8 @@ for adapter_file in CLAUDE.md AGENTS.md; do
     done
     if [ "$total" -le 500 ]; then echo "✓ always-loaded set ($label): $total/500 lines";
     else echo "✗ always-loaded set ($label): $total lines exceeds 500"; FAIL=1; fi
-    if [ "$owned" -le 305 ]; then echo "✓ flywheel-owned always-loaded ($adapter_file block+${label#*.md}): $owned/305 lines";
-    else echo "✗ flywheel-owned always-loaded ($adapter_file block+${label#*.md}): $owned lines exceeds 305"; FAIL=1; fi
+    if [ "$owned" -le 305 ]; then echo "✓ flywheel-owned always-loaded ($adapter_file block${label#*.md}): $owned/305 lines";
+    else echo "✗ flywheel-owned always-loaded ($adapter_file block${label#*.md}): $owned lines exceeds 305"; FAIL=1; fi
   fi
 done
 
