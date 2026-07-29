@@ -2,7 +2,7 @@
  {
   "id": "d1",
   "title": "Config tiers nest per-adapter values under \"adapters\" map",
-  "detail": "User request; extensible without schema change. (Key renamed harnesses\u2192adapters 2026-07-07.)",
+  "detail": "User request; extensible without schema change. (Key renamed harnesses→adapters 2026-07-07.)",
   "options": [],
   "recommendation": "",
   "autonomy_row": "Edit flywheel structural docs",
@@ -62,18 +62,18 @@
  {
   "id": "d6",
   "title": "No pi-style providers block in config.json",
-  "detail": "Flywheel never calls model APIs itself \u2014 the adapter does; per-tier adapters map plus the opencode 'provider' field already covers it.",
+  "detail": "Flywheel never calls model APIs itself — the adapter does; per-tier adapters map plus the opencode 'provider' field already covers it.",
   "options": [],
   "recommendation": "",
   "autonomy_row": "Architectural fork",
   "status": "decided-by-llm",
-  "outcome": "config schema unchanged beyond harnesses\u2192adapters key rename",
+  "outcome": "config schema unchanged beyond harnesses→adapters key rename",
   "created": "2026-07-07",
   "resolved": "2026-07-07"
  },
  {
   "id": "d7",
-  "title": "Cross-adapter auto-log hook for spawns.json \u2014 design only, not built now",
+  "title": "Cross-adapter auto-log hook for spawns.json — design only, not built now",
   "detail": "Extends d4 (hooks skipped). Design: claude-code SubagentStop/PostToolUse(Task) hook -> resolve-spawn.py maps subagent_type -> tier -> config.json adapter block -> {adapter,model,level}, appends a row; matching SessionStart/SessionEnd hook emits the coordinator row. opencode: same resolver via opencode.json plugin/hook mechanism. codex: degraded mode, no subagents to capture -- only session-level (coordinator/role) events loggable via notify; per-subagent capture is N/A, document the asymmetry rather than faking rows. Resolver logic is shared; only the wiring differs per adapter.",
   "options": [
    "build now",
@@ -283,7 +283,7 @@
  {
   "id": "d21",
   "title": "Merge Phase 1: scaffold-density principle (flywheel/improve-scaffold-density)",
-  "detail": "Phase 1 of docs/flywheel/plans/context-engineering-revision-2026-07.md. Adds MAINTENANCE.md \u00a75 scaffold-density principle (10-line fence incl. information-hierarchy tiers), raises MAINTENANCE budget 80->90 (plan's only raise, LESSONS.md-justified). Commit 514800c off 72ad67f. Engineer A1-A6 all PASS; fresh-context verifier VERIFIED: fence byte-identical to plan, commit hygiene clean, both check suites green, adapter lifecycle tests PASS, Phase 5 headroom probe 83<=90 holds.",
+  "detail": "Phase 1 of docs/flywheel/plans/context-engineering-revision-2026-07.md. Adds MAINTENANCE.md §5 scaffold-density principle (10-line fence incl. information-hierarchy tiers), raises MAINTENANCE budget 80->90 (plan's only raise, LESSONS.md-justified). Commit 514800c off 72ad67f. Engineer A1-A6 all PASS; fresh-context verifier VERIFIED: fence byte-identical to plan, commit hygiene clean, both check suites green, adapter lifecycle tests PASS, Phase 5 headroom probe 83<=90 holds.",
   "options": [
    "merge",
    "reject (branch stays, later phases rebase off it regardless)"
@@ -291,14 +291,14 @@
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
   "status": "approved",
-  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
+  "outcome": "merged via single merge of d25 branch (561aaf6) — human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
  },
  {
   "id": "d22",
   "title": "Merge Phase 2: degraded mode to ADAPTERS.md (flywheel/improve-degraded-mode-to-adapters)",
-  "detail": "Phase 2 of context-engineering-revision plan. Moves ORCHESTRATION.md \u00a78 degraded-mode into ADAPTERS.md \u00a7Degraded mode; ORCHESTRATION 113->106, ADAPTERS 66->74, always-loaded 265->258 (CLAUDE) / 268->261 (AGENTS); 4 cross-references updated; 10-file commit 38f1272 off 514800c (Phase 1 branch). History: engineer STOP exposed fence/B3 contradiction (plan amended 4232771); verifier FAILED on silent 4-word content drop traced to plan inception (plan amended 64f008e, commit re-made via --amend). Final verifier verdict VERIFIED: source-parity word diff exit 0, fence+mirror byte-identical, checks green.",
+  "detail": "Phase 2 of context-engineering-revision plan. Moves ORCHESTRATION.md §8 degraded-mode into ADAPTERS.md §Degraded mode; ORCHESTRATION 113->106, ADAPTERS 66->74, always-loaded 265->258 (CLAUDE) / 268->261 (AGENTS); 4 cross-references updated; 10-file commit 38f1272 off 514800c (Phase 1 branch). History: engineer STOP exposed fence/B3 contradiction (plan amended 4232771); verifier FAILED on silent 4-word content drop traced to plan inception (plan amended 64f008e, commit re-made via --amend). Final verifier verdict VERIFIED: source-parity word diff exit 0, fence+mirror byte-identical, checks green.",
   "options": [
    "merge (after d21 merges; branch chains off Phase 1)",
    "reject"
@@ -306,7 +306,7 @@
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
   "status": "approved",
-  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
+  "outcome": "merged via single merge of d25 branch (561aaf6) — human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
  },
@@ -321,14 +321,14 @@
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
   "status": "approved",
-  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
+  "outcome": "merged via single merge of d25 branch (561aaf6) — human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
  },
  {
   "id": "d24",
   "title": "Merge Phase 4: claude-code block HR pointer (flywheel/improve-claude-block-hr-pointer)",
-  "detail": "Phase 4 of context-engineering-revision plan. CLAUDE.md managed block HR1-4 duplicate replaced by 3-line pointer to canonical flywheel/INDEX.md \u00a7Hard rules (loaded via @-import); ADAPTERS.md Exception 5-for-3 swap (76 lines); dev/check.sh guard widened: @flywheel/INDEX.md exact-line import guard + cross-copy HR identity for remaining adapters. Always-loaded 243->238 CLAUDE. Commit d7dbb7f off 2130ddb. Zero STOPs. Fresh verifier VERIFIED: both negative fixtures re-run independently (import deletion FAILs guard; codex HR mutation FAILs cross-copy check), canonical HRs word-identical, pointer restates nothing, fences byte-identical, 7-file hygiene clean, all suites green.",
+  "detail": "Phase 4 of context-engineering-revision plan. CLAUDE.md managed block HR1-4 duplicate replaced by 3-line pointer to canonical flywheel/INDEX.md §Hard rules (loaded via @-import); ADAPTERS.md Exception 5-for-3 swap (76 lines); dev/check.sh guard widened: @flywheel/INDEX.md exact-line import guard + cross-copy HR identity for remaining adapters. Always-loaded 243->238 CLAUDE. Commit d7dbb7f off 2130ddb. Zero STOPs. Fresh verifier VERIFIED: both negative fixtures re-run independently (import deletion FAILs guard; codex HR mutation FAILs cross-copy check), canonical HRs word-identical, pointer restates nothing, fences byte-identical, 7-file hygiene clean, all suites green.",
   "options": [
    "merge (after d23; chains off Phase 3 branch)",
    "reject"
@@ -336,7 +336,7 @@
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
   "status": "approved",
-  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
+  "outcome": "merged via single merge of d25 branch (561aaf6) — human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
  },
@@ -351,8 +351,68 @@
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
   "status": "approved",
-  "outcome": "merged via single merge of d25 branch (561aaf6) \u2014 human chose landing all 5 chained branches at once; all suites green post-merge",
+  "outcome": "merged via single merge of d25 branch (561aaf6) — human chose landing all 5 chained branches at once; all suites green post-merge",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
+ },
+ {
+  "id": "d26",
+  "title": "Merge i20: audit-failure-mode-rubric (flywheel/improve-audit-failure-mode-rubric)",
+  "detail": "IMPROVE.md step 1 audit dispatch gains the 5-name failure-mode rubric (sediment, sprawl, no-op lines stating default model behavior, duplicated sources of truth, premature completion). IMPROVE.md 61->64/75; managed dogfood copy edited identically (dev/check.sh byte-compare). Plan defect caught at execution: first fence wrapped 'premature\\ncompletion', breaking its own grep gate; plan corrected, retry landed clean. Commit 73610a5 off f15be9c, verifier VERIFIED. Four-way octopus merge simulation of all four branches: clean, zero conflicts, all gates green on the merged tree.",
+  "options": [
+   "merge (independent — mergeable in any order or individually)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d27",
+  "title": "Merge i21: wrapup-spawns-done-condition (flywheel/improve-wrapup-spawns-done-condition)",
+  "detail": "wrapup SKILL.md step 2 spawns.json review gains a checkable done-condition ('every spawn row cross-checked, one at a time, against this session's own record of what that spawn did'). All three copies (distribution/shared, .claude, .agents) 54->56, byte-identical. Auditor fixes applied pre-execution: dropped a step-6 enumeration clause (ORCHESTRATION.md §3 conflict) and replaced ambiguous 'against the transcript'. Verifier note: real but partial — no externally-checkable artifact, residual rubber-stamp risk. Commit ad49607 off f15be9c, verifier VERIFIED. Four-way octopus merge simulation of all four branches: clean, zero conflicts, all gates green on the merged tree.",
+  "options": [
+   "merge (independent — mergeable in any order or individually)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d28",
+  "title": "Merge i23: positive-framing-judgment-r7 (flywheel/improve-positive-framing-judgment-r7)",
+  "detail": "Narrow negation audit of style-level prohibitions: 25 candidates swept, 1 accepted, 24 rejected as hard boundaries (HR1-4, AUTONOMY matrix, git -A ban, --no-verify). JUDGMENT.md:100 'Do not average interpretations. State both readings explicitly.' -> 'State both readings explicitly and pick neither.' Line-neutral at 129/130. Verifier confirmed binding force preserved (R7 steps 2-3 close the blend loophole) and no stale references to the old string. Commit 44e78b9 off f15be9c, verifier VERIFIED. Four-way octopus merge simulation of all four branches: clean, zero conflicts, all gates green on the merged tree.",
+  "options": [
+   "merge (independent — mergeable in any order or individually)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d29",
+  "title": "Merge i24: check-label-double-plus (flywheel/improve-check-label-double-plus)",
+  "detail": "check.sh:66-67 owned-cap label dropped a redundant literal '+': 'block+${label#*.md}' -> 'block${label#*.md}'. Renders 'CLAUDE.md block+INDEX+ORCHESTRATION+FACTS' / 'AGENTS.md block+INDEX+ORCHESTRATION+FACTS'; caps unchanged at 235/305 and 246/305. Display-only — verifier confirmed nothing greps the label. Both check.sh copies edited. Commit 987800a off f15be9c, verifier VERIFIED. Four-way octopus merge simulation of all four branches: clean, zero conflicts, all gates green on the merged tree.",
+  "options": [
+   "merge (independent — mergeable in any order or individually)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]

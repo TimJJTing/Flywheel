@@ -118,7 +118,7 @@
  {
   "ts": "2026-07-13T01:55",
   "session": 13,
-  "summary": "refactor: gen_architecture.py fully dynamic discovery (diagram, tech-stack, edges) \u2014 verified 9/9",
+  "summary": "refactor: gen_architecture.py fully dynamic discovery (diagram, tech-stack, edges) — verified 9/9",
   "commits": [
    "e88049e"
   ]
@@ -298,6 +298,18 @@
    "a99f2be",
    "561aaf6",
    "bd5df0c"
+  ]
+ },
+ {
+  "ts": "2026-07-29T12:20",
+  "session": 34,
+  "summary": "Fixed i20/i21/i23/i24 as four independent improve branches (73610a5, ad49607, 44e78b9, 987800a) — plan+audit+execute+verify; engineer run 1 refused 2 sections on coordinator-introduced plan defects, corrected, retry clean; all four VERIFIED and unmerged pending d26-d29; filed i26/i27",
+  "commits": [
+   "89e29c6",
+   "73610a5",
+   "ad49607",
+   "44e78b9",
+   "987800a"
   ]
  }
 ]

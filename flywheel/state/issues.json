@@ -245,8 +245,10 @@
   "type": "friction",
   "priority": "P2",
   "status": "open",
-  "detail": "Adopt named failure modes from mattpocock writing-great-skills (sediment, sprawl, no-op lines stating default behavior, duplicated sources of truth, premature completion) as an explicit rubric for the improve-pass plan-auditor dispatch in IMPROVE.md step 1. ~2 lines. Source analysis: session 33, docs/flywheel/research/positioning-and-cognitive-dashboard-2026-07.md \u00a74A.",
-  "commits": [],
+  "detail": "Adopt named failure modes from mattpocock writing-great-skills (sediment, sprawl, no-op lines stating default behavior, duplicated sources of truth, premature completion) as an explicit rubric for the improve-pass plan-auditor dispatch in IMPROVE.md step 1. ~2 lines. Source analysis: session 33, docs/flywheel/research/positioning-and-cognitive-dashboard-2026-07.md §4A. FIXED session 34 on flywheel/improve-* branch, commit 73610a5; plan docs/flywheel/plans/improve-i20-i21-i23-i24.md, plan-auditor VERIFIED, verifier VERIFIED. Branch UNMERGED pending human merge decision d26 (autonomy L3 ask-first). Close on merge.",
+  "commits": [
+   "73610a5"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -256,8 +258,10 @@
   "type": "friction",
   "priority": "P2",
   "status": "open",
-  "detail": "wrapup SKILL.md step 2 lacks a done-condition; auto-appended spawn rows risk rubber-stamped default outcomes (premature completion). Add: review is done when every row from this session is cross-checked against the transcript. Touches distribution source of the managed skill block.",
-  "commits": [],
+  "detail": "wrapup SKILL.md step 2 lacks a done-condition; auto-appended spawn rows risk rubber-stamped default outcomes (premature completion). Add: review is done when every row from this session is cross-checked against the transcript. Touches distribution source of the managed skill block. FIXED session 34 on flywheel/improve-* branch, commit ad49607; plan docs/flywheel/plans/improve-i20-i21-i23-i24.md, plan-auditor VERIFIED, verifier VERIFIED. Branch UNMERGED pending human merge decision d27 (autonomy L3 ask-first). Close on merge.",
+  "commits": [
+   "ad49607"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -267,7 +271,7 @@
   "type": "debt",
   "priority": "P2",
   "status": "open",
-  "detail": "Session-protocol lines in the claude-code managed block ('use the delegate skill', wrapup in step 3) duplicate what model-invoked skill descriptions already trigger \u2014 two sources of truth, ~3-4 always-loaded lines. SEQUENCING: execute only AFTER context-engineering-revision Phase 4 lands (same managed block; avoid editing it twice in flight). Own improve branch.",
+  "detail": "Session-protocol lines in the claude-code managed block ('use the delegate skill', wrapup in step 3) duplicate what model-invoked skill descriptions already trigger — two sources of truth, ~3-4 always-loaded lines. SEQUENCING: execute only AFTER context-engineering-revision Phase 4 lands (same managed block; avoid editing it twice in flight). Own improve branch.",
   "commits": [],
   "opened": "2026-07-29",
   "closed": null
@@ -278,8 +282,10 @@
   "type": "debt",
   "priority": "P3",
   "status": "open",
-  "detail": "Pocock negation failure mode: prohibition drags forbidden behavior into context. Applies ONLY to style-steering lines; hard boundaries (HR2/HR3, git -A ban, autonomy rows) stay explicit prohibitions per GPT cross-vendor feedback. Sweep flywheel/*.md for reframable style negations. Low priority.",
-  "commits": [],
+  "detail": "Pocock negation failure mode: prohibition drags forbidden behavior into context. Applies ONLY to style-steering lines; hard boundaries (HR2/HR3, git -A ban, autonomy rows) stay explicit prohibitions per GPT cross-vendor feedback. Sweep flywheel/*.md for reframable style negations. Low priority. FIXED session 34 on flywheel/improve-* branch, commit 44e78b9; plan docs/flywheel/plans/improve-i20-i21-i23-i24.md, plan-auditor VERIFIED, verifier VERIFIED. Branch UNMERGED pending human merge decision d28 (autonomy L3 ask-first). Close on merge.",
+  "commits": [
+   "44e78b9"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -289,8 +295,10 @@
   "type": "friction",
   "priority": "P3",
   "status": "open",
-  "detail": "check.sh flywheel-owned label renders 'AGENTS.md block++INDEX+ORCHESTRATION+FACTS' \u2014 double plus from the plan fence's ${label#*.md} stripping logic (plan defect reproduced byte-for-byte by engineer; verifier flagged cosmetic). One-line fix in a future pass; cosmetic only, caps compute correctly.",
-  "commits": [],
+  "detail": "check.sh flywheel-owned label renders 'AGENTS.md block++INDEX+ORCHESTRATION+FACTS' — double plus from the plan fence's ${label#*.md} stripping logic (plan defect reproduced byte-for-byte by engineer; verifier flagged cosmetic). One-line fix in a future pass; cosmetic only, caps compute correctly. FIXED session 34 on flywheel/improve-* branch, commit 987800a; plan docs/flywheel/plans/improve-i20-i21-i23-i24.md, plan-auditor VERIFIED, verifier VERIFIED. Branch UNMERGED pending human merge decision d29 (autonomy L3 ask-first). Close on merge.",
+  "commits": [
+   "987800a"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -301,6 +309,28 @@
   "priority": "P2",
   "status": "open",
   "detail": "The context-engineering practices implemented in session 33 exist only in internal files (MAINTENANCE.md par.5, IMPROVE.md preference, check.sh ratchet, LESSONS.md) and research docs; no user-facing doc states them as patterns. Write a short docs/CONTEXT-ENGINEERING.md (or PHILOSOPHY section): always-loaded budget + ratchet with named reserve, progressive disclosure via index, scaffold density scales with weakest reader, import-vs-duplicate by adapter capability (guarded @-import vs verbatim copies + cross-copy diff), execution-time mechanical verification of plans (simulate criteria, fence-to-source diffs). Positioning value: the Claude-5 context-engineering guide's advice implemented cross-vendor. Add README reading-map row when written.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i26",
+  "title": "MAINTENANCE.md and ORCHESTRATION.md cite ORCHESTRATION budget 120; check.sh enforces 95",
+  "type": "friction",
+  "priority": "P3",
+  "status": "open",
+  "detail": "flywheel/MAINTENANCE.md:29 says 'ORCHESTRATION 120' and flywheel/ORCHESTRATION.md:3 says 'Keep under 120 lines', but flywheel/check.sh:21 is `check_budget ORCHESTRATION.md 95`. Prose disagrees with the mechanical gate in two places, so a future editor may grow the file to 120 and be blocked by check.sh. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing, out of scope there (fixing it would have bundled improvements). Fix: reconcile all three to the enforced value.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i27",
+  "title": "IMPROVE.md dispatches `auditor` while the claude-code agent is named plan-auditor",
+  "type": "debt",
+  "priority": "P4",
+  "status": "open",
+  "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference.",
   "commits": [],
   "opened": "2026-07-29",
   "closed": null

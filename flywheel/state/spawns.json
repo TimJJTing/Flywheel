@@ -6,13 +6,13 @@
    "2026-07-16T23:02"
   ],
   "sessions": 73,
-  "summary": "compacted 73 entries \u2014 full history in git log of this file",
+  "summary": "compacted 73 entries — full history in git log of this file",
   "commits": [],
   "agent": "(compacted)",
   "adapter": "",
   "model": "",
   "level": "",
-  "task": "compacted 73 entries \u2014 full history in git log of this file",
+  "task": "compacted 73 entries — full history in git log of this file",
   "outcome": "ok",
   "notes": ""
  },
@@ -955,5 +955,65 @@
   "task": "Coordinate context-engineering revision (plan, audit, 5 phases)",
   "outcome": "ok",
   "notes": "model from session environment table 2026-07-29; 4 plan amendments authored inline (4232771, 64f008e, 3f96aae, 61878b1)"
+ },
+ {
+  "ts": "2026-07-29T11:19",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Plan i20/i21/i23/i24 improvements",
+  "outcome": "ok",
+  "notes": "plan docs/flywheel/plans/improve-i20-i21-i23-i24.md; found the brief's IMPROVE.md-has-no-budget premise wrong (check.sh:26 = 75)"
+ },
+ {
+  "ts": "2026-07-29T11:29",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Audit improve plan",
+  "outcome": "ok",
+  "notes": "VERIFIED, 0 blockers, 3 MAJOR + 6 MINOR corrections; all 4 BEFORE fences matched byte-for-byte; found 2 pre-existing defects (now i26, i27)"
+ },
+ {
+  "ts": "2026-07-29T11:41",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Apply four improve branches",
+  "outcome": "retried",
+  "notes": "i21 ad49607 + i24 987800a landed; i20/i23 correctly refused — plan self-contradiction (i20 fence wrapped 'premature\\ncompletion' breaking its own grep gate; i23 carried two conflicting replacement wordings). No files touched for those two. Plan corrected, retry dispatched."
+ },
+ {
+  "ts": "2026-07-29T11:49",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Retry i20 and i23 branches",
+  "outcome": "ok",
+  "notes": "retry 1 of max 2, changed spec (ORCHESTRATION.md §4); i20 73610a5 + i23 44e78b9, no fence mismatches, stale stash ca9bb6c dropped"
+ },
+ {
+  "ts": "2026-07-29T11:52",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify four improve branches",
+  "outcome": "ok",
+  "notes": "VERIFIED all four; four-way octopus merge simulation clean; evidence docs/flywheel/research/verify-improve-i20-i21-i23-i24.md"
+ },
+ {
+  "ts": "2026-07-29T12:10",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "",
+  "task": "Fix i20/i21/i23/i24 via four improve branches",
+  "outcome": "ok",
+  "notes": "model from session environment table 2026-07-29; authored the audit-fix and execution-fix plan patches inline; both plan defects that failed engineer run 1 were coordinator-introduced (LESSONS 2026-07-29)"
  }
 ]
