@@ -1095,5 +1095,15 @@
   "task": "Apply i26/i27/i28 branches",
   "outcome": "ok",
   "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T16:59",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i29 compact indent fix",
+  "outcome": "ok",
+  "notes": "auto-logged"
  }
 ]

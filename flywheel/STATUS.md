@@ -1,40 +1,40 @@
 # STATUS — session handover. Budget: ≤ 40 lines (check.sh enforces). Trim, don't grow.
 Decisions history lives in `flywheel/state/decisions.json` (rendered by the dashboard).
 
-Updated: 2026-07-29 (session 36, i26/i27/i28 fixed and merged)
+Updated: 2026-07-29 (session 37, i29 fixed — merge pending)
 
 ## Current state
-- i26, i27, i28 FIXED, VERIFIED and MERGED. Each was one commit on its own branch off
-  45e5a1c; d31/d32/d33 human-approved, merged --no-ff as e4e03a5, 008e041, ae18bf1.
-  Plan: `docs/flywheel/plans/improve-i26-i27-i28.md`. Post-merge green: flywheel/check.sh,
-  dev/check.sh, `python3 -m unittest tests.test_resolve_spawn` (OK).
-  - i26 `flywheel/improve-orchestration-budget-95` (8dac62e): ORCHESTRATION.md:3 +
-    MAINTENANCE.md:29 prose said budget 120; check.sh enforces 95. Prose moved to 95 —
-    a tightening, check.sh untouched. 4 files.
-  - i27 `flywheel/improve-auditor-tier-naming` (b0cf3b7): `dispatch \`auditor\`` →
-    `dispatch tier \`auditor\`` in IMPROVE.md:17 AND MAINTENANCE.md:69. One word each,
-    no reflow; keeps the tier vocabulary instead of renaming it in 7 files. 4 files.
-  - i28 `flywheel/improve-spawn-ledger-indent` (8425d40): resolve-spawn.py:530 dumps
-    indent=1 / ensure_ascii=False — spawns.json stops churning ~1000 lines per session.
-    test_resolve_spawn.py:744 + the ledger normalized in the same commit. 4 files.
-- plan-auditor: APPROVED WITH REQUIRED CHANGES (2 BLOCKER, 2 MAJOR, 3 MINOR), all 7
-  applied by the coordinator before dispatch. Both blockers were real scope bugs: i27
-  missed MAINTENANCE.md:69, and i26's "no stale 120" criterion was unpassable repo-wide
-  (it also hits the historical issues.json record + generated dashboard). LESSONS.md +1.
-- Verifier probed past the criteria: revert-then-dev/check.sh passes on all three, each
-  parent == main tip, and i28's small 33-line diffstat was explained (the COMMITTED
-  ledger was already indent=1; only the live hook append was indent=2).
+- i29 FIXED and VERIFIED on `flywheel/improve-compact-ledger-indent` (0fe6afa, one
+  commit off main 726bbc9), NOT merged — d34 is pending the human (AUTONOMY.md row
+  "Merge flywheel self-improvement branch" = A at L3).
+  `flywheel/compact.py:20` + its byte-identical distribution mirror now dump
+  `indent=1, ensure_ascii=False`; it was the last state-ledger writer still on
+  indent=2 and would have silently reverted i28 on the next compaction.
+- Fresh verifier VERIFIED 7/7 empirically on a scratch copy seeded from
+  `git show HEAD:flywheel/state/*.json` (real ledgers untouched): indent=1 output with
+  zero `\u` escapes, rerun idempotent + byte-identical, summary keeps the SCHEMAS.md
+  required fields, and 10 milestone hashes independently recomputed from the squashed
+  entries matched the summary's `commits` exactly. A7 probe: no third indent=2 writer
+  of `flywheel/state` exists, so i29 closes fully once merged.
+- i26/i27/i28 remain merged and closed (e4e03a5, 008e041, ae18bf1); detail in the
+  ledgers and `docs/flywheel/plans/improve-i26-i27-i28.md`.
 
 ## In flight
-- Nothing. The three `flywheel/improve-*` branches are merged; safe to delete.
+- `flywheel/improve-compact-ledger-indent` — awaiting the d34 merge decision.
 
 ## Next actions (in order)
-1. i29 (new, opened this session): `flywheel/compact.py:20` also writes indent=2 and
-   would revert i28. **Do not run `python3 flywheel/compact.py` until i29 is fixed**,
-   even though check.sh prints "compaction due" (>100 entries) every run.
-2. i25 (docs/CONTEXT-ENGINEERING.md) and open backlog i1-i11 unchanged.
+1. On d34 approval: merge --no-ff, close i29, then run the compaction that
+   MAINTENANCE.md:39-41 schedules (`python3 flywheel/compact.py`; check.sh has been
+   printing "compaction due" — spawns.json 109 entries > 100). Dry run in scratch gave
+   activity 36→31, spawns 109→31. **Until that merge lands, still do not run
+   compaction on main** — main's compact.py is unchanged and would revert i28.
+2. i30 (opened this session): `resolve-spawn.py:547,572` hardcode `"outcome": "ok"`,
+   so IMPROVE.md:23's "gather spawn rows with outcome retried|escalated|failed" can
+   never match; for background spawns the PostToolUse hook also writes the row at
+   launch, asserting success before the agent finishes. Own branch, do not bundle.
+3. i25 (docs/CONTEXT-ENGINEERING.md) and open backlog i1-i11 unchanged.
 
 ## Blockers / decisions pending the human
-- None.
+- d34: merge `flywheel/improve-compact-ledger-indent` (recommendation: merge).
 - Carry-forward: i21's done-condition is a real but PARTIAL fix (verifier) — no
   externally-checkable artifact, so spawn review stays rubber-stampable in principle.

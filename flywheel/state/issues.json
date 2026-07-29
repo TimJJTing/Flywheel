@@ -368,7 +368,20 @@
   "type": "friction",
   "priority": "P3",
   "status": "open",
-  "detail": "flywheel/compact.py:20 writes state ledgers with `indent=2` (ensure_ascii=False). It is the second writer of the same files that i28 fixed in flywheel/resolve-spawn.py, so the next compaction run would re-churn spawns.json indentation and also churn activity.json (indent=1 today). This is live, not theoretical: flywheel/check.sh already prints `⚠ state/spawns.json: 109 entries (>100) — compaction due (python3 flywheel/compact.py)` and flywheel/MAINTENANCE.md:39-41 schedules that compaction for an improve pass. Found while planning i28; plan-auditor confirmed that keeping it OUT of i28's commit is correct (separate file, separate revert unit) but required an explicit stop-instruction, recorded at docs/flywheel/plans/improve-i26-i27-i28.md §0.5: do NOT run compaction until this is fixed. Fix: compact.py to indent=1, own branch, then run compaction.",
+  "detail": "flywheel/compact.py:20 writes state ledgers with `indent=2` (ensure_ascii=False). It is the second writer of the same files that i28 fixed in flywheel/resolve-spawn.py, so the next compaction run would re-churn spawns.json indentation and also churn activity.json (indent=1 today). This is live, not theoretical: flywheel/check.sh already prints `⚠ state/spawns.json: 109 entries (>100) — compaction due (python3 flywheel/compact.py)` and flywheel/MAINTENANCE.md:39-41 schedules that compaction for an improve pass. Found while planning i28; plan-auditor confirmed that keeping it OUT of i28's commit is correct (separate file, separate revert unit) but required an explicit stop-instruction, recorded at docs/flywheel/plans/improve-i26-i27-i28.md §0.5: do NOT run compaction until this is fixed. Fix: compact.py to indent=1, own branch, then run compaction. FIXED on branch `flywheel/improve-compact-ledger-indent` (commit 0fe6afa, one commit off main 726bbc9): source + distribution mirror both `indent=1, ensure_ascii=False`. Fresh verifier VERIFIED 2026-07-29 (7/7 criteria, incl. an A7 probe confirming no third indent=2 writer of flywheel/state). Merge pending human approval as d34; compaction stays blocked until that merge lands.",
+  "commits": [
+   "0fe6afa"
+  ],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i30",
+  "title": "Spawn ledger records outcome \"ok\" unconditionally, and for background spawns writes it before the agent finishes",
+  "type": "friction",
+  "priority": "P3",
+  "status": "open",
+  "detail": "flywheel/resolve-spawn.py:547 and :572 hardcode `\"outcome\": \"ok\"`, so no spawn row can ever read retried/escalated/failed — yet IMPROVE.md:23 tells the improve pass to gather `state/spawns.json` rows with outcome `retried|escalated|failed`, which by construction returns nothing. Observed 2026-07-29 while fixing i29: the claude-code PostToolUse hook (.claude/settings.json, matcher `Agent`) fires when the Agent tool CALL returns, and a background spawn returns at launch, so the verifier row `{ts 2026-07-29T16:59, agent verifier, task \"Verify i29 compact indent fix\", outcome \"ok\"}` was already in the ledger while that verifier was still running — the verifier itself flagged it as a possibly fabricated success entry. Provenance is legitimate (framework hook, notes `auto-logged`), but the row asserts an outcome that did not exist yet. Fix candidates: drop the outcome field from auto-logged rows or set it to `pending`/`unknown` and have wrapup fill the real outcome, or move background-spawn logging to a completion-time signal. Own branch; do not bundle.",
   "commits": [],
   "opened": "2026-07-29",
   "closed": null

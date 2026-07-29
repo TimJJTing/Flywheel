@@ -474,5 +474,20 @@
   "outcome": "human approved; merged --no-ff into main as ae18bf1. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK).",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
+ },
+ {
+  "id": "d34",
+  "title": "Merge i29: compact ledgers at indent=1 (flywheel/improve-compact-ledger-indent)",
+  "detail": "flywheel/compact.py:20 was the second writer of flywheel/state/{activity,spawns}.json still serializing at indent=2, so the next scheduled compaction would have silently reverted i28 and re-churned activity.json. Now `json.dump(data, f, indent=1, ensure_ascii=False)`, applied to the source and its byte-identical distribution mirror. 2 files, 2 insertions / 2 deletions, commit 0fe6afa off main 726bbc9. Fresh verifier VERIFIED all 7 criteria empirically on a scratch copy seeded from `git show HEAD:flywheel/state/*.json` (real ledgers untouched): output indent=1 with zero \\u escapes, rerun idempotent and byte-identical, summary keeps SCHEMAS.md required fields, and the 10 milestone hashes independently computed from the squashed activity entries matched the summary's commits array exactly. A7 probe found no third indent=2 writer of flywheel/state — only compact.py and resolve-spawn.py write there, both now fixed, so i29 closes fully. Gates green on the branch: flywheel/check.sh `all checks passed`, dev/check.sh `PASS repository distribution checks`. Unblocks the compaction scheduled by MAINTENANCE.md:39-41 (check.sh: spawns.json 109 entries > 100).",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]

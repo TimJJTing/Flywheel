@@ -338,5 +338,13 @@
    "008e041",
    "ae18bf1"
   ]
+ },
+ {
+  "ts": "2026-07-29T19:20",
+  "session": 37,
+  "commits": [
+   "0fe6afa"
+  ],
+  "summary": "i29 fixed on `flywheel/improve-compact-ledger-indent` (0fe6afa, one implementation commit off main 726bbc9), left UNMERGED pending d34 (AUTONOMY.md merge-self-improvement row = A at L3). flywheel/compact.py:20 and its byte-identical distribution mirror now dump `indent=1, ensure_ascii=False`; it was the last flywheel/state writer still at indent=2 and the scheduled compaction would have silently reverted i28. Coordinator did the one-token edit inline (2 files), dry-ran compaction in a scratchpad copy (activity 36->31, spawns 109->31, indent=1, zero \\u escapes, rerun idempotent), then dispatched a fresh verifier per HR3: VERIFIED 7/7 with empirical hash-preservation and an A7 probe finding no third indent=2 writer of flywheel/state, so i29 closes fully on merge. Gates green on the branch: flywheel/check.sh, dev/check.sh. Verifier also flagged an uncommitted spawns.json row claiming its own success before it finished; investigated and NOT fabrication — the claude-code PostToolUse `Agent` hook (resolve-spawn.py) fires when a background Agent call returns at launch, and resolve-spawn.py:547,572 hardcode outcome \"ok\". Opened i30 for that (IMPROVE.md:23's retried|escalated|failed gather can never match). Compaction itself deliberately NOT run: main's compact.py is still indent=2 until d34 merges."
  }
 ]
