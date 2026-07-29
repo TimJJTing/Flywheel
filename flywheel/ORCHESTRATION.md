@@ -1,6 +1,6 @@
 # Orchestration — mandatory for every session in a flywheel project
 
-Always loaded. Keep under 120 lines; detail belongs in on-demand files (see INDEX.md).
+Always loaded. Keep under 95 lines; detail belongs in on-demand files (see INDEX.md).
 
 ## 1. The hierarchy (the Commander does not step onto the battlefield)
 
