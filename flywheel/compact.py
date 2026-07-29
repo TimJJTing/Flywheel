@@ -17,7 +17,7 @@ def load(name):
 
 def save(name, data):
     with open(os.path.join(STATE, name), "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(data, f, indent=1, ensure_ascii=False)
         f.write("\n")
 
 
