@@ -440,10 +440,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as e4e03a5. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK).",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d32",
@@ -455,10 +455,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as 008e041. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK).",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d33",
@@ -470,9 +470,9 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": "",
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as ae18bf1. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK).",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  }
 ]

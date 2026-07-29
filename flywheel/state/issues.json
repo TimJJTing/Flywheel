@@ -325,39 +325,42 @@
   "title": "MAINTENANCE.md and ORCHESTRATION.md cite ORCHESTRATION budget 120; check.sh enforces 95",
   "type": "friction",
   "priority": "P3",
-  "status": "open",
-  "detail": "flywheel/MAINTENANCE.md:29 says 'ORCHESTRATION 120' and flywheel/ORCHESTRATION.md:3 says 'Keep under 120 lines', but flywheel/check.sh:21 is `check_budget ORCHESTRATION.md 95`. Prose disagrees with the mechanical gate in two places, so a future editor may grow the file to 120 and be blocked by check.sh. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing, out of scope there (fixing it would have bundled improvements). Fix: reconcile all three to the enforced value. FIXED on branch `flywheel/improve-orchestration-budget-95` (commit 8dac62e, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "status": "done",
+  "detail": "flywheel/MAINTENANCE.md:29 says 'ORCHESTRATION 120' and flywheel/ORCHESTRATION.md:3 says 'Keep under 120 lines', but flywheel/check.sh:21 is `check_budget ORCHESTRATION.md 95`. Prose disagrees with the mechanical gate in two places, so a future editor may grow the file to 120 and be blocked by check.sh. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing, out of scope there (fixing it would have bundled improvements). Fix: reconcile all three to the enforced value. FIXED on branch `flywheel/improve-orchestration-budget-95` (commit 8dac62e, one commit off main), verifier VERIFIED 2026-07-29. Human approved the merge; merged --no-ff into main. Post-merge gates green.",
   "commits": [
-   "8dac62e"
+   "8dac62e",
+   "e4e03a5"
   ],
   "opened": "2026-07-29",
-  "closed": null
+  "closed": "2026-07-29"
  },
  {
   "id": "i27",
   "title": "IMPROVE.md dispatches `auditor` while the claude-code agent is named plan-auditor",
   "type": "debt",
   "priority": "P4",
-  "status": "open",
-  "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference. FIXED on branch `flywheel/improve-auditor-tier-naming` (commit b0cf3b7, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "status": "done",
+  "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference. FIXED on branch `flywheel/improve-auditor-tier-naming` (commit b0cf3b7, one commit off main), verifier VERIFIED 2026-07-29. Human approved the merge; merged --no-ff into main. Post-merge gates green.",
   "commits": [
-   "b0cf3b7"
+   "b0cf3b7",
+   "008e041"
   ],
   "opened": "2026-07-29",
-  "closed": null
+  "closed": "2026-07-29"
  },
  {
   "id": "i28",
   "title": "resolve-spawn.py rewrites spawns.json with indent=2/ensure_ascii=True, churning the whole file",
   "type": "friction",
   "priority": "P3",
-  "status": "open",
-  "detail": "The PostToolUse hook appends spawn rows but re-serializes the whole file at indent=2 with ASCII escapes, while the repo's ledgers are indent=1 with literal UTF-8. Every session's spawns.json therefore shows ~1000 changed lines instead of ~10, and each wrapup has to re-normalize by hand before committing. Observed 2026-07-29 session 35: `git diff --stat flywheel/state/spawns.json` = 1057 insertions / 1017 deletions for 5 appended rows. Fix: make flywheel/resolve-spawn.py dump with indent=1, ensure_ascii=False. FIXED on branch `flywheel/improve-spawn-ledger-indent` (commit 8425d40, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "status": "done",
+  "detail": "The PostToolUse hook appends spawn rows but re-serializes the whole file at indent=2 with ASCII escapes, while the repo's ledgers are indent=1 with literal UTF-8. Every session's spawns.json therefore shows ~1000 changed lines instead of ~10, and each wrapup has to re-normalize by hand before committing. Observed 2026-07-29 session 35: `git diff --stat flywheel/state/spawns.json` = 1057 insertions / 1017 deletions for 5 appended rows. Fix: make flywheel/resolve-spawn.py dump with indent=1, ensure_ascii=False. FIXED on branch `flywheel/improve-spawn-ledger-indent` (commit 8425d40, one commit off main), verifier VERIFIED 2026-07-29. Human approved the merge; merged --no-ff into main. Post-merge gates green.",
   "commits": [
-   "8425d40"
+   "8425d40",
+   "ae18bf1"
   ],
   "opened": "2026-07-29",
-  "closed": null
+  "closed": "2026-07-29"
  },
  {
   "id": "i29",
