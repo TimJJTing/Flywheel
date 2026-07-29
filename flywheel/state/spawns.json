@@ -315,5 +315,45 @@
   "task": "Verify i29 compact indent fix",
   "outcome": "ok",
   "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T17:09",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Fix i19 blank Project fallback",
+  "outcome": "ok",
+  "notes": "auto-logged; override requested: sonnet"
+ },
+ {
+  "ts": "2026-07-29T17:10",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Plan i30 spawn outcome fix",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T17:15",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i19 fix",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T17:19",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Audit i30 plan",
+  "outcome": "ok",
+  "notes": "auto-logged"
  }
 ]

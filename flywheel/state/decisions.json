@@ -489,5 +489,20 @@
   "outcome": "human approved; merged --no-ff into main as 778f856. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK). The compaction this unblocked then ran on main: activity.json 37->31, spawns.json 110->31, diff 21 insertions / 860 deletions — pure squash with no indentation churn, which is the i29 fix working.",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
+ },
+ {
+  "id": "d35",
+  "title": "Merge i19: blank Project line falls back to template (flywheel/improve-i19-blank-project-fallback)",
+  "detail": "installer/lifecycle/common.sh wire_block() preserved any existing `Project: ` line that did not start with the literal `(one line`, so an accidentally emptied line was treated as user content and survived every refresh instead of falling back to the template placeholder (issue i19). Both runner paths now preserve only when the value is non-blank after strip()/trim() AND is not the placeholder: common.sh:46-50 (python3 heredoc) and :70-77 (node heredoc) — select_runner() picks one at runtime, so a one-sided fix would have been a silent divergence. New test tests/test_adapter_lifecycle.sh:411-428, wired for both runners. 2 files, one commit a6b23d4 off main 50333fc. Fresh verifier VERIFIED 5/5 with its own harness (not the author's): all 8 runner x case combinations correct; revert probe fails as expected; probes beyond the author's tests — a legitimate value starting with `(` stays preserved, a tab-only value is replaced, refresh is idempotent; diff is exactly the two files, one commit, no ledger/STATUS edits. Verifier also established the node path was independently broken pre-fix and is fixed post-fix.",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": null,
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]
