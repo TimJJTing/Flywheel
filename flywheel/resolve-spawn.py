@@ -527,7 +527,7 @@ def append_or_update_rows(cwd, rows, coordinator_session_key=None):
                     data.append(rows[0])
         f.seek(0)
         f.truncate()
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=1, ensure_ascii=False)
         f.write("\n")
 
 

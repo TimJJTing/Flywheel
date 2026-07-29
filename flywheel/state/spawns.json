@@ -1065,5 +1065,35 @@
   "task": "Fix i22 via flywheel/improve-block-skill-dedup",
   "outcome": "ok",
   "notes": "model from session environment table 2026-07-29; patched the auditor's 7 findings into the plan and re-ran its V0 fence script before dispatching engineer; merged 542b4db after human approval of d30"
+ },
+ {
+  "ts": "2026-07-29T16:10",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Plan i26/i27/i28 fixes",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T16:18",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Audit i26/i27/i28 plan",
+  "outcome": "ok",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-29T16:25",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Apply i26/i27/i28 branches",
+  "outcome": "ok",
+  "notes": "auto-logged"
  }
 ]
