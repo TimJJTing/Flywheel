@@ -26,7 +26,7 @@ Enforced mechanically by `flywheel/check.sh` (wrapup runs it; a red check blocks
 committing doc changes until fixed or consciously overridden with a LESSONS.md entry).
 
 - Per-file budgets: the authoritative table is the `check_budget` list at the top of
-  `flywheel/check.sh` (INDEX 50, STATUS 40, ORCHESTRATION 120, and so on) — edit
+  `flywheel/check.sh` (INDEX 50, STATUS 40, ORCHESTRATION 95, and so on) — edit
   budgets there, via the structural process, never by letting a file grow past one.
 - Always-loaded set (adapter file + every file named in check.sh's `ALWAYS_LOADED`)
   ≤ 500 lines total; the flywheel-owned part (marker block + those files) ≤ 305 —
