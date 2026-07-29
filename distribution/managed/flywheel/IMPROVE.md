@@ -14,7 +14,7 @@ unrecognizable system.
 
 ## Procedure
 
-1. **Audit first** (MAINTENANCE.md §4): dispatch `auditor` over `flywheel/*.md` +
+1. **Audit first** (MAINTENANCE.md §4): dispatch tier `auditor` over `flywheel/*.md` +
    adapter block; the dispatch prompt lists these failure modes: sediment (stale
    lines nobody removed), sprawl (rules leaking past their home file), no-op lines
    stating default model behavior, duplicated sources of truth, premature completion
