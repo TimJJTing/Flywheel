@@ -21,6 +21,8 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
   actually retried, escalated, or failed. Add the coordinator row as directed by the
   active-adapter reference. Resolve manual model/level only from verified adapter
   facts; never write inheritance placeholders or unverified model guesses.
+  Done only when every spawn row from this session has been cross-checked, one at a
+  time, against this session's own record of what that spawn did.
 - `projects.json` / `issues.json`: update statuses, milestones, and commits arrays for
   anything this session advanced. Friction you noticed → new issue with
   `type: "friction"` (feeds the improve pass).
