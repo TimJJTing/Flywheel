@@ -367,13 +367,14 @@
   "title": "compact.py writes ledgers at indent=2, which would revert i28's spawns.json normalization",
   "type": "friction",
   "priority": "P3",
-  "status": "open",
-  "detail": "flywheel/compact.py:20 writes state ledgers with `indent=2` (ensure_ascii=False). It is the second writer of the same files that i28 fixed in flywheel/resolve-spawn.py, so the next compaction run would re-churn spawns.json indentation and also churn activity.json (indent=1 today). This is live, not theoretical: flywheel/check.sh already prints `⚠ state/spawns.json: 109 entries (>100) — compaction due (python3 flywheel/compact.py)` and flywheel/MAINTENANCE.md:39-41 schedules that compaction for an improve pass. Found while planning i28; plan-auditor confirmed that keeping it OUT of i28's commit is correct (separate file, separate revert unit) but required an explicit stop-instruction, recorded at docs/flywheel/plans/improve-i26-i27-i28.md §0.5: do NOT run compaction until this is fixed. Fix: compact.py to indent=1, own branch, then run compaction. FIXED on branch `flywheel/improve-compact-ledger-indent` (commit 0fe6afa, one commit off main 726bbc9): source + distribution mirror both `indent=1, ensure_ascii=False`. Fresh verifier VERIFIED 2026-07-29 (7/7 criteria, incl. an A7 probe confirming no third indent=2 writer of flywheel/state). Merge pending human approval as d34; compaction stays blocked until that merge lands.",
+  "status": "closed",
+  "detail": "flywheel/compact.py:20 writes state ledgers with `indent=2` (ensure_ascii=False). It is the second writer of the same files that i28 fixed in flywheel/resolve-spawn.py, so the next compaction run would re-churn spawns.json indentation and also churn activity.json (indent=1 today). This is live, not theoretical: flywheel/check.sh already prints `⚠ state/spawns.json: 109 entries (>100) — compaction due (python3 flywheel/compact.py)` and flywheel/MAINTENANCE.md:39-41 schedules that compaction for an improve pass. Found while planning i28; plan-auditor confirmed that keeping it OUT of i28's commit is correct (separate file, separate revert unit) but required an explicit stop-instruction, recorded at docs/flywheel/plans/improve-i26-i27-i28.md §0.5: do NOT run compaction until this is fixed. Fix: compact.py to indent=1, own branch, then run compaction. FIXED on branch `flywheel/improve-compact-ledger-indent` (commit 0fe6afa, one commit off main 726bbc9): source + distribution mirror both `indent=1, ensure_ascii=False`. Fresh verifier VERIFIED 2026-07-29 (7/7 criteria, incl. an A7 probe confirming no third indent=2 writer of flywheel/state). Human approved d34; merged --no-ff into main as 778f856, post-merge gates green. The blocked compaction then ran: activity.json 37->31, spawns.json 110->31 entries, 21 insertions / 860 deletions with no indentation churn.",
   "commits": [
-   "0fe6afa"
+   "0fe6afa",
+   "778f856"
   ],
   "opened": "2026-07-29",
-  "closed": null
+  "closed": "2026-07-29"
  },
  {
   "id": "i30",

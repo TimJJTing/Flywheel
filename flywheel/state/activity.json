@@ -1,74 +1,25 @@
 [
  {
-  "ts": "2026-07-06T14:00",
-  "session": 1,
-  "summary": "Bootstrap: doctrine, adapters, dashboard, install, docs, dogfood, audit+E2E fixes",
-  "commits": [
-   "5fcca4c",
-   "089bfdb",
-   "a26c727",
-   "eff2cd9",
-   "18649d1",
-   "6df7311",
-   "c787a7f"
-  ]
- },
- {
-  "ts": "2026-07-07T02:40",
-  "session": 2,
-  "summary": "Refinement pass: terminology adapter/framework, STATUS slim, R8 interrupts, wrapup.sh, drift check, compact.py",
-  "commits": [
-   "bd35b30",
-   "06e01af",
-   "69c7a0e",
-   "83f7d1d",
-   "e18bac2",
-   "3b17c40",
-   "3d2ebce",
-   "6573b3f"
-  ]
- },
- {
-  "ts": "2026-07-07T03:45",
-  "session": 3,
-  "summary": "Default models per tier/adapter + config.json single-source via sync.py (VERIFIED)",
-  "commits": [
-   "aa7aaa4"
-  ]
- },
- {
-  "ts": "2026-07-08T14:00",
-  "session": 4,
-  "summary": "Unify effort/reasoning to level vocabulary + dashboard ledger adapter/level/coordinator; deferred auto-log hook (d7)",
-  "commits": [
-   "6ca3206"
-  ]
- },
- {
-  "ts": "2026-07-08T15:00",
-  "session": 5,
-  "summary": "built d7 spawn auto-log+notify hook (claude-code), fixed flock race, codex hooks researched (SubagentStop possible), TEMPLATES.md model-line removed",
-  "commits": [
-   "9bfd334",
-   "be75e33"
-  ]
- },
- {
-  "ts": "2026-07-09T21:55",
-  "session": 6,
-  "summary": "codex adapter Part A built+verified (subagent assumption refuted, install.sh/resolve-spawn.py/check.sh wired); awaiting live codex session for Part B/C",
-  "commits": [
-   "4d2d17b"
-  ]
- },
- {
   "ts": "2026-07-09T23:30",
-  "session": 7,
-  "summary": "strategy consulting: landscape vs BMAD/Agent OS/Spec Kit, motto adopted, docs/flywheel/research/strategy-2026-07.md + README/CLAUDE.md updated",
+  "ts_range": [
+   "2026-07-06T14:00",
+   "2026-07-09T23:30"
+  ],
+  "sessions": 7,
+  "summary": "compacted 7 entries — full history in git log of this file",
   "commits": [
-   "7b62d3a",
-   "907cdcc"
-  ]
+   "06e01af",
+   "089bfdb",
+   "18649d1",
+   "3d2ebce",
+   "4d2d17b",
+   "5fcca4c",
+   "6573b3f",
+   "a26c727",
+   "e18bac2",
+   "eff2cd9"
+  ],
+  "session": 0
  },
  {
   "ts": "2026-07-10T12:59",
@@ -343,8 +294,9 @@
   "ts": "2026-07-29T19:20",
   "session": 37,
   "commits": [
-   "0fe6afa"
+   "0fe6afa",
+   "778f856"
   ],
-  "summary": "i29 fixed on `flywheel/improve-compact-ledger-indent` (0fe6afa, one implementation commit off main 726bbc9), left UNMERGED pending d34 (AUTONOMY.md merge-self-improvement row = A at L3). flywheel/compact.py:20 and its byte-identical distribution mirror now dump `indent=1, ensure_ascii=False`; it was the last flywheel/state writer still at indent=2 and the scheduled compaction would have silently reverted i28. Coordinator did the one-token edit inline (2 files), dry-ran compaction in a scratchpad copy (activity 36->31, spawns 109->31, indent=1, zero \\u escapes, rerun idempotent), then dispatched a fresh verifier per HR3: VERIFIED 7/7 with empirical hash-preservation and an A7 probe finding no third indent=2 writer of flywheel/state, so i29 closes fully on merge. Gates green on the branch: flywheel/check.sh, dev/check.sh. Verifier also flagged an uncommitted spawns.json row claiming its own success before it finished; investigated and NOT fabrication — the claude-code PostToolUse `Agent` hook (resolve-spawn.py) fires when a background Agent call returns at launch, and resolve-spawn.py:547,572 hardcode outcome \"ok\". Opened i30 for that (IMPROVE.md:23's retried|escalated|failed gather can never match). Compaction itself deliberately NOT run: main's compact.py is still indent=2 until d34 merges."
+  "summary": "i29 fixed on `flywheel/improve-compact-ledger-indent` (0fe6afa, one implementation commit off main 726bbc9), left UNMERGED pending d34 (AUTONOMY.md merge-self-improvement row = A at L3). flywheel/compact.py:20 and its byte-identical distribution mirror now dump `indent=1, ensure_ascii=False`; it was the last flywheel/state writer still at indent=2 and the scheduled compaction would have silently reverted i28. Coordinator did the one-token edit inline (2 files), dry-ran compaction in a scratchpad copy (activity 36->31, spawns 109->31, indent=1, zero \\u escapes, rerun idempotent), then dispatched a fresh verifier per HR3: VERIFIED 7/7 with empirical hash-preservation and an A7 probe finding no third indent=2 writer of flywheel/state, so i29 closes fully on merge. Gates green on the branch: flywheel/check.sh, dev/check.sh. Verifier also flagged an uncommitted spawns.json row claiming its own success before it finished; investigated and NOT fabrication — the claude-code PostToolUse `Agent` hook (resolve-spawn.py) fires when a background Agent call returns at launch, and resolve-spawn.py:547,572 hardcode outcome \"ok\". Opened i30 for that (IMPROVE.md:23's retried|escalated|failed gather can never match). Human approved d34; merged --no-ff as 778f856, post-merge green (flywheel/check.sh, dev/check.sh, tests.test_resolve_spawn OK); i29 closed. The unblocked compaction then ran on main: activity.json 37->31, spawns.json 110->31, 21 insertions / 860 deletions — pure squash, zero indentation churn."
  }
 ]

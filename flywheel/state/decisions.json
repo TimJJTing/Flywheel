@@ -485,9 +485,9 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as 778f856. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh (PASS repository distribution checks), python3 -m unittest tests.test_resolve_spawn (OK). The compaction this unblocked then ran on main: activity.json 37->31, spawns.json 110->31, diff 21 insertions / 860 deletions — pure squash with no indentation churn, which is the i29 fix working.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  }
 ]
