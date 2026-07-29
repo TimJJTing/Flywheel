@@ -97,7 +97,7 @@ path in docs is worse than a bug in code.
 ## R7. Handling ambiguity and taste (Honesty Clause)
 
 If a task hinges on ambiguous wording or a taste judgment with no rubric above:
-1. Do not average interpretations. State both readings explicitly.
+1. State both readings explicitly and pick neither.
 2. Escalate one tier up with both readings + your recommendation, or ask the human if
    the autonomy matrix says so.
 3. If neither is possible this session: implement NOTHING for the ambiguous part; leave
