@@ -21,7 +21,8 @@ unrecognizable system.
    (a step with no checkable done-condition). Fix BLOCKER/MAJOR findings below.
 2. **Gather inputs:** `flywheel/LESSONS.md`; `state/issues.json` where
    `type == "friction"`; latest `flywheel/check.sh` output; `state/spawns.json` rows
-   with outcome `retried|escalated|failed`.
+   with outcome `retried|escalated|failed` — plus any row still `pending`, which means
+   a wrapup never adjudicated that spawn and is itself a friction signal.
 3. **Propose ≤ 3 atomic improvements.** Each: one sentence + expected effect + the
    input line that motivated it. No improvement without a motivating observation —
    speculative rules are how doc rot starts.

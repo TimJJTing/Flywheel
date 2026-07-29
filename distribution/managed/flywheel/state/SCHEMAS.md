@@ -26,8 +26,14 @@ on the writing agent.
 // spawns.json — append-only agent-activity record (coordinator + subagents)
 { "ts":"2026-07-06T14:00","agent":"engineer","adapter":"claude-code",
   "model":"","level":"",
-  "task":"<=15 words","outcome":"ok|retried|escalated|failed","notes":"" }
+  "task":"<=15 words","outcome":"pending|ok|retried|escalated|failed","notes":"" }
 // agent: add "coordinator" for the main session itself.
+// outcome: automatic writers emit "pending" only — they fire before any verdict exists
+//   (a background claude-code spawn logs at launch). Wrapup resolves every "pending" row
+//   into ok|retried|escalated|failed; check.sh warns while any remain. Resolve them the
+//   same session: once the ledger passes 100 entries check.sh calls for compaction, and
+//   compact.py is then run to squash all but the newest 30 into the "(compacted)" rollup, and an unresolved "pending" row vanishes
+//   into it silently — the warning stops without anyone having adjudicated the spawn.
 // adapter: claude-code | codex | opencode | antigravity.
 // model provenance is adapter-specific: resolved child runtime (claude-code),
 //   configuration pin (codex child), current-turn telemetry (codex coordinator),

@@ -80,6 +80,7 @@
   .outcome.ok { background: var(--pos-bg); color: var(--pos); }
   .outcome.caution { background: var(--caution-bg); color: var(--caution); }
   .outcome.negative { background: var(--neg-bg); color: var(--neg); }
+  .outcome.pending { background: var(--border); color: var(--muted); }
   ul.activity-list { list-style: none; margin: 0; padding: 0; }
   ul.activity-list li {
     border-bottom: 1px solid var(--border); padding: 6px 2px; font-size: 13px;
@@ -169,6 +170,7 @@
     <div class="controls">
       <select id="f-spawns-outcome">
         <option value="all">All outcomes</option>
+        <option value="pending">pending</option>
         <option value="ok">ok</option><option value="retried">retried</option>
         <option value="escalated">escalated</option><option value="failed">failed</option>
       </select>
@@ -303,6 +305,7 @@ function renderActivity() {
 }
 
 function outcomeClass(o) {
+  if (o === "pending") return "pending";
   if (o === "ok") return "ok";
   if (o === "retried" || o === "escalated") return "caution";
   return "negative";

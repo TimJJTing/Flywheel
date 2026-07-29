@@ -16,8 +16,9 @@ from flywheel/config.json by the validated derived agent -> tier.
 
 Branches per-adapter (payload shapes differ, must not run unmodified against the
 other): build_row_claude_code / build_row_codex. Shared across both: TIER_MAP, the
-cwd-resolution fallback, the ts/outcome row fields, the file-locking append to
-spawns.json, and exit-0-on-any-error (a hook failure must never block a spawn).
+cwd-resolution fallback, the ts field and the non-terminal DEFAULT_OUTCOME, the
+file-locking append to spawns.json, and exit-0-on-any-error (a hook failure must never
+block a spawn).
 
 ponytail: one script, adapter branch via argv — no flag-parsing library needed.
 """
@@ -51,6 +52,12 @@ CODEX_THREAD_ID_RE = re.compile(
 )
 COORDINATOR_NOTES_PREFIX = "auto-resolved from Codex turn_context; session-key:"
 COORDINATOR_KEY_MARKER = "session-key:"
+
+# Automatic writers never adjudicate a spawn: hooks fire at tool-call return (which for
+# a background claude-code spawn is at LAUNCH) and no adapter payload carries a
+# retried/escalated/failed verdict. Rows are written non-terminal and the wrapup
+# procedure resolves them (flywheel/state/SCHEMAS.md, wrapup skill step 2).
+DEFAULT_OUTCOME = "pending"
 
 
 def _repo_contains(repo_root, candidate):
@@ -544,7 +551,7 @@ def main():
             "ts": datetime.now().strftime("%Y-%m-%dT%H:%M"),
             "agent": fields["agent"], "adapter": fields["adapter"],
             "model": fields["model"], "level": fields["level"],
-            "task": fields["task"], "outcome": "ok", "notes": fields["notes"],
+            "task": fields["task"], "outcome": DEFAULT_OUTCOME, "notes": fields["notes"],
         }]
         append_or_update_rows(installed_root, rows, session_key)
         print(json.dumps({"systemMessage":
@@ -569,7 +576,7 @@ def main():
             "model": fields["model"],
             "level": fields["level"],
             "task": fields["task"],
-            "outcome": "ok",
+            "outcome": DEFAULT_OUTCOME,
             "notes": fields["notes"],
         })
 
