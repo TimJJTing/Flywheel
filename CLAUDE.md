@@ -9,11 +9,8 @@ Project: flywheel — the portable agent-framework boilerplate itself (dogfoodin
 @flywheel/FACTS.md
 
 ## Session protocol
-1. Read `flywheel/STATUS.md` first — resume from it, don't re-derive. Then
-   `bash flywheel/check.sh`: ledger-untracked-commit warnings = work done outside the
-   framework — triage, backfill ledgers/docs, note in STATUS.md.
-2. Route work per ORCHESTRATION.md §1; use the `delegate` skill for any delegation.
-3. Before ending / context low: run the `wrapup` skill. Uncommitted = lost.
+Stated once in `flywheel/INDEX.md` §Session protocol, always loaded above; the
+`delegate` and `wrapup` skills carry their own triggers. Never restate them here.
 
 ## Hard rules
 HR1-HR4 are stated once in `flywheel/INDEX.md` §Hard rules, always loaded above, and
