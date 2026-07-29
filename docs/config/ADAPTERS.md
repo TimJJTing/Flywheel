@@ -45,7 +45,7 @@ Adapter-specific agents, skills, and hooks are installed separately.
 
 1. Answer the five questions in `flywheel/ADAPTERS.md`; that IS the design.
 2. Create `distribution/adapters/<adapter>/` with a `*.block` file (always-loaded surface ≤ 50
-   lines: pointer to INDEX.md + session protocol + the four hard rules verbatim) and
+   lines: pointer to INDEX.md, plus any doctrine the block cannot mechanically load) and
    whatever agent/skill definitions the adapter supports, each containing the string
    `flywheel-managed`.
 3. Add the adapter's per-tier config shape under `tiers.<tier>.adapters.<name>` in
