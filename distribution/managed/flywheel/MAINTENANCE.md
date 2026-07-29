@@ -66,7 +66,7 @@ input for the consolidation pass in §2 and the improve pass in IMPROVE.md.
 ## 4. Consistency audit cadence
 
 Every `audit_cadence_sessions` sessions (config.json, default 5) or before any
-release, dispatch `auditor` over `flywheel/*.md` + the adapter block, checking:
+release, dispatch tier `auditor` over `flywheel/*.md` + the adapter block, checking:
 contradictions, ground truth (paths/tools/models exist), ambiguity for smaller
 models, executability. Fix BLOCKER/MAJOR findings via the structural process in §1
 before proceeding. This pass is folded into the IMPROVE.md cadence — same trigger,
