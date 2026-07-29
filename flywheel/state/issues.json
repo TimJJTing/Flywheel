@@ -326,8 +326,10 @@
   "type": "friction",
   "priority": "P3",
   "status": "open",
-  "detail": "flywheel/MAINTENANCE.md:29 says 'ORCHESTRATION 120' and flywheel/ORCHESTRATION.md:3 says 'Keep under 120 lines', but flywheel/check.sh:21 is `check_budget ORCHESTRATION.md 95`. Prose disagrees with the mechanical gate in two places, so a future editor may grow the file to 120 and be blocked by check.sh. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing, out of scope there (fixing it would have bundled improvements). Fix: reconcile all three to the enforced value.",
-  "commits": [],
+  "detail": "flywheel/MAINTENANCE.md:29 says 'ORCHESTRATION 120' and flywheel/ORCHESTRATION.md:3 says 'Keep under 120 lines', but flywheel/check.sh:21 is `check_budget ORCHESTRATION.md 95`. Prose disagrees with the mechanical gate in two places, so a future editor may grow the file to 120 and be blocked by check.sh. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing, out of scope there (fixing it would have bundled improvements). Fix: reconcile all three to the enforced value. FIXED on branch `flywheel/improve-orchestration-budget-95` (commit 8dac62e, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "commits": [
+   "8dac62e"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -337,8 +339,10 @@
   "type": "debt",
   "priority": "P4",
   "status": "open",
-  "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference.",
-  "commits": [],
+  "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference. FIXED on branch `flywheel/improve-auditor-tier-naming` (commit b0cf3b7, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "commits": [
+   "b0cf3b7"
+  ],
   "opened": "2026-07-29",
   "closed": null
  },
@@ -348,7 +352,20 @@
   "type": "friction",
   "priority": "P3",
   "status": "open",
-  "detail": "The PostToolUse hook appends spawn rows but re-serializes the whole file at indent=2 with ASCII escapes, while the repo's ledgers are indent=1 with literal UTF-8. Every session's spawns.json therefore shows ~1000 changed lines instead of ~10, and each wrapup has to re-normalize by hand before committing. Observed 2026-07-29 session 35: `git diff --stat flywheel/state/spawns.json` = 1057 insertions / 1017 deletions for 5 appended rows. Fix: make flywheel/resolve-spawn.py dump with indent=1, ensure_ascii=False.",
+  "detail": "The PostToolUse hook appends spawn rows but re-serializes the whole file at indent=2 with ASCII escapes, while the repo's ledgers are indent=1 with literal UTF-8. Every session's spawns.json therefore shows ~1000 changed lines instead of ~10, and each wrapup has to re-normalize by hand before committing. Observed 2026-07-29 session 35: `git diff --stat flywheel/state/spawns.json` = 1057 insertions / 1017 deletions for 5 appended rows. Fix: make flywheel/resolve-spawn.py dump with indent=1, ensure_ascii=False. FIXED on branch `flywheel/improve-spawn-ledger-indent` (commit 8425d40, one commit off main), verifier VERIFIED 2026-07-29. Stays open until the merge decision is resolved (AUTONOMY.md:16 = A at autonomy 3).",
+  "commits": [
+   "8425d40"
+  ],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i29",
+  "title": "compact.py writes ledgers at indent=2, which would revert i28's spawns.json normalization",
+  "type": "friction",
+  "priority": "P3",
+  "status": "open",
+  "detail": "flywheel/compact.py:20 writes state ledgers with `indent=2` (ensure_ascii=False). It is the second writer of the same files that i28 fixed in flywheel/resolve-spawn.py, so the next compaction run would re-churn spawns.json indentation and also churn activity.json (indent=1 today). This is live, not theoretical: flywheel/check.sh already prints `⚠ state/spawns.json: 109 entries (>100) — compaction due (python3 flywheel/compact.py)` and flywheel/MAINTENANCE.md:39-41 schedules that compaction for an improve pass. Found while planning i28; plan-auditor confirmed that keeping it OUT of i28's commit is correct (separate file, separate revert unit) but required an explicit stop-instruction, recorded at docs/flywheel/plans/improve-i26-i27-i28.md §0.5: do NOT run compaction until this is fixed. Fix: compact.py to indent=1, own branch, then run compaction.",
   "commits": [],
   "opened": "2026-07-29",
   "closed": null

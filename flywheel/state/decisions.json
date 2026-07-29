@@ -429,5 +429,50 @@
   "outcome": "human approved; merged --no-ff into main as 542b4db. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh.",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
+ },
+ {
+  "id": "d31",
+  "title": "Merge i26: orchestration-budget-95 (flywheel/improve-orchestration-budget-95)",
+  "detail": "flywheel/ORCHESTRATION.md:3 said 'Keep under 120 lines' and flywheel/MAINTENANCE.md:29 cited 'ORCHESTRATION 120', but flywheel/check.sh enforces `check_budget ORCHESTRATION.md 95`. Both prose citations now read 95; check.sh was NOT touched, so this is a TIGHTENING of the documented rule to the mechanically enforced one, not a loosening (IMPROVE.md:50-52 does not apply — ORCHESTRATION.md is 90 lines today). 4 files (2 sources + 2 managed mirrors), 4 insertions / 4 deletions, commit 8dac62e off main 45e5a1c. plan-auditor narrowed the plan's 'no stale 120 survives' criterion to the rule files: a repo-wide grep also matches the historical issues.json i26 record and the generated dashboard, which are history and must not be rewritten. Fresh verifier VERIFIED: A1-A7 re-run, revert probe (revert HEAD then dev/check.sh) passes, parent == main tip, mirrors cmp-identical.",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d32",
+  "title": "Merge i27: auditor-tier-naming (flywheel/improve-auditor-tier-naming)",
+  "detail": "flywheel/IMPROVE.md:17 and flywheel/MAINTENANCE.md:69 both read `dispatch \\`auditor\\``, which a smaller model executing them literally reads as an agent name — no adapter ships an agent called `auditor` (claude-code names it `plan-auditor`). One word inserted in each: `dispatch tier \\`auditor\\``. This keeps the adapter-neutral tier vocabulary used by ORCHESTRATION.md:19 and TEMPLATES.md:172 rather than renaming the tier in 7 core files, and avoids any line reflow (the defect class behind three 2026-07-29 LESSONS entries). plan-auditor caught that the plan had scoped only IMPROVE.md:17 while IMPROVE.md:17 points AT MAINTENANCE.md §4 — fixing one would have left the two canonical sources disagreeing; MAINTENANCE.md:69 was added before dispatch. One fix in two places, not bundling. 4 files, 4 insertions / 4 deletions, commit b0cf3b7 off main 45e5a1c. Fresh verifier VERIFIED: B1-B7 re-run, word-diff shows only `{+tier+}` per hunk, revert probe passes.",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
+ },
+ {
+  "id": "d33",
+  "title": "Merge i28: spawn-ledger-indent (flywheel/improve-spawn-ledger-indent)",
+  "detail": "flywheel/resolve-spawn.py:530 re-serialized the whole spawn ledger at `indent=2` with ASCII escapes while every other state ledger is indent=1 literal UTF-8, so each session showed ~1000 changed lines for ~5 appended rows and every wrapup re-normalized by hand. Now `json.dump(data, f, indent=1, ensure_ascii=False)`. tests/test_resolve_spawn.py:744 pinned the old byte shape and was patched in the same commit; flywheel/state/spawns.json normalized in the same commit so the revert unit stays coherent. 4 files, 33 insertions / 3 deletions, commit 8425d40 off main 45e5a1c. Fresh verifier VERIFIED: C1-C8 re-run (`Ran 37 tests` / `OK`), revert probe passes, and — probing the small diffstat — established that the COMMITTED ledger on main was already indent=1 (hand-normalized by past wrapups) while the live uncommitted hook append was indent=2, so 33 lines is correct and the fix is what stops recurrence. End-to-end probe drove append_or_update_rows() against a scratch copy with `café`/`—`/`π`: output indent=1, zero \\u escapes, real ledger untouched.",
+  "options": [
+   "merge (independent single-commit branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "pending",
+  "outcome": "",
+  "created": "2026-07-29",
+  "resolved": null
  }
 ]

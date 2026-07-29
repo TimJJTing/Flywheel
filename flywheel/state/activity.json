@@ -325,5 +325,15 @@
    "542b4db",
    "6db6f18"
   ]
+ },
+ {
+  "ts": "2026-07-29T18:30",
+  "session": 36,
+  "summary": "i26/i27/i28 fixed, one branch + one commit each, all three left UNMERGED pending d31/d32/d33 (AUTONOMY.md:16 = A at L3). i26 orchestration-budget-95 (8dac62e): prose budget 120 → the enforced 95 in ORCHESTRATION.md:3 + MAINTENANCE.md:29, check.sh untouched (tightening). i27 auditor-tier-naming (b0cf3b7): `dispatch tier `auditor`` in IMPROVE.md:17 AND MAINTENANCE.md:69. i28 spawn-ledger-indent (8425d40): resolve-spawn.py:530 dumps indent=1/ensure_ascii=False, test:744 + ledger normalized in the same commit. researcher plan → plan-auditor APPROVED WITH REQUIRED CHANGES (2 BLOCKER: i27 missed MAINTENANCE.md:69; i26's A3 criterion was unpassable repo-wide) → coordinator applied all 7 findings → engineer → fresh verifier VERIFIED all three incl. revert probes. i29 opened: compact.py:20 writes indent=2 and would revert i28 — compaction blocked until fixed.",
+  "commits": [
+   "8dac62e",
+   "b0cf3b7",
+   "8425d40"
+  ]
  }
 ]
