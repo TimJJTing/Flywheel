@@ -315,5 +315,15 @@
    "094a2ac",
    "51a7172"
   ]
+ },
+ {
+  "ts": "2026-07-29T14:10",
+  "session": 35,
+  "summary": "i22 fixed on flywheel/improve-block-skill-dedup (91f9cea): claude-code block's duplicated Session protocol section → 3-line pointer to INDEX.md, plus 3 doc rewords. researcher plan → plan-auditor REJECTED (1 BLOCKER: the plan's own prose broke dev/check.sh) → coordinator patched blocker + 6 minors, re-ran the V0 fence script → engineer → fresh verifier VERIFIED. Owned always-loaded 235→232/305. d30 human-approved; merged --no-ff as 542b4db, post-merge gates green; i22 closed.",
+  "commits": [
+   "91f9cea",
+   "542b4db",
+   "6db6f18"
+  ]
  }
 ]

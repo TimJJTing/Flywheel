@@ -272,11 +272,14 @@
   "title": "Dedup skill instructions between CLAUDE.md block and skill descriptions",
   "type": "debt",
   "priority": "P2",
-  "status": "open",
-  "detail": "Session-protocol lines in the claude-code managed block ('use the delegate skill', wrapup in step 3) duplicate what model-invoked skill descriptions already trigger — two sources of truth, ~3-4 always-loaded lines. SEQUENCING: execute only AFTER context-engineering-revision Phase 4 lands (same managed block; avoid editing it twice in flight). Own improve branch.",
-  "commits": [],
+  "status": "closed",
+  "detail": "Session-protocol lines in the claude-code managed block ('use the delegate skill', wrapup in step 3) duplicate what model-invoked skill descriptions already trigger — two sources of truth, ~3-4 always-loaded lines. SEQUENCING: execute only AFTER context-engineering-revision Phase 4 lands (same managed block; avoid editing it twice in flight). Own improve branch. FIXED on flywheel/improve-block-skill-dedup (91f9cea), verifier VERIFIED; stays open until the d30 merge decision lands.",
+  "commits": [
+   "91f9cea",
+   "542b4db"
+  ],
   "opened": "2026-07-29",
-  "closed": null
+  "closed": "2026-07-29"
  },
  {
   "id": "i23",
@@ -335,6 +338,17 @@
   "priority": "P4",
   "status": "open",
   "detail": "flywheel/IMPROVE.md:17 says dispatch `auditor`; the actual claude-code subagent is `plan-auditor` (.claude/skills/improve/SKILL.md:14 uses the real name). Consistent with the tier-name convention in MAINTENANCE.md/ORCHESTRATION.md/TEMPLATES.md, so verifier judged it non-blocking — but a smaller model executing IMPROVE.md literally would look for a nonexistent agent. Found by plan-auditor during the i20/i21/i23/i24 audit; pre-existing. Fix: state the tier name and the adapter agent name once, or point at the adapter reference.",
+  "commits": [],
+  "opened": "2026-07-29",
+  "closed": null
+ },
+ {
+  "id": "i28",
+  "title": "resolve-spawn.py rewrites spawns.json with indent=2/ensure_ascii=True, churning the whole file",
+  "type": "friction",
+  "priority": "P3",
+  "status": "open",
+  "detail": "The PostToolUse hook appends spawn rows but re-serializes the whole file at indent=2 with ASCII escapes, while the repo's ledgers are indent=1 with literal UTF-8. Every session's spawns.json therefore shows ~1000 changed lines instead of ~10, and each wrapup has to re-normalize by hand before committing. Observed 2026-07-29 session 35: `git diff --stat flywheel/state/spawns.json` = 1057 insertions / 1017 deletions for 5 appended rows. Fix: make flywheel/resolve-spawn.py dump with indent=1, ensure_ascii=False.",
   "commits": [],
   "opened": "2026-07-29",
   "closed": null

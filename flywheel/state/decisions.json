@@ -414,5 +414,20 @@
   "outcome": "human approved all four; merged --no-ff into main as 51a7172. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh, install.sh --check.",
   "created": "2026-07-29",
   "resolved": "2026-07-29"
+ },
+ {
+  "id": "d30",
+  "title": "Merge i22: block-skill-dedup (flywheel/improve-block-skill-dedup)",
+  "detail": "claude-code managed block's 6-line '## Session protocol' section replaced by a 3-line pointer (CLAUDE.md.block:11-13): it duplicated flywheel/INDEX.md §Session protocol (mechanically @-loaded at CLAUDE.md:7) word-for-word, and its only non-duplicate content was the delegate/wrapup skill names, which the skill descriptions already carry. Same shape as Phase 4's Hard-rules pointer. 3 same-commit doc rewords (flywheel/ADAPTERS.md + managed mirror + docs/config/ADAPTERS.md) so no doc contradicts the diff. Skill whitelist kept byte-unchanged (exclusionary, not duplicated by any skill description). claude-code only — the other 3 blocks do not @-load INDEX.md and their step 2 carries adapter-specific spawn mechanics. Commit 91f9cea off 704fff9, 5 files. plan-auditor gated the plan (1 BLOCKER patched: the plan file's own prose broke dev/check.sh). Fresh verifier VERIFIED: harness green, always-loaded 238→235/500 and owned 235→232/305; regression probe confirms the wrapup/STATUS/triage/routing duties all survive in always-loaded context (INDEX.md:6-12, ORCHESTRATION.md §1); D10 negative fixture proves the @flywheel/INDEX.md guard non-vacuous; fresh install.sh into a temp target lands the pointer intact.",
+  "options": [
+   "merge (single independent branch off main)",
+   "reject"
+  ],
+  "recommendation": "merge",
+  "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
+  "status": "approved",
+  "outcome": "human approved; merged --no-ff into main as 542b4db. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh.",
+  "created": "2026-07-29",
+  "resolved": "2026-07-29"
  }
 ]

@@ -1015,5 +1015,55 @@
   "task": "Fix i20/i21/i23/i24 via four improve branches",
   "outcome": "ok",
   "notes": "model from session environment table 2026-07-29; authored the audit-fix and execution-fix plan patches inline; both plan defects that failed engineer run 1 were coordinator-introduced (LESSONS 2026-07-29)"
+ },
+ {
+  "ts": "2026-07-29T12:24",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Plan i22 block dedup",
+  "outcome": "ok",
+  "notes": "plan saved docs/flywheel/plans/improve-i22-block-skill-dedup.md; JC1-JC5 decided; plan itself carried 1 blocker (its prose broke dev/check.sh) caught downstream by plan-auditor"
+ },
+ {
+  "ts": "2026-07-29T12:32",
+  "agent": "plan-auditor",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Audit i22 plan",
+  "outcome": "ok",
+  "notes": "REJECTED with 1 BLOCKER + 6 MINOR; blocker = the plan file's own path-prefix token tripping dev/check.sh:61-68; coordinator patched all 7, re-ran the V0 fence script"
+ },
+ {
+  "ts": "2026-07-29T12:40",
+  "agent": "engineer",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Apply i22 block dedup",
+  "outcome": "ok",
+  "notes": "commit 91f9cea, 5 files, all §4 harness rows PASS; flagged D10's pre-commit git-status sub-check as unsatisfiable by sequencing (plan nit, not a safety failure)"
+ },
+ {
+  "ts": "2026-07-29T12:44",
+  "agent": "verifier",
+  "adapter": "claude-code",
+  "model": "claude-sonnet-5",
+  "level": "high",
+  "task": "Verify i22 commit",
+  "outcome": "ok",
+  "notes": "VERIFIED; harness re-run green, regression probe confirms wrapup/STATUS/triage/routing duties survive in always-loaded context, D10 negative fixture non-vacuous, fresh install.sh lands the pointer intact"
+ },
+ {
+  "ts": "2026-07-29T14:20",
+  "agent": "coordinator",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "",
+  "task": "Fix i22 via flywheel/improve-block-skill-dedup",
+  "outcome": "ok",
+  "notes": "model from session environment table 2026-07-29; patched the auditor's 7 findings into the plan and re-ran its V0 fence script before dispatching engineer; merged 542b4db after human approval of d30"
  }
 ]
