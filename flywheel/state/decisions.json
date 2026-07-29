@@ -365,10 +365,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved all four; merged --no-ff into main as 9ed00dd. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh, install.sh --check.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d27",
@@ -380,10 +380,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved all four; merged --no-ff into main as 5303f2b. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh, install.sh --check.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d28",
@@ -395,10 +395,10 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved all four; merged --no-ff into main as 094a2ac. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh, install.sh --check.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  },
  {
   "id": "d29",
@@ -410,9 +410,9 @@
   ],
   "recommendation": "merge",
   "autonomy_row": "Merge flywheel self-improvement branch (A at L3)",
-  "status": "pending",
-  "outcome": null,
+  "status": "approved",
+  "outcome": "human approved all four; merged --no-ff into main as 51a7172. Post-merge green: flywheel/check.sh (all checks passed), dev/check.sh, tests/test_adapter_lifecycle.sh, install.sh --check.",
   "created": "2026-07-29",
-  "resolved": null
+  "resolved": "2026-07-29"
  }
 ]
