@@ -15,7 +15,10 @@ unrecognizable system.
 ## Procedure
 
 1. **Audit first** (MAINTENANCE.md §4): dispatch `auditor` over `flywheel/*.md` +
-   adapter block. Fix BLOCKER/MAJOR findings as improvements below.
+   adapter block; the dispatch prompt lists these failure modes: sediment (stale
+   lines nobody removed), sprawl (rules leaking past their home file), no-op lines
+   stating default model behavior, duplicated sources of truth, premature completion
+   (a step with no checkable done-condition). Fix BLOCKER/MAJOR findings below.
 2. **Gather inputs:** `flywheel/LESSONS.md`; `state/issues.json` where
    `type == "friction"`; latest `flywheel/check.sh` output; `state/spawns.json` rows
    with outcome `retried|escalated|failed`.
