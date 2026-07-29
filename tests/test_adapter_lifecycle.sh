@@ -408,6 +408,24 @@ PY
   echo "PASS project line preserved across refresh runner=$runner"
 }
 
+exercise_blank_project_line_fallback() {
+  local runner="$1" t blank_value
+  for blank_value in "" "   "; do
+    t="$(new_repo "blank-project-line-$runner-$(printf '%s' "$blank_value" | wc -c | tr -d ' ')")"
+    run_install "$runner" "$t" codex
+    "$HOST_PYTHON" - "$t/AGENTS.md" "$blank_value" <<'PY'
+import re, sys
+path, blank_value = sys.argv[1], sys.argv[2]
+content = open(path, encoding="utf-8").read()
+content = re.sub(r"^Project: .*$", lambda _: "Project: " + blank_value, content, count=1, flags=re.MULTILINE)
+open(path, "w", encoding="utf-8").write(content)
+PY
+    run_install "$runner" "$t" codex
+    grep -q '^Project: (one line' "$t/AGENTS.md" || fail "blank/whitespace project line not replaced by template placeholder (runner=$runner, value='$blank_value')"
+  done
+  echo "PASS blank project line falls back to template runner=$runner"
+}
+
 exercise_sync_and_drift() {
   local t before second agent tier model level
   t="$(new_repo sync)"
@@ -534,6 +552,8 @@ exercise_runner python3
 exercise_runner node
 exercise_project_line_preservation python3
 exercise_project_line_preservation node
+exercise_blank_project_line_fallback python3
+exercise_blank_project_line_fallback node
 exercise_sync_and_drift
 exercise_cli_contract
 exercise_preservation_and_architecture
