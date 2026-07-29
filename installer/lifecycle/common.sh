@@ -43,9 +43,11 @@ elif begin in content and end in content:
     old_region = region_re.search(content).group(0)
     new_block = block.strip()
     old_project = re.search(r"^Project: .*$", old_region, re.MULTILINE)
-    if old_project and not old_project.group(0)[len("Project: "):].startswith("(one line"):
-        preserved = old_project.group(0)
-        new_block = re.sub(r"^Project: .*$", lambda _: preserved, new_block, count=1, flags=re.MULTILINE)
+    if old_project:
+        old_value = old_project.group(0)[len("Project: "):]
+        if old_value.strip() and not old_value.startswith("(one line"):
+            preserved = old_project.group(0)
+            new_block = re.sub(r"^Project: .*$", lambda _: preserved, new_block, count=1, flags=re.MULTILINE)
     out = region_re.sub(lambda _: new_block, content, count=1)
 else:
     out = content.rstrip("\n") + "\n\n" + block.strip() + "\n"
@@ -67,9 +69,12 @@ else if (content.includes(begin) && content.includes(end)) {
   const oldRegion = content.match(regionRe)[0];
   let newBlock = block.trim();
   const oldProject = oldRegion.match(/^Project: .*$/m);
-  if (oldProject && !oldProject[0].slice('Project: '.length).startsWith('(one line')) {
-    const preserved = oldProject[0];
-    newBlock = newBlock.replace(/^Project: .*$/m, () => preserved);
+  if (oldProject) {
+    const oldValue = oldProject[0].slice('Project: '.length);
+    if (oldValue.trim() && !oldValue.startsWith('(one line')) {
+      const preserved = oldProject[0];
+      newBlock = newBlock.replace(/^Project: .*$/m, () => preserved);
+    }
   }
   out = content.replace(regionRe, () => newBlock);
 } else out = content.replace(/\n+$/, '') + '\n\n' + block.trim() + '\n';
