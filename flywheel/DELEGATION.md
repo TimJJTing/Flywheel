@@ -25,5 +25,6 @@ Codex children use config pins (its stop payload lacks child runtime telemetry);
 Antigravity children inherit the parent model or configured fallback. Codex
 coordinators resolve current-turn rollout telemetry at wrapup. All automatic rows
 go through `flywheel/resolve-spawn.py`; otherwise log manually with best verified
-provenance and `Pending verification` when unavailable. At wrapup, correct child
-outcomes/notes and ensure the coordinator has exactly one row.
+provenance and `Pending verification` when unavailable. Automatic rows land with
+`outcome: pending`; at wrapup resolve every one, correct notes, and ensure the
+coordinator has exactly one row.

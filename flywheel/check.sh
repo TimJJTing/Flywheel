@@ -95,6 +95,19 @@ for f in files:
         print(f"✓ state/{f}: valid JSON array ({len(data)} entries)")
         if f in ("activity.json", "spawns.json") and len(data) > 100:
             print(f"⚠ state/{f}: {len(data)} entries (>100) — compaction due (python3 flywheel/compact.py)")
+        if f == "spawns.json":
+            allowed = {"pending", "ok", "retried", "escalated", "failed"}
+            bad = [i for i, item in enumerate(data)
+                   if not isinstance(item, dict) or item.get("outcome") not in allowed]
+            if bad:
+                print(f"✗ state/spawns.json: {len(bad)} row(s) with outcome outside "
+                      f"pending|ok|retried|escalated|failed (first at index {bad[0]})")
+                ok = False
+            n_pending = sum(1 for item in data if isinstance(item, dict)
+                            and item.get("outcome") == "pending")
+            if n_pending:
+                print(f"⚠ state/spawns.json: {n_pending} row(s) still outcome pending "
+                      f"— resolve each at wrapup (wrapup skill step 2)")
         for item in data:
             hashes += item.get("commits") or []
     except Exception as e:
@@ -118,6 +131,14 @@ for (const f of files) {
     console.log('✓ state/'+f+': valid JSON array ('+data.length+' entries)');
     if ((f==='activity.json'||f==='spawns.json') && data.length>100)
       console.log('⚠ state/'+f+': '+data.length+' entries (>100) — compaction due (python3 flywheel/compact.py)');
+    if (f === 'spawns.json') {
+      const allowed = new Set(['pending','ok','retried','escalated','failed']);
+      const bad = [];
+      data.forEach((it, i) => { if (!it || typeof it !== 'object' || !allowed.has(it.outcome)) bad.push(i); });
+      if (bad.length) { console.log('✗ state/spawns.json: '+bad.length+' row(s) with outcome outside pending|ok|retried|escalated|failed (first at index '+bad[0]+')'); ok=false; }
+      const nPending = data.filter(it => it && typeof it === 'object' && it.outcome === 'pending').length;
+      if (nPending) console.log('⚠ state/spawns.json: '+nPending+' row(s) still outcome pending — resolve each at wrapup (wrapup skill step 2)');
+    }
     for (const item of data) hashes.push(...(item.commits||[]));
   } catch (e) { console.log('✗ state/'+f+': invalid JSON ('+e.message+')'); ok=false; }
 }

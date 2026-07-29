@@ -16,9 +16,14 @@ order), Blockers/decisions pending the human. Amend existing entries; stay ≤ 4
   commits: [hashes made this session — fill after step 5, or amend]}.
 - Before reviewing `spawns.json`, read exactly one file in `references/`: the file
   matching the active adapter. Perform its telemetry and coordinator-row steps.
-- `spawns.json`: verify any automatically appended subagent rows and correct wrong
-  `outcome`/`notes` values; a default successful outcome must be changed when a spawn
-  actually retried, escalated, or failed. Add the coordinator row as directed by the
+- `spawns.json`: automatically appended subagent rows arrive with `outcome: "pending"`
+  — a placeholder, not a verdict. Resolve EVERY pending row to `ok`, `retried`,
+  `escalated`, or `failed` from this session's own record, and correct wrong `notes`.
+  If a spawn is genuinely still running, leave it `pending` and say so in STATUS.md;
+  never guess `ok`. A `pending` row from an earlier session that this session cannot
+  adjudicate: resolve it from the agent's committed output if it exists, otherwise set
+  `outcome: failed` and `notes: unadjudicated (session N)` — a spawn nobody can account
+  for did not succeed. Add the coordinator row as directed by the
   active-adapter reference. Resolve manual model/level only from verified adapter
   facts; never write inheritance placeholders or unverified model guesses.
   Done only when every spawn row from this session has been cross-checked, one at a

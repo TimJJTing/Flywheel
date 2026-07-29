@@ -162,7 +162,7 @@ class ResolveSpawnTests(unittest.TestCase):
         cell = self.expected_cell("utility")
         self.assert_terminal_row(self.spawns()[-1], {
             "agent": "utility", "adapter": "codex", "model": cell["model"],
-            "level": cell["level"], "task": "", "outcome": "ok",
+            "level": cell["level"], "task": "", "outcome": "pending",
             "notes": "auto-logged (codex; model from config, payload model is parent's)",
         })
 
@@ -475,7 +475,7 @@ class ResolveSpawnTests(unittest.TestCase):
         self.assertEqual(output, {"systemMessage": "spawn coordinator -> new-runtime / high"})
         self.assert_terminal_row(self.spawns()[-1], {
             "agent": "coordinator", "adapter": "codex", "model": "new-runtime",
-            "level": "high", "task": "", "outcome": "ok",
+            "level": "high", "task": "", "outcome": "pending",
             "notes": f"auto-resolved from Codex turn_context; session-key:{digest}",
         })
         serialized = json.dumps(output) + json.dumps(self.spawns())
@@ -767,7 +767,7 @@ class ResolveSpawnTests(unittest.TestCase):
             "model": "resolved-model-id",
             "level": self.adapter_cell("strategist", "claude-code")["level"],
             "task": "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen",
-            "outcome": "ok",
+            "outcome": "pending",
             "notes": "auto-logged; override requested: requested-alias",
         })
 
@@ -790,7 +790,7 @@ class ResolveSpawnTests(unittest.TestCase):
                                  json.dumps({"systemMessage": f"spawn engineer -> {model} / {configured['level']}"}) + "\n")
                 self.assert_terminal_row(self.spawns()[-1], {
                     "agent": "engineer", "adapter": "claude-code", "model": model,
-                    "level": configured["level"], "task": "build exact thing", "outcome": "ok",
+                    "level": configured["level"], "task": "build exact thing", "outcome": "pending",
                     "notes": notes,
                 })
 
@@ -804,7 +804,7 @@ class ResolveSpawnTests(unittest.TestCase):
         self.assert_terminal_row(self.spawns()[-1], {
             "agent": "future-agent", "adapter": "claude-code",
             "model": "Pending verification", "level": "-", "task": "unknown still logs",
-            "outcome": "ok", "notes": "auto-logged",
+            "outcome": "pending", "notes": "auto-logged",
         })
 
     def test_antigravity_invoke_subagent_multi_row_order_and_truncation_golden(self):
@@ -833,7 +833,7 @@ class ResolveSpawnTests(unittest.TestCase):
         for row, (agent, level, task) in zip(self.spawns()[-3:], expected):
             self.assert_terminal_row(row, {
                 "agent": agent, "adapter": "antigravity", "model": "parent-runtime-model",
-                "level": level, "task": task, "outcome": "ok",
+                "level": level, "task": task, "outcome": "pending",
                 "notes": "auto-logged (antigravity; same model as parent)",
             })
 
@@ -856,9 +856,36 @@ class ResolveSpawnTests(unittest.TestCase):
                                  json.dumps({"systemMessage": f"spawn architect -> {expected_model} / {level}"}) + "\n")
                 self.assert_terminal_row(self.spawns()[-1], {
                     "agent": "architect", "adapter": "antigravity", "model": expected_model,
-                    "level": level, "task": "design", "outcome": "ok",
+                    "level": level, "task": "design", "outcome": "pending",
                     "notes": "auto-logged (antigravity; same model as parent)",
                 })
+
+    def test_auto_logged_rows_never_assert_a_terminal_outcome(self):
+        """i30: hooks fire before a verdict exists (background claude-code spawns log
+        at launch), so no automatic writer may emit ok/retried/escalated/failed."""
+        cases = [
+            ("codex", {"agent_type": "utility", "cwd": str(self.root)}),
+            ("claude-code", {"tool_input": {"subagent_type": "engineer", "description": "x"},
+                             "tool_response": {}, "cwd": str(self.root)}),
+            ("antigravity", {"tool_input": {"Subagents": [{"TypeName": "utility", "Prompt": "x"},
+                                                          {"TypeName": "verifier", "Prompt": "y"}]},
+                             "cwd": str(self.root)}),
+        ]
+        for adapter, payload in cases:
+            with self.subTest(adapter=adapter):
+                before = len(self.spawns())
+                self.run_hook(payload, adapter=adapter)
+                new = self.spawns()[before:]
+                self.assertTrue(new)
+                for row in new:
+                    self.assertEqual(row["outcome"], "pending")
+
+        thread_id = "42345678-1234-1234-1234-123456789abc"
+        home, _ = self.coordinator_rollout(
+            thread_id, self.coordinator_records(thread_id, [{"model": "m", "effort": "high"}]))
+        before = len(self.spawns())
+        self.run_coordinator(thread_id, home)
+        self.assertEqual(self.spawns()[before]["outcome"], "pending")
 
 
 if __name__ == "__main__":
