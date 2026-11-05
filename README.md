@@ -1,3 +1,7 @@
+> Disclaimer: Note: This project is in need of a major architectural overhaul—use with caution.
+
+> It was originally designed during the Claude Opus 4 era, when models still required hands-on scaffolding and active guidance to stay on track. While this framework served me reliably for a long time, modern frontier models—and the native harnesses built by model providers—have largely absorbed these patterns internally. Much like capabilities that once felt like superpowers, explicit external scaffolding that used to be essential can now add unnecessary overhead or even hinder performance when paired with the latest models. 
+
 # Flywheel
 
 > **Heroes come and go; policies compound.**
