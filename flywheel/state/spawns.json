@@ -385,5 +385,35 @@
   "task": "Verify i30 implementation retry",
   "outcome": "ok",
   "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-30T01:15",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Bear analyst reviews direction",
+  "outcome": "pending",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-30T01:15",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Growth VC reviews direction",
+  "outcome": "pending",
+  "notes": "auto-logged"
+ },
+ {
+  "ts": "2026-07-30T01:15",
+  "agent": "researcher",
+  "adapter": "claude-code",
+  "model": "claude-opus-5",
+  "level": "high",
+  "task": "Operator PM reviews roadmap",
+  "outcome": "pending",
+  "notes": "auto-logged"
  }
 ]
